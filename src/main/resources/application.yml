@@ -1,0 +1,9 @@
+# Application YAML configuration
+
+# Set port to 8080
+server:
+  port: 8080
+
+spring:
+  application:
+    name: rexa
