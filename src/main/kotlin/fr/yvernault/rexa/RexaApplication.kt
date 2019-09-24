@@ -1,11 +1,11 @@
-package fr.yvernault.daxapp
+package fr.yvernault.rexa
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DaxappApplication
+class RexaApplication
 
 fun main(args: Array<String>) {
-	runApplication<DaxappApplication>(*args)
+	runApplication<RexaApplication>(*args)
 }
