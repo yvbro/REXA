@@ -21,9 +21,11 @@ const App = () => (
     <Router>
       <div>
         <Header />
-        <Switch>
-          <Route path="/dashboard" component={() => <AppLayout><DashboardPage /></AppLayout>} />
-        </Switch>
+        <AppLayout>
+          <Switch>
+            <Route path="/dashboard" component={() => <DashboardPage />} />
+          </Switch>
+        </AppLayout>
       </div>
     </Router>
   </Provider>
