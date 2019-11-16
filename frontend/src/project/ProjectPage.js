@@ -55,7 +55,7 @@ class DashboardPage extends React.Component {
     return (
       <div>
         <h3>
-            Rexa Main Dashboard
+            Project Dashboard
         </h3>
         <BarChart
           data={myData}
