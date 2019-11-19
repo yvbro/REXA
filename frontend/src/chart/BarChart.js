@@ -12,8 +12,6 @@ class BarChart extends React.Component {
   componentDidMount() {
     const { data, title, color } = this.props;
 
-    console.log(data);
-
     this.myChart = new Chart(this.chartRef.current, {
       type: 'bar',
       data: {
