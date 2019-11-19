@@ -12,6 +12,7 @@ import './App.css';
 import DashboardPage from '../dashboard/DashboardPage';
 import Header from './Header';
 import AppLayout from './AppLayout';
+import ProjectPage from '../project/ProjectPage';
 
 const store = configureStore();
 
@@ -19,12 +20,18 @@ const App = () => (
   <Provider store={store}>
     <ToastContainer autoClose={5000} />
     <Router>
-      <div>
-        <Header />
-        <Switch>
-          <Route path="/dashboard" component={() => <AppLayout><DashboardPage /></AppLayout>} />
-        </Switch>
-      </div>
+      <Route render={({ location, history }) => (
+        <div>
+          <Header location={location} history={history} />
+          <AppLayout>
+            <Switch>
+              <Route path="/dashboard" component={() => <DashboardPage />} />
+              <Route path="/project" component={() => <ProjectPage />} />
+            </Switch>
+          </AppLayout>
+        </div>
+      )}
+      />
     </Router>
   </Provider>
 );
