@@ -20,6 +20,9 @@
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
 		<node.version>v8.12.0</node.version>
 		<yarn.version>v1.11.0</yarn.version>
+		<fuel.version>2.2.1</fuel.version>
+		<jackson.version>2.10.0</jackson.version>
+		<json.version>20190722</json.version>
 	</properties>
 
 	<dependencies>
@@ -64,27 +67,27 @@
 		<dependency>
 			<groupId>com.github.kittinunf.fuel</groupId>
 			<artifactId>fuel</artifactId>
-			<version>2.2.1</version>
+			<version>${fuel.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.10.0.pr3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-kotlin</artifactId>
-			<version>2.10.0</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20190722</version>
+			<version>${json.version}</version>
 		</dependency>
 
 
