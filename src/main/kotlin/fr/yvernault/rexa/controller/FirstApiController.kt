@@ -22,7 +22,7 @@ class FirstApiController(private val xnatService: XnatService) {
                 scans.groupBy { it.sessionLabel }.size,
                 scans.groupBy { it.subjectLabel }.size,
                 scans,
-                assessors )
+                assessors)
     }
 
 }

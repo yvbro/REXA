@@ -8,6 +8,6 @@ data class  XnatInfoDTO(
         var numberOfSession: Int,
         var numberOfSubject: Int,
         var scans: List<Scan>,
-        var assessors: List<Assessor>?
+        var assessors: List<Assessor>
 ) {
 }

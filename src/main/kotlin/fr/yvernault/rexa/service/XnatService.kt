@@ -32,7 +32,7 @@ class XnatService(private val properties: XnatProperties) {
         val user = properties.user
         val password = properties.password
 
-        var sessionList: List<Scan> = emptyList()
+        var scans: List<Scan> = emptyList()
 
         val httpAsync = "${XnatGlossary.urlArchiveLabel}?project=$projectId${XnatGlossary.scanUrlLabel}"
                 .httpGet()
@@ -49,44 +49,44 @@ class XnatService(private val properties: XnatProperties) {
                             val data = result.get()
                             val mapper = jacksonObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                             val dataJson = jsonFormat(data)
-                            sessionList = mapper.readValue(dataJson.toString())
+                            scans = mapper.readValue(dataJson.toString())
                         }
                     }
                 }
 
         httpAsync.join()
 
-        return sessionList
+        return scans
     }
 
-    fun getAssessorsForProject(projectId: String): List<Assessor>? {
+    fun getAssessorsForProject(projectId: String): List<Assessor> {
 
         val user = properties.user
         val password = properties.password
 
-        var assessorList: MutableList<Assessor>? = null
+        var assessorList: MutableList<Assessor> = mutableListOf()
 
-        val httpAsync = "${XnatGlossary.urlArchiveLabel}?project=$projectId${XnatGlossary.assessorFsUrlLabel}"
-                .httpGet()
-                .header(Headers.ACCEPT to MediaType.APPLICATION_JSON)
-                .authentication()
-                .basic(user, password)
-                .responseString() { request, response, result ->
-                    when (result) {
-                        is Result.Failure -> {
-                            val ex = result.getException()
-                            logger.error(ex.message)
-                        }
-                        is Result.Success -> {
-                            val data = result.get()
-                            val mapper = jacksonObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                            val dataJson = jsonFormat(data)
-                            assessorList = mapper.readValue(dataJson.toString())
-                        }
-                    }
-                }
-
-        httpAsync.join()
+//        val httpAsync = "${XnatGlossary.urlArchiveLabel}?project=$projectId${XnatGlossary.assessorFsUrlLabel}"
+//                .httpGet()
+//                .header(Headers.ACCEPT to MediaType.APPLICATION_JSON)
+//                .authentication()
+//                .basic(user, password)
+//                .responseString() { request, response, result ->
+//                    when (result) {
+//                        is Result.Failure -> {
+//                            val ex = result.getException()
+//                            logger.error(ex.message)
+//                        }
+//                        is Result.Success -> {
+//                            val data = result.get()
+//                            val mapper = jacksonObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+//                            val dataJson = jsonFormat(data)
+//                            assessorList = mapper.readValue(dataJson.toString())
+//                        }
+//                    }
+//                }
+//
+//        httpAsync.join()
 
         val httpAsyncProc = "${XnatGlossary.urlArchiveLabel}?project=$projectId${XnatGlossary.assessorUrlLabel}"
                 .httpGet()

@@ -6,12 +6,12 @@ import fr.yvernault.rexa.XnatGlossary
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 data class Assessor(
-        @JsonProperty("ID") val id: String,
-        @JsonProperty("insert_date") val insertDate: String?,
-        @JsonProperty("URI") val uri: String,
         @JsonProperty("session_ID") val sessionId: String,
+        @JsonProperty("ID") val id: String,
+        @JsonProperty("insert_date") val insertedDate: String?,
+        @JsonProperty("URI") val uri: String,
         @JsonProperty(XnatGlossary.defaultAssessorTypeLabel+ "/" + XnatGlossary.assessorStatusLabel) val procStatus: String,
-        @JsonProperty(XnatGlossary.defaultAssessorTypeLabel + "/" + XnatGlossary.assessorTypeLabel) val type: String,
+        @JsonProperty(XnatGlossary.defaultAssessorTypeLabel + "/" + XnatGlossary.assessorTypeLabel) val procType: String,
         @JsonProperty(XnatGlossary.defaultAssessorTypeLabel + "/validation/status") val qaStatus: String,
         val project: String,
         val xsiType: String,
