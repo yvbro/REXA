@@ -1,4 +1,4 @@
-package fr.yvernault.rexa
+package fr.yvernault.rexa.xnat
 
 class XnatGlossary {
     companion object {

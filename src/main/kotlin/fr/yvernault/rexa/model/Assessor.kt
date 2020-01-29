@@ -2,7 +2,7 @@ package fr.yvernault.rexa.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import fr.yvernault.rexa.XnatGlossary
+import fr.yvernault.rexa.xnat.XnatGlossary
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 data class Assessor(
