@@ -11,4 +11,4 @@ spring:
 xnat:
   url: http://localhost
   user: admin
-  password: admin
+  password: ok

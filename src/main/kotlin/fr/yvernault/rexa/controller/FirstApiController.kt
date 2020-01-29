@@ -1,9 +1,7 @@
 package fr.yvernault.rexa.controller
 
 import fr.yvernault.rexa.DTO.XnatInfoDTO
-import fr.yvernault.rexa.model.XnatProperties
 import fr.yvernault.rexa.service.XnatService
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 class FirstApiController(private val xnatService: XnatService) {
 
     @GetMapping("/projects/{id}")
-    fun getXnatInfo(@PathVariable id: String): XnatInfoDTO{
+    fun getXnatInfo(@PathVariable id: String): XnatInfoDTO {
 
         val scans = xnatService.getScansForProject(id)
         val assessors = xnatService.getAssessorsForProject(id)
