@@ -7,3 +7,8 @@ server:
 spring:
   application:
     name: rexa
+
+xnat:
+  url: http://localhost
+  user: admin
+  password: admin
