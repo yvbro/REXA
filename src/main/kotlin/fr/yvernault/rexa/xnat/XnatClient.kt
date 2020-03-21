@@ -30,7 +30,7 @@ class XnatClient(private val properties: XnatProperties) {
                 .header(Headers.ACCEPT to MediaType.APPLICATION_JSON)
                 .authentication()
                 .basic(user, password)
-                .responseString() { request, response, result ->
+                .responseString() { _, _, result ->
                     when (result) {
                         is Result.Failure -> {
                             val ex = result.getException()
