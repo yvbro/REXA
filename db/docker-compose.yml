@@ -1,0 +1,23 @@
+version: '3.6'
+
+services:
+
+
+  db:
+    image: postgres:12.2
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: rexa
+      POSTGRES_PASSWORD: rexa
+      POSTGRES_DB: rexa
+    networks:
+      - rexa-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+networks:
+  rexa-network:
+volumes:
+  postgres-data:
