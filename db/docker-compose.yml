@@ -1,23 +1,38 @@
-version: '3.6'
-
+version: '3.3'
 services:
-
-
-  db:
+  rexa-db:
+    container_name: rexa-db
     image: postgres:12.2
     ports:
-      - 5432:5432
+      - 25432:5432
     restart: always
     environment:
-      POSTGRES_USER: rexa
-      POSTGRES_PASSWORD: rexa
+      POSTGRES_USER: rexaAdmin
+      POSTGRES_PASSWORD: rexaAdmin
       POSTGRES_DB: rexa
     networks:
       - rexa-network
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgres
+  rexa-db-webadmin:
+    image: adminer
+    container_name: rdb-db-webadmin
+    restart: always
+    ports:
+      - 28080:8080
+    networks:
+      - rexa-network
+
+  flyway:
+    image: boxfuse/flyway:5.2.4
+    command: -connectRetries=60 baseline migrate info
+    volumes:
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+    depends_on:
+      - rexa-db
+    networks:
+      - rexa-network
 
 networks:
   rexa-network:
-volumes:
-  postgres-data:
