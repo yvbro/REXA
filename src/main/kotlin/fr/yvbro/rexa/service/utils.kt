@@ -1,4 +1,4 @@
-package fr.yvernault.rexa.service
+package fr.yvbro.rexa.service
 
 import org.json.JSONArray
 import org.json.JSONObject

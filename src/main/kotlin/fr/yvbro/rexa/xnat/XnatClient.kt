@@ -1,11 +1,11 @@
-package fr.yvernault.rexa.xnat
+package fr.yvbro.rexa.xnat
 
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
-import fr.yvernault.rexa.service.jsonFormat
+import fr.yvbro.rexa.service.jsonFormat
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service

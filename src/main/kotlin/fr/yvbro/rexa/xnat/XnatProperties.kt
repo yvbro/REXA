@@ -1,4 +1,4 @@
-package fr.yvernault.rexa.xnat
+package fr.yvbro.rexa.xnat
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration

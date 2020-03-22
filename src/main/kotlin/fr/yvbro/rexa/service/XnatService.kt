@@ -1,12 +1,12 @@
-package fr.yvernault.rexa.service
+package fr.yvbro.rexa.service
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import fr.yvernault.rexa.model.Assessor
-import fr.yvernault.rexa.model.Scan
-import fr.yvernault.rexa.xnat.XnatClient
-import fr.yvernault.rexa.xnat.XnatGlossary
+import fr.yvbro.rexa.model.Assessor
+import fr.yvbro.rexa.model.Scan
+import fr.yvbro.rexa.xnat.XnatClient
+import fr.yvbro.rexa.xnat.XnatGlossary
 import org.springframework.stereotype.Service
 
 @Service

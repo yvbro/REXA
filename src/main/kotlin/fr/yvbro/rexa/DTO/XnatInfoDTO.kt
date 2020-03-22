@@ -1,7 +1,7 @@
-package fr.yvernault.rexa.DTO
+package fr.yvbro.rexa.DTO
 
-import fr.yvernault.rexa.model.Assessor
-import fr.yvernault.rexa.model.Scan
+import fr.yvbro.rexa.model.Assessor
+import fr.yvbro.rexa.model.Scan
 
 data class  XnatInfoDTO(
         var numberOfScan: Int,
