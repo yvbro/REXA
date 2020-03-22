@@ -17,19 +17,34 @@
 	<properties>
 		<java.version>11</java.version>
 		<kotlin.version>1.3.50</kotlin.version>
-		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
-		<node.version>v8.12.0</node.version>
-		<yarn.version>v1.11.0</yarn.version>
-		<fuel.version>2.2.1</fuel.version>
-		<jackson.version>2.10.0</jackson.version>
-		<json.version>20190722</json.version>
+
+		<!-- Database & framework related-->
 		<postgresql.version>42.2.11</postgresql.version>
 		<jooq.version>3.13.1</jooq.version>
+		<!-- Flyway -->
 		<flyway-core.version>3.0</flyway-core.version>
 		<flyway.user>rexaAdmin</flyway.user>
 		<flyway.password>rexaAdmin</flyway.password>
 		<flyway.schemas>rexa</flyway.schemas>
 		<flyway.url>jdbc:postgresql://localhost:5432/rexa</flyway.url>
+
+		<!-- Test -->
+		<junit.version>5.5.2</junit.version>
+
+		<!-- Other Libs -->
+		<fuel.version>2.2.1</fuel.version>
+		<jackson.version>2.10.0</jackson.version>
+		<json.version>20190722</json.version>
+		<kittinunf.version>2.2.0</kittinunf.version>
+		<slf4j.version>1.7.28</slf4j.version>
+		<annotations.version>13.0</annotations.version>
+
+		<!-- Maven -->
+		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+		<node.version>v8.12.0</node.version>
+		<yarn.version>v1.11.0</yarn.version>
+		<asm.version>7.3.1</asm.version>
+		<maven-dependency-analyzer.version>1.11.1</maven-dependency-analyzer.version>
 	</properties>
 
 	<dependencies>
@@ -50,15 +65,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-reflect</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk8</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -66,6 +72,10 @@
 				<exclusion>
 					<groupId>org.junit.vintage</groupId>
 					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.skyscreamer</groupId>
+					<artifactId>jsonassert</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -75,6 +85,11 @@
 			<groupId>com.github.kittinunf.fuel</groupId>
 			<artifactId>fuel</artifactId>
 			<version>${fuel.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.kittinunf.result</groupId>
+			<artifactId>result</artifactId>
+			<version>${kittinunf.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
@@ -91,6 +106,27 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
+		<!-- Libs -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>${annotations.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
@@ -156,6 +192,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<!-- Plugin to move the react build into our target -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -175,10 +212,12 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
@@ -218,6 +257,55 @@
 				</dependencies>
 			</plugin>
 
+			<plugin>
+				<!-- This plugin checks that we have declared as a dependency any class that we directly import -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+						<version>${asm.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.shared</groupId>
+						<artifactId>maven-dependency-analyzer</artifactId>
+						<version>${maven-dependency-analyzer.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<goals>
+							<goal>analyze</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<failOnWarning>true</failOnWarning>
+					<!-- As there are lots of classpath auto discovery we can only apply the analysis to compile dependencies -->
+					<ignoreNonCompile>true</ignoreNonCompile>
+
+					<ignoredDependencies>
+						<!-- org.springframework*: spring boot starter not analyzed correctly by the plugin,
+                             triggering lots of false positives. -->
+						<ignoredDependency>org.springframework*</ignoredDependency>
+
+						<!-- org.jooq: same for jooq -->
+						<ignoredDependency>org.jooq</ignoredDependency>
+
+						<!-- tomcat-embed-core : includes the servlet api (eg. HttpServletRequest object) in the jar !
+                            as we are using those, it thinks we should include the jar as compile, but in fact
+                            we are using the standalone javax.servlet:servlet-api dependency for compile (as provided) scope -->
+						<ignoredDependency>org.apache.tomcat.embed:tomcat-embed-core</ignoredDependency>
+
+						<!-- com.fasterxml.jackson: imported through com.mirakl:spring-boot-starter-api,
+                                with version defined in spring-boot-dependencies -->
+						<ignoredDependency>com.fasterxml.jackson.*</ignoredDependency>
+					</ignoredDependencies>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
