@@ -1,11 +1,11 @@
--- V1_2__create_settings_table.sql
+-- V1_1__create_settings_table.sql
 DROP TABLE IF EXISTS
-rexa.seller,
+rexa.settings,
 CASCADE;
 
 CREATE TABLE rexa.settings
 (
-    id BIGSERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     xnat_username VARCHAR NOT NULL,
     xnat_password VARCHAR NOT NULL,
     xnat_url VARCHAR NOT NULL
