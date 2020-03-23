@@ -5,13 +5,12 @@ package fr.yvernault.rexa.jooq.generated;
 
 
 import fr.yvernault.rexa.jooq.generated.tables.JSchemaVersion;
-import fr.yvernault.rexa.jooq.generated.tables.JSettings;
+import fr.yvernault.rexa.jooq.generated.tables.JUser;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Catalog;
-import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
@@ -22,7 +21,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JRexa extends SchemaImpl {
 
-    private static final long serialVersionUID = 1330127251;
+    private static final long serialVersionUID = -538852946;
 
     /**
      * The reference instance of <code>rexa</code>
@@ -35,9 +34,9 @@ public class JRexa extends SchemaImpl {
     public final JSchemaVersion SCHEMA_VERSION = JSchemaVersion.SCHEMA_VERSION;
 
     /**
-     * The table <code>rexa.settings</code>.
+     * The table <code>rexa.user</code>.
      */
-    public final JSettings SETTINGS = JSettings.SETTINGS;
+    public final JUser USER = JUser.USER;
 
     /**
      * No further instances allowed
@@ -53,15 +52,9 @@ public class JRexa extends SchemaImpl {
     }
 
     @Override
-    public final List<Sequence<?>> getSequences() {
-        return Arrays.<Sequence<?>>asList(
-            Sequences.SETTINGS_ID_SEQ);
-    }
-
-    @Override
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             JSchemaVersion.SCHEMA_VERSION,
-            JSettings.SETTINGS);
+            JUser.USER);
     }
 }

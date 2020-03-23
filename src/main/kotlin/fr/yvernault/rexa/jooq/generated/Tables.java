@@ -5,7 +5,7 @@ package fr.yvernault.rexa.jooq.generated;
 
 
 import fr.yvernault.rexa.jooq.generated.tables.JSchemaVersion;
-import fr.yvernault.rexa.jooq.generated.tables.JSettings;
+import fr.yvernault.rexa.jooq.generated.tables.JUser;
 
 
 /**
@@ -20,7 +20,7 @@ public class Tables {
     public static final JSchemaVersion SCHEMA_VERSION = JSchemaVersion.SCHEMA_VERSION;
 
     /**
-     * The table <code>rexa.settings</code>.
+     * The table <code>rexa.user</code>.
      */
-    public static final JSettings SETTINGS = JSettings.SETTINGS;
+    public static final JUser USER = JUser.USER;
 }

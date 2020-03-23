@@ -5,11 +5,10 @@ package fr.yvernault.rexa.jooq.generated;
 
 
 import fr.yvernault.rexa.jooq.generated.tables.JSchemaVersion;
-import fr.yvernault.rexa.jooq.generated.tables.JSettings;
+import fr.yvernault.rexa.jooq.generated.tables.JUser;
 import fr.yvernault.rexa.jooq.generated.tables.records.JSchemaVersionRecord;
-import fr.yvernault.rexa.jooq.generated.tables.records.JSettingsRecord;
+import fr.yvernault.rexa.jooq.generated.tables.records.JUserRecord;
 
-import org.jooq.Identity;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
@@ -26,14 +25,13 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<JSettingsRecord, Long> IDENTITY_SETTINGS = Identities0.IDENTITY_SETTINGS;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = UniqueKeys0.SCHEMA_VERSION_PK;
-    public static final UniqueKey<JSettingsRecord> SETTINGS_PKEY = UniqueKeys0.SETTINGS_PKEY;
+    public static final UniqueKey<JUserRecord> USER_PKEY = UniqueKeys0.USER_PKEY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -44,12 +42,8 @@ public class Keys {
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
-    private static class Identities0 {
-        public static Identity<JSettingsRecord, Long> IDENTITY_SETTINGS = Internal.createIdentity(JSettings.SETTINGS, JSettings.SETTINGS.ID);
-    }
-
     private static class UniqueKeys0 {
         public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = Internal.createUniqueKey(JSchemaVersion.SCHEMA_VERSION, "schema_version_pk", new TableField[] { JSchemaVersion.SCHEMA_VERSION.VERSION }, true);
-        public static final UniqueKey<JSettingsRecord> SETTINGS_PKEY = Internal.createUniqueKey(JSettings.SETTINGS, "settings_pkey", new TableField[] { JSettings.SETTINGS.ID }, true);
+        public static final UniqueKey<JUserRecord> USER_PKEY = Internal.createUniqueKey(JUser.USER, "user_pkey", new TableField[] { JUser.USER.EMAIL }, true);
     }
 }
