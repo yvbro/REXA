@@ -6,7 +6,7 @@ CASCADE;
 CREATE TABLE rexa.settings
 (
     id UUID PRIMARY KEY,
-    xnat_username VARCHAR NOT NULL,
+    xnat_username VARCHAR NOT NULL UNIQUE,
     xnat_password VARCHAR NOT NULL,
     xnat_url VARCHAR NOT NULL
 );
