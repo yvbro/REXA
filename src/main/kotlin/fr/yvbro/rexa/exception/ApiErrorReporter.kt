@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.TypeMismatchException
+import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
 import org.springframework.validation.FieldError
@@ -18,6 +19,7 @@ import javax.validation.Path
 class ApiErrorReporter {
 
     private val LOGGER: Logger = LoggerFactory.getLogger(ApiErrorReporter::class.java)
+
     private val UNKNOWN_ERROR = "UNKNOWN_ERROR"
     private val UNKNOWN_ERROR_MESSAGE = "Unknown error, please provide byvernault on github."
     private val VALIDATION_ERROR = "VALIDATION_ERROR"
@@ -25,6 +27,9 @@ class ApiErrorReporter {
     private val INVALID_FIELD_TYPE = "INVALID_FIELD_TYPE"
     private val INVALID_FIELD_TYPE_MESSAGE = "The field type is invalid."
     private val INVALID_VALUE = "INVALID_VALUE"
+    private val INVALID_VALUE_MESSAGE = "Please check the field value and datatype"
+    private val IO_ERROR = "IO_ERROR"
+    private val IO_ERROR_MESSAGE = "Required request body is missing or malformed"
 
     private interface ExceptionReportStrategy<T : Exception?> {
         fun reportError(e: T): ApiErrorBean?
@@ -61,7 +66,7 @@ class ApiErrorReporter {
 
     private val genericExceptionReportStrategy: ExceptionReportStrategy<Exception> = object : ExceptionReportStrategy<Exception> {
         override fun reportError(e: Exception): ApiErrorBean? {
-            return e.message?.let { ApiErrorBean(it, "BAD_REQUEST") }
+            return e.message?.let { ApiErrorBean(it, HttpStatus.BAD_REQUEST.name) }
         }
     }
 
@@ -89,18 +94,17 @@ class ApiErrorReporter {
     private val messageNotReadableStrategy: ExceptionReportStrategy<HttpMessageNotReadableException> = object : ExceptionReportStrategy<HttpMessageNotReadableException> {
         override fun reportError(e: HttpMessageNotReadableException): ApiErrorBean? {
             val causeException = e.cause
-            var message = "Required request body is missing or malformed"
-            var errorCode = "IO_ERROR"
+            var message = IO_ERROR_MESSAGE
+            var errorCode = IO_ERROR
             var field: String? = null
-            if (causeException is JsonMappingException) {
+
+            if (causeException is JsonMappingException && causeException.path.isNotEmpty()) {
                 // Typical random deserialization issue
-                val jsonPathList = causeException.path
-                if (jsonPathList.isNotEmpty()) {
-                    field = getFieldPathInError(causeException)
-                    message = "Please check the field value and datatype"
-                    errorCode = INVALID_VALUE
-                }
+                field = getFieldPathInError(causeException)
+                message = INVALID_VALUE_MESSAGE
+                errorCode = INVALID_VALUE
             }
+
             return ApiErrorBean(message, errorCode, field)
         }
     }
