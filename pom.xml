@@ -24,8 +24,8 @@
 		<jackson.version>2.10.0</jackson.version>
 		<json.version>20190722</json.version>
 		<postgresql.version>42.2.11</postgresql.version>
-		<flyway-core.version>3.0</flyway-core.version>
 		<jooq.version>3.13.1</jooq.version>
+		<flyway-core.version>3.0</flyway-core.version>
 		<flyway.user>rexaAdmin</flyway.user>
 		<flyway.password>rexaAdmin</flyway.password>
 		<flyway.schemas>rexa</flyway.schemas>
