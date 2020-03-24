@@ -23,6 +23,13 @@
 		<fuel.version>2.2.1</fuel.version>
 		<jackson.version>2.10.0</jackson.version>
 		<json.version>20190722</json.version>
+		<postgresql.version>42.2.11</postgresql.version>
+		<jooq.version>3.13.1</jooq.version>
+		<flyway-core.version>3.0</flyway-core.version>
+		<flyway.user>rexaAdmin</flyway.user>
+		<flyway.password>rexaAdmin</flyway.password>
+		<flyway.schemas>rexa</flyway.schemas>
+		<flyway.url>jdbc:postgresql://localhost:5432/rexa</flyway.url>
 	</properties>
 
 	<dependencies>
@@ -90,6 +97,12 @@
 			<version>${json.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>${jooq.version}</version>
+		</dependency>
 
 	</dependencies>
 
@@ -185,7 +198,79 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway-core.version}</version>
+				<configuration>
+					<user>${flyway.user}</user>
+					<url>${flyway.url}</url>
+					<password>${flyway.password}</password>
+					<schemas>${flyway.schemas}</schemas>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${postgresql.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>jooq-gen</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jooq</groupId>
+						<artifactId>jooq-codegen-maven</artifactId>
+						<version>${jooq.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>${postgresql.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<jdbc>
+								<driver>org.postgresql.Driver</driver>
+								<user>${flyway.user}</user>
+								<url>${flyway.url}</url>
+								<password>${flyway.password}</password>
+							</jdbc>
+							<generator>
+								<strategy>
+									<name>org.jooq.codegen.example.JPrefixGeneratorStrategy</name>
+								</strategy>
+								<database>
+									<name>org.jooq.meta.postgres.PostgresDatabase</name>
+									<includes>.*</includes>
+									<excludes>flyway_schema_history</excludes>
+									<inputSchema>${flyway.schemas}</inputSchema>
+								</database>
+								<target>
+									<packageName>fr.yvernault.rexa.jooq.generated</packageName>
+									<directory>src/main/kotlin</directory>
+								</target>
+							</generator>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
