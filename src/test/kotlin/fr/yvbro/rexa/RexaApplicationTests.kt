@@ -1,4 +1,4 @@
-package fr.yvernault.rexa
+package fr.yvbro.rexa
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

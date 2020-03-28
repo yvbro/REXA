@@ -4,15 +4,9 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
     "@trendmicro/react-sidenav": "^0.4.5",
-    "axios": "^0.18.0",
     "chart.js": "^2.9.2",
     "font-awesome": "^4.7.0",
-    "react": "^16.9.0",
-    "react-bootstrap": "^1.0.0-beta.5",
     "react-click-outside": "tj/react-click-outside",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
@@ -21,7 +15,9 @@
     "react-toastify": "^4.5.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,9 +43,15 @@
   "devDependencies": {
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-plugin-flowtype": "^4.6.0"
+  },
+  "volta": {
+    "node": "12.13.1",
+    "yarn": "1.19.2"
   }
 }

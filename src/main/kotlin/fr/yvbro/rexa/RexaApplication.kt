@@ -1,4 +1,4 @@
-package fr.yvernault.rexa
+package fr.yvbro.rexa
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class RexaApplication
 
 fun main(args: Array<String>) {
-	runApplication<RexaApplication>(*args)
+    runApplication<RexaApplication>(*args)
 }

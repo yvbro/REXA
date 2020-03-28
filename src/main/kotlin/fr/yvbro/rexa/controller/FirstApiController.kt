@@ -1,7 +1,7 @@
-package fr.yvernault.rexa.controller
+package fr.yvbro.rexa.controller
 
-import fr.yvernault.rexa.DTO.XnatInfoDTO
-import fr.yvernault.rexa.service.XnatService
+import fr.yvbro.rexa.DTO.XnatInfoDTO
+import fr.yvbro.rexa.service.XnatService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
