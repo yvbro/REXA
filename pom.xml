@@ -34,7 +34,7 @@
 		<!-- Other Libs -->
 		<jackson.version>2.10.0</jackson.version>
 		<json.version>20190722</json.version>
-		<kittinunf.version>2.2.1</kittinunf.version>
+		<kittinunf.version>2.2.0</kittinunf.version>
 		<slf4j.version>1.7.28</slf4j.version>
 		<annotations.version>13.0</annotations.version>
 		<jakarta-validation.version>2.0.1</jakarta-validation.version>
