@@ -5,7 +5,10 @@ import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
+import fr.yvbro.rexa.exception.RexaBadRequestException
+import fr.yvbro.rexa.exception.RexaUnknownException
 import fr.yvbro.rexa.service.jsonFormat
+import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -21,9 +24,12 @@ class XnatClient(private val properties: XnatProperties) {
 
     fun callXnatUri(uri: String, projectId: String): String {
 
+        var statusCode = 201
+        var errorMessage: String? = ""
+
         val user = properties.user
         val password = properties.password
-        var data: String = ""
+        var data = ""
 
         val httpAsync = uri
                 .httpGet()
@@ -34,7 +40,8 @@ class XnatClient(private val properties: XnatProperties) {
                     when (result) {
                         is Result.Failure -> {
                             val ex = result.getException()
-                            logger.error(ex.message)
+                            errorMessage = ex.message
+                            statusCode = ex.response.statusCode
                         }
                         is Result.Success -> {
                             val dataJson = result.get()
@@ -43,6 +50,19 @@ class XnatClient(private val properties: XnatProperties) {
                     }
                 }
         httpAsync.join()
+
+        when (statusCode) {
+            400 -> {
+                throw RexaBadRequestException(errorMessage)
+            }
+            401 -> {
+                throw XnatUnauthorizedException()
+            }
+            500 -> {
+                logger.error(errorMessage)
+                throw RexaUnknownException()
+            }
+        }
 
         return data
     }

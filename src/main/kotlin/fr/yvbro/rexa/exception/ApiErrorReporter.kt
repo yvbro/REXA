@@ -1,6 +1,7 @@
 package fr.yvbro.rexa.exception
 
 import com.fasterxml.jackson.databind.JsonMappingException
+import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.TypeMismatchException
@@ -18,7 +19,7 @@ import javax.validation.Path
 
 class ApiErrorReporter {
 
-    private val LOGGER: Logger = LoggerFactory.getLogger(ApiErrorReporter::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(ApiErrorReporter::class.java)
 
     private val UNKNOWN_ERROR = "UNKNOWN_ERROR"
     private val UNKNOWN_ERROR_MESSAGE = "Unknown error, please provide byvernault on github."
@@ -36,7 +37,7 @@ class ApiErrorReporter {
     }
 
     fun buildUnknownErrorBean(ex: Exception?): ApiErrorBean? {
-        LOGGER.error("Internal Server Error: ", ex)
+        logger.error("Internal Server Error: ", ex)
         return ApiErrorBean(UNKNOWN_ERROR_MESSAGE, UNKNOWN_ERROR)
     }
 
@@ -59,6 +60,9 @@ class ApiErrorReporter {
             }
             is MissingServletRequestPartException -> {
                 return missingServletRequestPartExceptionStrategy.reportError(e)
+            }
+            is XnatUnauthorizedException -> {
+                return xnatUnauthorizedExceptionStrategy.reportError(e)
             }
             else -> return e?.let { genericExceptionReportStrategy.reportError(it) }
         }
@@ -121,6 +125,12 @@ class ApiErrorReporter {
     private val missingServletRequestPartExceptionStrategy: ExceptionReportStrategy<MissingServletRequestPartException> = object : ExceptionReportStrategy<MissingServletRequestPartException> {
         override fun reportError(e: MissingServletRequestPartException): ApiErrorBean? {
             return e.message?.let { ApiErrorBean(it, e.requestPartName) }
+        }
+    }
+
+    private val xnatUnauthorizedExceptionStrategy: ExceptionReportStrategy<XnatUnauthorizedException> = object : ExceptionReportStrategy<XnatUnauthorizedException> {
+        override fun reportError(e: XnatUnauthorizedException): ApiErrorBean? {
+            return e.message?.let { ApiErrorBean(it, e.errorCode) }
         }
     }
 

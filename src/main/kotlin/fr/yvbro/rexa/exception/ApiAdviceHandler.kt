@@ -1,5 +1,6 @@
 package fr.yvbro.rexa.exception
 
+import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.HttpMediaTypeNotAcceptableException
@@ -22,7 +23,8 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
             IllegalArgumentException::class,
             MultipartException::class,
             MethodArgumentNotValidException::class,
-            MethodArgumentTypeMismatchException::class)
+            MethodArgumentTypeMismatchException::class,
+            RexaBadRequestException::class)
     protected fun handleBadRequest(ex: Exception?): ApiErrorBean? {
         return apiErrorReporter.buildErrorBean(ex)
     }
@@ -37,6 +39,12 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     protected fun handleUnsupportedMediaType() {
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(XnatUnauthorizedException::class)
+    protected fun handleUnauthorizedException(ex: Exception?): ApiErrorBean? {
+        return apiErrorReporter.buildErrorBean(ex);
+    }
+
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
     protected fun handleNotAcceptableMediaType() {
@@ -48,7 +56,7 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler(RexaUnknownException::class, Exception::class)
     protected fun handleUnknownError(ex: Exception?): ApiErrorBean? {
         return apiErrorReporter.buildUnknownErrorBean(ex)
     }
