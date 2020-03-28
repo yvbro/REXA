@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class RexaApplication
 
 fun main(args: Array<String>) {
-	runApplication<RexaApplication>(*args)
+    runApplication<RexaApplication>(*args)
 }

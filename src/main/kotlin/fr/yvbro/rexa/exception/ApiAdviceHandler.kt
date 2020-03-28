@@ -7,18 +7,19 @@ import org.springframework.web.HttpMediaTypeNotAcceptableException
 import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.multipart.MultipartException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 
-@ControllerAdvice
+@RestControllerAdvice
 class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(HttpMessageNotReadableException::class,
+    @ExceptionHandler(
+            HttpMessageNotReadableException::class,
             MissingServletRequestPartException::class,
             IllegalArgumentException::class,
             MultipartException::class,
@@ -42,7 +43,7 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(XnatUnauthorizedException::class)
     protected fun handleUnauthorizedException(ex: Exception?): ApiErrorBean? {
-        return apiErrorReporter.buildErrorBean(ex);
+        return apiErrorReporter.buildErrorBean(ex)
     }
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)

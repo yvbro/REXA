@@ -70,13 +70,13 @@ class ApiErrorReporter {
 
     private val genericExceptionReportStrategy: ExceptionReportStrategy<Exception> = object : ExceptionReportStrategy<Exception> {
         override fun reportError(e: Exception): ApiErrorBean? {
-            return e.message?.let { ApiErrorBean(it, HttpStatus.BAD_REQUEST.name) }
+            return ApiErrorBean(HttpStatus.BAD_REQUEST.name, e.message)
         }
     }
 
     private val bindExceptionReportStrategy: ExceptionReportStrategy<BindException> = object : ExceptionReportStrategy<BindException> {
         override fun reportError(e: BindException): ApiErrorBean? {
-            return ApiErrorBean(INVALID_FIELD_TYPE_MESSAGE, INVALID_FIELD_TYPE, if (e.fieldError != null) e.fieldError!!.field else null)
+            return ApiErrorBean(INVALID_FIELD_TYPE, INVALID_FIELD_TYPE_MESSAGE, e.fieldError.toString())
         }
     }
 
@@ -85,31 +85,26 @@ class ApiErrorReporter {
             val errors = e.bindingResult.fieldErrors.stream()
                     .map<Any> { error: FieldError -> error.defaultMessage?.let { ValidationError(error.field, it) } }
                     .collect(Collectors.toList())
-            return ApiValidationErrorBean(VALIDATION_ERROR_MESSAGE, VALIDATION_ERROR, errors as List<ValidationError>)
+            return ApiValidationErrorBean(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE, errors as List<ValidationError>)
         }
     }
 
     private val methodArgumentTypeMismatchExceptionStrategy: ExceptionReportStrategy<MethodArgumentTypeMismatchException> = object : ExceptionReportStrategy<MethodArgumentTypeMismatchException> {
         override fun reportError(e: MethodArgumentTypeMismatchException): ApiErrorBean? {
-            return ApiErrorBean(INVALID_FIELD_TYPE_MESSAGE, INVALID_FIELD_TYPE, e.name)
+            return ApiErrorBean(INVALID_FIELD_TYPE, INVALID_FIELD_TYPE_MESSAGE, e.name)
         }
     }
 
     private val messageNotReadableStrategy: ExceptionReportStrategy<HttpMessageNotReadableException> = object : ExceptionReportStrategy<HttpMessageNotReadableException> {
         override fun reportError(e: HttpMessageNotReadableException): ApiErrorBean? {
             val causeException = e.cause
-            var message = IO_ERROR_MESSAGE
-            var errorCode = IO_ERROR
-            var field: String? = null
 
             if (causeException is JsonMappingException && causeException.path.isNotEmpty()) {
                 // Typical random deserialization issue
-                field = getFieldPathInError(causeException)
-                message = INVALID_VALUE_MESSAGE
-                errorCode = INVALID_VALUE
+                ApiErrorBean(INVALID_VALUE, INVALID_VALUE_MESSAGE, getFieldPathInError(causeException))
             }
 
-            return ApiErrorBean(message, errorCode, field)
+            return ApiErrorBean(IO_ERROR, IO_ERROR_MESSAGE)
         }
     }
 
@@ -118,19 +113,19 @@ class ApiErrorReporter {
             val errors = e.constraintViolations.stream()
                     .map<Any> { constraintViolation: ConstraintViolation<*> -> removeMethodNameFromPropertyPath(constraintViolation.propertyPath)?.let { ValidationError(it, constraintViolation.message) } }
                     .collect(Collectors.toList())
-            return ApiValidationErrorBean(VALIDATION_ERROR_MESSAGE, VALIDATION_ERROR, errors as List<ValidationError>)
+            return ApiValidationErrorBean(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE, errors as List<ValidationError>)
         }
     }
 
     private val missingServletRequestPartExceptionStrategy: ExceptionReportStrategy<MissingServletRequestPartException> = object : ExceptionReportStrategy<MissingServletRequestPartException> {
         override fun reportError(e: MissingServletRequestPartException): ApiErrorBean? {
-            return e.message?.let { ApiErrorBean(it, e.requestPartName) }
+            return ApiErrorBean(INVALID_FIELD_TYPE, e.message, e.requestPartName)
         }
     }
 
     private val xnatUnauthorizedExceptionStrategy: ExceptionReportStrategy<XnatUnauthorizedException> = object : ExceptionReportStrategy<XnatUnauthorizedException> {
         override fun reportError(e: XnatUnauthorizedException): ApiErrorBean? {
-            return e.message?.let { ApiErrorBean(it, e.errorCode) }
+            return ApiErrorBean(e.errorCode, e.message)
         }
     }
 

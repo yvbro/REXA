@@ -24,7 +24,7 @@ class XnatClient(private val properties: XnatProperties) {
 
     fun callXnatUri(uri: String, projectId: String): String {
 
-        var statusCode = 201
+        var statusCode = 200
         var errorMessage: String? = ""
 
         val user = properties.user
