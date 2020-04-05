@@ -1,16 +1,20 @@
 package fr.yvbro.rexa.service
 
+import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
 import fr.yvbro.rexa.model.User
 import fr.yvbro.rexa.repository.UserRepository
+import org.mindrot.jbcrypt.BCrypt
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UserService(private var userRepository: UserRepository) {
 
-    fun authenUser(userEmail: String?): Optional<User>? {
+    fun verifyUser(user: User?) {
 
+        val userGet = userRepository.getUserByEmail(user)
 
-        return userRepository.getUserByEmail(userEmail)
+        if (!BCrypt.checkpw(user?.password, userGet?.password)) {
+            throw RexaAuthentificationFailedException()
+        }
     }
 }

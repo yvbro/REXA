@@ -43,7 +43,7 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(XnatUnauthorizedException::class)
+    @ExceptionHandler(XnatUnauthorizedException::class, RexaAuthentificationFailedException::class)
     protected fun handleUnauthorizedException(ex: Exception?): ApiErrorBean? {
         return apiErrorReporter.buildErrorBean(ex)
     }
@@ -56,6 +56,12 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException::class)
     protected fun handleForbidden() {
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(RexaNotFoundException::class)
+    protected fun handleNotFoundException(ex: Exception?): ApiErrorBean? {
+        return apiErrorReporter.buildErrorBean(ex)
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

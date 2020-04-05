@@ -5,14 +5,13 @@ import fr.yvbro.rexa.service.UserService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import java.util.*
 
 @RestController
-class AuthenController(private val userService: UserService) {
+class AuthentificationController(private val userService: UserService) {
 
     @PostMapping("/login")
-    fun postAuthen(@RequestBody user: User): String{
-        return userService.authenUser(user.email).toString()
+    fun authentification(@RequestBody user: User) {
+        userService.verifyUser(user)
     }
 
 }

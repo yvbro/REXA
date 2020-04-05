@@ -61,8 +61,8 @@ class ApiErrorReporter {
             is MissingServletRequestPartException -> {
                 return missingServletRequestPartExceptionStrategy.reportError(e)
             }
-            is XnatUnauthorizedException -> {
-                return xnatUnauthorizedExceptionStrategy.reportError(e)
+            is RexaException -> {
+                return rexaExceptionStrategy.reportError(e)
             }
             else -> return e?.let { genericExceptionReportStrategy.reportError(it) }
         }
@@ -123,8 +123,8 @@ class ApiErrorReporter {
         }
     }
 
-    private val xnatUnauthorizedExceptionStrategy: ExceptionReportStrategy<XnatUnauthorizedException> = object : ExceptionReportStrategy<XnatUnauthorizedException> {
-        override fun reportError(e: XnatUnauthorizedException): ApiErrorBean? {
+    private val rexaExceptionStrategy: ExceptionReportStrategy<RexaException> = object : ExceptionReportStrategy<RexaException> {
+        override fun reportError(e: RexaException): ApiErrorBean? {
             return ApiErrorBean(e.errorCode, e.message)
         }
     }
