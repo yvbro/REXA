@@ -1,4 +1,4 @@
-package fr.yvbro.rexa.exception
+package fr.yvbro.rexa.exception.common
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.Instant

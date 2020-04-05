@@ -1,5 +1,7 @@
-package fr.yvbro.rexa.exception
+package fr.yvbro.rexa.exception.common
 
+import fr.yvbro.rexa.exception.RexaBadRequestException
+import fr.yvbro.rexa.exception.RexaUnknownException
 import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
