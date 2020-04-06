@@ -1,4 +1,4 @@
-package fr.yvbro.rexa.repository
+package fr.yvbro.rexa.repository.mapper
 
 import fr.yvbro.rexa.jooq.generated.Tables
 import fr.yvbro.rexa.model.User
