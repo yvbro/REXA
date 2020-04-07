@@ -1,6 +1,6 @@
 package fr.yvbro.rexa.model
 
-data class User private constructor(
+data class User(
         var email: String?,
         var password: String?
 ) {

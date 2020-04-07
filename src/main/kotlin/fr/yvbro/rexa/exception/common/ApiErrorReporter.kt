@@ -1,7 +1,7 @@
 package fr.yvbro.rexa.exception.common
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
+import fr.yvbro.rexa.exception.RexaException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.TypeMismatchException
