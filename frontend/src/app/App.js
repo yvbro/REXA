@@ -13,6 +13,7 @@ import DashboardPage from '../dashboard/DashboardPage';
 import Header from './Header';
 import AppLayout from './AppLayout';
 import ProjectPage from '../project/ProjectPage';
+import LoginPage from '../auth/LoginPage';
 
 const store = configureStore();
 
@@ -27,6 +28,7 @@ const App = () => (
             <Switch>
               <Route path="/dashboard" component={() => <DashboardPage />} />
               <Route path="/project" component={() => <ProjectPage />} />
+              <Route path="/login" component={() => <LoginPage />}/>
             </Switch>
           </AppLayout>
         </div>
