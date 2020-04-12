@@ -44,8 +44,12 @@ class FormLogin extends React.Component {
   render(){
     return(
           <form onSubmit={this.handleSubmit} className="container">
-              <div class="header">
-                <div><span1>Welcome</span1> <span2>to</span2> <span> Rexa</span></div>
+              <div className="header">
+                <div>
+                  <span className="welcome">Welcome</span> 
+                  <span className="to">to</span> 
+                  <span className="rexa"> Rexa</span>
+                </div>
               </div>
               <FormGroup controlId="email" className="email">
                 <FormLabel>Email</FormLabel>

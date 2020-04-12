@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure({ position: "top-center" });
 
 const initialState = {
   isLogged: false,
@@ -24,10 +28,12 @@ export function performLogin(account) {
         password: account.password
       })
       .then( () =>  {
+        toast.error("Welcome in Rexa");
         return dispatch({type: SUCCESS_LOGIN});
       })
       .catch(error => {
         console.log(error.message);
+        toast.error("Failed to authentificate");
         return dispatch({type: FAILED_LOGIN})
       });
 }

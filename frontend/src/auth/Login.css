@@ -38,7 +38,7 @@ body{
 	top: calc(50% - 35px);
 	left: calc(50% - 255px);
 	color: #282c34;
-	top: 50px;
+	top: 48px;
 	left: -320px;
 }
 
@@ -50,24 +50,24 @@ body{
   	font-weight: 300;
 }
 
-.header div span1{
+.header div span.welcome{
   position: relative;
   bottom: 40px;
-  left: 110px;
+  left: 95px;
   color: blue !important;
 }
 
-.header div span2{
+.header div span.to{
 	position: relative;
 	bottom: 0px;
 	left: -20px;
 	color: #282c34 !important;
   }
   
-.header div span{
+.header div span.rexa{
   position: relative;
   bottom: -40px;
-  left: -100px;
+  left: -105px;
   color: red !important;
 }
 
