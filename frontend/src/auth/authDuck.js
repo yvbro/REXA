@@ -4,7 +4,7 @@ const initialState = {
   isLogged: false,
 };
 const SUCCESS_LOGIN = 'SUCCESS_LOGIN';
-const SUCCESS_LOGOUT = 'SUCCESS_LOGOUT';
+const FAILED_LOGIN = 'LOGIN_FAILED';
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
@@ -25,6 +25,19 @@ export function performLogin(account) {
       })
       .then( () =>  {
         return dispatch({type: SUCCESS_LOGIN});
+      })
+      .catch(error => {
+        console.log(error.message);
+        return dispatch({type: FAILED_LOGIN})
       });
+}
+
+export function getCurrentUser(){
+  return dispatch =>
+      axios
+          .get("/mono/user/current")
+          .then( () =>  {
+            return dispatch({type: SUCCESS_LOGIN});
+          });
 }
 

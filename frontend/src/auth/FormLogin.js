@@ -5,7 +5,7 @@ import {bindActionCreators, compose} from 'redux'
 import { connect } from 'react-redux'
 
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import { performLogin } from './auth';
+import { performLogin } from './authDuck';
 import {withRouter} from "react-router-dom";
 
 class FormLogin extends React.Component {
@@ -37,39 +37,42 @@ class FormLogin extends React.Component {
       password: this.state.password
     };
     performLogin(account)
-        .then( () => this.props.history.push('/dashboard'));
+           .then( () => 
+            this.props.history.push('/dashboard'));
   };
-
 
   render(){
     return(
-      <form onSubmit={this.handleSubmit}>
-        <FormGroup controlId="email">
-          <FormLabel>Email</FormLabel>
-          <FormControl
-            autoFocus
-            value={this.state.email}
-            onChange={this.handleChange}
-            required="required"
-          />
-        </FormGroup>
-        <FormGroup controlId="password">
-          <FormLabel>Password</FormLabel>
-          <FormControl
-            value={this.state.password}
-            onChange={this.handleChange}
-            type="password"
-            required="required"
-          />
-        </FormGroup>
-        <Button
-          block
-          disabled={!this.validateForm()}
-          type="submit"
-        >
-          Login
-        </Button>
-      </form>
+          <form onSubmit={this.handleSubmit} className="container">
+              <div class="header">
+                <div><span1>Welcome</span1> <span2>to</span2> <span> Rexa</span></div>
+              </div>
+              <FormGroup controlId="email" className="email">
+                <FormLabel>Email</FormLabel>
+                <FormControl className="emailZone"
+                  autoFocus
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  required="required"
+                />
+              </FormGroup>
+              <FormGroup controlId="password" className="password">
+                <FormLabel>Password</FormLabel>
+                <FormControl className="passwordZone"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type="password"
+                  required="required"
+                />
+              </FormGroup>
+              <Button className="submit"
+                block
+                disabled={!this.validateForm()}
+                type="submit"
+              >
+                Login
+              </Button>
+          </form>
     )
   }
 

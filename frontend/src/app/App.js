@@ -14,6 +14,7 @@ import Header from './Header';
 import AppLayout from './AppLayout';
 import ProjectPage from '../project/ProjectPage';
 import LoginPage from '../auth/LoginPage';
+import PrivateRoute from "./PrivateRoute";
 
 const store = configureStore();
 
@@ -26,9 +27,9 @@ const App = () => (
           <Header location={location} history={history} />
           <AppLayout>
             <Switch>
-              <Route path="/dashboard" component={() => <DashboardPage />} />
-              <Route path="/project" component={() => <ProjectPage />} />
               <Route path="/login" component={() => <LoginPage />}/>
+              <PrivateRoute path="/dashboard" component={() => <DashboardPage />} />
+              <PrivateRoute path="/project" component={() => <ProjectPage />} />
             </Switch>
           </AppLayout>
         </div>
