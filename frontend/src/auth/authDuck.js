@@ -28,11 +28,10 @@ export function performLogin(account) {
         password: account.password
       })
       .then( () =>  {
-        toast.error("Welcome in Rexa");
+        toast.info("Welcome to Rexa");
         return dispatch({type: SUCCESS_LOGIN});
       })
       .catch(error => {
-        console.log(error.message);
         toast.error("Failed to authentificate");
         return dispatch({type: FAILED_LOGIN})
       });
