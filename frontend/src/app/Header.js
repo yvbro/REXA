@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux'
 import {connect } from "react-redux";
 
-import SideNav, { NavItem, NavIcon, NavText, NavLink } from '@trendmicro/react-sidenav';
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import { Link } from 'react-router-dom';
 import ClickOutside from 'react-click-outside';
 import {performLogout} from "../auth/authDuck";
