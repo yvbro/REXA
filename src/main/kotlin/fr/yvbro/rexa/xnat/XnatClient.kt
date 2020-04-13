@@ -23,7 +23,7 @@ class XnatClient(private val properties: XnatProperties) {
         FuelManager.instance.basePath = properties.url
     }
 
-    fun callXnatUri(uri: String, projectId: String): String {
+    fun callXnatUri(uri: String): String {
 
         var statusCode = 200
         var errorMessage: String? = ""
