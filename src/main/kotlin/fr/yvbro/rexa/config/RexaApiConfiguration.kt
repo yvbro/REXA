@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class RexaApiConfiguration {
+open class RexaApiConfiguration {
 
     @Bean
-    fun apiErrorReporter(): ApiErrorReporter {
+    open fun apiErrorReporter() : ApiErrorReporter {
         return ApiErrorReporter()
     }
 }
