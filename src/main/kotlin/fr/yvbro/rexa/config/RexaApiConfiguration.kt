@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration
 class RexaApiConfiguration {
 
     @Bean
-    fun apiErrorReporter() : ApiErrorReporter {
+    fun apiErrorReporter(): ApiErrorReporter {
         return ApiErrorReporter()
     }
 }

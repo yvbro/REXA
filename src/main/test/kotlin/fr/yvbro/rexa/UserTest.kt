@@ -19,8 +19,7 @@ class UserTest {
 
 
     @Nested
-    inner class UserServiceTest
-    {
+    inner class UserServiceTest {
 
         @InjectMocks
         lateinit var userService: UserService
@@ -31,7 +30,7 @@ class UserTest {
         @BeforeEach
         fun setMock() {
             val bCrypt = mock(BCrypt::class.java)
-            var goodUserFromRepository = User("beber@gmail.com","\$2a\$04\$/FCeArg6BcWT7tYqChau5uhLlVaxOa4c6v5gO19mTAEW/4BPMXWiy")
+            var goodUserFromRepository = User("beber@gmail.com", "\$2a\$04\$/FCeArg6BcWT7tYqChau5uhLlVaxOa4c6v5gO19mTAEW/4BPMXWiy")
 
             `when`(userRepository.getUserByEmail(any())).thenReturn(goodUserFromRepository)
         }

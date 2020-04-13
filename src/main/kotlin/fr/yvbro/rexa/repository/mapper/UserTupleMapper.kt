@@ -7,7 +7,7 @@ import org.jooq.RecordMapper
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserTupleMapper: RecordMapper<Record, User> {
+class UserTupleMapper : RecordMapper<Record, User> {
     override fun map(record: Record?): User {
         return User.Builder()
                 .email(record?.get(Tables.USER.EMAIL))
