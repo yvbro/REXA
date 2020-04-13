@@ -14,7 +14,7 @@ services:
     networks:
       - rexa-network
   rexa-db-webadmin:
-    image: adminer
+    image: adminer:4.2.5-standalone
     container_name: rdb-db-webadmin
     restart: always
     ports:

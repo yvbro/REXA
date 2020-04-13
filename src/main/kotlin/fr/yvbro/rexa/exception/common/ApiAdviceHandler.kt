@@ -1,6 +1,8 @@
 package fr.yvbro.rexa.exception.common
 
+import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
 import fr.yvbro.rexa.exception.RexaBadRequestException
+import fr.yvbro.rexa.exception.RexaNotFoundException
 import fr.yvbro.rexa.exception.RexaUnknownException
 import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.springframework.http.HttpStatus
@@ -43,7 +45,7 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(XnatUnauthorizedException::class)
+    @ExceptionHandler(XnatUnauthorizedException::class, RexaAuthentificationFailedException::class)
     protected fun handleUnauthorizedException(ex: Exception?): ApiErrorBean? {
         return apiErrorReporter.buildErrorBean(ex)
     }
@@ -56,6 +58,12 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException::class)
     protected fun handleForbidden() {
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(RexaNotFoundException::class)
+    protected fun handleNotFoundException(ex: Exception?): ApiErrorBean? {
+        return apiErrorReporter.buildErrorBean(ex)
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -5,8 +5,14 @@ server:
   port: 8080
 
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rexa
+    username: 'rexaAdmin'
+    password: 'rexaAdmin'
   application:
     name: rexa
+  jooq:
+    sql-dialect: Postgres
 
 xnat:
   url: http://localhost

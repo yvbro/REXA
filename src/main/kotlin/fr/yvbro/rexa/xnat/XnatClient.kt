@@ -7,8 +7,9 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import fr.yvbro.rexa.exception.RexaBadRequestException
 import fr.yvbro.rexa.exception.RexaUnknownException
-import fr.yvbro.rexa.service.jsonFormat
 import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
+import org.json.JSONArray
+import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -66,4 +67,10 @@ class XnatClient(private val properties: XnatProperties) {
 
         return data
     }
+
+    fun jsonFormat(json: String): JSONArray {
+        val answer = JSONObject(json)
+        return answer.optJSONObject("ResultSet").optJSONArray("Result")
+    }
+
 }

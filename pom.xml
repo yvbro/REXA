@@ -162,6 +162,21 @@
 			<artifactId>jooq</artifactId>
 			<version>${jooq.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jooq</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.3m</version>
+		</dependency>
 
 	</dependencies>
 
@@ -212,13 +227,6 @@
 					<password>${flyway.password}</password>
 					<schemas>${flyway.schemas}</schemas>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-						<version>${postgresql.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 			<plugin>
@@ -380,7 +388,7 @@
 									<inputSchema>${flyway.schemas}</inputSchema>
 								</database>
 								<target>
-									<packageName>fr.yvernault.rexa.jooq.generated</packageName>
+									<packageName>fr.yvbro.rexa.jooq.generated</packageName>
 									<directory>src/main/kotlin</directory>
 								</target>
 							</generator>
