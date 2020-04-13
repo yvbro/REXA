@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
+import {bindActionCreators} from 'redux'
+import {connect } from "react-redux";
 
-import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import SideNav, { NavItem, NavIcon, NavText, NavLink } from '@trendmicro/react-sidenav';
 import { Link } from 'react-router-dom';
 import ClickOutside from 'react-click-outside';
+import {performLogout} from "../auth/authDuck";
 
 class Header extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { location, history, isLogged } = this.props;
+    const { location, history, isLogged, performLogout } = this.props;
 
     return (
       <>
@@ -39,7 +41,7 @@ class Header extends React.Component {
               }}
             >
               <SideNav.Toggle />
-              <SideNav.Nav defaultSelected="dashboard">
+              <SideNav.Nav defaultSelected="dashboard" >
                 <NavItem eventKey="dashboard">
                   <NavIcon>
                     <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
@@ -75,6 +77,14 @@ class Header extends React.Component {
                     </NavText>
                   </NavItem>
                 </NavItem>
+                <NavItem onClick={performLogout} eventKey="login" >
+                  <NavIcon>
+                    <i className="fa fa-sign-out" style={{ fontSize: '1.75em' }} />
+                  </NavIcon>
+                  <NavText>
+                      Logout
+                  </NavText>
+                </NavItem>
               </SideNav.Nav>
             </SideNav>
           </ClickOutside>
@@ -91,7 +101,16 @@ Header.propTypes = {
 
 const mapStateToProps = state => ({isLogged: state.auth.isLogged});
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      performLogout,
+    },
+    dispatch
+  )
+}
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
   )(Header)
