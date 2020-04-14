@@ -6,9 +6,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/rexa
-    username: 'rexaAdmin'
-    password: 'rexaAdmin'
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB:rexa}
+    username: ${POSTGRES_USER:rexaAdmin}
+    password: ${POSTGRES_PASSWORD:rexaAdmin}
   application:
     name: rexa
   jooq:

@@ -24,3 +24,4 @@ services:
 
 networks:
   rexa-network:
+    driver: bridge
