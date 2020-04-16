@@ -11,6 +11,11 @@ import { fetchProject } from "../xnat/xnatDuck"
 class ProjectPage extends React.Component {
   constructor(props) {
     super(props)
+    this.setState({ project: "" })
+  }
+
+  setProject(project) {
+    this.setState({ project: project })
   }
 
   render() {
@@ -19,7 +24,7 @@ class ProjectPage extends React.Component {
     return (
       <div>
         <h3>Project Dashboard</h3>
-        <ProjectsDropDown />
+        <ProjectsDropDown setProject={this.setProject} />
         ( assessments &&
         <BarChart data={assessments} title="Processes Report" color="#70CAD1" />)
       </div>
