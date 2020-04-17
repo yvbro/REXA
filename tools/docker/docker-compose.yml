@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  rexa:
+    container_name: rexa
+    image: rexa:0.0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+    networks:
+      - tools_rexa-network
+
+networks:
+  tools_rexa-network:
+    external: true

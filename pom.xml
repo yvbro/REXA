@@ -47,6 +47,10 @@
 		<yarn.version>v1.11.0</yarn.version>
 		<asm.version>7.3.1</asm.version>
 		<maven-dependency-analyzer.version>1.11.1</maven-dependency-analyzer.version>
+
+		<!--DOCKER-->
+		<docker.image.name>rexa</docker.image.name>
+		<fabric8.version>0.32.0</fabric8.version>
 	</properties>
 
 	<dependencies>
@@ -276,6 +280,31 @@
                                 with version defined in spring-boot-dependencies -->
 						<ignoredDependency>com.fasterxml.jackson.*</ignoredDependency>
 					</ignoredDependencies>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>${fabric8.version}</version>
+				<configuration>
+					<images>
+						<image>
+							<name>${docker.image.name}</name>
+							<alias>dockerfile</alias>
+							<build>
+								<filter>@</filter>
+								<dockerFileDir>${project.basedir}/tools/docker</dockerFileDir>
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
 				</configuration>
 			</plugin>
 		</plugins>
