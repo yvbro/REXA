@@ -41,16 +41,16 @@ class Header extends React.Component {
               }}
             >
               <SideNav.Toggle />
-              <SideNav.Nav defaultSelected="dashboard">
-                <NavItem eventKey="dashboard">
+              <SideNav.Nav defaultSelected="rexa/dashboard">
+                <NavItem eventKey="rexa/dashboard">
                   <NavIcon>
                     <i className="fa fa-fw fa-home" style={{ fontSize: "1.75em" }} />
                   </NavIcon>
                   <NavText>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="rexa/dashboard">Dashboard</Link>
                   </NavText>
                 </NavItem>
-                <NavItem eventKey="project">
+                <NavItem eventKey="rexa/project">
                   <NavIcon>
                     <i
                       className="fa fa-fw fa-user-o"
@@ -58,11 +58,11 @@ class Header extends React.Component {
                     />
                   </NavIcon>
                   <NavText>
-                    <Link to="/project">Project View</Link>
+                    <Link to="rexa/project">Project View</Link>
                   </NavText>
                 </NavItem>
 
-                <NavItem eventKey="charts">
+                <NavItem eventKey="rexa/charts">
                   <NavIcon>
                     <i
                       className="fa fa-fw fa-line-chart"
@@ -70,10 +70,10 @@ class Header extends React.Component {
                     />
                   </NavIcon>
                   <NavText>Charts</NavText>
-                  <NavItem eventKey="charts/linechart">
+                  <NavItem eventKey="rexa/charts/linechart">
                     <NavText>Line Chart</NavText>
                   </NavItem>
-                  <NavItem eventKey="charts/barchart">
+                  <NavItem eventKey="rexa/charts/barchart">
                     <NavText>Bar Chart</NavText>
                   </NavItem>
                 </NavItem>

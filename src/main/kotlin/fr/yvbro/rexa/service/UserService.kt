@@ -17,4 +17,9 @@ class UserService(private var userRepository: UserRepository) {
             throw RexaAuthentificationFailedException()
         }
     }
+
+    fun saveUser(user: User){
+        userRepository.save(user);
+    }
+
 }

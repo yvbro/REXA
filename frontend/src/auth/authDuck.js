@@ -25,7 +25,7 @@ export default function auth(state = initialState, action) {
 export function performLogin(email, password) {
   return (dispatch) =>
     axios
-      .post("/login", {
+      .post("/api/login", {
         email: email,
         password: password,
       })
@@ -46,5 +46,5 @@ export function performLogout() {
 
 export function getCurrentUser() {
   return (dispatch) =>
-    axios.get("/user/current").then(() => dispatch({ type: SUCCESS_LOGIN }))
+    axios.get("/api/userinfo").then(() => dispatch({ type: SUCCESS_LOGIN }))
 }

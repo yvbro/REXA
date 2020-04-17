@@ -35,12 +35,12 @@ const App = () => (
                         <AppLayout>
                             <Switch>
                                 <PrivateRoute
-                                    path="/dashboard"
+                                    path="/rexa/dashboard"
                                     component={() => <DashboardPage/>}
                                 />
-                                <PrivateRoute path="/project" component={() => <ProjectPage/>}/>
-                                <Route path="/login" component={() => <LoginPage/>}/>
-                                <Route path="/" component={() => <LoginPage/>}/>
+                                <PrivateRoute path="/rexa/project" component={() => <ProjectPage/>}/>
+                                <Route path="/rexa/login" component={() => <LoginPage/>}/>
+                                <PrivateRoute path="/" component={() => <DashboardPage/>}/>
                             </Switch>
                         </AppLayout>
                     </div>

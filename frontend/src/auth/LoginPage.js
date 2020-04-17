@@ -6,6 +6,7 @@ import {FormGroup, FormControl, FormLabel, Button, Container, Row, Col} from "re
 
 import "./Login.css";
 import {performLogin} from "./authDuck";
+import SocialLogin from "./SocialLogin"
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ export default function LoginPage() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        dispatch(performLogin(email, password)).then(() => history.push("/dashboard"));
+        dispatch(performLogin(email, password)).then(() => history.push("/rexa/dashboard"));
     }
 
     return (
@@ -54,6 +55,7 @@ export default function LoginPage() {
                         <Button block disabled={!validateForm()} type="submit">
                             Sign in
                         </Button>
+                        <SocialLogin/>
                     </form>
                 </Col>
             </Row>

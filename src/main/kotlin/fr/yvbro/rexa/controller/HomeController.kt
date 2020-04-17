@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/", "/rexa/**")
     fun index() = "/index.html"
 }

@@ -19,6 +19,13 @@ class UserRepository(private val dsl: DSLContext,
             .orElseThrow { RexaAuthentificationFailedException() }
 
 
+    fun save(user: User){
+        dsl.insertInto(USER, USER.EMAIL, USER.PASSWORD)
+                .values(user.email, user.password)
+                .execute()
+
+    }
+
     companion object {
         private val USER = JUser.USER
     }
