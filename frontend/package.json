@@ -29,11 +29,6 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run format"
-    }
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -61,7 +56,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "husky": "^4.2.5",
     "prettier": "^2.0.4"
   },
   "volta": {
