@@ -28,12 +28,13 @@ const App = () => (
             <Header location={location} history={history} />
             <AppLayout>
               <Switch>
-                <Route path="/login" component={() => <LoginPage />} />
                 <PrivateRoute
                   path="/dashboard"
                   component={() => <DashboardPage />}
                 />
                 <PrivateRoute path="/project" component={() => <ProjectPage />} />
+                <Route path="/login" component={() => <LoginPage />} />
+                <Route path="/" component={() => <LoginPage />} />
               </Switch>
             </AppLayout>
           </div>
