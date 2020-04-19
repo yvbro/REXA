@@ -5,20 +5,12 @@ services:
     container_name: rexa-db
     image: postgres:12.2
     ports:
-      - 5432:5432
+      - 5442:5432
     restart: always
     environment:
       POSTGRES_USER: rexaAdmin
       POSTGRES_PASSWORD: rexaAdmin
       POSTGRES_DB: rexa
-    networks:
-      - rexa-network
-  rexa-db-webadmin:
-    image: adminer:4.2.5-standalone
-    container_name: rdb-db-webadmin
-    restart: always
-    ports:
-      - 8085:8080
     networks:
       - rexa-network
 

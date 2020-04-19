@@ -26,7 +26,7 @@
 		<flyway.user>rexaAdmin</flyway.user>
 		<flyway.password>rexaAdmin</flyway.password>
 		<flyway.schemas>rexa</flyway.schemas>
-		<flyway.url>jdbc:postgresql://localhost:5432/rexa</flyway.url>
+		<flyway.url>jdbc:postgresql://localhost:5442/rexa</flyway.url>
 
 		<!-- Test -->
 		<junit.version>5.5.2</junit.version>
