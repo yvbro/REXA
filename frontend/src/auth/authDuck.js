@@ -1,33 +1,33 @@
-import axios from "axios"
-import { toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-toast.configure({ position: "top-center" })
+toast.configure({ position: "top-center" });
 
 const initialState = {
   isLogged: false,
-}
-const SUCCESS_LOGIN = "SUCCESS_LOGIN"
-const SUCCESS_LOGOUT = "SUCCESS_LOGOUT"
-const FAILED_LOGIN = "LOGIN_FAILED"
+};
+const SUCCESS_LOGIN = "SUCCESS_LOGIN";
+const SUCCESS_LOGOUT = "SUCCESS_LOGOUT";
+const FAILED_LOGIN = "LOGIN_FAILED";
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
     case SUCCESS_LOGIN:
-      return { ...state, isLogged: true }
+      return { ...state, isLogged: true };
     case SUCCESS_LOGOUT:
-      return { ...state, isLogged: false }
+      return { ...state, isLogged: false };
     default:
       return state
   }
 }
 
-export function performLogin(account) {
+export function performLogin(email, password) {
   return (dispatch) =>
     axios
       .post("/login", {
-        email: account.email,
-        password: account.password,
+        email: email,
+        password: password,
       })
       .then(() => {
         toast.info("Welcome to Rexa")

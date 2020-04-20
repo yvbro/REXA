@@ -1,32 +1,34 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import ProjectsDropDown from "./ProjectsDropDown"
-import BarChart from "../chart/BarChart"
-import { fetchProject } from "../xnat/xnatDuck"
+import {ProjectsDropDown} from "./ProjectsDropDown";
+// import BarChart from "../chart/BarChart";
+import { fetchProject } from "../xnat/xnatDuck";
+import {Form} from "react-bootstrap";
 
 class ProjectPage extends React.Component {
   constructor(props) {
-    super(props)
-    this.setState({ project: "" })
+    super(props);
+    this.state = { project: "" };
   }
 
-  setProject(project) {
-    this.setState({ project: project })
+  setProjectToFetch = project => {
+    this.setState({ project: project });
   }
 
   render() {
-    const { assessments } = this.props
-
     return (
       <div>
         <h3>Project Dashboard</h3>
-        <ProjectsDropDown setProject={this.setProject} />
-        ( assessments &&
-        <BarChart data={assessments} title="Processes Report" color="#70CAD1" />)
+        <Form>
+          <ProjectsDropDown setProjectToFetch={this.setProjectToFetch} />
+        </Form>
+        {/*( assessments &&*/}
+        {/*  <BarChart data={assessments} title="Processes Report" color="#70CAD1" />*/}
+        {/*)*/}
       </div>
     )
   }
@@ -37,7 +39,7 @@ ProjectPage.propTypes = {
 
   assessments: PropTypes.array,
   scans: PropTypes.array,
-}
+};
 
 function mapStateToProps(state) {
   return {

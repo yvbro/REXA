@@ -1,14 +1,14 @@
-import React from "react"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { bindActionCreators, compose } from "redux"
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { bindActionCreators, compose } from "redux";
 
-import { Redirect, Route } from "react-router-dom"
-import { getCurrentUser } from "../auth/authDuck"
+import { Redirect, Route } from "react-router-dom";
+import { getCurrentUser } from "../auth/authDuck";
 
 class PrivateRoute extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = { hasFetchCurrentUser: false }
   }
 
@@ -23,8 +23,8 @@ class PrivateRoute extends React.Component {
   }
 
   render() {
-    const { component: Component, isLogged, ...rest } = this.props
-    const { hasFetchCurrentUser } = this.state
+    const { component: Component, isLogged, ...rest } = this.props;
+    const { hasFetchCurrentUser } = this.state;
 
     return (
       <div>
@@ -53,10 +53,10 @@ class PrivateRoute extends React.Component {
 PrivateRoute.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
   isLogged: PropTypes.bool.isRequired,
-  component: PropTypes.object,
-}
+  component: PropTypes.func,
+};
 
-const mapStateToProps = (state) => ({ isLogged: state.auth.isLogged })
+const mapStateToProps = (state) => ({ isLogged: state.auth.isLogged });
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(

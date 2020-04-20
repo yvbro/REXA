@@ -1,17 +1,62 @@
-import React from "react"
-import "./Login.css"
+import React, {useState} from "react";
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from "react-redux";
 
-import { Row, Col } from "react-bootstrap"
-import FormLogin from "./FormLogin"
+import {FormGroup, FormControl, FormLabel, Button, Container, Row, Col} from "react-bootstrap";
 
-const LoginPage = () => (
-  <section>
-    <Row className="justify-content-md-center">
-      <Col xs={3}>
-        <FormLogin />
-      </Col>
-    </Row>
-  </section>
-)
+import "./Login.css";
+import {performLogin} from "./authDuck";
 
-export default LoginPage
+export default function LoginPage() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    function validateForm() {
+        return email.length > 3 && password.length > 0;
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        dispatch(performLogin(email, password)).then(() => history.push("/dashboard"));
+    }
+
+    return (
+        <Container>
+            <Row>
+                <Col md={{ span: 4, offset: 4 }}>
+                    <div className="header">
+                        <p className="welcome">Welcome{' '}</p>
+                        <p className="to">to{' '}</p>
+                        <p className="rexa"> ReXA</p>
+                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <FormGroup controlId="email">
+                            <FormLabel>Email</FormLabel>
+                            <FormControl
+                                autoFocus
+                                type="email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </FormGroup>
+                        <FormGroup controlId="password">
+                            <FormLabel>Password</FormLabel>
+                            <FormControl
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                type="password"
+                            />
+                        </FormGroup>
+                        <Button block disabled={!validateForm()} type="submit">
+                            Sign in
+                        </Button>
+                    </form>
+                </Col>
+            </Row>
+        </Container>
+    );
+}

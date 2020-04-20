@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useState} from "react";
 
-import { DropdownButton, Dropdown } from "react-bootstrap"
-import { fetchProjects } from "../xnat/xnatDuck"
+import axios from "axios";
+import {DropdownButton, Dropdown} from "react-bootstrap";
 
-export default function ProjectsDropDown(setProject) {
-  const [projects, setProjects] = useState([])
-  const onSelect = (eventKey) => setProject(eventKey)
+export const ProjectsDropDown = ({setProjectToFetch}) => {
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    fetchProjects().then((data) => setProjects(data))
-  })
+    const fetchData = async () => {
+      const result = await axios("http://localhost:9000/projects");
+      setProjects(result.data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!projects) {
+    return (<span>Loading</span>);
+  }
+
+  const onSelect = (project) => {
+    setProjectToFetch(project);
+  }
 
   return (
-    <DropdownButton
-      onSelect={onSelect}
-      title="Your Xnat Projects"
-      id="bg-nested-dropdown"
-    >
-      {projects.map((project) => (
-        <Dropdown.Item eventKey="1" key={project.name}>
-          {project.name}
-        </Dropdown.Item>
-      ))}
-    </DropdownButton>
+      <DropdownButton id="dropdown-basic-button" title="Select your XNAT project to analyse" onSelect={onSelect}>
+        {projects.map( project => <Dropdown.Item eventKey={project.name} key={project.name}>{project.name}</Dropdown.Item>)}
+      </DropdownButton>
   )
 }

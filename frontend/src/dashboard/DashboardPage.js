@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-import BarChart from "../chart/BarChart"
+import BarChart from "../chart/BarChart";
 
 const MOCK_DATA = [
   {
@@ -43,7 +43,7 @@ const MOCK_DATA = [
     label: "UNKNOWN",
     value: 0,
   },
-]
+];
 
 class DashboardPage extends React.Component {
   getMockData() {
@@ -51,7 +51,7 @@ class DashboardPage extends React.Component {
   }
 
   render() {
-    const myData = this.getMockData()
+    const myData = this.getMockData();
     return (
       <div>
         <h3>Rexa Main Dashboard</h3>

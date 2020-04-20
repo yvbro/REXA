@@ -1,11 +1,11 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
-import Chart from "chart.js"
+import Chart from "chart.js";
 
 class BarChart extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.chartRef = React.createRef()
   }
 
@@ -36,6 +36,6 @@ BarChart.propTypes = {
   data: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-}
+};
 
 export default BarChart

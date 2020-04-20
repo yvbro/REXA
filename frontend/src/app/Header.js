@@ -1,16 +1,16 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { bindActionCreators } from "redux"
-import { connect } from "react-redux"
+import React from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav"
-import { Link } from "react-router-dom"
-import ClickOutside from "react-click-outside"
-import { performLogout } from "../auth/authDuck"
+import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+import { Link } from "react-router-dom";
+import ClickOutside from "react-click-outside";
+import { performLogout } from "../auth/authDuck";
 
 class Header extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       expanded: false,
@@ -18,7 +18,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { location, history, isLogged, performLogout } = this.props
+    const { location, history, isLogged, performLogout } = this.props;
 
     return (
       <>
@@ -34,7 +34,7 @@ class Header extends React.Component {
                 this.setState({ expanded })
               }}
               onSelect={(selected) => {
-                const to = `/${selected}`
+                const to = `/${selected}`;
                 if (location.pathname !== to) {
                   history.push(to)
                 }
@@ -98,9 +98,9 @@ Header.propTypes = {
 
   isLogged: PropTypes.bool.isRequired,
   performLogout: PropTypes.func.isRequired,
-}
+};
 
-const mapStateToProps = (state) => ({ isLogged: state.auth.isLogged })
+const mapStateToProps = (state) => ({ isLogged: state.auth.isLogged });
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(

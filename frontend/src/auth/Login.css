@@ -1,126 +1,18 @@
-@import url(https://fonts.googleapis.com/css?family=Exo:100, 200, 400);
-@import url(
-  https://fonts.googleapis.com/css?family=Source + Sans + Pro:700,
-  400,
-  300
-);
-
-body {
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  color: #fff;
-  font-family: Arial;
-  font-size: 12px;
-}
-
-.body {
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -40px;
-  bottom: -40px;
-  width: auto;
-  height: auto;
-  z-index: 0;
-}
-
-.container {
-  position: absolute;
-  top: calc(50% - 75px);
-  left: calc(50% - 50px);
-  height: 150px;
-  width: 350px;
-  padding: 10px;
-  z-index: 2;
-}
-
-.header {
-  position: absolute;
-  top: calc(50% - 35px);
-  left: calc(50% - 255px);
-  color: #282c34;
-  top: 48px;
-  left: -320px;
-}
-
-.header div {
-  float: left;
-  color: #282c34;
-  font-family: "Exo", sans-serif;
-  font-size: 45px;
-  font-weight: 300;
-}
-
-.header div span.welcome {
-  position: relative;
-  bottom: 40px;
-  left: 95px;
+.header p.welcome {
   color: blue !important;
+  font-size: 30px;
+  text-align: center;
 }
 
-.header div span.to {
-  position: relative;
-  bottom: 0px;
-  left: -20px;
+.header p.to {
   color: #282c34 !important;
+  font-size: 15px;
+  text-align: center;
 }
 
-.header div span.rexa {
-  position: relative;
-  bottom: -40px;
-  left: -105px;
+.header p.rexa {
   color: red !important;
+  font-size: 30px;
+  text-align: center;
 }
 
-.email {
-  width: 100px;
-  height: 30px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 2px;
-  color: #282c34;
-  font-family: "Exo", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  padding: 4px;
-}
-
-.emailZone {
-  width: 125px;
-  height: 14px;
-}
-
-.passwordZone {
-  width: 125px;
-  height: 14px;
-}
-
-.password {
-  width: 180px;
-  height: 30px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 2px;
-  color: #282c34;
-  font-family: "Exo", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  padding: 4px;
-  margin-top: 10px;
-}
-
-.submit {
-  width: 120px;
-  height: 50px;
-  background: #fff;
-  border: 1px solid #fff;
-  cursor: pointer;
-  border-radius: 2px;
-  color: #282c34;
-  font-family: "Exo", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  padding: 6px;
-  margin-top: 15px;
-}
