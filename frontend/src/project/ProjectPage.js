@@ -1,60 +1,33 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-import {ProjectsDropDown} from "./ProjectsDropDown";
-// import BarChart from "../chart/BarChart";
-import { fetchProject } from "../xnat/xnatDuck";
 import {Form} from "react-bootstrap";
 
+import {ProjectDetails} from "./ProjectDetails";
+import {ProjectsDropDown} from "./ProjectsDropDown";
+
 class ProjectPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { project: "" };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {projectId: ""};
+    }
 
-  setProjectToFetch = project => {
-    this.setState({ project: project });
-  }
+    setProjectId = projectId => {
+        this.setState({projectId: projectId});
+    };
 
-  render() {
-    return (
-      <div>
-        <h3>Project Dashboard</h3>
-        <Form>
-          <ProjectsDropDown setProjectToFetch={this.setProjectToFetch} />
-        </Form>
-        {/*( assessments &&*/}
-        {/*  <BarChart data={assessments} title="Processes Report" color="#70CAD1" />*/}
-        {/*)*/}
-      </div>
-    )
-  }
+    render() {
+        const {projectId} = this.state;
+
+        return (
+            <div>
+                <h3>Project Dashboard</h3>
+                <Form>
+                    <ProjectsDropDown setProjectId={this.setProjectId}/>
+                </Form>
+                {projectId && <ProjectDetails projectId={projectId}/>}
+            </div>
+        )
+    }
 }
 
-ProjectPage.propTypes = {
-  fetchProject: PropTypes.func.isRequired,
-
-  assessments: PropTypes.array,
-  scans: PropTypes.array,
-};
-
-function mapStateToProps(state) {
-  return {
-    assessments: state.assessments,
-    scans: state.scans,
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      fetchProject,
-    },
-    dispatch
-  )
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectPage)
+export default ProjectPage;
