@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9000",
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
     "apexcharts": "^3.19.0",

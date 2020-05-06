@@ -11,7 +11,7 @@ export const ProjectDetails = ({projectId}) => {
     
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios(`http://localhost:9000/projects/${projectId}`);
+            const result = await axios(`/projects/${projectId}`);
             setProject(result.data);
         };
         
@@ -22,8 +22,6 @@ export const ProjectDetails = ({projectId}) => {
     if (project.assessors) {
         assessorsStats = extractAssessorsProcTypeAndStatus(project.assessors);
     }
-
-    console.log(assessorsStats);
 
     return (
         <StackedProjectColumnChart assessors={assessorsStats} />

@@ -9,7 +9,7 @@ export const ProjectsDropDown = ({setProjectId}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios("http://localhost:9000/projects");
+            const result = await axios("/projects");
             setProjects(result.data);
         };
 

@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
 import auth from "../auth/authDuck";
-import xnat from "../xnat/xnatDuck";
 
 const appReducer = combineReducers({
   auth,
-  xnat,
 });
 
 const rootReducer = (state, action) => {

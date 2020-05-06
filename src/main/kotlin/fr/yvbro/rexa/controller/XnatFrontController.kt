@@ -28,10 +28,7 @@ class XnatFrontController(private val xnatService: XnatService) {
 
     @GetMapping("/projects")
     fun getXnatProjects(): List<ProjectDto> {
-
-        val projects = xnatService.getProjects()
-
-        return projects
+        return xnatService.getProjects()
                 .stream()
                 .map(this::mapToDto)
                 .collect(toList())
