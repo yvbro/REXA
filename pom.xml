@@ -26,7 +26,7 @@
 		<flyway.user>rexaAdmin</flyway.user>
 		<flyway.password>rexaAdmin</flyway.password>
 		<flyway.schemas>rexa</flyway.schemas>
-		<flyway.url>jdbc:postgresql://localhost:5432/rexa</flyway.url>
+		<flyway.url>jdbc:postgresql://localhost:5442/rexa</flyway.url>
 
 		<!-- Test -->
 		<junit.version>5.5.2</junit.version>
@@ -43,8 +43,8 @@
 
 		<!-- Maven -->
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
-		<node.version>v8.12.0</node.version>
-		<yarn.version>v1.11.0</yarn.version>
+		<node.version>v12.13.1</node.version>
+		<yarn.version>v1.19.2</yarn.version>
 		<asm.version>7.3.1</asm.version>
 		<maven-dependency-analyzer.version>1.11.1</maven-dependency-analyzer.version>
 
@@ -174,6 +174,7 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -339,7 +340,7 @@
 									<goal>yarn</goal>
 								</goals>
 								<configuration>
-									<arguments>install</arguments>
+									<arguments>install --frozen-lockfile</arguments>
 								</configuration>
 							</execution>
 							<execution>

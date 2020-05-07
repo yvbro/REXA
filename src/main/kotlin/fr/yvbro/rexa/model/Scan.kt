@@ -20,5 +20,4 @@ data class Scan(
         var date: String?,
         var project: String,
         var xsiType: String
-) {
-}
+)

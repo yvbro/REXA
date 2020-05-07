@@ -1,71 +1,33 @@
-import React from 'react';
+import React from "react";
 
-import BarChart from '../chart/BarChart';
+import {Form} from "react-bootstrap";
 
-const MOCK_DATA = [
-  {
-    label: 'NEED_INPUTS',
-    value: 45,
-  },
-  {
-    label: 'NEED_TO_RUN',
-    value: 10,
-  },
-  {
-    label: 'JOB_RUNNING',
-    value: 15,
-  },
-  {
-    label: 'JOB_FAILED',
-    value: 3,
-  },
-  {
-    label: 'READY_TO_UPLOAD',
-    value: 20,
-  },
-  {
-    label: 'UPLOADING',
-    value: 13,
-  },
-  {
-    label: 'READY_TO_COMPLETE',
-    value: 21,
-  },
-  {
-    label: 'COMPLETE',
-    value: 87,
-  },
-  {
-    label: 'NO_DATA',
-    value: 1,
-  },
-  {
-    label: 'UNKNOWN',
-    value: 0,
-  },
-];
+import {ProjectDetails} from "./ProjectDetails";
+import {ProjectsDropDown} from "./ProjectsDropDown";
 
-class DashboardPage extends React.Component {
-  getMockData() {
-    return MOCK_DATA;
-  }
+class ProjectPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {projectId: ""};
+    }
 
-  render() {
-    const myData = this.getMockData();
-    return (
-      <div>
-        <h3>
-            Project Dashboard
-        </h3>
-        <BarChart
-          data={myData}
-          title="Processes Report"
-          color="#70CAD1"
-        />
-      </div>
-    );
-  }
+    setProjectId = projectId => {
+        this.setState({projectId: projectId});
+    };
+
+    render() {
+        const {projectId} = this.state;
+
+        return (
+            <div>
+                <h3>Project Dashboard</h3>
+                <Form>
+                    <ProjectsDropDown setProjectId={this.setProjectId}/>
+                </Form>
+                {projectId && <ProjectDetails projectId={projectId}/>}
+            </div>
+        )
+    }
 }
 
-
-export default DashboardPage;
+export default ProjectPage;

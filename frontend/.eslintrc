@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "amd": true
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "import",
+    "react"
+  ],
+  "extends": [
+    "plugin:react/recommended",
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "no-console": "warn",
+    "no-eval": "error",
+    "import/first": "error"
+  }
+}

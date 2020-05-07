@@ -22,7 +22,7 @@ class ApiErrorReporter {
     private val logger: Logger = LoggerFactory.getLogger(ApiErrorReporter::class.java)
 
     private val UNKNOWN_ERROR = "UNKNOWN_ERROR"
-    private val UNKNOWN_ERROR_MESSAGE = "Unknown error, please provide byvernault on github."
+    private val UNKNOWN_ERROR_MESSAGE = "Unknown error, please contact the developer team on github."
     private val VALIDATION_ERROR = "VALIDATION_ERROR"
     private val VALIDATION_ERROR_MESSAGE = "The request could not be understood by the server due to client error."
     private val INVALID_FIELD_TYPE = "INVALID_FIELD_TYPE"
@@ -85,7 +85,7 @@ class ApiErrorReporter {
             val errors = e.bindingResult.fieldErrors.stream()
                     .map<Any> { error: FieldError -> error.defaultMessage?.let { ValidationError(error.field, it) } }
                     .collect(Collectors.toList())
-            return ApiValidationErrorBean(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE, errors as List<ValidationError>)
+            return ApiValidationErrorBean(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE, errors)
         }
     }
 
@@ -113,7 +113,7 @@ class ApiErrorReporter {
             val errors = e.constraintViolations.stream()
                     .map<Any> { constraintViolation: ConstraintViolation<*> -> removeMethodNameFromPropertyPath(constraintViolation.propertyPath)?.let { ValidationError(it, constraintViolation.message) } }
                     .collect(Collectors.toList())
-            return ApiValidationErrorBean(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE, errors as List<ValidationError>)
+            return ApiValidationErrorBean(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE, errors)
         }
     }
 

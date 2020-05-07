@@ -16,6 +16,4 @@ data class Assessor(
         val project: String,
         val xsiType: String,
         val label: String
-) {
-
-}
+)
