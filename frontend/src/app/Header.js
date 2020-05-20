@@ -7,6 +7,7 @@ import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { Link } from "react-router-dom";
 import ClickOutside from "react-click-outside";
 import { performLogout } from "../auth/authDuck";
+import {ACCESS_TOKEN} from "../constants";
 
 class Header extends React.Component {
   constructor(props) {
@@ -17,12 +18,19 @@ class Header extends React.Component {
     }
   }
 
+  handleLogOut = () => {
+    this.props.performLogout()
+        .then(() =>
+            localStorage.removeItem(ACCESS_TOKEN)
+        );
+  };
+
   render() {
-    const { location, history, isLogged, performLogout } = this.props;
+    const { location, history, authenticated } = this.props;
 
     return (
       <>
-        {isLogged && (
+        {authenticated && (
           <ClickOutside
             onClickOutside={() => {
               this.setState({ expanded: false })
@@ -77,7 +85,7 @@ class Header extends React.Component {
                     <NavText>Bar Chart</NavText>
                   </NavItem>
                 </NavItem>
-                <NavItem onClick={performLogout} eventKey="login">
+                <NavItem onClick={this.handleLogOut} eventKey="login">
                   <NavIcon>
                     <i className="fa fa-sign-out" style={{ fontSize: "1.75em" }} />
                   </NavIcon>
@@ -96,11 +104,9 @@ Header.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 
-  isLogged: PropTypes.bool.isRequired,
+  authenticated: PropTypes.bool.isRequired,
   performLogout: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = (state) => ({ isLogged: state.auth.isLogged });
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -111,4 +117,4 @@ function mapDispatchToProps(dispatch) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(null, mapDispatchToProps)(Header)

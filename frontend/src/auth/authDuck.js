@@ -1,50 +1,105 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-toast.configure({ position: "top-center" });
+import {fulfilled, pending, rejected} from '../helpers/promise';
+
+toast.configure({position: "top-center"});
 
 const initialState = {
-  isLogged: false,
+    authenticated: false,
+    currentUser: null,
+    loading: false
 };
-const SUCCESS_LOGIN = "SUCCESS_LOGIN";
-const SUCCESS_LOGOUT = "SUCCESS_LOGOUT";
-const FAILED_LOGIN = "LOGIN_FAILED";
+
+const LOGIN = "[Auth] LOGIN";
+const LOGOUT = "[Auth] LOGOUT";
+const FETCH_USER = "[Auth] FETCH_USER";
 
 export default function auth(state = initialState, action) {
-  switch (action.type) {
-    case SUCCESS_LOGIN:
-      return { ...state, isLogged: true };
-    case SUCCESS_LOGOUT:
-      return { ...state, isLogged: false };
-    default:
-      return state
-  }
+    switch (action.type) {
+        case pending(LOGIN):
+            return {
+                ...state,
+                authenticated: false,
+                currentUser: null,
+                loading: true,
+            };
+        case fulfilled(LOGIN):
+            return {
+                ...state,
+                authenticated: true,
+                currentUser: state.currentUser,
+                loading: false,
+            };
+        case rejected(LOGIN):
+            return {
+                ...state,
+                authenticated: false,
+                currentUser: null,
+                loading: false,
+            };
+        case LOGOUT:
+            return {
+                ...state,
+                authenticated: false,
+                currentUser: null,
+                loading: false,
+            };
+        case pending(LOGOUT):
+            return {
+                ...state,
+                authenticated: false,
+                currentUser: null,
+                loading: true,
+            };
+        case pending(FETCH_USER):
+            return {
+                ...state,
+                authenticated: state.authenticated,
+                currentUser: state.currentUser,
+                loading: true,
+            };
+        case fulfilled(FETCH_USER):
+            return {
+                ...state,
+                authenticated: true,
+                currentUser: action.payload.user,
+                loading: false,
+            };
+        case rejected(FETCH_USER):
+            return {
+                ...state,
+                authenticated: false,
+                currentUser: null,
+                loading: false,
+            };
+        default:
+            return state
+    }
 }
 
-export function performLogin(email, password) {
-  return (dispatch) =>
-    axios
-      .post("/api/login", {
-        email: email,
-        password: password,
-      })
-      .then(() => {
-        toast.info("Welcome to Rexa")
-        return dispatch({ type: SUCCESS_LOGIN })
-      })
-      .catch(() => {
-        toast.error("Failed to authentificate")
-        return dispatch({ type: FAILED_LOGIN })
-      })
-}
+export const performLogin = (email, password) => dispatch =>
+    dispatch({
+        type: LOGIN,
+        payload: axios.post("/api/login", {
+            email: email,
+            password: password,
+        }),
+    }).then(() => {
+        toast.info("Welcome to Rexa");
+    }).catch(() => {
+        toast.error("Wrong login information");
+    });
 
-export function performLogout() {
-  return (dispatch) =>
-    axios.post("/logout").finally(() => dispatch({ type: SUCCESS_LOGOUT }))
-}
+export const performLogout = () => dispatch =>
+    dispatch({
+        type: LOGOUT,
+        payload: axios.post("/api/logout"),
+    });
 
-export function getCurrentUser() {
-  return (dispatch) =>
-    axios.get("/api/userinfo").then(() => dispatch({ type: SUCCESS_LOGIN }))
-}
+export const getCurrentUser = () => dispatch =>
+    dispatch({
+        type: FETCH_USER,
+        payload: axios.post("/api/userinfo"),
+    });

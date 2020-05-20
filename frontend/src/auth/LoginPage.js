@@ -1,19 +1,22 @@
 import React, {useState} from "react";
-import {useHistory} from 'react-router-dom';
+import {Redirect, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
+import { toast } from "react-toastify";
 
 import {FormGroup, FormControl, FormLabel, Button, Container, Row, Col} from "react-bootstrap";
 
 import "./Login.css";
 import {performLogin} from "./authDuck";
 import SocialLogin from "./SocialLogin"
+import {ACCESS_TOKEN} from "../constants";
 
-export default function LoginPage() {
+export default function LoginPage(authenticated) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
 
     function validateForm() {
         return email.length > 3 && password.length > 0;
@@ -22,7 +25,20 @@ export default function LoginPage() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        dispatch(performLogin(email, password)).then(() => history.push("/rexa/dashboard"));
+        dispatch(performLogin(email, password)).then((response) => {
+            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+            history.push("/rexa/dashboard");
+        }).catch( error =>
+            toast.error((error && error.message) || 'Oops! Something went wrong. Please try again!')
+        );
+    }
+
+    if(authenticated) {
+        return <Redirect
+            to={{
+                pathname: "/rexa/dashboard",
+                state: { from: location }
+            }}/>;
     }
 
     return (
