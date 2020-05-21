@@ -1,6 +1,6 @@
 package fr.yvbro.rexa.controller
 
-import fr.yvbro.rexa.config.WebConfig.Companion.API_CONTEXT_PATH
+import fr.yvbro.rexa.config.WebConfig.Companion.AUTH_CONTEXT_PATH
 import fr.yvbro.rexa.model.User
 import fr.yvbro.rexa.service.UserService
 import org.mindrot.jbcrypt.BCrypt
@@ -9,10 +9,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-
 @RestController
-@RequestMapping(API_CONTEXT_PATH)
-class AuthenticationController(private val userService: UserService) {
+@RequestMapping(AUTH_CONTEXT_PATH)
+class AuthController(private val userService: UserService) {
 
     @PostMapping("/login")
     fun authentication(@RequestBody user: User) {

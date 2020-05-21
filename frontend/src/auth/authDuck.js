@@ -82,7 +82,7 @@ export default function auth(state = initialState, action) {
 export const performLogin = (email, password) => dispatch =>
     dispatch({
         type: LOGIN,
-        payload: axios.post("/api/login", {
+        payload: axios.post("/auth/login", {
             email: email,
             password: password,
         }),
@@ -95,11 +95,11 @@ export const performLogin = (email, password) => dispatch =>
 export const performLogout = () => dispatch =>
     dispatch({
         type: LOGOUT,
-        payload: axios.post("/api/logout"),
+        payload: axios.post("/auth/logout"),
     });
 
 export const getCurrentUser = () => dispatch =>
     dispatch({
         type: FETCH_USER,
-        payload: axios.post("/api/userinfo"),
+        payload: axios.post("/auth/userinfo"),
     });

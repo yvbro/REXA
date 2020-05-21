@@ -23,7 +23,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/", "/api/login", "/api/sign-up", "/api/userinfo").permitAll()
+                .antMatchers("/", "/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint( LoginUrlAuthenticationEntryPoint("/"))
