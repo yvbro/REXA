@@ -40,7 +40,7 @@
 		<slf4j.version>1.7.28</slf4j.version>
 		<annotations.version>13.0</annotations.version>
 		<jakarta-validation.version>2.0.1</jakarta-validation.version>
-		<jbcrypt.version>0.3m</jbcrypt.version>
+		<jjwt.version>0.5.1</jjwt.version>
 
 		<!-- Maven -->
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
@@ -194,9 +194,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.mindrot</groupId>
-			<artifactId>jbcrypt</artifactId>
-			<version>${jbcrypt.version}</version>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 	</dependencies>
