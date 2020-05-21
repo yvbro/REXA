@@ -1,7 +1,7 @@
 package fr.yvbro.rexa.service
 
+import fr.yvbro.rexa.controller.input.UserInput
 import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
-import fr.yvbro.rexa.model.User
 import fr.yvbro.rexa.repository.UserRepository
 import org.mindrot.jbcrypt.BCrypt
 import org.springframework.stereotype.Service
@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private var userRepository: UserRepository) {
 
-    fun verifyUser(user: User?) {
+    fun verifyUser(user: UserInput) {
 
-        val userGet = userRepository.getUserByEmail(user)
+        val userGet = user.email?.let { userRepository.getUserByEmail(it) }
 
-        if (!BCrypt.checkpw(user?.password, userGet?.password)) {
+        if (!BCrypt.checkpw(user.password, userGet?.password)) {
             throw RexaAuthentificationFailedException()
         }
     }
 
-    fun saveUser(user: User){
-        userRepository.save(user);
+    fun saveUser(user: UserInput){
+        user.password?.let { user.email?.let { it1 -> userRepository.save(it1, it) } };
     }
 
 }

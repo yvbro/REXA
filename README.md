@@ -6,8 +6,11 @@ Reporting Xnat App to generate report over its content especially related to DAX
 
 To manage our schema we are using Flyway. You can find more about it here (un lien ici).
 
+To clean the database :
+`mvn clean compile flyway:clean`
+
 To run the migration, you can run the following command : 
-`mvn clean compule flyway: migrate`
+`mvn clean compile flyway:migrate`
 
 # Docker image:
 
