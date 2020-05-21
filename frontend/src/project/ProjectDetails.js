@@ -11,7 +11,7 @@ export const ProjectDetails = ({projectId}) => {
     
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios(`/projects/${projectId}`);
+            const result = await axios(`/private/projects/${projectId}`);
             setProject(result.data);
         };
         

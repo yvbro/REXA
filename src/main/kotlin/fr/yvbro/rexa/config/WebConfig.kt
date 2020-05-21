@@ -9,6 +9,7 @@ class WebConfig : WebMvcConfigurer {
     companion object {
         const val API_CONTEXT_PATH = "/api"
         const val AUTH_CONTEXT_PATH = "/auth"
+        const val FRONT_CONTEXT_PATH = "/private"
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
