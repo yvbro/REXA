@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import org.springframework.security.web.savedrequest.RequestCache
 import org.springframework.security.web.savedrequest.SimpleSavedRequest
@@ -34,7 +35,8 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf()
-                .disable()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
                 .formLogin()
                 .disable()
                 .httpBasic()
@@ -109,4 +111,7 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
             }
         }
     }
+
+    @Bean
+    fun appProperties(): AppProperties {return AppProperties()}
 }

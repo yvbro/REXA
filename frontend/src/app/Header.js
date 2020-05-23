@@ -19,10 +19,8 @@ class Header extends React.Component {
   }
 
   handleLogOut = () => {
-    this.props.performLogout()
-        .then(() =>
-            localStorage.removeItem(ACCESS_TOKEN)
-        );
+    this.props.performLogout();
+    localStorage.removeItem(ACCESS_TOKEN);
   };
 
   render() {

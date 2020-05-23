@@ -1,10 +1,7 @@
 import axios from "axios";
-import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {fulfilled, pending, rejected} from '../helpers/promise';
-
-toast.configure({position: "top-center"});
 
 const initialState = {
     authenticated: false,
@@ -85,21 +82,18 @@ export const performLogin = (email, password) => dispatch =>
         payload: axios.post("/auth/login", {
             email: email,
             password: password,
-        }),
-    }).then(() => {
-        toast.info("Welcome to Rexa");
-    }).catch(() => {
-        toast.error("Wrong login information");
+        })
     });
 
 export const performLogout = () => dispatch =>
     dispatch({
         type: LOGOUT,
-        payload: axios.post("/auth/logout"),
     });
 
-export const getCurrentUser = () => dispatch =>
+export const getCurrentUser = () => dispatch => {
     dispatch({
         type: FETCH_USER,
-        payload: axios.post("/auth/userinfo"),
+        payload: axios.get("/auth/userinfo"),
     });
+};
+

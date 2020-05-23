@@ -3,19 +3,23 @@ package fr.yvbro.rexa.controller
 import fr.yvbro.rexa.config.WebConfig.Companion.AUTH_CONTEXT_PATH
 import fr.yvbro.rexa.controller.input.LoginRequest
 import fr.yvbro.rexa.controller.output.AuthResponse
+import fr.yvbro.rexa.exception.RexaUnauthorizedException
+import fr.yvbro.rexa.repository.UserRepository
 import fr.yvbro.rexa.security.TokenProvider
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.web.bind.annotation.*
+
 
 @RestController
 @RequestMapping(AUTH_CONTEXT_PATH)
-class AuthController(private val authenticationManager: AuthenticationManager, private val tokenProvider: TokenProvider) {
+class AuthController(private val authenticationManager: AuthenticationManager,
+                     private val tokenProvider: TokenProvider,
+                     private val userRepository: UserRepository) {
 
     @PostMapping("/login")
     fun authentication(@RequestBody loginRequest: LoginRequest): ResponseEntity<Any> {
@@ -33,7 +37,11 @@ class AuthController(private val authenticationManager: AuthenticationManager, p
     }
 
     @GetMapping("/userinfo")
-    fun getUser(@AuthenticationPrincipal principal: OAuth2User): String? {
-        return principal.getAttribute("name")
+    fun getUser(): String? {
+        val authentication = SecurityContextHolder.getContext().authentication
+        if (authentication !is AnonymousAuthenticationToken) {
+            return authentication.name
+        }
+        throw RexaUnauthorizedException()
     }
 }

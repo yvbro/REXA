@@ -5,8 +5,8 @@ import {connect, Provider} from "react-redux";
 import {ToastContainer} from "react-toastify";
 import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
 
-// import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-// import "font-awesome/css/font-awesome.min.css";
+import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+import "font-awesome/css/font-awesome.min.css";
 import "./App.css";
 
 import DashboardPage from "../dashboard/DashboardPage";

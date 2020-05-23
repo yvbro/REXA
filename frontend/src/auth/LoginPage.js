@@ -1,7 +1,8 @@
 import React, {useState} from "react";
+import PropTypes from 'prop-types';
 import {Redirect, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 import {FormGroup, FormControl, FormLabel, Button, Container, Row, Col} from "react-bootstrap";
 
@@ -10,7 +11,7 @@ import {performLogin} from "./authDuck";
 import SocialLogin from "./SocialLogin"
 import {ACCESS_TOKEN} from "../constants";
 
-export default function LoginPage(authenticated) {
+const LoginPage = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -25,26 +26,28 @@ export default function LoginPage(authenticated) {
     function handleSubmit(event) {
         event.preventDefault();
 
-        dispatch(performLogin(email, password)).then((response) => {
-            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-            history.push("/rexa/dashboard");
-        }).catch( error =>
-            toast.error((error && error.message) || 'Oops! Something went wrong. Please try again!')
-        );
+        dispatch(performLogin(email, password))
+            .then((response) => {
+                toast.info("Welcome to Rexa");
+                localStorage.setItem(ACCESS_TOKEN, `Bearer ${response.value.data.accessToken}`);
+                history.push("/rexa/dashboard");
+            }).catch(() => {
+                toast.error("Wrong login information");
+            });
     }
 
-    if(authenticated) {
+    if (props.authenticated) {
         return <Redirect
             to={{
                 pathname: "/rexa/dashboard",
-                state: { from: location }
+                state: {from: location}
             }}/>;
     }
 
     return (
         <Container>
             <Row>
-                <Col md={{ span: 4, offset: 4 }}>
+                <Col md={{span: 4, offset: 4}}>
                     <div className="header">
                         <p className="welcome">Welcome{' '}</p>
                         <p className="to">to{' '}</p>
@@ -77,4 +80,10 @@ export default function LoginPage(authenticated) {
             </Row>
         </Container>
     );
-}
+};
+
+LoginPage.propTypes = {
+    authenticated: PropTypes.bool.isRequired,
+};
+
+export default LoginPage;
