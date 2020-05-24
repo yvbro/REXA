@@ -14,6 +14,7 @@ class UserTupleMapper : RecordMapper<Record, User> {
                 .id(record?.get(Tables.USER.ID))
                 .email(record?.get(Tables.USER.EMAIL))
                 .password(record?.get(Tables.USER.PASSWORD))
+                .authProvider(record?.get(Tables.USER.AUTH_PROVIDER))
                 .build()
     }
 }

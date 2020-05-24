@@ -3,7 +3,6 @@ package fr.yvbro.rexa.controller
 import fr.yvbro.rexa.config.WebConfig.Companion.AUTH_CONTEXT_PATH
 import fr.yvbro.rexa.controller.input.LoginRequest
 import fr.yvbro.rexa.controller.output.AuthResponse
-import fr.yvbro.rexa.repository.UserRepository
 import fr.yvbro.rexa.security.TokenProvider
 import fr.yvbro.rexa.security.UserPrincipal
 import org.springframework.http.ResponseEntity

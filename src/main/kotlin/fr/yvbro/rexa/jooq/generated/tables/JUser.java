@@ -16,7 +16,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row3;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JUser extends TableImpl<JUserRecord> {
 
-    private static final long serialVersionUID = 1809396618;
+    private static final long serialVersionUID = -1913586413;
 
     /**
      * The reference instance of <code>rexa.user</code>
@@ -61,6 +61,11 @@ public class JUser extends TableImpl<JUserRecord> {
      * The column <code>rexa.user.password</code>.
      */
     public final TableField<JUserRecord, String> PASSWORD = createField(DSL.name("password"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+
+    /**
+     * The column <code>rexa.user.auth_provider</code>.
+     */
+    public final TableField<JUserRecord, String> AUTH_PROVIDER = createField(DSL.name("auth_provider"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * Create a <code>rexa.user</code> table reference
@@ -137,11 +142,11 @@ public class JUser extends TableImpl<JUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row3 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<UUID, String, String> fieldsRow() {
-        return (Row3) super.fieldsRow();
+    public Row4<UUID, String, String, String> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }

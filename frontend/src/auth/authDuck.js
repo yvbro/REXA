@@ -68,7 +68,7 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 authenticated: true,
-                currentUser: action.payload.user,
+                currentUser: action.payload.data.name,
                 loading: false,
             };
         case rejected(FETCH_USER):

@@ -2,6 +2,10 @@ package fr.yvbro.rexa.config
 
 import fr.yvbro.rexa.security.CustomUserDetailsService
 import fr.yvbro.rexa.security.TokenAuthenticationFilter
+import fr.yvbro.rexa.security.TokenProvider
+import fr.yvbro.rexa.security.oauth2.CustomOAuth2UserService
+import fr.yvbro.rexa.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository
+import fr.yvbro.rexa.security.oauth2.OAuth2AuthenticationSuccessHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -10,9 +14,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
@@ -27,25 +33,37 @@ import javax.servlet.http.HttpServletResponse
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration(private val customUserDetailsService: CustomUserDetailsService) : WebSecurityConfigurerAdapter() {
+class SecurityConfiguration(private val customUserDetailsService: CustomUserDetailsService,
+                            private val customOAuth2UserService: CustomOAuth2UserService) : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
                 .cors()
                 .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/", "/error", "/auth/login", "/auth/userinfo", "/oauth2/**").permitAll()
+                .antMatchers("/", "/error", "/auth/login", "/oauth/login", "/auth/userinfo", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/auth/logout")
                 .logoutSuccessUrl("/").permitAll()
                 .and()
                 .oauth2Login()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize-client")
+                .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository())
+                .and()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
+                .and()
+                .successHandler(oAuth2AuthenticationSuccessHandler()).and().exceptionHandling()
+                .authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/"))
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
@@ -88,7 +106,9 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
     }
 
     @Bean
-    fun appProperties(): AppProperties {return AppProperties()}
+    fun appProperties(): AppProperties {
+        return AppProperties()
+    }
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource? {
@@ -101,5 +121,20 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
+    }
+
+    @Bean
+    fun oAuth2AuthenticationSuccessHandler(): OAuth2AuthenticationSuccessHandler {
+        return OAuth2AuthenticationSuccessHandler(tokenProvider(), appProperties(), httpCookieOAuth2AuthorizationRequestRepository())
+    }
+
+    @Bean
+    fun httpCookieOAuth2AuthorizationRequestRepository(): HttpCookieOAuth2AuthorizationRequestRepository {
+        return HttpCookieOAuth2AuthorizationRequestRepository()
+    }
+
+    @Bean
+    fun tokenProvider(): TokenProvider {
+        return TokenProvider(appProperties())
     }
 }

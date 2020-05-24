@@ -8,6 +8,6 @@ class AppProperties {
     lateinit var appTokenSecret: String
     @Value("\${app.auth.tokenExpirationMsec}")
     lateinit var appTokenExpirationMsec: String
-//    @Value("\${app.oauth2.authorizedRedirectUris}")
-//    lateinit var appOauth2AuthorizedRedirectUris: String
+    @Value("\${app.oauth2.authorizedRedirectUris}")
+    lateinit var appAuthorizedRedirectUris: String
 }

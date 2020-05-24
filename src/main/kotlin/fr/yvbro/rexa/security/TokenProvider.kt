@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service
 import java.security.SignatureException
 import java.util.*
 
-@Service
 class TokenProvider(private var appProperties: AppProperties) {
     fun createToken(authentication: Authentication): String {
         val userPrincipal = authentication.principal as UserPrincipal
