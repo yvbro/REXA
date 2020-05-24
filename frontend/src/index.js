@@ -11,11 +11,6 @@ import {ACCESS_TOKEN} from "./constants";
 
 const store = configureStore();
 
-/* eslint-disable no-undef */
-/* eslint-disable quotes */
-// const XSRFToken = document.querySelector('meta[name="csrf-token"]');
-// axios.defaults.headers.common['X-XSRF-TOKEN'] = XSRFToken.content;
-// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
     config.headers.Authorization = localStorage.getItem(ACCESS_TOKEN);

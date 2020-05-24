@@ -36,19 +36,26 @@ export default function auth(state = initialState, action) {
                 currentUser: null,
                 loading: false,
             };
-        case LOGOUT:
+        case pending(LOGOUT):
+            return {
+                ...state,
+                authenticated: state.authenticated,
+                currentUser: state.currentUser,
+                loading: true,
+            };
+        case fulfilled(LOGOUT):
             return {
                 ...state,
                 authenticated: false,
                 currentUser: null,
                 loading: false,
             };
-        case pending(LOGOUT):
+        case rejected(LOGOUT):
             return {
                 ...state,
-                authenticated: false,
-                currentUser: null,
-                loading: true,
+                authenticated: state.authenticated,
+                currentUser: state.currentUser,
+                loading: false,
             };
         case pending(FETCH_USER):
             return {
@@ -88,6 +95,7 @@ export const performLogin = (email, password) => dispatch =>
 export const performLogout = () => dispatch =>
     dispatch({
         type: LOGOUT,
+        payload: axios.post("/auth/logout"),
     });
 
 export const getCurrentUser = () => dispatch => {

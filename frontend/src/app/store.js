@@ -4,7 +4,10 @@ import rootReducer from "./reducers";
 import promiseMiddleware from 'redux-promise-middleware';
 
 const configureStore = () => {
-  const store = compose(applyMiddleware(thunk, promiseMiddleware))(createStore)(rootReducer);
+  const store = compose(
+      applyMiddleware(thunk, promiseMiddleware),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )(createStore)(rootReducer);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -19,8 +18,12 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import org.springframework.security.web.savedrequest.RequestCache
 import org.springframework.security.web.savedrequest.SimpleSavedRequest
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+
 
 @Configuration
 @EnableWebSecurity
@@ -31,50 +34,22 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
         http
                 .cors()
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
-                .formLogin()
-                .disable()
-                .httpBasic()
-                .disable()
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/", "/auth/**", "/oauth2/**").permitAll()
+                .antMatchers("/", "/error", "/auth/login", "/auth/userinfo", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
-//                .and()
-//                .oauth2Login()
-//                .authorizationEndpoint()
-//                .baseUri("/oauth2/authorize")
-//                .authorizationRequestRepository(cookieAuthorizationRequestRepository())
-//                .and()
-//                .redirectionEndpoint()
-//                .baseUri("/oauth2/callback/*")
-//                .and()
-//                .userInfoEndpoint()
-//                .userService(customOAuth2UserService)
-//                .and()
-//                .successHandler(oAuth2AuthenticationSuccessHandler)
-//                .failureHandler(oAuth2AuthenticationFailureHandler)
+                .and()
+                .logout().logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/").permitAll()
+                .and()
+                .oauth2Login()
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
-//        http
-//                .oauth2Login().and()
-//                .csrf()
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/**/*.{js,html,css}").permitAll()
-//                .antMatchers("/", "/auth/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and().exceptionHandling()
-//                .authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/"))
-//                .and().logout { l -> l.logoutSuccessUrl("/").permitAll() }
     }
 
     @Throws(java.lang.Exception::class)
@@ -114,4 +89,17 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
 
     @Bean
     fun appProperties(): AppProperties {return AppProperties()}
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource? {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("*")
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        configuration.allowCredentials = true
+        configuration.allowedHeaders = listOf("authorization", "Cache-Control", "content-type", "X-XSRF-TOKEN")
+        configuration.exposedHeaders = listOf("X-XSRF-TOKEN")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
 }

@@ -1,118 +1,105 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import {useDispatch} from "react-redux";
 
-import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
-import { Link } from "react-router-dom";
+import SideNav, {NavItem, NavIcon, NavText} from "@trendmicro/react-sidenav";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import ClickOutside from "react-click-outside";
-import { performLogout } from "../auth/authDuck";
+import {performLogout} from "../auth/authDuck";
 import {ACCESS_TOKEN} from "../constants";
+import {toast} from "react-toastify";
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
+const Header = (props) => {
+    const [expanded, setExpanded] = useState(false);
 
-    this.state = {
-      expanded: false,
-    }
-  }
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
 
-  handleLogOut = () => {
-    this.props.performLogout();
-    localStorage.removeItem(ACCESS_TOKEN);
-  };
+    const handleLogOut = (event) => {
+      event.preventDefault();
 
-  render() {
-    const { location, history, authenticated } = this.props;
+      dispatch(performLogout())
+          .then(() => {
+            toast.info("Logged out");
+            localStorage.removeItem(ACCESS_TOKEN);
+            history.push("/login");
+          }).catch(() => {
+            toast.error("Could not log out");
+          });
+    };
 
     return (
-      <>
-        {authenticated && (
-          <ClickOutside
-            onClickOutside={() => {
-              this.setState({ expanded: false })
-            }}
-          >
-            <SideNav
-              expanded={this.state.expanded}
-              onToggle={(expanded) => {
-                this.setState({ expanded })
-              }}
-              onSelect={(selected) => {
-                const to = `/${selected}`;
-                if (location.pathname !== to) {
-                  history.push(to)
-                }
-              }}
-            >
-              <SideNav.Toggle />
-              <SideNav.Nav defaultSelected="rexa/dashboard">
-                <NavItem eventKey="rexa/dashboard">
-                  <NavIcon>
-                    <i className="fa fa-fw fa-home" style={{ fontSize: "1.75em" }} />
-                  </NavIcon>
-                  <NavText>
-                    <Link to="rexa/dashboard">Dashboard</Link>
-                  </NavText>
-                </NavItem>
-                <NavItem eventKey="rexa/project">
-                  <NavIcon>
-                    <i
-                      className="fa fa-fw fa-user-o"
-                      style={{ fontSize: "1.75em" }}
-                    />
-                  </NavIcon>
-                  <NavText>
-                    <Link to="rexa/project">Project View</Link>
-                  </NavText>
-                </NavItem>
+        <>
+            {props.authenticated && (
+                <ClickOutside
+                    onClickOutside={() => setExpanded(false)}
+                >
+                    <SideNav
+                        expanded={expanded}
+                        onToggle={(expanded) => {
+                          setExpanded(expanded)
+                        }}
+                        onSelect={(selected) => {
+                            const to = `/${selected}`;
+                            if (location.pathname !== to) {
+                                history.push(to)
+                            }
+                        }}
+                    >
+                        <SideNav.Toggle/>
+                        <SideNav.Nav defaultSelected="rexa/dashboard">
+                            <NavItem eventKey="rexa/dashboard">
+                                <NavIcon>
+                                    <i className="fa fa-fw fa-home" style={{fontSize: "1.75em"}}/>
+                                </NavIcon>
+                                <NavText>
+                                    <Link to="rexa/dashboard">Dashboard</Link>
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="rexa/project">
+                                <NavIcon>
+                                    <i
+                                        className="fa fa-fw fa-user-o"
+                                        style={{fontSize: "1.75em"}}
+                                    />
+                                </NavIcon>
+                                <NavText>
+                                    <Link to="rexa/project">Project View</Link>
+                                </NavText>
+                            </NavItem>
 
-                <NavItem eventKey="rexa/charts">
-                  <NavIcon>
-                    <i
-                      className="fa fa-fw fa-line-chart"
-                      style={{ fontSize: "1.75em" }}
-                    />
-                  </NavIcon>
-                  <NavText>Charts</NavText>
-                  <NavItem eventKey="rexa/charts/linechart">
-                    <NavText>Line Chart</NavText>
-                  </NavItem>
-                  <NavItem eventKey="rexa/charts/barchart">
-                    <NavText>Bar Chart</NavText>
-                  </NavItem>
-                </NavItem>
-                <NavItem onClick={this.handleLogOut} eventKey="login">
-                  <NavIcon>
-                    <i className="fa fa-sign-out" style={{ fontSize: "1.75em" }} />
-                  </NavIcon>
-                  <NavText>Logout</NavText>
-                </NavItem>
-              </SideNav.Nav>
-            </SideNav>
-          </ClickOutside>
-        )}
-      </>
+                            <NavItem eventKey="rexa/charts">
+                                <NavIcon>
+                                    <i
+                                        className="fa fa-fw fa-line-chart"
+                                        style={{fontSize: "1.75em"}}
+                                    />
+                                </NavIcon>
+                                <NavText>Charts</NavText>
+                                <NavItem eventKey="rexa/charts/linechart">
+                                    <NavText>Line Chart</NavText>
+                                </NavItem>
+                                <NavItem eventKey="rexa/charts/barchart">
+                                    <NavText>Bar Chart</NavText>
+                                </NavItem>
+                            </NavItem>
+                            <NavItem onClick={handleLogOut} eventKey="login">
+                                <NavIcon>
+                                    <i className="fa fa-sign-out" style={{fontSize: "1.75em"}}/>
+                                </NavIcon>
+                                <NavText>Logout</NavText>
+                            </NavItem>
+                        </SideNav.Nav>
+                    </SideNav>
+                </ClickOutside>
+            )}
+        </>
     )
-  }
-}
-
-Header.propTypes = {
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-
-  authenticated: PropTypes.bool.isRequired,
-  performLogout: PropTypes.func.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      performLogout,
-    },
-    dispatch
-  )
-}
+Header.propTypes = {
+    authenticated: PropTypes.bool.isRequired,
+};
 
-export default connect(null, mapDispatchToProps)(Header)
+export default Header;
