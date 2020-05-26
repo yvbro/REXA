@@ -17,17 +17,19 @@ const Header = (props) => {
     const location = useLocation();
 
     const handleLogOut = (event) => {
-      event.preventDefault();
+        event.preventDefault();
 
-      dispatch(performLogout())
-          .then(() => {
-            toast.info("Logged out");
-            localStorage.removeItem(ACCESS_TOKEN);
-            history.push("/login");
-          }).catch(() => {
+        dispatch(performLogout())
+            .then(() => {
+                toast.info("Logged out");
+                localStorage.removeItem(ACCESS_TOKEN);
+                history.push("/login");
+            }).catch(() => {
             toast.error("Could not log out");
-          });
+        });
     };
+
+    const defaultSelectedNav = props.location.pathname === "/" ? "rexa/dashboard" : props.location.pathname.substr(1);
 
     return (
         <>
@@ -38,7 +40,7 @@ const Header = (props) => {
                     <SideNav
                         expanded={expanded}
                         onToggle={(expanded) => {
-                          setExpanded(expanded)
+                            setExpanded(expanded)
                         }}
                         onSelect={(selected) => {
                             const to = `/${selected}`;
@@ -48,7 +50,7 @@ const Header = (props) => {
                         }}
                     >
                         <SideNav.Toggle/>
-                        <SideNav.Nav defaultSelected="rexa/dashboard">
+                        <SideNav.Nav defaultSelected={defaultSelectedNav}>
                             <NavItem eventKey="rexa/dashboard">
                                 <NavIcon>
                                     <i className="fa fa-fw fa-home" style={{fontSize: "1.75em"}}/>
@@ -100,6 +102,7 @@ const Header = (props) => {
 
 Header.propTypes = {
     authenticated: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
 };
 
 export default Header;

@@ -98,10 +98,9 @@ export const performLogout = () => dispatch =>
         payload: axios.post("/auth/logout"),
     });
 
-export const getCurrentUser = () => dispatch => {
+export const getCurrentUser = () => dispatch =>
     dispatch({
         type: FETCH_USER,
         payload: axios.get("/auth/userinfo"),
     });
-};
 

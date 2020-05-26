@@ -21,12 +21,8 @@ import {getCurrentUser} from "../auth/authDuck";
 import OAuth2RedirectHandler from "../auth/OAuth2RedirectHandler";
 
 class App extends React.Component {
-    componentDidMount() {
-        this.props.getCurrentUser();
-    }
-
     render() {
-        const {authenticated, store, loading} = this.props;
+        const {store, authenticated, loading} = this.props;
 
         if(loading) {
             return <LoadingIndicator />
@@ -45,7 +41,9 @@ class App extends React.Component {
                     <Route
                         render={({location, history}) => (
                             <div>
-                                <Header location={location} history={history} authenticated={authenticated}/>
+                                <Header location={location}
+                                        history={history}
+                                        authenticated={authenticated}/>
                                 <AppLayout>
                                     <Switch>
                                         <Route path="/login" component={() => <LoginPage authenticated={authenticated}/>}/>
@@ -62,7 +60,7 @@ class App extends React.Component {
                                         <PrivateRoute
                                             authenticated={authenticated}
                                             path="/"
-                                            component={() => <DashboardPage/>}/>
+                                            component={() => <LoginPage authenticated={authenticated}/>}/>
                                     </Switch>
                                 </AppLayout>
                             </div>
