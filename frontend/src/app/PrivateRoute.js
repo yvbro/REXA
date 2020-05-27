@@ -4,42 +4,18 @@ import {Redirect, Route} from "react-router-dom";
 import {bindActionCreators} from "redux";
 import {getCurrentUser} from "../auth/authDuck";
 import {connect} from "react-redux";
+import LoadingIndicator from "./LoadingIndicator";
 
 class PrivateRoute extends React.Component {
-    _isMounted = false;
-
-    constructor(props) {
-        super(props);
-        this.state = {hasFetchCurrentUser: false};
-    }
-
-    componentDidMount() {
-        this._isMounted = true;
-        const {authenticated, getCurrentUser} = this.props;
-        if (!authenticated) {
-            getCurrentUser().finally(() => {
-                if (this._isMounted) {
-                    this.setState({hasFetchCurrentUser: true})
-                }
-            });
-        } else {
-            if (this._isMounted) {
-                this.setState({hasFetchCurrentUser: true});
-            }
-        }
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
     render() {
-        const {component: Component, authenticated, ...rest} = this.props;
-        const {hasFetchCurrentUser} = this.state;
+        const {component: Component, authenticated, loading, ...rest} = this.props;
+
+        if(loading) {
+            return <LoadingIndicator />
+        }
 
         return (
             <div>
-                {hasFetchCurrentUser &&
                 <Route
                     {...rest}
                     render={props =>
@@ -55,7 +31,6 @@ class PrivateRoute extends React.Component {
                         )
                     }
                 />
-                }
             </div>
         )
     }
@@ -64,10 +39,14 @@ class PrivateRoute extends React.Component {
 PrivateRoute.propTypes = {
     component: PropTypes.func,
     getCurrentUser: PropTypes.func.isRequired,
-    authenticated: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool,
+    loading: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({authenticated: state.auth.authenticated});
+const mapStateToProps = state => ({
+    authenticated: state.auth.authenticated,
+    loading: state.auth.loading
+});
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(

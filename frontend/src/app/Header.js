@@ -29,8 +29,6 @@ const Header = (props) => {
         });
     };
 
-    const defaultSelectedNav = props.location.pathname === "/" ? "rexa/dashboard" : props.location.pathname.substr(1);
-
     return (
         <>
             {props.authenticated && (
@@ -50,8 +48,8 @@ const Header = (props) => {
                         }}
                     >
                         <SideNav.Toggle/>
-                        <SideNav.Nav defaultSelected={defaultSelectedNav}>
-                            <NavItem eventKey="rexa/dashboard">
+                        <SideNav.Nav>
+                            <NavItem eventKey="rexa/dashboard" active={props.location.pathname.startsWith("/rexa/dashboard")}>
                                 <NavIcon>
                                     <i className="fa fa-fw fa-home" style={{fontSize: "1.75em"}}/>
                                 </NavIcon>
@@ -59,7 +57,7 @@ const Header = (props) => {
                                     <Link to="rexa/dashboard">Dashboard</Link>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="rexa/project">
+                            <NavItem eventKey="rexa/project" active={props.location.pathname.startsWith("/rexa/project")}>
                                 <NavIcon>
                                     <i
                                         className="fa fa-fw fa-user-o"
@@ -71,7 +69,7 @@ const Header = (props) => {
                                 </NavText>
                             </NavItem>
 
-                            <NavItem eventKey="rexa/charts">
+                            <NavItem eventKey="rexa/charts" active={props.location.pathname.startsWith("/rexa/charts")}>
                                 <NavIcon>
                                     <i
                                         className="fa fa-fw fa-line-chart"
@@ -86,7 +84,7 @@ const Header = (props) => {
                                     <NavText>Bar Chart</NavText>
                                 </NavItem>
                             </NavItem>
-                            <NavItem onClick={handleLogOut} eventKey="login">
+                            <NavItem onClick={handleLogOut} eventKey="logout">
                                 <NavIcon>
                                     <i className="fa fa-sign-out" style={{fontSize: "1.75em"}}/>
                                 </NavIcon>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {connect, Provider} from "react-redux";
 import {ToastContainer} from "react-toastify";
-import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
+import {Route, Switch, BrowserRouter as Router, Redirect} from "react-router-dom";
 
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -21,6 +21,11 @@ import {getCurrentUser} from "../auth/authDuck";
 import OAuth2RedirectHandler from "../auth/OAuth2RedirectHandler";
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.props.getCurrentUser();
+    }
+
     render() {
         const {store, authenticated, loading} = this.props;
 
@@ -60,7 +65,11 @@ class App extends React.Component {
                                         <PrivateRoute
                                             authenticated={authenticated}
                                             path="/"
-                                            component={() => <LoginPage authenticated={authenticated}/>}/>
+                                            component={() => <Redirect
+                                                to={{
+                                                    pathname: "/rexa/dashboard",
+                                                    state: {from: location}
+                                                }}/>}/>
                                     </Switch>
                                 </AppLayout>
                             </div>
