@@ -5,6 +5,7 @@ import fr.yvbro.rexa.security.TokenAuthenticationFilter
 import fr.yvbro.rexa.security.TokenProvider
 import fr.yvbro.rexa.security.oauth2.CustomOAuth2UserService
 import fr.yvbro.rexa.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository
+import fr.yvbro.rexa.security.oauth2.OAuth2AuthenticationFailureHandler
 import fr.yvbro.rexa.security.oauth2.OAuth2AuthenticationSuccessHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -47,7 +48,7 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/", "/error", "/auth/login", "/oauth/login", "/auth/userinfo", "/oauth2/**", "/rexa/**").permitAll()
+                .antMatchers("/", "/error", "/auth/login", "/auth/userinfo", "/oauth2/**", "/rexa/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/auth/logout")
@@ -62,6 +63,7 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
                 .userService(customOAuth2UserService)
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler())
+                .failureHandler(oAuth2AuthenticationFailureHandler())
                 .and()
                 .exceptionHandling()
 
@@ -126,6 +128,11 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
     @Bean
     fun oAuth2AuthenticationSuccessHandler(): OAuth2AuthenticationSuccessHandler {
         return OAuth2AuthenticationSuccessHandler(tokenProvider(), appProperties(), httpCookieOAuth2AuthorizationRequestRepository())
+    }
+
+    @Bean
+    fun oAuth2AuthenticationFailureHandler(): OAuth2AuthenticationFailureHandler {
+        return OAuth2AuthenticationFailureHandler(httpCookieOAuth2AuthorizationRequestRepository())
     }
 
     @Bean

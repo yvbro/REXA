@@ -23,7 +23,7 @@ const Header = (props) => {
             .then(() => {
                 toast.info("Logged out");
                 localStorage.removeItem(ACCESS_TOKEN);
-                history.push("/login");
+                history.push("/rexa/login");
             }).catch(() => {
             toast.error("Could not log out");
         });

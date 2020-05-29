@@ -32,8 +32,13 @@ const LoginPage = (props) => {
                 localStorage.setItem(ACCESS_TOKEN, `Bearer ${response.value.data.accessToken}`);
                 history.push("/rexa/dashboard");
             }).catch(() => {
-                toast.error("Wrong login information");
+                toast.error("Login failed: Invalid username or password.");
             });
+    }
+
+    if (location.state.error) {
+        toast.error("This account is not allowed to sign in.");
+        location.state.error = null;
     }
 
     if (props.authenticated) {

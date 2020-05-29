@@ -31,11 +31,11 @@ class OAuth2AuthenticationSuccessHandler(var tokenProvider: TokenProvider,
     }
 
     override fun determineTargetUrl(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication): String {
-        val redirectUri = getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
-        if (redirectUri != null && !isAuthorizedRedirectUri(redirectUri.value)) {
+        val cookie = getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
+        if (cookie != null && !isAuthorizedRedirectUri(cookie.value)) {
             throw RexaBadRequestException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication")
         }
-        val targetUrl = redirectUri?.value ?:defaultTargetUrl
+        val targetUrl = cookie?.value ?:defaultTargetUrl
         val token = tokenProvider.createToken(authentication)
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)

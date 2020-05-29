@@ -51,7 +51,7 @@ class App extends React.Component {
                                         authenticated={authenticated}/>
                                 <AppLayout>
                                     <Switch>
-                                        <Route path="/login" component={() => <LoginPage authenticated={authenticated}/>}/>
+                                        <Route path="/rexa/login" component={() => <LoginPage authenticated={authenticated}/>}/>
                                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
                                         <PrivateRoute
                                             authenticated={authenticated}
