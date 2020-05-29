@@ -57,6 +57,7 @@ const Header = (props) => {
                                     <Link to="rexa/dashboard">Dashboard</Link>
                                 </NavText>
                             </NavItem>
+
                             <NavItem eventKey="rexa/project" active={props.location.pathname.startsWith("/rexa/project")}>
                                 <NavIcon>
                                     <i
@@ -69,21 +70,6 @@ const Header = (props) => {
                                 </NavText>
                             </NavItem>
 
-                            <NavItem eventKey="rexa/charts" active={props.location.pathname.startsWith("/rexa/charts")}>
-                                <NavIcon>
-                                    <i
-                                        className="fa fa-fw fa-line-chart"
-                                        style={{fontSize: "1.75em"}}
-                                    />
-                                </NavIcon>
-                                <NavText>Charts</NavText>
-                                <NavItem eventKey="rexa/charts/linechart">
-                                    <NavText>Line Chart</NavText>
-                                </NavItem>
-                                <NavItem eventKey="rexa/charts/barchart">
-                                    <NavText>Bar Chart</NavText>
-                                </NavItem>
-                            </NavItem>
                             <NavItem onClick={handleLogOut} eventKey="logout">
                                 <NavIcon>
                                     <i className="fa fa-sign-out" style={{fontSize: "1.75em"}}/>

@@ -18,7 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
@@ -48,7 +47,7 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/", "/error", "/auth/login", "/oauth/login", "/auth/userinfo", "/oauth2/**").permitAll()
+                .antMatchers("/", "/error", "/auth/login", "/oauth/login", "/auth/userinfo", "/oauth2/**", "/rexa/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/auth/logout")
@@ -62,8 +61,9 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
                 .and()
-                .successHandler(oAuth2AuthenticationSuccessHandler()).and().exceptionHandling()
-                .authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/"))
+                .successHandler(oAuth2AuthenticationSuccessHandler())
+                .and()
+                .exceptionHandling()
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
