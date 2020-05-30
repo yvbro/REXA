@@ -36,7 +36,7 @@ const LoginPage = (props) => {
             });
     }
 
-    if (location.state.error) {
+    if (location.state && location.state.error) {
         toast.error("This account is not allowed to sign in.");
         location.state.error = null;
     }
