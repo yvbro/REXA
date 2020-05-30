@@ -1,19 +1,20 @@
-.header p.welcome {
+.header {
+  text-align: center;
+}
+
+.header span.welcome {
   color: blue !important;
   font-size: 30px;
-  text-align: center;
 }
 
-.header p.to {
+.header span.to {
   color: #282c34 !important;
   font-size: 15px;
-  text-align: center;
 }
 
-.header p.rexa {
+.header span.rexa {
   color: red !important;
   font-size: 30px;
-  text-align: center;
 }
 
 .social-btn {
@@ -30,4 +31,17 @@
 
 .social-btn.google {
   margin-top: 15px;
+  border: 1px solid black;
+}
+
+.containerLogin {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formDiv {
+  width: 350px;
+  height: 400px;
 }

@@ -28,11 +28,15 @@ class App extends React.Component {
         this.props.getCurrentUser();
     }
 
+    componentDidMount() {
+        document.title = "ReXA"
+    }
+
     render() {
         const {store, authenticated, loading} = this.props;
 
-        if(loading) {
-            return <LoadingIndicator />
+        if (loading) {
+            return <LoadingIndicator/>
         }
 
         return (
@@ -51,30 +55,31 @@ class App extends React.Component {
                                 <Header location={location}
                                         history={history}
                                         authenticated={authenticated}/>
-                                <AppLayout>
-                                    <Switch>
-                                        <Route path="/rexa/login" component={() => <LoginPage authenticated={authenticated}/>}/>
-                                        <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
-                                        <Route path="/rexa/notfound" component={() => <NotFound/>}/>
-                                        <PrivateRoute
-                                            authenticated={authenticated}
-                                            path="/rexa/dashboard"
-                                            component={() => <DashboardPage/>}
-                                        />
-                                        <PrivateRoute
-                                            authenticated={authenticated}
-                                            path="/rexa/project"
-                                            component={() => <ProjectPage/>}/>
-                                        <PrivateRoute
-                                            authenticated={authenticated}
-                                            path="/"
-                                            component={() => <Redirect
-                                                to={{
-                                                    pathname: "/rexa/dashboard",
-                                                    state: {from: location}
-                                                }}/>}/>
-                                    </Switch>
-                                </AppLayout>
+                                <Switch>
+                                    <Route path="/rexa/login"
+                                           component={() => <LoginPage authenticated={authenticated}/>}/>
+                                    <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
+
+                                    <Route path="/rexa/notfound" component={() => <NotFound/>}/>
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/rexa/dashboard"
+                                        component={() => <DashboardPage/>}
+                                    />
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/rexa/project"
+                                        component={() => <ProjectPage/>}/>
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/"
+                                        component={() => <Redirect
+                                            to={{
+                                                pathname: "/rexa/dashboard",
+                                                state: {from: location}
+                                            }}/>}/>
+
+                                </Switch>
                             </div>
                         )}
                     />

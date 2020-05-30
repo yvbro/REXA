@@ -4,6 +4,7 @@ import {Form} from "react-bootstrap";
 
 import {ProjectDetails} from "./ProjectDetails";
 import {ProjectsDropDown} from "./ProjectsDropDown";
+import AppLayout from "../app/AppLayout";
 
 class ProjectPage extends React.Component {
     constructor(props) {
@@ -19,13 +20,13 @@ class ProjectPage extends React.Component {
         const {projectId} = this.state;
 
         return (
-            <div>
+            <AppLayout>
                 <h3>Project Dashboard</h3>
                 <Form>
                     <ProjectsDropDown setProjectId={this.setProjectId}/>
                 </Form>
                 {projectId && <ProjectDetails projectId={projectId}/>}
-            </div>
+            </AppLayout>
         )
     }
 }

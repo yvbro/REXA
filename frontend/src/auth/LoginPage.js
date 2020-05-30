@@ -4,7 +4,7 @@ import {Redirect, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 
-import {FormGroup, FormControl, FormLabel, Button, Container, Row, Col} from "react-bootstrap";
+import {Button, Container, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 
 import "./Login.css";
 import {performLogin} from "./authDuck";
@@ -32,8 +32,8 @@ const LoginPage = (props) => {
                 localStorage.setItem(ACCESS_TOKEN, `Bearer ${response.value.data.accessToken}`);
                 history.push("/rexa/dashboard");
             }).catch(() => {
-                toast.error("Login failed: Invalid username or password.");
-            });
+            toast.error("Login failed: Invalid username or password.");
+        });
     }
 
     if (location.state && location.state.error) {
@@ -50,39 +50,39 @@ const LoginPage = (props) => {
     }
 
     return (
-        <Container>
-            <Row>
-                <Col md={{span: 4, offset: 4}}>
-                    <div className="header">
-                        <p className="welcome">Welcome{' '}</p>
-                        <p className="to">to{' '}</p>
-                        <p className="rexa"> ReXA</p>
-                    </div>
-                    <form onSubmit={handleSubmit}>
-                        <FormGroup controlId="email">
-                            <FormLabel>Email</FormLabel>
-                            <FormControl
-                                autoFocus
-                                type="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        </FormGroup>
-                        <FormGroup controlId="password">
-                            <FormLabel>Password</FormLabel>
-                            <FormControl
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                type="password"
-                            />
-                        </FormGroup>
-                        <Button block disabled={!validateForm()} type="submit">
-                            Sign in
-                        </Button>
-                        <SocialLogin/>
-                    </form>
-                </Col>
-            </Row>
+        <Container className="containerLogin">
+            <div className="formDiv">
+                <div className="header">
+                    <h1>
+                        <span className="welcome">Welcome{' '}</span>
+                        <span className="to">to{' '}</span>
+                        <span className="rexa"> ReXA</span>
+                    </h1>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <FormGroup controlId="email">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl
+                            autoFocus
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </FormGroup>
+                    <FormGroup controlId="password">
+                        <FormLabel>Password</FormLabel>
+                        <FormControl
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            type="password"
+                        />
+                    </FormGroup>
+                    <Button block disabled={!validateForm()} type="submit">
+                        Sign in
+                    </Button>
+                    <SocialLogin/>
+                </form>
+            </div>
         </Container>
     );
 };
