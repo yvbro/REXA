@@ -6,15 +6,33 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB:rexa}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5442/${POSTGRES_DB:rexa}
     username: ${POSTGRES_USER:rexaAdmin}
     password: ${POSTGRES_PASSWORD:rexaAdmin}
   application:
     name: rexa
   jooq:
     sql-dialect: Postgres
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 95069339481-snr5vq6toevl0objs0e360uibop8jgg4.apps.googleusercontent.com
+            clientSecret: _iqhRL9lti3EwfBwas_BmAdG
+            scope:
+              - email
+              - profile
 
 xnat:
   url: http://localhost
   user: admin
   password: admin
+
+app:
+  oauth2:
+    authorizedRedirectUris: http://localhost:8080/oauth2/redirect
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
+

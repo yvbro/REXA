@@ -1,70 +1,52 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { bindActionCreators, compose } from "redux";
-
-import { Redirect, Route } from "react-router-dom";
-import { getCurrentUser } from "../auth/authDuck";
+import PropTypes from 'prop-types';
+import {Redirect, Route} from "react-router-dom";
+import {connect} from "react-redux";
+import LoadingIndicator from "./LoadingIndicator";
 
 class PrivateRoute extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasFetchCurrentUser: false }
-  }
+    render() {
+        const {component: Component, authenticated, loading, ...rest} = this.props;
 
-  componentDidMount() {
-    if (!this.props.isLogged) {
-      this.props
-        .getCurrentUser()
-        .finally(() => this.setState({ hasFetchCurrentUser: true }))
-    } else {
-      this.setState({ hasFetchCurrentUser: true })
-    }
-  }
+        if(loading) {
+            return <LoadingIndicator />
+        }
 
-  render() {
-    const { component: Component, isLogged, ...rest } = this.props;
-    const { hasFetchCurrentUser } = this.state;
-
-    return (
-      <div>
-        {hasFetchCurrentUser && (
-          <Route
-            {...rest}
-            render={(props) =>
-              isLogged ? (
-                <Component {...props} />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.location },
-                  }}
+        return (
+            <div>
+                <Route
+                    {...rest}
+                    render={props =>
+                        authenticated ? (
+                            <Component {...props} />
+                        ) : (
+                            <Redirect
+                                to={{
+                                    pathname: "/rexa/login",
+                                    state: {from: props.location}
+                                }}
+                            />
+                        )
+                    }
                 />
-              )
-            }
-          />
-        )}
-      </div>
-    )
-  }
+            </div>
+        )
+    }
 }
 
 PrivateRoute.propTypes = {
-  getCurrentUser: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool.isRequired,
-  component: PropTypes.func,
+    component: PropTypes.func,
+    getCurrentUser: PropTypes.func.isRequired,
+    authenticated: PropTypes.bool,
+    loading: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({ isLogged: state.auth.isLogged });
+const mapStateToProps = state => ({
+    authenticated: state.auth.authenticated,
+    loading: state.auth.loading
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getCurrentUser,
-    },
-    dispatch
-  )
-}
-
-export default compose(connect(mapStateToProps, mapDispatchToProps))(PrivateRoute)
+export default connect(
+    mapStateToProps,
+    null,
+)(PrivateRoute)

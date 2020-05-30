@@ -10,12 +10,13 @@ import fr.yvbro.rexa.jooq.generated.tables.records.JUserRecord;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row2;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JUser extends TableImpl<JUserRecord> {
 
-    private static final long serialVersionUID = -394086921;
+    private static final long serialVersionUID = -1913586413;
 
     /**
      * The reference instance of <code>rexa.user</code>
@@ -47,6 +48,11 @@ public class JUser extends TableImpl<JUserRecord> {
     }
 
     /**
+     * The column <code>rexa.user.id</code>.
+     */
+    public final TableField<JUserRecord, UUID> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+
+    /**
      * The column <code>rexa.user.email</code>.
      */
     public final TableField<JUserRecord, String> EMAIL = createField(DSL.name("email"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
@@ -55,6 +61,11 @@ public class JUser extends TableImpl<JUserRecord> {
      * The column <code>rexa.user.password</code>.
      */
     public final TableField<JUserRecord, String> PASSWORD = createField(DSL.name("password"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+
+    /**
+     * The column <code>rexa.user.auth_provider</code>.
+     */
+    public final TableField<JUserRecord, String> AUTH_PROVIDER = createField(DSL.name("auth_provider"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * Create a <code>rexa.user</code> table reference
@@ -131,11 +142,11 @@ public class JUser extends TableImpl<JUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row2 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row2<String, String> fieldsRow() {
-        return (Row2) super.fieldsRow();
+    public Row4<UUID, String, String, String> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }

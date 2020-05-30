@@ -5,8 +5,10 @@ CASCADE;
 
 CREATE TABLE rexa.user
 (
-    email VARCHAR PRIMARY KEY,
-    password VARCHAR NOT NULL
+    id uuid PRIMARY KEY,
+    email VARCHAR NOT NULL,
+    password VARCHAR NOT NULL,
+    auth_provider VARCHAR NOT NULL
 );
 
 

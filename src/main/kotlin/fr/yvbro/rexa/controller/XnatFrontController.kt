@@ -1,15 +1,18 @@
 package fr.yvbro.rexa.controller
 
+import fr.yvbro.rexa.config.WebConfig
 import fr.yvbro.rexa.controller.output.ProjectDto
 import fr.yvbro.rexa.controller.output.XnatInfoDto
 import fr.yvbro.rexa.model.Project
 import fr.yvbro.rexa.service.XnatService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.stream.Collectors.toList
 
 @RestController
+@RequestMapping(WebConfig.FRONT_CONTEXT_PATH)
 class XnatFrontController(private val xnatService: XnatService) {
 
     @GetMapping("/projects/{id}")

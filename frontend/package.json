@@ -18,10 +18,12 @@
     "react-dropdown": "^1.7.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2",
+    "react-scripts": "^3.4.1",
     "react-toastify": "^5.5.0",
     "redux": "^4.0.1",
+    "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "styled-components": "^4.4.1"
   },
   "scripts": {

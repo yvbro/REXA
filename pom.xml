@@ -40,6 +40,7 @@
 		<slf4j.version>1.7.28</slf4j.version>
 		<annotations.version>13.0</annotations.version>
 		<jakarta-validation.version>2.0.1</jakarta-validation.version>
+		<jjwt.version>0.5.1</jjwt.version>
 
 		<!-- Maven -->
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
@@ -61,6 +62,22 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
 		</dependency>
 
 		<!-- Springboot DevTools to provide additional development-time features -->
@@ -159,7 +176,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
 		<dependency>
 			<groupId>org.jooq</groupId>
@@ -178,9 +194,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.mindrot</groupId>
-			<artifactId>jbcrypt</artifactId>
-			<version>0.3m</version>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 	</dependencies>
