@@ -24,7 +24,7 @@ class CustomOAuth2UserService(private val userRepository: UserRepository): Defau
             processOAuth2User(oAuth2UserRequest, oAuth2User)
         } catch (ex: AuthenticationException) {
             throw ex
-        } catch (ex: Exception) { // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
+        } catch (ex: Exception) {
             throw InternalAuthenticationServiceException(ex.message, ex.cause)
         }
     }

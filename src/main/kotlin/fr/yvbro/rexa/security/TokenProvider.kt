@@ -11,8 +11,7 @@ import java.util.*
 class TokenProvider(private var appProperties: AppProperties) {
     fun createToken(authentication: Authentication): String {
         val userPrincipal = authentication.principal as UserPrincipal
-        val now = Date()
-        val expiryDate = Date(now.time + appProperties.appTokenExpirationMsec.toInt())
+        val expiryDate = Date(Date().time + appProperties.appTokenExpirationMsec.toInt())
         return Jwts.builder()
                 .setSubject(userPrincipal.id.toString())
                 .setIssuedAt(Date())

@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {Redirect, Route} from "react-router-dom";
-import {bindActionCreators} from "redux";
-import {getCurrentUser} from "../auth/authDuck";
 import {connect} from "react-redux";
 import LoadingIndicator from "./LoadingIndicator";
 
@@ -48,16 +46,7 @@ const mapStateToProps = state => ({
     loading: state.auth.loading
 });
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-        {
-            getCurrentUser
-        },
-        dispatch
-    )
-}
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    null,
 )(PrivateRoute)
