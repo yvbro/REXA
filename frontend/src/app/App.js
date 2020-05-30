@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import {connect, Provider} from "react-redux";
 import {ToastContainer} from "react-toastify";
-import {Route, Switch, BrowserRouter as Router, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+
+import {bindActionCreators, compose} from "redux";
 
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -16,7 +18,7 @@ import ProjectPage from "../project/ProjectPage";
 import LoginPage from "../auth/LoginPage";
 import PrivateRoute from "./PrivateRoute";
 import LoadingIndicator from "./LoadingIndicator";
-import {bindActionCreators, compose} from "redux";
+import NotFound from "./NotFound";
 import {getCurrentUser} from "../auth/authDuck";
 import OAuth2RedirectHandler from "../auth/OAuth2RedirectHandler";
 
@@ -53,6 +55,7 @@ class App extends React.Component {
                                     <Switch>
                                         <Route path="/rexa/login" component={() => <LoginPage authenticated={authenticated}/>}/>
                                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
+                                        <Route path="/rexa/notfound" component={() => <NotFound/>}/>
                                         <PrivateRoute
                                             authenticated={authenticated}
                                             path="/rexa/dashboard"
