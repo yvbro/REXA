@@ -6,6 +6,7 @@ package fr.yvbro.rexa.jooq.generated;
 
 import fr.yvbro.rexa.jooq.generated.tables.JSchemaVersion;
 import fr.yvbro.rexa.jooq.generated.tables.JUser;
+import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JRexa extends SchemaImpl {
 
-    private static final long serialVersionUID = -944577552;
+    private static final long serialVersionUID = -1236355590;
 
     /**
      * The reference instance of <code>rexa</code>
@@ -37,6 +38,11 @@ public class JRexa extends SchemaImpl {
      * The table <code>rexa.user</code>.
      */
     public final JUser USER = JUser.USER;
+
+    /**
+     * The table <code>rexa.user_settings</code>.
+     */
+    public final JUserSettings USER_SETTINGS = JUserSettings.USER_SETTINGS;
 
     /**
      * No further instances allowed
@@ -55,6 +61,7 @@ public class JRexa extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             JSchemaVersion.SCHEMA_VERSION,
-            JUser.USER);
+            JUser.USER,
+            JUserSettings.USER_SETTINGS);
     }
 }
