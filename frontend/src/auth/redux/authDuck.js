@@ -1,7 +1,7 @@
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
-import {fulfilled, pending, rejected} from '../helpers/promise';
+import {fulfilled, pending, rejected} from '../../helpers/promise';
 
 const initialState = {
     authenticated: false,

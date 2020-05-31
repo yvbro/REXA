@@ -9,18 +9,16 @@ import {bindActionCreators, compose} from "redux";
 
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "font-awesome/css/font-awesome.min.css";
-import "./App.css";
 
-import DashboardPage from "../dashboard/DashboardPage";
+import DashboardPage from "../dashboard/page/DashboardPage";
 import Header from "./Header";
-import AppLayout from "./AppLayout";
-import ProjectPage from "../project/ProjectPage";
-import LoginPage from "../auth/LoginPage";
+import ProjectPage from "../project/page/ProjectPage";
+import LoginPage from "../auth/page/LoginPage";
 import PrivateRoute from "./PrivateRoute";
-import LoadingIndicator from "./LoadingIndicator";
-import NotFound from "./NotFound";
-import {getCurrentUser} from "../auth/authDuck";
-import OAuth2RedirectHandler from "../auth/OAuth2RedirectHandler";
+import LoadingIndicator from "../common/LoadingIndicator";
+import NotFound from "../common/NotFound";
+import {getCurrentUser} from "../auth/redux/authDuck";
+import OAuth2RedirectHandler from "../auth/smart/OAuth2RedirectHandler";
 
 class App extends React.Component {
     constructor(props) {

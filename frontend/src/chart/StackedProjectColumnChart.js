@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import Chart from "react-apexcharts";
-import {PROC_STATUS} from "../xnat/xnat";
+import {PROC_STATUS} from "../utils/xnat";
 
 class StackedProjectColumnChart extends React.Component {
     constructor(props) {
