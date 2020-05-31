@@ -14,6 +14,7 @@ import DashboardPage from "../dashboard/page/DashboardPage";
 import Header from "./Header";
 import ProjectPage from "../project/page/ProjectPage";
 import LoginPage from "../auth/page/LoginPage";
+import SettingsPage from "../settings/SettingsPage";
 import PrivateRoute from "./PrivateRoute";
 import LoadingIndicator from "../common/LoadingIndicator";
 import NotFound from "../common/NotFound";
@@ -64,6 +65,10 @@ class App extends React.Component {
                                         authenticated={authenticated}
                                         path="/rexa/project"
                                         component={() => <ProjectPage/>}/>
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/rexa/Settings"
+                                        component={() => <SettingsPage/>}/>
                                     <PrivateRoute
                                         authenticated={authenticated}
                                         path="/"

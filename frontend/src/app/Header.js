@@ -75,19 +75,32 @@ const Header = (props) => {
                 </NavText>
               </NavItem>
 
-              <NavItem onClick={handleLogOut} eventKey="logout">
-                <NavIcon>
-                  <i className="fa fa-sign-out" style={{ fontSize: "1.75em" }} />
-                </NavIcon>
-                <NavText>Logout</NavText>
-              </NavItem>
-            </SideNav.Nav>
-          </SideNav>
-        </ClickOutside>
-      )}
-    </>
-  )
-}
+                            <NavItem eventKey="rexa/settings" active={props.location.pathname.startsWith("/rexa/settings")}>
+                                <NavIcon>
+                                    <i
+                                        class="fa fa-cogs"
+                                        aria-hidden="true"
+                                        style={{fontSize: "1.75em"}}
+                                    />
+                                </NavIcon>
+                                <NavText>
+                                    <Link to="rexa/project">Project View</Link>
+                                </NavText>
+                            </NavItem>
+
+                            <NavItem onClick={handleLogOut} eventKey="logout">
+                                <NavIcon>
+                                    <i className="fa fa-sign-out" style={{fontSize: "1.75em"}}/>
+                                </NavIcon>
+                                <NavText>Logout</NavText>
+                            </NavItem>
+                        </SideNav.Nav>
+                    </SideNav>
+                </ClickOutside>
+            )}
+        </>
+    )
+};
 
 Header.propTypes = {
   authenticated: PropTypes.bool.isRequired,
