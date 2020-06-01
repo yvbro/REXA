@@ -1,10 +1,12 @@
 import React from "react";
-import PropTypes from 'prop-types';
 
 import {useSelector} from "react-redux";
 
 import {ProcessorDetails} from "../dumb/ProcessorDetails";
 import {ProjectTable} from "../dumb/ProjectTable";
+import {NoProjectData} from "../dumb/NoProjectData";
+
+import style from '../dumb/project.module.scss';
 
 export const ProjectDetails = () => {
     const {project, loading} = useSelector(
@@ -15,21 +17,18 @@ export const ProjectDetails = () => {
     );
 
     if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (project === undefined) {
-        return <div>No project selected</div>
+        return <div className={style.containerProject}>Loading...</div>;
     }
 
     return (
-        <>
-            <ProjectTable project={project}/>
-            <ProcessorDetails processors={project.assessors}/>
-        </>
+        <div className={style.containerProject}>
+            {project ?
+                <>
+                    <ProjectTable project={project}/>
+                    <ProcessorDetails processors={project.assessors}/>
+                </>
+                : <NoProjectData/>
+            }
+        </div>
     )
-};
-
-ProjectDetails.propTypes = {
-    projectId: PropTypes.string.isRequired,
 };
