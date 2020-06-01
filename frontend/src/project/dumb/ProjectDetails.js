@@ -2,11 +2,11 @@ import React from "react";
 
 import {useSelector} from "react-redux";
 
-import {ProcessorDetails} from "../dumb/ProcessorDetails";
-import {ProjectTable} from "../dumb/ProjectTable";
-import {NoProjectData} from "../dumb/NoProjectData";
+import {ProcessorDetails} from "./ProcessorDetails";
+import {ProjectTable} from "./ProjectTable";
+import {NoProjectData} from "./NoProjectData";
 
-import style from '../dumb/project.module.scss';
+import style from './project.module.scss';
 
 export const ProjectDetails = () => {
     const {project, loading} = useSelector(

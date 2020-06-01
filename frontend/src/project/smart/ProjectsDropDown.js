@@ -9,10 +9,11 @@ import style from '../dumb/project.module.scss';
 
 export const ProjectsDropDown = () => {
     const dispatch = useDispatch();
-    const {projects, loading} = useSelector(
+    const {projects, loading, project} = useSelector(
         state => ({
             projects: state.project.projectsList.data,
             loading: state.project.projectsList.loading,
+            project: state.project.selectedProject.data,
         })
     );
 
@@ -32,10 +33,10 @@ export const ProjectsDropDown = () => {
                 <label>
                     Select your XNAT project to analyse:
                 </label>
-                <Form.Control as="select" className={style.marginLeft}>
-                    <option>No project</option>
-                    {projects && projects.map(project =>
-                        <option key={project.name} value={project.id}>{project.name}</option>)
+                <Form.Control as="select" className={style.marginLeft} defaultValue={project ? project.projectId : ""}>
+                    <option value="">No project</option>
+                    {projects && projects.map(p =>
+                        <option key={p.name} value={p.id}>{p.name}</option>)
                     }
                 </Form.Control>
             </div>

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Table} from "react-bootstrap";
 
 export const ProjectTable = ({project}) => {
-    console.log(project);
     return (
         <>
             <h3>Project Information</h3>
