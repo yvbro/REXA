@@ -31,4 +31,5 @@ class XnatService(private val xnatClient: XnatClient) {
 
         return mapper.readValue(xnatClient.callXnatUri(assessorUri))
     }
+
 }

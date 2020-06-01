@@ -5,10 +5,10 @@ CASCADE;
 
 CREATE TABLE rexa.user_settings
 (
-  id uuid PRIMARY KEY,
   xnat_username VARCHAR NOT NULL,
   xnat_password VARCHAR NOT NULL,
   xnat_url VARCHAR NOT NULL,
-  user_id uuid REFERENCES rexa.user (id)
+  user_id uuid REFERENCES rexa.user (id),
+  CONSTRAINT pk_id PRIMARY KEY (xnat_username,xnat_url)
 );
 
