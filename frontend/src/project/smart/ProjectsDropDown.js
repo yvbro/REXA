@@ -35,7 +35,7 @@ export const ProjectsDropDown = () => {
                 </label>
                 <Form.Control as="select" className={style.marginLeft} defaultValue={project ? project.projectId : ""}>
                     <option value="">No project</option>
-                    {projects && projects.map(p =>
+                    {!loading && projects && projects.map(p =>
                         <option key={p.name} value={p.id}>{p.name}</option>)
                     }
                 </Form.Control>
