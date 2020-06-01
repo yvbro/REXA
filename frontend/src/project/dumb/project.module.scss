@@ -1,3 +1,5 @@
+@import "src/constants/variables";
+
 .noDataDiv {
   color: grey;
   text-align: center;
@@ -12,3 +14,7 @@
   justify-content: center;
 }
 
+.paddingTop {
+  padding-top: $spacingSize;
+  padding-left: $spacingSize;
+}

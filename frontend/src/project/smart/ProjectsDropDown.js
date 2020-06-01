@@ -1,9 +1,11 @@
 import React, {useEffect} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
-import {Dropdown, DropdownButton, Form} from "react-bootstrap";
+import {Col, Dropdown, DropdownButton, Form, Row} from "react-bootstrap";
 
 import {fetchProject, fetchProjects} from "../redux/projectDuck";
+
+import style from '../dumb/project.module.scss';
 
 export const ProjectsDropDown = () => {
     const dispatch = useDispatch();
@@ -18,18 +20,27 @@ export const ProjectsDropDown = () => {
         dispatch(fetchProjects());
     }, [dispatch]);
 
+    const onChange = (event) => dispatch(fetchProject(event.target.value));
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <Form>
-            <DropdownButton id="dropdown-basic-button" title="Select your XNAT project to analyse"
-                            onSelect={(projectId) => dispatch(fetchProject(projectId))}>
-                {projects && projects.map(project =>
-                    <Dropdown.Item eventKey={project.id} key={project.name}>{project.name}</Dropdown.Item>)
-                }
-            </DropdownButton>
+        <Form className={style.paddingTop} onChange={onChange}>
+            <Form.Group as={Row} controlId="dropdownProjects">
+                <Form.Label column sm="4">
+                    Select your XNAT project to analyse:
+                </Form.Label>
+                <Col sm="6">
+                    <Form.Control as="select">
+                        <option>No project</option>
+                        {projects && projects.map(project =>
+                            <option key={project.name} value={project.id}>{project.name}</option>)
+                        }
+                    </Form.Control>
+                </Col>
+            </Form.Group>
         </Form>
     )
 };
