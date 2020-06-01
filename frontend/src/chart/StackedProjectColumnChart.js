@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Chart from "react-apexcharts";
 import {PROC_STATUS} from "../utils/xnat";
 
+import style from './charts.module.scss';
+
 class StackedProjectColumnChart extends React.Component {
     constructor(props) {
         super(props);
@@ -55,7 +57,7 @@ class StackedProjectColumnChart extends React.Component {
         const {assessors} = this.props;
 
         return (
-            <div id="chart">
+            <div id="chart" className={style.drawing}>
                 <Chart options={this.state.options} series={assessors} type="bar" height={350}/>
             </div>
         );

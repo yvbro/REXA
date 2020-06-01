@@ -23,10 +23,10 @@ export const ProjectDetails = () => {
     return (
         <div className={style.containerProject}>
             {project ?
-                <>
+                <div className={style.project}>
                     <ProjectTable project={project}/>
                     <ProcessorDetails processors={project.assessors}/>
-                </>
+                </div>
                 : <NoProjectData/>
             }
         </div>

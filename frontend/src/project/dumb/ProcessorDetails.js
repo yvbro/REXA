@@ -11,7 +11,10 @@ export const ProcessorDetails = ({processors}) => {
     }
 
     return (
-        <StackedProjectColumnChart assessors={processorsStats} />
+        <>
+            <h3>Processor Board</h3>
+            <StackedProjectColumnChart assessors={processorsStats}/>
+        </>
     )
 };
 

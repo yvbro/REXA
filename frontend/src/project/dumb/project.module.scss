@@ -14,7 +14,17 @@
   justify-content: center;
 }
 
-.paddingTop {
+.project {
+  height: 100vh;
+  width: 100vh;
   padding-top: $spacingSize;
-  padding-left: $spacingSize;
+  margin-left: -$spacingSize;
+}
+
+.projectsForm {
+  padding-top: $spacingSize;
+}
+
+.marginLeft {
+  margin-left: $spacingSize;
 }
