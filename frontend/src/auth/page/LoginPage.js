@@ -4,7 +4,7 @@ import {Redirect, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 
-import {Grid, Card, Button, TextField, makeStyles} from "@material-ui/core";
+import {Button, Container, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 
 import {performLogin} from "../redux/authDuck";
 import SocialLogin from "../dumb/SocialLogin"
@@ -12,45 +12,19 @@ import {ACCESS_TOKEN} from "../../constants";
 
 import style from "../dumb/auth.module.scss";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        minHeight: '100vh',
-    },
-    card: {
-        width: 400,
-        height: 350,
-        borderRadius: "16px",
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
-        margin: theme.spacing(1),
-        width: 350,
-    },
-    button: {
-        width: 350,
-        margin: theme.spacing(1),
-    },
-}));
-
-const regexEmail = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
-
 const LoginPage = (props) => {
-    const classes = useStyles();
-
     const [email, setEmail] = useState("");
-    const [errorEmail, setErrorEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
 
-    const handleSubmit = (event) => {
+    function validateForm() {
+        return email.length > 3 && password.length > 0;
+    }
+
+    function handleSubmit(event) {
         event.preventDefault();
 
         dispatch(performLogin(email, password))
@@ -61,16 +35,7 @@ const LoginPage = (props) => {
             }).catch(() => {
             toast.error("Login failed: Invalid username or password.");
         });
-    };
-
-    const onChangeEmail = (event) => {
-        if (event.target.value.match(regexEmail)) {
-            setEmail(event.target.value);
-            setErrorEmail('');
-        } else {
-            setErrorEmail('Email invalid');
-        }
-    };
+    }
 
     if (location.state && location.state.error) {
         toast.error("This account is not allowed to sign in.");
@@ -86,55 +51,40 @@ const LoginPage = (props) => {
     }
 
     return (
-        <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justify="center"
-            className={classes.root}
-        >
-            <Grid item xs={3}>
-                <Card className={classes.card}>
-                    <div className={style.header}>
-                        <h1>
-                            <span className={style.blue30}>Welcome{' '}</span>
-                            <span className={style.black15}>to{' '}</span>
-                            <span className={style.red30}> ReXA</span>
-                        </h1>
-                    </div>
-                    <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
-                        <TextField id="outlined-basic"
-                                   type="email"
-                                   name="email"
-                                   label="Email"
-                                   variant="outlined"
-                                   error={!!errorEmail}
-                                   helperText={errorEmail}
-                                   onChange={onChangeEmail}
-                                   className={classes.text}/>
-                        <TextField
-                            id="filled-password-input"
-                            name="password"
-                            label="Password"
-                            type="password"
-                            variant="outlined"
-                            onChange={e => setPassword(e.target.value)}
-                            className={classes.text}
+        <Container className={style.containerLogin}>
+            <div className={style.formDiv}>
+                <div className={style.header}>
+                    <h1>
+                        <span className={style.blue30}>Welcome{' '}</span>
+                        <span className={style.black15}>to{' '}</span>
+                        <span className={style.red30}> ReXA</span>
+                    </h1>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <FormGroup controlId="email">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl
+                            autoFocus
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
                         />
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                            color="primary"
-                            disabled={!!errorEmail}
-                            className={classes.button}>
-                            Sign in
-                        </Button>
-                        <SocialLogin/>
-                    </form>
-                </Card>
-            </Grid>
-        </Grid>
+                    </FormGroup>
+                    <FormGroup controlId="password">
+                        <FormLabel>Password</FormLabel>
+                        <FormControl
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            type="password"
+                        />
+                    </FormGroup>
+                    <Button block disabled={!validateForm()} type="submit">
+                        Sign in
+                    </Button>
+                    <SocialLogin/>
+                </form>
+            </div>
+        </Container>
     );
 };
 

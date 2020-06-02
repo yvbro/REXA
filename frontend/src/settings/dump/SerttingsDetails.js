@@ -1,13 +1,13 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
-import AppLayout from "../app/AppLayout";
+import PropTypes from 'prop-types';
 
-const SettingsPage = (props) => {
+import axios from "axios";
 
-  return (
-    <AppLayout>
-      <Form>
+export const SettingsDetails = () => {
+
+    return (
+        <Form>
         <Form.Group as={Row} controlId="formXnatUsername">
           <Form.Label column sm="2">
             Xnat Username
@@ -40,10 +40,9 @@ const SettingsPage = (props) => {
         </Button>
         <Button onClick={true} variant="outline-primary" size="lg">Edit</Button>
 
-      </Form>
-    </AppLayout>
+      </Form>    
+      )
 
-  );
-};
+}
 
-export default SettingsPage;
+export default SettingsDetails;
