@@ -12,9 +12,7 @@ class XnatGlossary {
 
         const val assessorUrlLabel: String = "&xsiType=$defaultAssessorTypeLabel&columns=ID,label,URI,xsiType,project,xnat:imagesessiondata/subject_id," +
                 "xnat:imagesessiondata/id,xnat:imagesessiondata/label,$defaultAssessorTypeLabel/procstatus,$defaultAssessorTypeLabel/" +
-                "proctype,$defaultAssessorTypeLabel/validation/status,$defaultAssessorTypeLabel/procversion,$defaultAssessorTypeLabel/jobstartdate," +
-                "$defaultAssessorTypeLabel/memused,$defaultAssessorTypeLabel/walltimeused,$defaultAssessorTypeLabel/jobid,$defaultAssessorTypeLabel/jobnode," +
-                "$defaultAssessorTypeLabel/inputs,$defaultAssessorTypeLabel/out/file/label"
+                "proctype,$defaultAssessorTypeLabel/validation/status,$defaultAssessorTypeLabel/procversion"
 
         const val scanUrlLabel: String = "&xsiType=xnat:imageSessionData&columns=ID," +
                 "URI,label,subject_label,project,xnat:imagesessiondata/subject_id,nat:imagescandata/" +

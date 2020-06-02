@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import auth from "../auth/authDuck";
+import auth from "../auth/redux/authDuck";
+import project from "../project/redux/projectDuck";
 
 const appReducer = combineReducers({
   auth,
+  project,
 });
 
 const rootReducer = (state, action) => {

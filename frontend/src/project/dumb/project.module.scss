@@ -1,0 +1,30 @@
+@import "src/constants/variables";
+
+.noDataDiv {
+  color: grey;
+  text-align: center;
+  width: 350px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+}
+
+.containerProject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project {
+  width: 100%;
+  padding-top: $spacingSize;
+  margin-left: -$spacingSize;
+}
+
+.projectsForm {
+  padding-top: $spacingSize;
+}
+
+.marginLeft {
+  margin-left: $spacingSize;
+}

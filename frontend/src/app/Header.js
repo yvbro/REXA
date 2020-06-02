@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import SideNav, {NavItem, NavIcon, NavText} from "@trendmicro/react-sidenav";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import ClickOutside from "react-click-outside";
-import {performLogout} from "../auth/authDuck";
+import {performLogout} from "../auth/redux/authDuck";
 import {ACCESS_TOKEN} from "../constants";
 import {toast} from "react-toastify";
 

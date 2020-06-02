@@ -22,6 +22,7 @@ class XnatFrontController(private val xnatService: XnatService) {
         val assessors = xnatService.getAssessorsForProject(id)
 
         return XnatInfoDto(
+                id,
                 scans.size,
                 scans.groupBy { it.sessionLabel }.size,
                 scans.groupBy { it.subjectLabel }.size,

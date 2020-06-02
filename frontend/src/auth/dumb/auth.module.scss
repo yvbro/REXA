@@ -1,37 +1,35 @@
+@import "src/constants/variables";
+
 .header {
   text-align: center;
 }
 
-.header span.welcome {
+.blue30 {
   color: blue !important;
-  font-size: 30px;
+  font-size: $headerTextSize;
 }
 
-.header span.to {
+.black15 {
   color: #282c34 !important;
-  font-size: 15px;
+  font-size: $headerTextSize/2;
 }
 
-.header span.rexa {
+.red30 {
   color: red !important;
-  font-size: 30px;
+  font-size: $headerTextSize;
 }
 
-.social-btn {
+.socialBtn {
   margin-bottom: 15px;
   font-weight: 400;
   font-size: 16px;
-}
-
-.social-btn img {
-  height: 32px;
-  float: left;
-  margin-top: -2px;
-}
-
-.social-btn.google {
   margin-top: 15px;
-  border: 1px solid black;
+  height: 45px;
+}
+
+.socialBtnImg {
+  height: 32px;
+  margin-top: -2px;
 }
 
 .containerLogin {

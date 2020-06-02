@@ -1,13 +1,11 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
-import styled from "styled-components";
+import style from "../common/common.module.scss";
 
-const Wrapper = styled.div`
-  padding-left: 80px;
-  height: 100vh;
-`;
+const AppLayout = ({children}) => <div className={style.wrapper}>{children}</div>;
 
-// eslint-disable-next-line react/prop-types
-export default function AppLayout({ children }) {
-  return <Wrapper>{children}</Wrapper>
-}
+AppLayout.propTypes = {
+    children: PropTypes.array.isRequired,
+};
+export default AppLayout;

@@ -1,7 +1,8 @@
 import React from "react";
 
-import BarChart from "../chart/BarChart";
-import AppLayout from "../app/AppLayout";
+import BarChart from "../../chart/BarChart";
+import AppLayout from "../../app/AppLayout";
+import HeaderPage from "../../common/HeaderPage";
 
 const MOCK_DATA = [
     {
@@ -55,7 +56,7 @@ class DashboardPage extends React.Component {
         const myData = this.getMockData();
         return (
             <AppLayout>
-                <h3>Rexa Main Dashboard</h3>
+                <HeaderPage title={"Rexa Main Dashboard"}/>
                 <BarChart data={myData} title="Processes Report" color="#70CAD1"/>
             </AppLayout>
         )

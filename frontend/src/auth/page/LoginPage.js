@@ -6,10 +6,11 @@ import {toast} from "react-toastify";
 
 import {Button, Container, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 
-import "./Login.css";
-import {performLogin} from "./authDuck";
-import SocialLogin from "./SocialLogin"
-import {ACCESS_TOKEN} from "../constants";
+import {performLogin} from "../redux/authDuck";
+import SocialLogin from "../dumb/SocialLogin"
+import {ACCESS_TOKEN} from "../../constants";
+
+import style from "../dumb/auth.module.scss";
 
 const LoginPage = (props) => {
     const [email, setEmail] = useState("");
@@ -50,13 +51,13 @@ const LoginPage = (props) => {
     }
 
     return (
-        <Container className="containerLogin">
-            <div className="formDiv">
-                <div className="header">
+        <Container className={style.containerLogin}>
+            <div className={style.formDiv}>
+                <div className={style.header}>
                     <h1>
-                        <span className="welcome">Welcome{' '}</span>
-                        <span className="to">to{' '}</span>
-                        <span className="rexa"> ReXA</span>
+                        <span className={style.blue30}>Welcome{' '}</span>
+                        <span className={style.black15}>to{' '}</span>
+                        <span className={style.red30}> ReXA</span>
                     </h1>
                 </div>
                 <form onSubmit={handleSubmit}>

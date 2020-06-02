@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Redirect, Route} from "react-router-dom";
 import {connect} from "react-redux";
-import LoadingIndicator from "./LoadingIndicator";
+import LoadingIndicator from "../common/LoadingIndicator";
 
 class PrivateRoute extends React.Component {
     render() {
@@ -36,7 +36,6 @@ class PrivateRoute extends React.Component {
 
 PrivateRoute.propTypes = {
     component: PropTypes.func,
-    getCurrentUser: PropTypes.func.isRequired,
     authenticated: PropTypes.bool,
     loading: PropTypes.bool,
 };
