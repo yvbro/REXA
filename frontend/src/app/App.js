@@ -13,6 +13,7 @@ import "font-awesome/css/font-awesome.min.css";
 import DashboardPage from "../dashboard/page/DashboardPage";
 import Header from "./Header";
 import ProjectPage from "../project/page/ProjectPage";
+import SettingsPage from "../settings/page/SettingsPage";
 import LoginPage from "../auth/page/LoginPage";
 import SettingsPage from "../settings/SettingsPage";
 import PrivateRoute from "./PrivateRoute";

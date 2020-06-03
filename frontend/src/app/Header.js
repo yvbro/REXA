@@ -78,7 +78,7 @@ const Header = (props) => {
                             <NavItem eventKey="rexa/settings" active={props.location.pathname.startsWith("/rexa/settings")}>
                                 <NavIcon>
                                     <i
-                                        class="fa fa-cogs"
+                                        className="fa fa-cogs"
                                         aria-hidden="true"
                                         style={{fontSize: "1.75em"}}
                                     />

@@ -1,26 +1,15 @@
 import React from "react";
 import AppLayout from "../../app/AppLayout";
-import {SettingsDetails} from "../dump/SerttingsDetails;
+import {SettingsDetails} from "../dump/SettingsDetails";
 
-const SettingsPage = () => {
-  const [settings, setSettings] = useState([]);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-        const result = await axios(`/private/settings`);
-        setSettings(result.data);
-    };
-    
-    fetchData();
-  }, [projectId]);
-
-  return (
-    <AppLayout>
-      <SettingsDetails />
-    </AppLayout>
-
-  );
-};
+class SettingsPage extends React.Component {
+  render() {
+      return (
+          <AppLayout>
+            <SettingsDetails />
+          </AppLayout>
+      )
+  }
+}
 
 export default SettingsPage;
