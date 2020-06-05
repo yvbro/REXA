@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component
 class UserSettingsMapper : RecordMapper<Record, UserSettings> {
     override fun map(record: Record?): UserSettings {
         return UserSettings.Builder()
-                .xnat_username(record?.get(Tables.USER_SETTINGS.XNAT_USERNAME))
-                .xnat_password(record?.get(Tables.USER_SETTINGS.XNAT_PASSWORD))
-                .xnat_url(record?.get(Tables.USER_SETTINGS.XNAT_URL))
-                .user_id(record?.get(Tables.USER_SETTINGS.USER_ID))
+                .xnatUsername(record?.get(Tables.USER_SETTINGS.XNAT_USERNAME))
+                .xnatPassword(record?.get(Tables.USER_SETTINGS.XNAT_PASSWORD))
+                .xnatHost(record?.get(Tables.USER_SETTINGS.XNAT_URL))
+                .userId(record?.get(Tables.USER_SETTINGS.USER_ID))
                 .build()
     }
 }

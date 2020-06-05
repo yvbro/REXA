@@ -18,8 +18,8 @@ class UserSettingsFrontController(private val userSettingsService: UserSettingsS
         var userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
         val userSettings = userSettingsService.getXnatSettings(userId)
         return UserSettingsDto(
-                userSettings.xnat_username,
-                userSettings.xnat_url
+                userSettings.xnatUsername,
+                userSettings.xnatHost
         )
     }
 }
