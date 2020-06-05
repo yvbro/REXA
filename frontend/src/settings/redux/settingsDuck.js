@@ -12,6 +12,7 @@ const initialState = {
 const FETCH_SETTINGS = "[Auth] FETCH SETTINGS";
 
 export default function settings(state = initialState, action) {
+    console.log(action)
     switch (action.type) {
         case pending(FETCH_SETTINGS):
             return {
@@ -23,8 +24,8 @@ export default function settings(state = initialState, action) {
         case fulfilled(FETCH_SETTINGS):
             return {
                 ...state,
-                xnatUser: action.payload.data.xnat_username,
-                xnatHost: action.payload.data.xnat_url,
+                xnatUser: action.payload.data.xnatUsername,
+                xnatHost: action.payload.data.xnatHost,
                 loading: false,
             };
         case rejected(FETCH_SETTINGS):
@@ -44,3 +45,12 @@ export const fetchSettings = () => dispatch =>
         type: FETCH_SETTINGS,
         payload: axios.get("/private/settings")
     });
+
+export const updateSettings = (xnatUsername, xnatHost) => {
+        const response = axios.post("/private/settings",
+         { xnatUsername ,xnatHost },
+        );
+      
+        return response.data;
+    };
+    
