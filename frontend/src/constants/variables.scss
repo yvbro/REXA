@@ -3,3 +3,9 @@ $headerTextSize: 30px;
 $iconSize: 1.75em;
 $spacingSize: 20px;
 $borderColor: #e1e4e7;
+$backgroundColor: #f7f8fa;
+$menuColor: #2b78e3;
+
+:export {
+    backgroundColor: $backgroundColor;
+}

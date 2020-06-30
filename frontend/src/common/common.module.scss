@@ -1,11 +1,20 @@
 @import "../constants/variables.scss";
 
+.mainDiv {
+  height: 100vh;
+  background-color:$backgroundColor;
+}
+
 .wrapper {
   padding-left: $navSize;
 }
 
 .headerDiv {
   text-align: center;
-  margin-top: 20px;
+  padding-top: 20px;
   height: 50px;
+}
+
+.navBar {
+  background-color: $menuColor;
 }

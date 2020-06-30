@@ -9,6 +9,8 @@ import {performLogout} from "../auth/redux/authDuck";
 import {ACCESS_TOKEN} from "../constants";
 import {toast} from "react-toastify";
 
+import style from "../common/common.module.scss"
+
 const Header = (props) => {
     const [expanded, setExpanded] = useState(false);
 
@@ -36,6 +38,7 @@ const Header = (props) => {
                     onClickOutside={() => setExpanded(false)}
                 >
                     <SideNav
+                        className={style.navBar}
                         expanded={expanded}
                         onToggle={(expanded) => {
                             setExpanded(expanded)
