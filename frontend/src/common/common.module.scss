@@ -1,10 +1,5 @@
 @import "../constants/variables.scss";
 
-.mainDiv {
-  height: 100vh;
-  background-color:$backgroundColor;
-}
-
 .wrapper {
   padding-left: $navSize;
 }
@@ -17,4 +12,7 @@
 
 .navBar {
   background-color: $menuColor;
+  position: fixed;
+  top: 0;
+  left: 0;
 }

@@ -53,7 +53,7 @@ class App extends React.Component {
                 <Router>
                     <Route
                         render={({location, history}) => (
-                            <div className={style.mainDiv}>
+                            <div>
                                 <Header location={location}
                                         history={history}
                                         authenticated={authenticated}/>

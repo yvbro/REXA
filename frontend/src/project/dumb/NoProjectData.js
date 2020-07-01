@@ -1,10 +1,8 @@
 import React from "react"
 
-import { makeStyles } from "@material-ui/core/styles"
-import { Card, CardContent, Typography } from "@material-ui/core"
-import InfoIcon from "@material-ui/icons/Info"
-
-import variables from "../../constants/variables.scss"
+import { makeStyles } from "@material-ui/core/styles";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import InfoIcon from "@material-ui/icons/Info";
 
 const useStyles = makeStyles((theme) => ({
   section1: {
@@ -23,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 80,
     color: "gray",
   }
-}))
+}));
 
 export const NoProjectData = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.section1}>
@@ -40,4 +38,4 @@ export const NoProjectData = () => {
       </Card>
     </div>
   )
-}
+};
