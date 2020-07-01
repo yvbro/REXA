@@ -20,8 +20,6 @@ import NotFound from "../common/NotFound";
 import {getCurrentUser} from "../auth/redux/authDuck";
 import OAuth2RedirectHandler from "../auth/smart/OAuth2RedirectHandler";
 
-import style from "../common/common.module.scss"
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -36,17 +34,11 @@ class App extends React.Component {
         const {store, authenticated, loading} = this.props;
 
         if (loading) {
-            return <LoadingIndicator/>
+            return <LoadingIndicator/>;
         }
 
         return (
             <Provider store={store}>
-                <link
-                    rel="stylesheet"
-                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-                    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-                    crossOrigin="anonymous"
-                />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
                 <ToastContainer autoClose={5000}/>

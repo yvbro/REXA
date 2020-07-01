@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
-import { makeStyles } from "@material-ui/core/styles";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import CameraIcon from "@material-ui/icons/Camera";
-import DeviceHubIcon from "@material-ui/icons/DeviceHub";
-import EventNoteIcon from "@material-ui/icons/EventNote";
+import { makeStyles } from "@material-ui/core/styles"
+import AccountCircleIcon from "@material-ui/icons/AccountCircle"
+import CameraIcon from "@material-ui/icons/Camera"
+import DeviceHubIcon from "@material-ui/icons/DeviceHub"
+import EventNoteIcon from "@material-ui/icons/EventNote"
 import {
   List,
   ListItemAvatar,
@@ -13,7 +13,7 @@ import {
   ListItemText,
   ListItem,
   Card,
-} from "@material-ui/core";
+} from "@material-ui/core"
 
 const useStyles = makeStyles({
   root: {
@@ -21,13 +21,13 @@ const useStyles = makeStyles({
     maxWidth: 360,
   },
   cardInfo: {
-      width: 300,
-      borderRadius: "16px"
-  }
-});
+    width: 300,
+    borderRadius: "16px",
+  },
+})
 
 export const ProjectInfo = ({ project }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <>
@@ -75,8 +75,8 @@ export const ProjectInfo = ({ project }) => {
       </Card>
     </>
   )
-};
+}
 
 ProjectInfo.propTypes = {
   project: PropTypes.object.isRequired,
-};
+}
