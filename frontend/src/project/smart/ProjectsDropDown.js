@@ -3,18 +3,18 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
   InputLabel,
-  NativeSelect,
-  FormHelperText,
+  Select,
   FormControl,
   makeStyles,
+  MenuItem,
 } from "@material-ui/core"
 
 import { fetchProject, fetchProjects } from "../redux/projectDuck"
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    marginLeft: theme.spacing(2),
-    minWidth: 120,
+    backgroundColor: "white",
+    width: 300,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -41,26 +41,26 @@ export const ProjectsDropDown = () => {
   }
 
   return (
-    <FormControl className={classes.formControl}>
-      <InputLabel htmlFor="age-native-helper">Project Id</InputLabel>
-      <NativeSelect
+    <FormControl variant="outlined" className={classes.formControl}>
+      <InputLabel id="project-selector">Select a project</InputLabel>
+      <Select
+        labelId="project-selector"
+        id="demo-simple-select-outlined"
         value={project ? project.projectId : ""}
         onChange={onChange}
-        inputProps={{
-          name: "project",
-          id: "age-native-helper",
-        }}
+        label="project"
       >
-        <option value="" />
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
         {!loading &&
           projects &&
           projects.map((p) => (
-            <option key={p.name} value={p.id}>
+            <MenuItem key={p.name} value={p.id}>
               {p.name}
-            </option>
+            </MenuItem>
           ))}
-      </NativeSelect>
-      <FormHelperText>Select your XNAT project to analyse</FormHelperText>
+      </Select>
     </FormControl>
   )
 }
