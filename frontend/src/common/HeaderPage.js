@@ -1,7 +1,7 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
-import { makeStyles } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core";
 
 const useStyle = makeStyles(() => ({
   title: {
@@ -9,16 +9,16 @@ const useStyle = makeStyles(() => ({
     paddingTop: "20px",
     height: "50px",
   },
-}))
+}));
 
 const HeaderPage = (props) => {
-  const classes = useStyle()
+  const classes = useStyle();
 
   return <h1 className={classes.title}>{props.title}</h1>
-}
+};
 
 HeaderPage.propTypes = {
   title: PropTypes.string.isRequired,
-}
+};
 
 export default HeaderPage
