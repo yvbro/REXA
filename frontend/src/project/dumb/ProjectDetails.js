@@ -1,24 +1,39 @@
-import React from "react";
+import React from "react"
 
-import { useSelector } from "react-redux";
-import { Grid } from "@material-ui/core";
+import { useSelector } from "react-redux"
+import { Grid, Typography, makeStyles } from "@material-ui/core"
 
-import { ProcessorDetails } from "./ProcessorDetails";
-import { ProjectInfo } from "./ProjectInfo";
-import { NoProjectData } from "./NoProjectData";
+import { ProcessorDetails } from "./ProcessorDetails"
+import { ProjectInfo } from "./ProjectInfo"
+import { NoProjectData } from "./NoProjectData"
 
-import style from "./project.module.scss";
+const useStyles = makeStyles({
+  loading: {
+    textAlign: "center",
+  },
+});
 
 export const ProjectDetails = () => {
+  const classes = useStyles();
 
   const { project, loading, parentLoading } = useSelector((state) => ({
     project: state.project.selectedProject.data,
     loading: state.project.selectedProject.loading,
     parentLoading: state.project.projectsList.loading,
-  }));
+  }))
 
   if (loading || parentLoading) {
-    return <div className={style.containerProject}>Loading...</div>;
+    return (
+      <Grid container spacing={3}>
+        <Grid item xs></Grid>
+        <Grid item xs={6}>
+          <Typography className={classes.loading} variant="subtitle1" gutterBottom>
+            Loading...
+          </Typography>
+        </Grid>
+        <Grid item xs></Grid>
+      </Grid>
+    )
   }
 
   return (
@@ -49,5 +64,5 @@ export const ProjectDetails = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}

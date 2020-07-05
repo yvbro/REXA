@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
-import { makeStyles } from "@material-ui/core/styles"
-import { Card, CardContent, Typography } from "@material-ui/core"
-import InfoIcon from "@material-ui/icons/Info"
-import grey from "@material-ui/core/colors/grey"
+import { makeStyles } from "@material-ui/core/styles";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import InfoIcon from "@material-ui/icons/Info";
+import grey from "@material-ui/core/colors/grey";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   iconDef: {
     fontSize: 80,
   },
-}))
+}));
 
 export const NoProjectData = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <Card variant="outlined" className={classes.card}>
@@ -34,5 +34,5 @@ export const NoProjectData = () => {
         </Typography>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
