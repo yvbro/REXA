@@ -1,19 +1,24 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import style from './common.module.scss';
+import { makeStyles } from "@material-ui/core";
+
+const useStyle = makeStyles(() => ({
+  title: {
+    textAlign: "center",
+    paddingTop: "20px",
+    height: "50px",
+  },
+}));
 
 const HeaderPage = (props) => {
-    return (
-        <div className={style.headerDiv}>
-            <h3>{props.title}</h3>
-        </div>
-    );
+  const classes = useStyle();
+
+  return <h1 className={classes.title}>{props.title}</h1>
 };
 
 HeaderPage.propTypes = {
-    title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
-export default HeaderPage;
-
+export default HeaderPage

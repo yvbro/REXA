@@ -4,6 +4,7 @@ import fr.yvbro.rexa.exception.*
 import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.HttpMediaTypeNotAcceptableException
 import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -42,7 +43,10 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(XnatUnauthorizedException::class, RexaAuthentificationFailedException::class)
+    @ExceptionHandler(
+            XnatUnauthorizedException::class,
+            RexaAuthentificationFailedException::class,
+            BadCredentialsException::class)
     protected fun handleUnauthorizedException(ex: Exception?): ApiErrorBean? {
         return apiErrorReporter.buildErrorBean(ex)
     }

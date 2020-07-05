@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@trendmicro/react-sidenav": "^0.4.5",
     "apexcharts": "^3.19.0",
     "axios": "0.19.2",
