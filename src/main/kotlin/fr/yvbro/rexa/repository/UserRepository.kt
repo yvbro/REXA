@@ -17,7 +17,7 @@ class UserRepository(private val dsl: DSLContext,
             .where(USER.EMAIL.eq(email))
             .limit(1)
             .fetchOptional(userTupleMapper)
-            .orElseThrow { UsernameNotFoundException("User not found with email : $email")  }
+            .orElseThrow { UsernameNotFoundException("User not found with email : $email") }
 
     fun save(email: String, password: String) {
         dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD)
@@ -30,5 +30,5 @@ class UserRepository(private val dsl: DSLContext,
             .where(USER.ID.eq(id))
             .limit(1)
             .fetchOptional(userTupleMapper)
-            .orElseThrow { UsernameNotFoundException("User not found with id : $id")  }
+            .orElseThrow { UsernameNotFoundException("User not found with id : $id") }
 }

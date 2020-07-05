@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse
 class TokenAuthenticationFilter : OncePerRequestFilter() {
     @Autowired
     private val tokenProvider: TokenProvider? = null
+
     @Autowired
     private val customUserDetailsService: CustomUserDetailsService? = null
 

@@ -7,13 +7,12 @@ data class UserSettings(
         var xnatPassword: String?,
         var xnatHost: String?,
         var userId: UUID?
-){
+) {
     data class Builder(
             var xnatUsername: String? = null,
             var xnatPassword: String? = null,
             var xnatHost: String? = null,
-            var userId: UUID? = null)
-             {
+            var userId: UUID? = null) {
         fun xnatUsername(xnatUsername: String?) = apply { this.xnatUsername = xnatUsername }
         fun xnatPassword(xnatPassword: String?) = apply { this.xnatPassword = xnatPassword }
         fun xnatHost(xnatHost: String?) = apply { this.xnatHost = xnatHost }

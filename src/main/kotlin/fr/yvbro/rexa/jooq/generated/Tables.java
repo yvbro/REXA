@@ -12,7 +12,7 @@ import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
 /**
  * Convenience access to all tables in rexa
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class Tables {
 
     /**

@@ -36,7 +36,7 @@ class XnatService(private val xnatClient: XnatClient) {
 
     fun testConnection(userSettingsRequest: UserSettingsRequest) {
         val fullUri = userSettingsRequest.xnatHost + XnatGlossary.urlProjectLabel
-        xnatClient.callXnatUriWithCredentials(fullUri, UserSettings(userSettingsRequest.xnatUsername, userSettingsRequest.xnatPassword, userSettingsRequest.xnatHost, null));
+        xnatClient.callXnatUriWithCredentials(fullUri, UserSettings(userSettingsRequest.xnatUsername, userSettingsRequest.xnatPassword, userSettingsRequest.xnatHost, null))
     }
 
 }
