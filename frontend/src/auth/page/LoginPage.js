@@ -4,8 +4,7 @@ import {Redirect, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 
-import {Grid, Card, Button, TextField} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core";
+import {Grid, Card, Button, TextField, makeStyles} from "@material-ui/core";
 
 import {performLogin} from "../redux/authDuck";
 import SocialLogin from "../dumb/SocialLogin"

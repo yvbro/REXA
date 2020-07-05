@@ -57,7 +57,7 @@ class ApiAdviceHandler(private var apiErrorReporter: ApiErrorReporter) {
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(AccessDeniedException::class)
+    @ExceptionHandler(AccessDeniedException::class, RexaUnauthorizedException::class)
     protected fun handleForbidden() {
     }
 
