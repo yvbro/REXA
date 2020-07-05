@@ -8,24 +8,13 @@ import fr.yvbro.rexa.jooq.generated.Indexes;
 import fr.yvbro.rexa.jooq.generated.JRexa;
 import fr.yvbro.rexa.jooq.generated.Keys;
 import fr.yvbro.rexa.jooq.generated.tables.records.JSchemaVersionRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Record;
-import org.jooq.Row11;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.TableOptions;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**

@@ -5,14 +5,13 @@ package fr.yvbro.rexa.jooq.generated.tables.records;
 
 
 import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
-
-import java.util.UUID;
-
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record4;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import java.util.UUID;
 
 
 /**

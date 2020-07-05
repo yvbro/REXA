@@ -7,13 +7,12 @@ package fr.yvbro.rexa.jooq.generated;
 import fr.yvbro.rexa.jooq.generated.tables.JSchemaVersion;
 import fr.yvbro.rexa.jooq.generated.tables.JUser;
 import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 /**

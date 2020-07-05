@@ -10,7 +10,6 @@ import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
 import fr.yvbro.rexa.jooq.generated.tables.records.JSchemaVersionRecord;
 import fr.yvbro.rexa.jooq.generated.tables.records.JUserRecord;
 import fr.yvbro.rexa.jooq.generated.tables.records.JUserSettingsRecord;
-
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;

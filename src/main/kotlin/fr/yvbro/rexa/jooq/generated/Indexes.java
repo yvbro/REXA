@@ -5,7 +5,6 @@ package fr.yvbro.rexa.jooq.generated;
 
 
 import fr.yvbro.rexa.jooq.generated.tables.JSchemaVersion;
-
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.Internal;

@@ -6,7 +6,6 @@ import fr.yvbro.rexa.controller.output.ProjectDto
 import fr.yvbro.rexa.controller.output.XnatInfoDto
 import fr.yvbro.rexa.model.Project
 import fr.yvbro.rexa.service.XnatService
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.stream.Collectors.toList
 
