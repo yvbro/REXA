@@ -3,7 +3,7 @@ import React, { useEffect,useState } from "react"
 import {Grid, Card, Button, TextField, makeStyles} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux"
 
-import { fetchSettings, updateSettings } from "../redux/settingsDuck"
+import { fetchSettings, updateSettings, testConnection } from "../redux/settingsDuck"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
       width: 400,
-      height: 400,
+      height: 450,
       borderRadius: "16px",
   },
   form: {
@@ -54,7 +54,7 @@ export const SettingsDetails = () => {
     return <div>Loading...</div>
   }
 
-  function handleSubmit(event){
+  const handleSubmit = (event) => {
     event.preventDefault();
 
   if(!password){
@@ -63,6 +63,14 @@ export const SettingsDetails = () => {
     updateSettings(username === -1 ? xnatUsername : username, host === -1 ? xnatHost : host, password)
   }
   };
+
+  const testCredentials = (event) =>{
+    if(!password){
+      setErrorPassword(true);
+    }else{
+      testConnection(username === -1 ? xnatUsername : username, host === -1 ? xnatHost : host, password)
+    }
+    };
 
   return (
     <Grid
@@ -117,6 +125,13 @@ export const SettingsDetails = () => {
                             disabled={(host === -1 || host === xnatHost) && (username === -1 || username === xnatUsername) && !password}
                             className={classes.button}>
                             Save
+                        </Button>                        
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                            onClick={testCredentials}>
+                            test connection
                         </Button>
                     </form>
                 </Card>

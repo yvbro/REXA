@@ -3,9 +3,11 @@ package fr.yvbro.rexa.service
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import fr.yvbro.rexa.controller.input.UserSettingsRequest
 import fr.yvbro.rexa.model.Assessor
 import fr.yvbro.rexa.model.Project
 import fr.yvbro.rexa.model.Scan
+import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.xnat.XnatClient
 import fr.yvbro.rexa.xnat.XnatGlossary
 import org.springframework.stereotype.Service
@@ -30,6 +32,11 @@ class XnatService(private val xnatClient: XnatClient) {
         //TODO: Add FreeSurfer assessor get
 
         return mapper.readValue(xnatClient.callXnatUri(assessorUri))
+    }
+
+    fun testConnection(userSettingsRequest: UserSettingsRequest) {
+        val fullUri = userSettingsRequest.xnatHost + XnatGlossary.urlProjectLabel
+        xnatClient.callXnatUriWithCredentials(fullUri, UserSettings(userSettingsRequest.xnatUsername, userSettingsRequest.xnatPassword, userSettingsRequest.xnatHost, null));
     }
 
 }

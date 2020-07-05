@@ -1,14 +1,13 @@
 package fr.yvbro.rexa.controller
 
 import fr.yvbro.rexa.config.WebConfig
+import fr.yvbro.rexa.controller.input.UserSettingsRequest
 import fr.yvbro.rexa.controller.output.ProjectDto
 import fr.yvbro.rexa.controller.output.XnatInfoDto
 import fr.yvbro.rexa.model.Project
 import fr.yvbro.rexa.service.XnatService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 import java.util.stream.Collectors.toList
 
 @RestController
@@ -36,6 +35,11 @@ class XnatFrontController(private val xnatService: XnatService) {
                 .stream()
                 .map(this::mapToDto)
                 .collect(toList())
+    }
+
+    @PostMapping("/test")
+    fun testCredentials(@RequestBody userSettingsRequest: UserSettingsRequest) {
+        xnatService.testConnection(userSettingsRequest)
     }
 
     private fun mapToDto(project: Project): ProjectDto {

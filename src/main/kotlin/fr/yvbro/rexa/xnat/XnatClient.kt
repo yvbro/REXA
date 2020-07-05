@@ -7,6 +7,7 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import fr.yvbro.rexa.exception.RexaBadRequestException
 import fr.yvbro.rexa.exception.RexaUnknownException
+import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.security.UserPrincipal
 import fr.yvbro.rexa.service.UserSettingsService
 import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
@@ -23,19 +24,24 @@ class XnatClient(private val properties: XnatProperties, private val userSetting
     private val logger = LoggerFactory.getLogger(XnatClient::class.java)
 
     fun callXnatUri(uri: String): String {
+        val user = userSettingsService.getXnatSettings((SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id)
+        var fullUri = user.xnatHost + uri
+
+        return callXnatUriWithCredentials(fullUri, user)
+    }
+
+    fun callXnatUriWithCredentials(uri: String, userSettings: UserSettings): String {
 
         var statusCode = 200
         var errorMessage: String? = ""
 
-        val user = userSettingsService.getXnatSettings((SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id)
         var data = ""
-        var fullUri = user.xnatHost + uri
 
-        val httpAsync = fullUri
+        val httpAsync = uri
                 .httpGet()
                 .header(Headers.ACCEPT to MediaType.APPLICATION_JSON)
                 .authentication()
-                .basic(user.xnatUsername!!, user.xnatPassword!!)
+                .basic(userSettings.xnatUsername!!, userSettings.xnatPassword!!)
                 .responseString { _, _, result ->
                     when (result) {
                         is Result.Failure -> {
