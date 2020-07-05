@@ -60,7 +60,7 @@ export const SettingsDetails = () => {
   if(!password){
     setErrorPassword(true);
   }else{
-    updateSettings(username === -1 ? xnatUsername : username, host === -1 ? xnatHost : host)
+    updateSettings(username === -1 ? xnatUsername : username, host === -1 ? xnatHost : host, password)
   }
   };
 
@@ -114,7 +114,7 @@ export const SettingsDetails = () => {
                             type="submit"
                             variant="outlined"
                             color="primary"
-                            disabled={(host === -1 || host === xnatHost) && (username === -1 || username === xnatUsername)}
+                            disabled={(host === -1 || host === xnatHost) && (username === -1 || username === xnatUsername) && !password}
                             className={classes.button}>
                             Save
                         </Button>
@@ -122,41 +122,6 @@ export const SettingsDetails = () => {
                 </Card>
             </Grid>
         </Grid>
-/*     <Container>
-      <form onSubmit={handleSubmit}>
-        <Form>
-          <Form.Group as={Row} controlId="formXnatUsername">
-            <Form.Label column sm="2">
-              Xnat Username
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type="text"
-                defaultValue={xnatUsername}
-                onChange={e => setUsername(e.target.value)}
-                />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="formXnatUrl">
-            <Form.Label column sm="2">
-              Xnat Url
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                type="text"
-                defaultValue={xnatHost}
-                onChange={e => setHost(e.target.value)}
-              />
-            </Col>
-          </Form.Group>
-
-          <Button disabled={false} type="submit" size="lg">
-            Save
-          </Button>
-        </Form>
-      </form>
-    </Container> */
   )
 }
 

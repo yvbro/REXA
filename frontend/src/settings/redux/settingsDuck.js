@@ -2,6 +2,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 import {fulfilled, pending, rejected} from '../../helpers/promise';
+import {toast} from "react-toastify";
 
 const initialState = {
     xnatUser: '',
@@ -46,10 +47,14 @@ export const fetchSettings = () => dispatch =>
         payload: axios.get("/private/settings")
     });
 
-export const updateSettings = (xnatUsername, xnatHost) => {
+export const updateSettings = (xnatUsername, xnatHost, xnatPassword) => {
         const response = axios.post("/private/settings",
-         { xnatUsername ,xnatHost },
-        );
+         { xnatUsername ,xnatHost, xnatPassword},
+        ).then(() => {
+            toast.info("Settings saved");
+        }).catch(() => {
+        toast.error("Failed to save settings");
+    });
       
         return response.data;
     };

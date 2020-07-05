@@ -19,10 +19,11 @@ class UserSettingsRepository(private val dsl: DSLContext,
             .fetchOptional(xnatSettingsMapper)
             .orElseThrow { UsernameNotFoundException("Settings not found") }
 
-    fun save(userId: UUID?, xnatUsername: String?, xnatHost: String?) {
+    fun save(userId: UUID?, xnatUsername: String?, xnatHost: String?, xnatPassword: String?) {
         dsl.update(Tables.USER_SETTINGS)
                 .set(Tables.USER_SETTINGS.XNAT_USERNAME, xnatUsername)
                 .set(Tables.USER_SETTINGS.XNAT_URL, xnatHost)
+                .set(Tables.USER_SETTINGS.XNAT_PASSWORD, xnatPassword)
                 .where(Tables.USER_SETTINGS.USER_ID.eq(userId))
                 .execute()
     }

@@ -12,8 +12,8 @@ class UserSettingsService(private val xnatRepository: UserSettingsRepository) {
         return xnatRepository.getSettingsByUserId(userId)
     }
 
-    fun updateXnatSettings(userId: UUID?, xnatUsername: String?, xnatHost: String?) {
-        xnatRepository.save(userId, xnatUsername, xnatHost)
+    fun updateXnatSettings(userId: UUID?, xnatUsername: String?, xnatHost: String?, xnatPassword: String?) {
+        xnatRepository.save(userId, xnatUsername, xnatHost, xnatPassword)
     }
 
 }

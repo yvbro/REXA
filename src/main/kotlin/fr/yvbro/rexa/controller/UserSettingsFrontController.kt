@@ -2,7 +2,6 @@ package fr.yvbro.rexa.controller
 
 import fr.yvbro.rexa.config.WebConfig
 import fr.yvbro.rexa.controller.input.UserSettingsRequest
-import fr.yvbro.rexa.controller.output.AuthResponse
 import fr.yvbro.rexa.controller.output.UserSettingsDto
 import fr.yvbro.rexa.security.UserPrincipal
 import fr.yvbro.rexa.service.UserSettingsService
@@ -26,9 +25,8 @@ class UserSettingsFrontController(private val userSettingsService: UserSettingsS
 
     @PostMapping("/settings")
     fun updateXnatSettings(@RequestBody userSettingsRequest: UserSettingsRequest): ResponseEntity<Any> {
-        println(userSettingsRequest.xnatUsername)
         var userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
-        userSettingsService.updateXnatSettings(userId, userSettingsRequest.xnatUsername, userSettingsRequest.xnatHost)
+        userSettingsService.updateXnatSettings(userId, userSettingsRequest.xnatUsername, userSettingsRequest.xnatHost, userSettingsRequest.xnatPassword)
         return ResponseEntity.ok("DONE")
     }
 }

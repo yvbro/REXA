@@ -24,11 +24,6 @@ spring:
               - email
               - profile
 
-xnat:
-  url: http://localhost
-  user: admin
-  password: admin
-
 app:
   oauth2:
     authorizedRedirectUris: http://localhost:8080/oauth2/redirect
