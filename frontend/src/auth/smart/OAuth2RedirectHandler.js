@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-import {ACCESS_TOKEN} from "../../constants";
+import { ACCESS_TOKEN } from '../../constants';
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
@@ -10,7 +10,9 @@ class OAuth2RedirectHandler extends Component {
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 
         var results = regex.exec(this.props.location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        return results === null
+            ? ''
+            : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 
     render() {
@@ -19,18 +21,26 @@ class OAuth2RedirectHandler extends Component {
 
         if (token) {
             localStorage.setItem(ACCESS_TOKEN, `Bearer ${token}`);
-            return <Redirect to={{
-                pathname: "/rexa/dashboard",
-                state: {from: this.props.location}
-            }}/>;
+            return (
+                <Redirect
+                    to={{
+                        pathname: '/rexa/dashboard',
+                        state: { from: this.props.location },
+                    }}
+                />
+            );
         } else {
-            return <Redirect to={{
-                pathname: "/rexa/login",
-                state: {
-                    from: this.props.location,
-                    error: error,
-                }
-            }}/>;
+            return (
+                <Redirect
+                    to={{
+                        pathname: '/rexa/login',
+                        state: {
+                            from: this.props.location,
+                            error: error,
+                        },
+                    }}
+                />
+            );
         }
     }
 }

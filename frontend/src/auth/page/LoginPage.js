@@ -1,16 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, useHistory, useLocation} from 'react-router-dom';
-import {useDispatch} from "react-redux";
-import {toast} from "react-toastify";
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-import {Grid, Card, Button, TextField, makeStyles} from "@material-ui/core";
+import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 
-import {performLogin} from "../redux/authDuck";
-import SocialLogin from "../dumb/SocialLogin"
-import {ACCESS_TOKEN} from "../../constants";
+import { performLogin } from '../redux/authDuck';
+import SocialLogin from '../dumb/SocialLogin';
+import { ACCESS_TOKEN } from '../../constants';
 
-import style from "../dumb/auth.module.scss";
+import style from '../dumb/auth.module.scss';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
         height: 350,
-        borderRadius: "16px",
+        borderRadius: '16px',
     },
     form: {
         display: 'flex',
@@ -42,9 +42,9 @@ const regexEmail = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
 const LoginPage = (props) => {
     const classes = useStyles();
 
-    const [email, setEmail] = useState("");
-    const [errorEmail, setErrorEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -55,12 +55,16 @@ const LoginPage = (props) => {
 
         dispatch(performLogin(email, password))
             .then((response) => {
-                toast.info("Welcome to Rexa");
-                localStorage.setItem(ACCESS_TOKEN, `Bearer ${response.value.data.accessToken}`);
-                history.push("/rexa/dashboard");
-            }).catch(() => {
-            toast.error("Login failed: Invalid username or password.");
-        });
+                toast.info('Welcome to Rexa');
+                localStorage.setItem(
+                    ACCESS_TOKEN,
+                    `Bearer ${response.value.data.accessToken}`
+                );
+                history.push('/rexa/dashboard');
+            })
+            .catch(() => {
+                toast.error('Login failed: Invalid username or password.');
+            });
     };
 
     const onChangeEmail = (event) => {
@@ -73,16 +77,19 @@ const LoginPage = (props) => {
     };
 
     if (location.state && location.state.error) {
-        toast.error("This account is not allowed to sign in.");
+        toast.error('This account is not allowed to sign in.');
         location.state.error = null;
     }
 
     if (props.authenticated) {
-        return <Redirect
-            to={{
-                pathname: "/rexa/dashboard",
-                state: {from: location}
-            }}/>;
+        return (
+            <Redirect
+                to={{
+                    pathname: '/rexa/dashboard',
+                    state: { from: location },
+                }}
+            />
+        );
     }
 
     return (
@@ -98,28 +105,35 @@ const LoginPage = (props) => {
                 <Card className={classes.card}>
                     <div className={style.header}>
                         <h1>
-                            <span className={style.blue30}>Welcome{' '}</span>
-                            <span className={style.black15}>to{' '}</span>
+                            <span className={style.blue30}>Welcome </span>
+                            <span className={style.black15}>to </span>
                             <span className={style.red30}> ReXA</span>
                         </h1>
                     </div>
-                    <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
-                        <TextField id="outlined-basic"
-                                   type="email"
-                                   name="email"
-                                   label="Email"
-                                   variant="outlined"
-                                   error={!!errorEmail}
-                                   helperText={errorEmail}
-                                   onChange={onChangeEmail}
-                                   className={classes.text}/>
+                    <form
+                        className={classes.form}
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={handleSubmit}
+                    >
+                        <TextField
+                            id="outlined-basic"
+                            type="email"
+                            name="email"
+                            label="Email"
+                            variant="outlined"
+                            error={!!errorEmail}
+                            helperText={errorEmail}
+                            onChange={onChangeEmail}
+                            className={classes.text}
+                        />
                         <TextField
                             id="filled-password-input"
                             name="password"
                             label="Password"
                             type="password"
                             variant="outlined"
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                             className={classes.text}
                         />
                         <Button
@@ -127,10 +141,11 @@ const LoginPage = (props) => {
                             variant="outlined"
                             color="primary"
                             disabled={!!errorEmail}
-                            className={classes.button}>
+                            className={classes.button}
+                        >
                             Sign in
                         </Button>
-                        <SocialLogin/>
+                        <SocialLogin />
                     </form>
                 </Card>
             </Grid>
