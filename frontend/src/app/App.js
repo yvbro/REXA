@@ -15,7 +15,6 @@ import Header from "./Header";
 import ProjectPage from "../project/page/ProjectPage";
 import SettingsPage from "../settings/page/SettingsPage";
 import LoginPage from "../auth/page/LoginPage";
-import SettingsPage from "../settings/SettingsPage";
 import PrivateRoute from "./PrivateRoute";
 import LoadingIndicator from "../common/LoadingIndicator";
 import NotFound from "../common/NotFound";
