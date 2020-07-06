@@ -10,13 +10,13 @@ import java.util.*
 
 @Repository
 class UserSettingsRepository(private val dsl: DSLContext,
-                             private val xnatSettingsMapper: UserSettingsMapper) {
+                             private val userSettingsMapper: UserSettingsMapper) {
 
     fun getSettingsByUserId(userId: UUID?): UserSettings = dsl.select()
             .from(Tables.USER_SETTINGS)
             .where(Tables.USER_SETTINGS.USER_ID.eq(userId))
             .limit(1)
-            .fetchOptional(xnatSettingsMapper)
+            .fetchOptional(userSettingsMapper)
             .orElseThrow { UsernameNotFoundException("Settings not found") }
 
     fun save(userId: UUID?, xnatUsername: String?, xnatHost: String?, xnatPassword: String?) {

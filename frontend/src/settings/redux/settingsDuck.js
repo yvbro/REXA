@@ -13,7 +13,6 @@ const initialState = {
 const FETCH_SETTINGS = "[Auth] FETCH SETTINGS"
 
 export default function settings(state = initialState, action) {
-  console.log(action)
   switch (action.type) {
     case pending(FETCH_SETTINGS):
       return {
@@ -64,7 +63,7 @@ export const testConnection = (xnatUsername, xnatHost, xnatPassword) => {
   const response = axios
     .post("/private/test", { xnatUsername, xnatHost, xnatPassword })
     .then(() => {
-      toast.info("Connect succesfully to Xnat")
+      toast.info("Succesfully connected to Xnat")
     })
     .catch(() => {
       toast.error("Connection failed")

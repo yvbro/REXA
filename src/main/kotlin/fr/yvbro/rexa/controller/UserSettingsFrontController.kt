@@ -24,9 +24,8 @@ class UserSettingsFrontController(private val userSettingsService: UserSettingsS
     }
 
     @PostMapping("/settings")
-    fun updateXnatSettings(@RequestBody userSettingsRequest: UserSettingsRequest): ResponseEntity<Any> {
+    fun updateXnatSettings(@RequestBody userSettingsRequest: UserSettingsRequest) {
         var userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
         userSettingsService.updateXnatSettings(userId, userSettingsRequest.xnatUsername, userSettingsRequest.xnatHost, userSettingsRequest.xnatPassword)
-        return ResponseEntity.ok("DONE")
     }
 }
