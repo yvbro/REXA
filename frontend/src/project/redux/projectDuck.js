@@ -1,7 +1,7 @@
-import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
 
-import {fulfilled, pending, rejected} from '../../helpers/promise';
+import { fulfilled, pending, rejected } from '../../helpers/promise';
 
 const initialState = {
     projectsList: {
@@ -14,8 +14,8 @@ const initialState = {
     },
 };
 
-const FETCH_PROJECTS = "[Auth] FETCH LIST OF PROJECTS";
-const FETCH_PROJECT = "[Auth] FETCH ONE PROJECT";
+const FETCH_PROJECTS = '[Auth] FETCH LIST OF PROJECTS';
+const FETCH_PROJECT = '[Auth] FETCH ONE PROJECT';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
@@ -25,7 +25,7 @@ export default function project(state = initialState, action) {
                 projectsList: {
                     data: [],
                     loading: true,
-                }
+                },
             };
         case fulfilled(FETCH_PROJECTS):
             return {
@@ -33,7 +33,7 @@ export default function project(state = initialState, action) {
                 projectsList: {
                     data: action.payload.data,
                     loading: false,
-                }
+                },
             };
         case rejected(FETCH_PROJECTS):
             return {
@@ -41,7 +41,7 @@ export default function project(state = initialState, action) {
                 projectsList: {
                     data: state.projectsList.data,
                     loading: false,
-                }
+                },
             };
         case pending(FETCH_PROJECT):
             return {
@@ -49,7 +49,7 @@ export default function project(state = initialState, action) {
                 selectedProject: {
                     data: [],
                     loading: true,
-                }
+                },
             };
         case fulfilled(FETCH_PROJECT):
             return {
@@ -57,7 +57,7 @@ export default function project(state = initialState, action) {
                 selectedProject: {
                     data: action.payload.data,
                     loading: false,
-                }
+                },
             };
         case rejected(FETCH_PROJECT):
             return {
@@ -65,22 +65,21 @@ export default function project(state = initialState, action) {
                 selectedProject: {
                     data: state.selectedProject.data,
                     loading: false,
-                }
+                },
             };
         default:
-            return state
+            return state;
     }
 }
 
-export const fetchProjects = () => dispatch =>
+export const fetchProjects = () => (dispatch) =>
     dispatch({
         type: FETCH_PROJECTS,
-        payload: axios.get("/private/projects")
+        payload: axios.get('/private/projects'),
     });
 
-export const fetchProject = (projectId) => dispatch =>
+export const fetchProject = (projectId) => (dispatch) =>
     dispatch({
         type: FETCH_PROJECT,
-        payload: axios.get(`/private/projects/${projectId}`)
+        payload: axios.get(`/private/projects/${projectId}`),
     });
-

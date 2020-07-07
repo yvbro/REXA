@@ -1,13 +1,13 @@
-import React from "react"
-import ReactDOM from "react-dom"
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import axios from 'axios';
 
-import "./index.scss"
-import App from "./app/App"
-import * as serviceWorker from "./serviceWorker"
-import configureStore from "./app/store";
-import {ACCESS_TOKEN} from "./constants";
+import './index.scss';
+import App from './app/App';
+import * as serviceWorker from './serviceWorker';
+import configureStore from './app/store';
+import { ACCESS_TOKEN } from './constants';
 
 const store = configureStore();
 
@@ -17,7 +17,7 @@ axios.interceptors.request.use(function (config) {
     return config;
 });
 
-ReactDOM.render(<App store={store}/>, document.getElementById("root"));
+ReactDOM.render(<App store={store} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
