@@ -9,7 +9,7 @@ import { performLogout } from "../auth/redux/authDuck"
 import { ACCESS_TOKEN } from "../constants"
 import { toast } from "react-toastify"
 
-import style from "../common/common.module.scss";
+import style from "../common/common.module.scss"
 
 const Header = (props) => {
   const [expanded, setExpanded] = useState(false)
@@ -72,6 +72,22 @@ const Header = (props) => {
                 </NavIcon>
                 <NavText>
                   <Link to="rexa/project">Project View</Link>
+                </NavText>
+              </NavItem>
+
+              <NavItem
+                eventKey="rexa/settings"
+                active={props.location.pathname.startsWith("/rexa/settings")}
+              >
+                <NavIcon>
+                  <i
+                    className="fa fa-cogs"
+                    aria-hidden="true"
+                    style={{ fontSize: "1.75em" }}
+                  />
+                </NavIcon>
+                <NavText>
+                  <Link to="rexa/project">User settings</Link>
                 </NavText>
               </NavItem>
 

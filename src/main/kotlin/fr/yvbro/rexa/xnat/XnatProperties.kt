@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationProperties(prefix = "xnat")
-open class XnatProperties {
+class XnatProperties {
     lateinit var url: String
     lateinit var user: String
     lateinit var password: String

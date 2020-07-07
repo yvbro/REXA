@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 
 @Component
-class CustomOAuth2UserService(private val userRepository: UserRepository): DefaultOAuth2UserService() {
+class CustomOAuth2UserService(private val userRepository: UserRepository) : DefaultOAuth2UserService() {
 
     @Throws(OAuth2AuthenticationException::class)
     override fun loadUser(oAuth2UserRequest: OAuth2UserRequest): OAuth2User? {

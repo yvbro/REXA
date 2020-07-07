@@ -6,12 +6,13 @@ package fr.yvbro.rexa.jooq.generated;
 
 import fr.yvbro.rexa.jooq.generated.tables.JSchemaVersion;
 import fr.yvbro.rexa.jooq.generated.tables.JUser;
+import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
 
 
 /**
  * Convenience access to all tables in rexa
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class Tables {
 
     /**
@@ -23,4 +24,9 @@ public class Tables {
      * The table <code>rexa.user</code>.
      */
     public static final JUser USER = JUser.USER;
+
+    /**
+     * The table <code>rexa.user_settings</code>.
+     */
+    public static final JUserSettings USER_SETTINGS = JUserSettings.USER_SETTINGS;
 }

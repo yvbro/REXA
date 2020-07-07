@@ -35,7 +35,7 @@ class OAuth2AuthenticationSuccessHandler(var tokenProvider: TokenProvider,
         if (cookie != null && !isAuthorizedRedirectUri(cookie.value)) {
             throw RexaBadRequestException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication")
         }
-        val targetUrl = cookie?.value ?:defaultTargetUrl
+        val targetUrl = cookie?.value ?: defaultTargetUrl
         val token = tokenProvider.createToken(authentication)
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
@@ -43,13 +43,13 @@ class OAuth2AuthenticationSuccessHandler(var tokenProvider: TokenProvider,
     }
 
     private fun isAuthorizedRedirectUri(uri: String): Boolean {
-        val clientRedirectUri = URI.create(uri);
+        val clientRedirectUri = URI.create(uri)
 
-        val authorizedURI = URI.create(appProperties.appAuthorizedRedirectUris);
+        val authorizedURI = URI.create(appProperties.appAuthorizedRedirectUris)
         if (authorizedURI.host == clientRedirectUri.host && authorizedURI.port == clientRedirectUri.port) {
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     protected fun clearAuthenticationAttributes(request: HttpServletRequest, response: HttpServletResponse) {

@@ -10,5 +10,4 @@ data class XnatInfoDto(
         var numberOfSubject: Int,
         var scans: List<Scan>,
         var assessors: List<Assessor>
-) {
-}
+)

@@ -13,6 +13,7 @@ import "font-awesome/css/font-awesome.min.css";
 import DashboardPage from "../dashboard/page/DashboardPage";
 import Header from "./Header";
 import ProjectPage from "../project/page/ProjectPage";
+import SettingsDetailsPage from "../settings/page/SettingsDetailsPage";
 import LoginPage from "../auth/page/LoginPage";
 import PrivateRoute from "./PrivateRoute";
 import LoadingIndicator from "../common/LoadingIndicator";
@@ -64,6 +65,10 @@ class App extends React.Component {
                                         authenticated={authenticated}
                                         path="/rexa/project"
                                         component={() => <ProjectPage/>}/>
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/rexa/Settings"
+                                        component={() => <SettingsDetailsPage/>}/>
                                     <PrivateRoute
                                         authenticated={authenticated}
                                         path="/"
