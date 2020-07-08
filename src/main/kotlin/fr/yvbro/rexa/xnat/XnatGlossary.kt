@@ -9,6 +9,8 @@ class XnatGlossary {
         const val defaultScanTypeLabel: String = "xnat:imagescandata"
         const val urlArchiveLabel: String = "/REST/archive/experiments"
         const val urlProjectLabel: String = "/REST/projects"
+        const val urlRecentActivities: String = "/data/experiments?recent=true&format=json"
+        const val urlPreArchive: String = "/REST/prearchive?format=json"
 
         const val assessorUrlLabel: String = "&xsiType=$defaultAssessorTypeLabel&columns=ID,label,URI,xsiType,project,xnat:imagesessiondata/subject_id," +
                 "xnat:imagesessiondata/id,xnat:imagesessiondata/label,$defaultAssessorTypeLabel/procstatus,$defaultAssessorTypeLabel/" +

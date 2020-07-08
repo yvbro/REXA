@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import fr.yvbro.rexa.controller.input.UserSettingsRequest
-import fr.yvbro.rexa.model.Assessor
-import fr.yvbro.rexa.model.Project
-import fr.yvbro.rexa.model.Scan
-import fr.yvbro.rexa.model.UserSettings
+import fr.yvbro.rexa.model.*
 import fr.yvbro.rexa.xnat.XnatClient
 import fr.yvbro.rexa.xnat.XnatGlossary
 import org.springframework.stereotype.Service
@@ -32,6 +29,18 @@ class XnatService(private val xnatClient: XnatClient) {
         //TODO: Add FreeSurfer assessor get
 
         return mapper.readValue(xnatClient.callXnatUri(assessorUri))
+    }
+
+    fun getRecentActivities(): List<ProjectRecentActivities> {
+        val recentActivitiesUri = XnatGlossary.urlRecentActivities
+
+        return mapper.readValue(xnatClient.callXnatUri(recentActivitiesUri))
+    }
+
+    fun getPreArchive(): List<ProjectPreArchive> {
+        val preArchiveUri = XnatGlossary.urlPreArchive
+
+        return mapper.readValue(xnatClient.callXnatUri(preArchiveUri))
     }
 
     fun testConnection(userSettingsRequest: UserSettingsRequest) {
