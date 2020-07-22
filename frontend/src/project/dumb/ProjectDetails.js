@@ -6,6 +6,7 @@ import { Grid, Typography, makeStyles } from '@material-ui/core';
 import { ProcessorDetails } from './ProcessorDetails';
 import { ProjectInfo } from './ProjectInfo';
 import { NoProjectData } from './NoProjectData';
+import { ProjectScanUnusable } from './ProjectScanUnusable';
 
 const useStyles = makeStyles({
     loading: {
@@ -45,10 +46,13 @@ export const ProjectDetails = () => {
             {project && project.assessors ? (
                 <>
                     <Grid container spacing={3}>
-                        <Grid item xs={6}>
+                        <Grid item xs={3}>
                             <ProjectInfo project={project} />
                         </Grid>
-                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                            <ProjectScanUnusable scans={project.scans} />
+                        </Grid>
+                        <Grid item xs={3}/>
                     </Grid>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>

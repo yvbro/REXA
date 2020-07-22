@@ -45,8 +45,7 @@ export const ProjectsDropDown = () => {
             <InputLabel id="project-selector">Select a project</InputLabel>
             <Select
                 labelId="project-selector"
-                id="demo-simple-select-outlined"
-                value={project ? project.projectId : ''}
+                value={project && project.projectId ? project.projectId : ''}
                 onChange={onChange}
                 label="project"
             >
