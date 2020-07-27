@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {
     Card,
 } from '@material-ui/core';
 import ScanUnusablePieChart from '../../chart/ScanUnusablePieChart';
-import { extractUnusableScanTypes } from '../../utils/xnat';
+import {extractUnusableScanTypes} from '../../utils/xnat';
+import {NoScansUnusable} from "./NoScansUnsusable";
 
 const useStyles = makeStyles({
     root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const ProjectScanUnusable = ({ scans }) => {
+export const ProjectScanUnusable = ({scans}) => {
     const classes = useStyles();
 
     let unusableScans = [];
@@ -32,7 +33,12 @@ export const ProjectScanUnusable = ({ scans }) => {
         <>
             <h3>Scan types unusables</h3>
             <Card className={classes.cardInfo}>
-                <ScanUnusablePieChart unusableScans={unusableScans}/>
+                {unusableScans && unusableScans.length > 0 ? (
+                    <ScanUnusablePieChart unusableScans={unusableScans}/>
+                ) : (
+                    <NoScansUnusable/>
+                )
+                }
             </Card>
         </>
     );
