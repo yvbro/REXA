@@ -17,17 +17,7 @@ import {
 
 const useStyles = makeStyles({
     cardInfo: {
-        width: 300,
-        height: 350,
         borderRadius: '16px',
-    },
-    list: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
     },
 });
 
@@ -38,7 +28,7 @@ export const ProjectInfo = ({ project }) => {
         <>
             <h3>Project Information</h3>
             <Card className={classes.cardInfo}>
-                <List className={classes.list}>
+                <List>
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar>

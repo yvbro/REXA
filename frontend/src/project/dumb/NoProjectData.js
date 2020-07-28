@@ -8,7 +8,6 @@ import grey from '@material-ui/core/colors/grey';
 const useStyles = makeStyles((theme) => ({
     card: {
         borderRadius: '16px',
-        width: '100vh',
     },
     alignItemsAndJustifyContent: {
         display: 'flex',

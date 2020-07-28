@@ -7,13 +7,7 @@ import { Grid, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
         padding: theme.spacing(3),
-    },
-    loading: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 }));
 
@@ -24,7 +18,7 @@ export const ProjectPage = () => {
         <AppLayout>
             <div className={classes.root}>
                 <Grid container spacing={3}>
-                    <Grid item xs={3}>
+                    <Grid item md={3} xs={12}>
                         <ProjectsDropDown />
                     </Grid>
                 </Grid>

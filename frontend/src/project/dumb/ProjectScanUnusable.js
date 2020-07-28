@@ -10,13 +10,7 @@ import {extractUnusableScanTypes} from '../../utils/xnat';
 import {NoScansUnusable} from "./NoScansUnsusable";
 
 const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-    },
     cardInfo: {
-        width: 500,
-        height: 350,
         borderRadius: '16px',
     },
 });

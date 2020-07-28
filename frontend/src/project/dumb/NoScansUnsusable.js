@@ -12,7 +12,6 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         flexDirection: 'column',
         color: grey[500],
-        height: 350,
     },
     iconDef: {
         fontSize: 80,

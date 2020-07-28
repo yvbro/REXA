@@ -26,8 +26,7 @@ export const ProjectDetails = () => {
     if (loading || parentLoading) {
         return (
             <Grid container spacing={3}>
-                <Grid item xs></Grid>
-                <Grid item xs={6}>
+                <Grid item md={6}>
                     <Typography
                         className={classes.loading}
                         variant="subtitle1"
@@ -36,7 +35,6 @@ export const ProjectDetails = () => {
                         Loading...
                     </Typography>
                 </Grid>
-                <Grid item xs></Grid>
             </Grid>
         );
     }
@@ -46,16 +44,15 @@ export const ProjectDetails = () => {
             {project && project.assessors ? (
                 <>
                     <Grid container spacing={3}>
-                        <Grid item xs={3}>
+                        <Grid item md={3} xs={12}>
                             <ProjectInfo project={project} />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item md={6} xs={12}>
                             <ProjectScanUnusable scans={project.scans} />
                         </Grid>
-                        <Grid item xs={3}/>
                     </Grid>
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item md={12} xs={12}>
                             <ProcessorDetails processors={project.assessors} />
                         </Grid>
                     </Grid>
@@ -63,11 +60,9 @@ export const ProjectDetails = () => {
             ) : (
                 <>
                     <Grid container spacing={3}>
-                        <Grid item xs></Grid>
-                        <Grid item xs={6}>
+                        <Grid item md={12} xs={12}>
                             <NoProjectData />
                         </Grid>
-                        <Grid item xs></Grid>
                     </Grid>
                 </>
             )}
