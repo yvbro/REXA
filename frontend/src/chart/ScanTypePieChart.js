@@ -5,7 +5,7 @@ import Chart from 'react-apexcharts';
 
 import style from './charts.module.scss';
 
-class ScanUnusablePieChart extends React.Component {
+class ScanTypePieChart extends React.Component {
     constructor(props) {
         super(props);
 
@@ -41,13 +41,13 @@ class ScanUnusablePieChart extends React.Component {
     }
 
     render() {
-        const {unusableScans} = this.props;
+        const {scans} = this.props;
 
         return (
             <div id="chart" className={style.drawing}>
                 <Chart
-                    options={{...this.state.options, labels: unusableScans.map(obj => obj.name)}}
-                    series={unusableScans.map(obj => obj.data)}
+                    options={{...this.state.options, labels: scans.map(obj => obj.name)}}
+                    series={scans.map(obj => obj.data)}
                     type="donut"
                     height={350}
                 />
@@ -56,8 +56,8 @@ class ScanUnusablePieChart extends React.Component {
     }
 }
 
-ScanUnusablePieChart.propTypes = {
-    unusableScans: PropTypes.array.isRequired,
+ScanTypePieChart.propTypes = {
+    scans: PropTypes.array.isRequired,
 };
 
-export default ScanUnusablePieChart;
+export default ScanTypePieChart;

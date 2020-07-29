@@ -3,10 +3,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 
-import { ProcessorDetails } from './ProcessorDetails';
 import { ProjectInfo } from './ProjectInfo';
 import { NoProjectData } from './NoProjectData';
-import { ProjectScanUnusable } from './ProjectScanUnusable';
+import { ScanTypesDetails } from './ScanTypesDetails';
+import {ProcessorGrid} from "./ProcessorGrid";
 
 const useStyles = makeStyles({
     loading: {
@@ -45,17 +45,16 @@ export const ProjectDetails = () => {
                 <>
                     <Grid container spacing={3}>
                         <Grid item md={3} xs={12}>
-                            <ProjectInfo project={project} />
+                            <ProjectInfo project={project}/>
                         </Grid>
                         <Grid item md={6} xs={12}>
-                            <ProjectScanUnusable scans={project.scans} />
+                            <ScanTypesDetails scans={project.scans}/>
                         </Grid>
+                        {/*<Grid item md={3} xs={12}>*/}
+                        {/*    <UnusableScans status={scansByType} />*/}
+                        {/*</Grid>*/}
                     </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item md={12} xs={12}>
-                            <ProcessorDetails processors={project.assessors} />
-                        </Grid>
-                    </Grid>
+                    <ProcessorGrid processors={project.assessors}/>
                 </>
             ) : (
                 <>

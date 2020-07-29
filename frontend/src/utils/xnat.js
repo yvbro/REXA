@@ -32,22 +32,25 @@ export const extractAssessorsProcTypeAndStatus = (assessors) => {
         } else {
             arr.push({
                 name: obj['proc:genprocdata/proctype'],
-                data: [...defaultProcStatus(obj['proc:genprocdata/procstatus'])],
+                data: [...defaultProcStatus(obj['proc:genprocdata/procstatus'] in PROC_STATUS ? obj['proc:genprocdata/procstatus'] : 'UNKNOWN')],
             });
         }
         return arr;
     }, []);
 };
 
-export const extractUnusableScanTypes = (scans) => {
-    return scans.filter(
-            (scan) => scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY
-        ).reduce((arr, obj) => {
+export const getUnknownProcStatus = (assessors) => {
+    return [...new Set(assessors.filter(proc => !PROC_STATUS.includes(proc['proc:genprocdata/procstatus']))
+        .map(proc => proc['proc:genprocdata/procstatus']))]
+};
+
+export const extractScanTypes = (scans) => {
+    return scans.reduce((arr, obj) => {
         const typeFound = arr.filter(
             (el) => el.name === obj['xnat:imagescandata/type']
         );
         if (typeFound.length > 0) {
-            typeFound[0] += 1;
+            typeFound[0].data += 1;
         } else {
             arr.push({
                 name: obj['xnat:imagescandata/type'],
