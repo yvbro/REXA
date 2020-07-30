@@ -22,17 +22,19 @@ const defaultProcStatus = (status) => {
 
 export const extractAssessorsProcTypeAndStatus = (assessors) => {
     return assessors.reduce((arr, obj) => {
+        const procStatus = PROC_STATUS.includes(obj['proc:genprocdata/procstatus']) ? obj['proc:genprocdata/procstatus'] : 'UNKNOWN';
+
         const procFound = arr.filter(
             (el) => el.name === obj['proc:genprocdata/proctype']
         );
         if (procFound.length > 0) {
             procFound[0].data[
-                PROC_STATUS.indexOf(obj['proc:genprocdata/procstatus'])
+                PROC_STATUS.indexOf(procStatus)
             ] += 1;
         } else {
             arr.push({
                 name: obj['proc:genprocdata/proctype'],
-                data: [...defaultProcStatus(obj['proc:genprocdata/procstatus'] in PROC_STATUS ? obj['proc:genprocdata/procstatus'] : 'UNKNOWN')],
+                data: [...defaultProcStatus(procStatus)],
             });
         }
         return arr;
