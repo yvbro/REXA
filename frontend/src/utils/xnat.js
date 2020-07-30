@@ -11,7 +11,7 @@ export const PROC_STATUS = [
     'UNKNOWN',
 ];
 
-export const UNUSABLE_SCAN_QUALITY = 'unusable';
+export const UNUSABLE_SCAN_QUALITY = 'bad';
 
 const defaultProcStatus = (status) => {
     return PROC_STATUS.reduce(function (result, s) {
@@ -61,4 +61,8 @@ export const extractScanTypes = (scans) => {
         }
         return arr;
     }, []);
+};
+
+export const getUnusableScans = (scans) => {
+    return scans.filter(scan => scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY)
 };

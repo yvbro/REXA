@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import ScanTypePieChart from '../../chart/ScanTypePieChart';
 import {extractScanTypes} from '../../utils/xnat';
-import {NoScansData} from "./NoScansUnsusable";
+import {NoScanData} from "./NoScanData";
 
 const useStyles = makeStyles({
     cardInfo: {
@@ -29,7 +29,7 @@ export const ScanTypesDetails = ({scans}) => {
                 {scansByType && scansByType.length > 0 ? (
                     <ScanTypePieChart scans={scansByType}/>
                 ) : (
-                    <NoScansData/>
+                    <NoScanData/>
                 )
                 }
             </Card>

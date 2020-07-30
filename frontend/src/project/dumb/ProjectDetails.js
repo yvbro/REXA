@@ -5,8 +5,8 @@ import { Grid, Typography, makeStyles } from '@material-ui/core';
 
 import { ProjectInfo } from './ProjectInfo';
 import { NoProjectData } from './NoProjectData';
-import { ScanTypesDetails } from './ScanTypesDetails';
 import {ProcessorGrid} from "./ProcessorGrid";
+import {ScanGrid} from "./ScanGrid";
 
 const useStyles = makeStyles({
     loading: {
@@ -47,12 +47,7 @@ export const ProjectDetails = () => {
                         <Grid item md={3} xs={12}>
                             <ProjectInfo project={project}/>
                         </Grid>
-                        <Grid item md={6} xs={12}>
-                            <ScanTypesDetails scans={project.scans}/>
-                        </Grid>
-                        {/*<Grid item md={3} xs={12}>*/}
-                        {/*    <UnusableScans status={scansByType} />*/}
-                        {/*</Grid>*/}
+                        <ScanGrid scans={project.scans} />
                     </Grid>
                     <ProcessorGrid processors={project.assessors}/>
                 </>

@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const NoScansData = () => {
+export const NoScanData = () => {
     const classes = useStyles();
 
     return (

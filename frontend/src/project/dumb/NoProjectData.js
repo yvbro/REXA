@@ -5,7 +5,7 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import grey from '@material-ui/core/colors/grey';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     card: {
         borderRadius: '16px',
     },
