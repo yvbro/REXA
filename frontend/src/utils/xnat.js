@@ -11,7 +11,7 @@ export const PROC_STATUS = [
     'UNKNOWN',
 ];
 
-export const UNUSABLE_SCAN_QUALITY = 'bad';
+export const UNUSABLE_SCAN_QUALITY = 'unusable';
 
 const defaultProcStatus = (status) => {
     return PROC_STATUS.reduce(function (result, s) {
@@ -64,5 +64,20 @@ export const extractScanTypes = (scans) => {
 };
 
 export const getUnusableScans = (scans) => {
-    return scans.filter(scan => scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY)
+    let idsProcessed = [];
+    return scans.filter(scan => {
+        if(scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY) {
+            const uniqueId = `${scan.ID}.${scan['xnat:imagescandata/id']}`;
+            if (idsProcessed.includes(uniqueId)) {
+                return false;
+            } else {
+                idsProcessed.push(uniqueId)
+                return true;
+            }
+        } else {
+            return false;
+        }
+    });
 };
+
+export const getXnatUri = (host, id) => `${host}/app/action/DisplayItemAction/search_element/xnat:mrSessionData/search_field/xnat:mrSessionData.ID/search_value/${id}/project/ReXA`

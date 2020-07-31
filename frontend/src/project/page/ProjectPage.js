@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { Grid, makeStyles } from '@material-ui/core';
 
 import { ProjectsDropDown } from '../smart/ProjectsDropDown';
 import AppLayout from '../../app/AppLayout';
 import { ProjectDetails } from '../dumb/ProjectDetails';
-import { Grid, makeStyles } from '@material-ui/core';
+import {fetchSettings} from '../../settings/redux/settingsDuck';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const ProjectPage = () => {
     const classes = useStyles();
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchSettings());
+    }, [dispatch]);
 
     return (
         <AppLayout>

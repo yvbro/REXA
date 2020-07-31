@@ -1,40 +1,51 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
 import { makeStyles } from '@material-ui/core/styles';
-import {Card, CardContent, Typography} from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import grey from '@material-ui/core/colors/grey';
-import PropTypes from "prop-types";
+import {Card, List, ListItem, Chip} from '@material-ui/core';
+import MoodBadIcon from '@material-ui/icons/MoodBad';
+
+import {getXnatUri} from "../../utils/xnat";
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
     cardInfo: {
         borderRadius: '16px',
+        height: '350px',
     },
-    alignItemsAndJustifyContent: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        color: grey[500],
-    },
-    iconDef: {
-        fontSize: 80,
+    listScrollable: {
+        maxHeight: '100%',
+        overflow: 'auto',
     },
 }));
 
 export const UnusableScans = ({unusableScans}) => {
     const classes = useStyles();
 
+    const { xnatHost } = useSelector((state) => ({
+        xnatHost: state.settings.xnatHost,
+    }));
+
     return (
         <>
             <h3>Unusable scans</h3>
             <Card className={classes.cardInfo}>
-                <CardContent className={classes.alignItemsAndJustifyContent}>
-                    <InfoIcon className={classes.iconDef} />
-                    <Typography variant="h5" component="h2">
-                        No scans found
-                    </Typography>
-                </CardContent>
+                <List className={classes.listScrollable}>
+                    {unusableScans &&
+                        unusableScans.map((scan) => (
+                            <ListItem key={`${scan.ID}.${scan['xnat:imagescandata/id']}`}>
+                                <Chip
+                                    icon={<MoodBadIcon />}
+                                    label={`${scan['xnat:imagescandata/id']} on ${scan['label']}`}
+                                    clickable
+                                    color="primary"
+                                    component="a"
+                                    href={getXnatUri(xnatHost, scan.ID)}
+                                    variant="outlined"
+                                />
+                            </ListItem>
+                        ))}
+                </List>
             </Card>
         </>
     );

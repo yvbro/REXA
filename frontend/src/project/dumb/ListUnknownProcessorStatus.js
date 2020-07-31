@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles({
     cardInfo: {
         borderRadius: '16px',
+        height: '365px',
     },
     listScrollable: {
         maxHeight: '100%',

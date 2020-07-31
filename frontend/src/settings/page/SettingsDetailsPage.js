@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import AppLayout from '../../app/AppLayout';
 
-import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
+
+import AppLayout from '../../app/AppLayout';
 
 import {
     fetchSettings,
