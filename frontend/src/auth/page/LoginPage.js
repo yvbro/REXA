@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// eslint-disable-next-line
 const regexEmail = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
 
 const LoginPage = (props) => {
