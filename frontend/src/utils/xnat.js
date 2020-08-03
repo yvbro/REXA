@@ -80,4 +80,4 @@ export const getUnusableScans = (scans) => {
     });
 };
 
-export const getXnatUri = (host, id) => `${host}/app/action/DisplayItemAction/search_element/xnat:mrSessionData/search_field/xnat:mrSessionData.ID/search_value/${id}/project/ReXA`
+export const getXnatUri = (host, id) => `${host}/app/action/DisplayItemAction/search_element/xnat:mrSessionData/search_field/xnat:mrSessionData.ID/search_value/${id}`
