@@ -41,6 +41,8 @@ export const UnusableScans = ({unusableScans}) => {
                                     color="primary"
                                     component="a"
                                     href={getXnatUri(xnatHost, scan.ID)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     variant="outlined"
                                 />
                             </ListItem>
