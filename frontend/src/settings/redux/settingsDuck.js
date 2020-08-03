@@ -60,7 +60,7 @@ export const updateSettings = (xnatUsername, xnatHost, xnatPassword) => {
 };
 
 export const testConnection = (xnatUsername, xnatHost, xnatPassword) => {
-    const response = axios
+    axios
         .post('/private/test', { xnatUsername, xnatHost, xnatPassword })
         .then(() => {
             toast.info('Succesfully connected to Xnat');

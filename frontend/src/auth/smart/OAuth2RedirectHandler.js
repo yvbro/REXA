@@ -6,6 +6,7 @@ import { ACCESS_TOKEN } from '../../constants';
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
+        // eslint-disable-next-line
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 
