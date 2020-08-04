@@ -16,12 +16,7 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-    },
     cardInfo: {
-        width: 300,
         borderRadius: '16px',
     },
 });
@@ -33,7 +28,7 @@ export const ProjectInfo = ({ project }) => {
         <>
             <h3>Project Information</h3>
             <Card className={classes.cardInfo}>
-                <List className={classes.root}>
+                <List>
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar>

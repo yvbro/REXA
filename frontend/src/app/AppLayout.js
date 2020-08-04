@@ -6,6 +6,6 @@ import style from '../common/common.module.scss';
 const AppLayout = ({ children }) => <div className={style.wrapper}>{children}</div>;
 
 AppLayout.propTypes = {
-    children: PropTypes.array.isRequired,
+    children: PropTypes.object.isRequired,
 };
 export default AppLayout;

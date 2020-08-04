@@ -42,11 +42,10 @@ export const ProjectsDropDown = () => {
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="project-selector">Select a project</InputLabel>
+            <InputLabel id="project-selector">Project</InputLabel>
             <Select
                 labelId="project-selector"
-                id="demo-simple-select-outlined"
-                value={project ? project.projectId : ''}
+                value={project && project.projectId ? project.projectId : ''}
                 onChange={onChange}
                 label="project"
             >

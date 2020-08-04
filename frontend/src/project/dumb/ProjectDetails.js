@@ -3,9 +3,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 
-import { ProcessorDetails } from './ProcessorDetails';
 import { ProjectInfo } from './ProjectInfo';
 import { NoProjectData } from './NoProjectData';
+import {ProcessorGrid} from "./ProcessorGrid";
+import {ScanGrid} from "./ScanGrid";
 
 const useStyles = makeStyles({
     loading: {
@@ -25,8 +26,7 @@ export const ProjectDetails = () => {
     if (loading || parentLoading) {
         return (
             <Grid container spacing={3}>
-                <Grid item xs></Grid>
-                <Grid item xs={6}>
+                <Grid item md={6}>
                     <Typography
                         className={classes.loading}
                         variant="subtitle1"
@@ -35,7 +35,6 @@ export const ProjectDetails = () => {
                         Loading...
                     </Typography>
                 </Grid>
-                <Grid item xs></Grid>
             </Grid>
         );
     }
@@ -45,25 +44,19 @@ export const ProjectDetails = () => {
             {project && project.assessors ? (
                 <>
                     <Grid container spacing={3}>
-                        <Grid item xs={6}>
-                            <ProjectInfo project={project} />
+                        <Grid item md={3} xs={12}>
+                            <ProjectInfo project={project}/>
                         </Grid>
-                        <Grid item xs={6}></Grid>
+                        <ScanGrid scans={project.scans} />
                     </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <ProcessorDetails processors={project.assessors} />
-                        </Grid>
-                    </Grid>
+                    <ProcessorGrid processors={project.assessors}/>
                 </>
             ) : (
                 <>
                     <Grid container spacing={3}>
-                        <Grid item xs></Grid>
-                        <Grid item xs={6}>
+                        <Grid item md={12} xs={12}>
                             <NoProjectData />
                         </Grid>
-                        <Grid item xs></Grid>
                     </Grid>
                 </>
             )}

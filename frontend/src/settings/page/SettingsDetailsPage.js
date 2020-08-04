@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import AppLayout from '../../app/AppLayout';
 
-import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
+
+import AppLayout from '../../app/AppLayout';
 
 import {
     fetchSettings,
@@ -13,6 +14,10 @@ import {
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     card: {
         width: 400,
@@ -75,7 +80,7 @@ export const SettingsDetails = () => {
         }
     };
 
-    const testCredentials = (event) => {
+    const testCredentials = () => {
         if (!password) {
             setErrorPassword(true);
         } else {
@@ -91,13 +96,9 @@ export const SettingsDetails = () => {
         <AppLayout>
             <Grid
                 container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
                 className={classes.root}
             >
-                <Grid item xs={3}>
+                <Grid item md={6} xs={12}>
                     <Card className={classes.card}>
                         <div className={classes.header}>
                             <h1>
