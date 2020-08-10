@@ -22,15 +22,15 @@ const defaultProcStatus = (status) => {
 
 export const extractAssessorsProcTypeAndStatus = (assessors) => {
     return assessors.reduce((arr, obj) => {
-        const procStatus = PROC_STATUS.includes(obj['proc:genprocdata/procstatus']) ? obj['proc:genprocdata/procstatus'] : 'UNKNOWN';
+        const procStatus = PROC_STATUS.includes(obj['proc:genprocdata/procstatus'])
+            ? obj['proc:genprocdata/procstatus']
+            : 'UNKNOWN';
 
         const procFound = arr.filter(
             (el) => el.name === obj['proc:genprocdata/proctype']
         );
         if (procFound.length > 0) {
-            procFound[0].data[
-                PROC_STATUS.indexOf(procStatus)
-            ] += 1;
+            procFound[0].data[PROC_STATUS.indexOf(procStatus)] += 1;
         } else {
             arr.push({
                 name: obj['proc:genprocdata/proctype'],
@@ -42,8 +42,16 @@ export const extractAssessorsProcTypeAndStatus = (assessors) => {
 };
 
 export const getUnknownProcStatus = (assessors) => {
-    return [...new Set(assessors.filter(proc => !PROC_STATUS.includes(proc['proc:genprocdata/procstatus']))
-        .map(proc => proc['proc:genprocdata/procstatus']))]
+    return [
+        ...new Set(
+            assessors
+                .filter(
+                    (proc) =>
+                        !PROC_STATUS.includes(proc['proc:genprocdata/procstatus'])
+                )
+                .map((proc) => proc['proc:genprocdata/procstatus'])
+        ),
+    ];
 };
 
 export const extractScanTypes = (scans) => {
@@ -65,13 +73,13 @@ export const extractScanTypes = (scans) => {
 
 export const getUnusableScans = (scans) => {
     let idsProcessed = [];
-    return scans.filter(scan => {
-        if(scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY) {
+    return scans.filter((scan) => {
+        if (scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY) {
             const uniqueId = `${scan.ID}.${scan['xnat:imagescandata/id']}`;
             if (idsProcessed.includes(uniqueId)) {
                 return false;
             } else {
-                idsProcessed.push(uniqueId)
+                idsProcessed.push(uniqueId);
                 return true;
             }
         } else {
@@ -80,4 +88,5 @@ export const getUnusableScans = (scans) => {
     });
 };
 
-export const getXnatUri = (host, id) => `${host}/app/action/DisplayItemAction/search_element/xnat:mrSessionData/search_field/xnat:mrSessionData.ID/search_value/${id}`
+export const getXnatUri = (host, id) =>
+    `${host}/app/action/DisplayItemAction/search_element/xnat:mrSessionData/search_field/xnat:mrSessionData.ID/search_value/${id}`;

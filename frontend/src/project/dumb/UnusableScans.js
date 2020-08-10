@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
-import {Card, List, ListItem, Chip} from '@material-ui/core';
+import { Card, List, ListItem, Chip } from '@material-ui/core';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 
-import {getXnatUri} from "../../utils/xnat";
+import { getXnatUri } from '../../utils/xnat';
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const UnusableScans = ({unusableScans}) => {
+export const UnusableScans = ({ unusableScans }) => {
     const classes = useStyles();
 
     const { xnatHost } = useSelector((state) => ({
@@ -33,7 +33,9 @@ export const UnusableScans = ({unusableScans}) => {
                 <List className={classes.listScrollable}>
                     {unusableScans &&
                         unusableScans.map((scan) => (
-                            <ListItem key={`${scan.ID}.${scan['xnat:imagescandata/id']}`}>
+                            <ListItem
+                                key={`${scan.ID}.${scan['xnat:imagescandata/id']}`}
+                            >
                                 <Chip
                                     icon={<MoodBadIcon />}
                                     label={`${scan['xnat:imagescandata/id']} on ${scan['label']}`}
