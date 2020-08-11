@@ -1,3 +1,5 @@
+![Java CI with Maven](https://github.com/yvbro/ReXA/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 # REXA
 Reporting Xnat App to generate report over its content especially related to DAX metadata.
 
