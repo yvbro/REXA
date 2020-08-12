@@ -1,0 +1,17 @@
+name: Label Required
+
+on:
+  pull_request:
+   types: [opened, labeled, unlabeled, synchronize]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Label Review Done required
+      uses: actions/verify-pr-label-action@v1.0.0
+      with:
+        github-token: '${{ secrets.GITHUB_TOKEN }}'
+        valid-labels: 'Review Done'
