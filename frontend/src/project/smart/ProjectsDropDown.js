@@ -36,10 +36,6 @@ export const ProjectsDropDown = () => {
 
     const onChange = (event) => dispatch(fetchProject(event.target.value));
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel id="project-selector">Project</InputLabel>
@@ -48,6 +44,7 @@ export const ProjectsDropDown = () => {
                 value={project && project.projectId ? project.projectId : ''}
                 onChange={onChange}
                 label="project"
+                disabled={loading}
             >
                 <MenuItem value="">
                     <em>None</em>

@@ -16,38 +16,43 @@ class ScanTypePieChart extends React.Component {
                     type: 'donut',
                 },
                 dataLabels: {
-                    enabled: false
+                    enabled: false,
                 },
                 fill: {
                     type: 'gradient',
                 },
                 legend: {
                     formatter: function (val, opts) {
-                        return val + " - " + opts.w.globals.series[opts.seriesIndex]
-                    }
+                        return val + ' - ' + opts.w.globals.series[opts.seriesIndex];
+                    },
                 },
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                            offsetX: -10,
-                            offsetY: 0,
-                        }
-                    }
-                }]
+                responsive: [
+                    {
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0,
+                            },
+                        },
+                    },
+                ],
             },
         };
     }
 
     render() {
-        const {scans} = this.props;
+        const { scans } = this.props;
 
         return (
             <div id="chart" className={style.drawing}>
                 <Chart
-                    options={{...this.state.options, labels: scans.map(obj => obj.name)}}
-                    series={scans.map(obj => obj.data)}
+                    options={{
+                        ...this.state.options,
+                        labels: scans.map((obj) => obj.name),
+                    }}
+                    series={scans.map((obj) => obj.data)}
                     type="donut"
                     height={350}
                 />

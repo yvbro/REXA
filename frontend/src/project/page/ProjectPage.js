@@ -6,7 +6,7 @@ import { Grid, makeStyles } from '@material-ui/core';
 import { ProjectsDropDown } from '../smart/ProjectsDropDown';
 import AppLayout from '../../app/AppLayout';
 import { ProjectDetails } from '../dumb/ProjectDetails';
-import {fetchSettings} from '../../settings/redux/settingsDuck';
+import { fetchSettings } from '../../settings/redux/settingsDuck';
 
 const useStyles = makeStyles((theme) => ({
     root: {

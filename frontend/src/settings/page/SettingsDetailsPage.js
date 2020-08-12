@@ -94,10 +94,7 @@ export const SettingsDetails = () => {
 
     return (
         <AppLayout>
-            <Grid
-                container
-                className={classes.root}
-            >
+            <Grid container className={classes.root}>
                 <Grid item md={6} xs={12}>
                     <Card className={classes.card}>
                         <div className={classes.header}>
