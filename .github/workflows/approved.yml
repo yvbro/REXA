@@ -1,5 +1,8 @@
 name: Label approved pull requests
-on: pull_request_review
+on:
+  pull_request_review:
+    branches-ignore:
+      - master
 jobs:
   build:
     name: Label when approved
