@@ -1,6 +1,9 @@
 name: Label Required
 
 on:
+  push:
+    branches-ignore: 
+      - master
   pull_request:
    types: [opened, labeled, unlabeled, synchronize]
    branches-ignore:
