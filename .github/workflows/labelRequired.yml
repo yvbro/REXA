@@ -3,6 +3,8 @@ name: Label Required
 on:
   pull_request:
    types: [opened, labeled, unlabeled, synchronize]
+   branches-ignore:
+      - master
 
 jobs:
   build:
