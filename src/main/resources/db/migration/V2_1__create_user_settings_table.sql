@@ -11,4 +11,3 @@ CREATE TABLE rexa.user_settings
   user_id uuid REFERENCES rexa.user (id),
   CONSTRAINT pk_id PRIMARY KEY (xnat_username,xnat_url)
 );
-

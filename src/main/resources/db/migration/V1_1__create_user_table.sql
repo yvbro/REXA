@@ -10,5 +10,3 @@ CREATE TABLE rexa.user
     password VARCHAR NOT NULL,
     auth_provider VARCHAR NOT NULL
 );
-
-
