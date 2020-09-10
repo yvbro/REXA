@@ -4,12 +4,17 @@
 package fr.yvbro.rexa.jooq.generated;
 
 
+import fr.yvbro.rexa.jooq.generated.tables.JRoles;
 import fr.yvbro.rexa.jooq.generated.tables.JSchemaVersion;
 import fr.yvbro.rexa.jooq.generated.tables.JUser;
+import fr.yvbro.rexa.jooq.generated.tables.JUserRole;
 import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
+import fr.yvbro.rexa.jooq.generated.tables.records.JRolesRecord;
 import fr.yvbro.rexa.jooq.generated.tables.records.JSchemaVersionRecord;
 import fr.yvbro.rexa.jooq.generated.tables.records.JUserRecord;
+import fr.yvbro.rexa.jooq.generated.tables.records.JUserRoleRecord;
 import fr.yvbro.rexa.jooq.generated.tables.records.JUserSettingsRecord;
+
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -17,10 +22,10 @@ import org.jooq.impl.Internal;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables of
+ * A class modelling foreign key relationships and constraints of tables of 
  * the <code>rexa</code> schema.
  */
-@SuppressWarnings({"all", "unchecked", "rawtypes"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
     // -------------------------------------------------------------------------
@@ -32,6 +37,7 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<JRolesRecord> ROLES_PKEY = UniqueKeys0.ROLES_PKEY;
     public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = UniqueKeys0.SCHEMA_VERSION_PK;
     public static final UniqueKey<JUserRecord> USER_PKEY = UniqueKeys0.USER_PKEY;
     public static final UniqueKey<JUserSettingsRecord> PK_ID = UniqueKeys0.PK_ID;
@@ -40,6 +46,8 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<JUserRoleRecord, JUserRecord> USER_ROLE__USER_ROLE_USER_ID_FKEY = ForeignKeys0.USER_ROLE__USER_ROLE_USER_ID_FKEY;
+    public static final ForeignKey<JUserRoleRecord, JRolesRecord> USER_ROLE__USER_ROLE_ROLE_ID_FKEY = ForeignKeys0.USER_ROLE__USER_ROLE_ROLE_ID_FKEY;
     public static final ForeignKey<JUserSettingsRecord, JUserRecord> USER_SETTINGS__USER_SETTINGS_USER_ID_FKEY = ForeignKeys0.USER_SETTINGS__USER_SETTINGS_USER_ID_FKEY;
 
     // -------------------------------------------------------------------------
@@ -47,12 +55,15 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class UniqueKeys0 {
-        public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = Internal.createUniqueKey(JSchemaVersion.SCHEMA_VERSION, "schema_version_pk", new TableField[]{JSchemaVersion.SCHEMA_VERSION.VERSION}, true);
-        public static final UniqueKey<JUserRecord> USER_PKEY = Internal.createUniqueKey(JUser.USER, "user_pkey", new TableField[]{JUser.USER.ID}, true);
-        public static final UniqueKey<JUserSettingsRecord> PK_ID = Internal.createUniqueKey(JUserSettings.USER_SETTINGS, "pk_id", new TableField[]{JUserSettings.USER_SETTINGS.XNAT_USERNAME, JUserSettings.USER_SETTINGS.USER_ID}, true);
+        public static final UniqueKey<JRolesRecord> ROLES_PKEY = Internal.createUniqueKey(JRoles.ROLES, "roles_pkey", new TableField[] { JRoles.ROLES.ID }, true);
+        public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = Internal.createUniqueKey(JSchemaVersion.SCHEMA_VERSION, "schema_version_pk", new TableField[] { JSchemaVersion.SCHEMA_VERSION.VERSION }, true);
+        public static final UniqueKey<JUserRecord> USER_PKEY = Internal.createUniqueKey(JUser.USER, "user_pkey", new TableField[] { JUser.USER.ID }, true);
+        public static final UniqueKey<JUserSettingsRecord> PK_ID = Internal.createUniqueKey(JUserSettings.USER_SETTINGS, "pk_id", new TableField[] { JUserSettings.USER_SETTINGS.XNAT_USERNAME, JUserSettings.USER_SETTINGS.XNAT_URL }, true);
     }
 
     private static class ForeignKeys0 {
-        public static final ForeignKey<JUserSettingsRecord, JUserRecord> USER_SETTINGS__USER_SETTINGS_USER_ID_FKEY = Internal.createForeignKey(Keys.USER_PKEY, JUserSettings.USER_SETTINGS, "user_settings_user_id_fkey", new TableField[]{JUserSettings.USER_SETTINGS.USER_ID}, true);
+        public static final ForeignKey<JUserRoleRecord, JUserRecord> USER_ROLE__USER_ROLE_USER_ID_FKEY = Internal.createForeignKey(Keys.USER_PKEY, JUserRole.USER_ROLE, "user_role_user_id_fkey", new TableField[] { JUserRole.USER_ROLE.USER_ID }, true);
+        public static final ForeignKey<JUserRoleRecord, JRolesRecord> USER_ROLE__USER_ROLE_ROLE_ID_FKEY = Internal.createForeignKey(Keys.ROLES_PKEY, JUserRole.USER_ROLE, "user_role_role_id_fkey", new TableField[] { JUserRole.USER_ROLE.ROLE_ID }, true);
+        public static final ForeignKey<JUserSettingsRecord, JUserRecord> USER_SETTINGS__USER_SETTINGS_USER_ID_FKEY = Internal.createForeignKey(Keys.USER_PKEY, JUserSettings.USER_SETTINGS, "user_settings_user_id_fkey", new TableField[] { JUserSettings.USER_SETTINGS.USER_ID }, true);
     }
 }
