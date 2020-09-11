@@ -49,6 +49,7 @@ class SecurityConfiguration(private val customUserDetailsService: CustomUserDeta
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
                 .antMatchers("/", "/auth/**", "/oauth2/**", "/rexa/**").permitAll()
+                .antMatchers("/private/management/users").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/auth/logout")

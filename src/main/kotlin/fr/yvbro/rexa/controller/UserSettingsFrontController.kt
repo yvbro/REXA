@@ -5,7 +5,6 @@ import fr.yvbro.rexa.controller.input.UserSettingsRequest
 import fr.yvbro.rexa.controller.output.UserSettingsDto
 import fr.yvbro.rexa.security.UserPrincipal
 import fr.yvbro.rexa.service.UserSettingsService
-import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 

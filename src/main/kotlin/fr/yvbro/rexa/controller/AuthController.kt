@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @RequestMapping(AUTH_CONTEXT_PATH)
@@ -35,7 +34,7 @@ class AuthController(private val authenticationManager: AuthenticationManager,
     }
 
     @GetMapping("/userinfo")
-    fun getUser(@AuthenticationPrincipal principal: UserPrincipal): Map<String, String?> {
-        return Collections.singletonMap("name", principal.username)
+    fun getUser(@AuthenticationPrincipal principal: UserPrincipal): Map<String, Any?> {
+        return mapOf("name" to principal.username, "roles" to principal.authorities)
     }
 }

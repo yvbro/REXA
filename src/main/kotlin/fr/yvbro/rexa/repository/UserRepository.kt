@@ -19,10 +19,11 @@ class UserRepository(private val dsl: DSLContext,
             .fetchOptional(userTupleMapper)
             .orElseThrow { UsernameNotFoundException("User not found with email : $email") }
 
-    fun save(email: String, password: String) {
-        dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD)
+    fun save(email: String, password: String): UUID {
+            return dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD)
                 .values(UUID.randomUUID(), email, password)
-                .execute()
+                .returningResult(USER.ID)
+                .fetchOne().get(USER.ID)
     }
 
     fun getUserById(id: UUID?): User = dsl.select()
@@ -31,4 +32,8 @@ class UserRepository(private val dsl: DSLContext,
             .limit(1)
             .fetchOptional(userTupleMapper)
             .orElseThrow { UsernameNotFoundException("User not found with id : $id") }
+
+    fun getUsers(): List<User> = dsl.select()
+            .from(USER)
+            .fetch(userTupleMapper)
 }

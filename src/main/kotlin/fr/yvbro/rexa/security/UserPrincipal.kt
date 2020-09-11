@@ -51,8 +51,9 @@ class UserPrincipal(val id: UUID?, val email: String?, private val password: Str
     }
 
     companion object {
-        fun create(user: User): UserPrincipal {
-            val authorities: List<GrantedAuthority> = listOf(SimpleGrantedAuthority("ROLE_USER"))
+        fun create(user: User, userRoles: List<String>): UserPrincipal {
+            val authorities: List<GrantedAuthority> = userRoles.map {role -> SimpleGrantedAuthority(role)}
+
             return UserPrincipal(
                     user.id,
                     user.email,
@@ -61,8 +62,8 @@ class UserPrincipal(val id: UUID?, val email: String?, private val password: Str
             )
         }
 
-        fun create(user: User, attributes: Map<String, Any>?): UserPrincipal {
-            val userPrincipal = create(user)
+        fun create(user: User, userRoles: List<String>, attributes: Map<String, Any>?): UserPrincipal {
+            val userPrincipal = create(user, userRoles)
             userPrincipal.setAttributes(attributes)
             return userPrincipal
         }
