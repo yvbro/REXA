@@ -14,6 +14,7 @@ import DashboardPage from '../dashboard/page/DashboardPage';
 import Header from './Header';
 import ProjectPage from '../project/page/ProjectPage';
 import SettingsDetailsPage from '../settings/page/SettingsDetailsPage';
+import UsersManagementPage from '../management/page/UsersManagementPage';
 import LoginPage from '../auth/page/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import LoadingIndicator from '../common/LoadingIndicator';
@@ -88,8 +89,13 @@ class App extends React.Component {
                                     />
                                     <PrivateRoute
                                         authenticated={authenticated}
-                                        path="/rexa/Settings"
+                                        path="/rexa/settings"
                                         component={() => <SettingsDetailsPage />}
+                                    />
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/rexa/management"
+                                        component={() => <UsersManagementPage />}
                                     />
                                     <PrivateRoute
                                         authenticated={authenticated}
