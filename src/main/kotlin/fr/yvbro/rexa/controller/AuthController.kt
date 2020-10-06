@@ -33,6 +33,21 @@ class AuthController(private val authenticationManager: AuthenticationManager,
         return ResponseEntity.ok<Any>(AuthResponse(token))
     }
 
+    @PostMapping("/sign-in")
+    fun signIn(@RequestBody loginRequest: LoginRequest): ResponseEntity<Any> {
+        val authentication: Authentication = authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(
+                        loginRequest.email,
+                        loginRequest.password
+                )
+        )
+
+        SecurityContextHolder.getContext().authentication = authentication
+
+        val token: String = tokenProvider.createToken(authentication)
+        return ResponseEntity.ok<Any>(AuthResponse(token))
+    }
+
     @GetMapping("/userinfo")
     fun getUser(@AuthenticationPrincipal principal: UserPrincipal): Map<String, Any?> {
         return mapOf("name" to principal.username, "roles" to principal.authorities)

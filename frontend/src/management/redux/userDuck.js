@@ -9,7 +9,7 @@ const initialState = {
     },
 };
 
-const FETCH_USERS = '[Auth] FETCH LIST OF USERS';
+const FETCH_USERS = '[User] FETCH LIST OF USERS';
 
 export default function project(state = initialState, action) {
     switch (action.type) {

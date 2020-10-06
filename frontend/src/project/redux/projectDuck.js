@@ -14,8 +14,8 @@ const initialState = {
     },
 };
 
-const FETCH_PROJECTS = '[Auth] FETCH LIST OF PROJECTS';
-const FETCH_PROJECT = '[Auth] FETCH ONE PROJECT';
+const FETCH_PROJECTS = '[Project] FETCH LIST OF PROJECTS';
+const FETCH_PROJECT = '[Project] FETCH ONE PROJECT';
 
 export default function project(state = initialState, action) {
     switch (action.type) {

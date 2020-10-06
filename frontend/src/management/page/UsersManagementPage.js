@@ -11,6 +11,7 @@ import {
     TableRow,
     withStyles,
     Paper,
+    Typography
 } from '@material-ui/core';
 
 import AppLayout from '../../app/AppLayout';
@@ -20,7 +21,7 @@ import { NoUserData } from '../dumb/NoUserData';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: '#2b78e3',
         color: theme.palette.common.white,
     },
     body: {
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 700,
     },
+    header: {
+        textAlign: 'center',
+        background: '#f1f0eb',
+    },
 }));
 
 const UsersManagementPage = () => {
@@ -52,7 +57,7 @@ const UsersManagementPage = () => {
 
     useEffect(() => {
         dispatch(fetchUsers());
-    }, [dispatch]);
+    }, []);
 
     const { users, loading } = useSelector((state) => ({
         users: state.user.users.data,
@@ -65,6 +70,9 @@ const UsersManagementPage = () => {
                 <LoadingIndicator />
             ) : users ? (
                 <div className={classes.root}>
+                    <Typography className={classes.header} variant="h5">
+                        User Management
+                    </Typography>
                     <TableContainer component={Paper}>
                         <Table
                             className={classes.table}

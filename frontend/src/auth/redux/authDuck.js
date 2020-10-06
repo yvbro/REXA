@@ -29,7 +29,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: true,
                 currentUser: state.currentUser,
-                isAdmin: false,
+                isAdmin: state.isAdmin,
                 loading: false,
             };
         case rejected(LOGIN):
@@ -61,7 +61,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: state.authenticated,
                 currentUser: state.currentUser,
-                isAdmin: false,
+                isAdmin: state.isAdmin,
                 loading: false,
             };
         case pending(FETCH_USER):
@@ -69,7 +69,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: state.authenticated,
                 currentUser: state.currentUser,
-                isAdmin: false,
+                isAdmin: state.isAdmin,
                 loading: true,
             };
         case fulfilled(FETCH_USER):

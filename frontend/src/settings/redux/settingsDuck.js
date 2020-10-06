@@ -10,7 +10,7 @@ const initialState = {
     loading: false,
 };
 
-const FETCH_SETTINGS = '[Auth] FETCH SETTINGS';
+const FETCH_SETTINGS = '[Settings] FETCH SETTINGS';
 
 export default function settings(state = initialState, action) {
     switch (action.type) {
