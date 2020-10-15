@@ -28,8 +28,8 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 authenticated: true,
-                currentUser: state.currentUser,
-                isAdmin: state.isAdmin,
+                currentUser: action.payload.data,
+                isAdmin: isAdmin(action.payload.data.roles),
                 loading: false,
             };
         case rejected(LOGIN):
@@ -77,7 +77,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: true,
                 currentUser: action.payload.data,
-                isAdmin: action.payload.data.roles.filter(r => r.authority === 'ADMIN').length > 0,
+                isAdmin: isAdmin(action.payload.data.roles),
                 loading: false,
             };
         case rejected(FETCH_USER):
@@ -91,6 +91,10 @@ export default function auth(state = initialState, action) {
         default:
             return state;
     }
+}
+
+function isAdmin(authorities) {
+    return authorities.filter(r => r === 'ADMIN').length > 0
 }
 
 export const performLogin = (email, password) => (dispatch) =>
