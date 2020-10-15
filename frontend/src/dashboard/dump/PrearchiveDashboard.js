@@ -15,6 +15,7 @@ import LoadingIndicator from '../../common/LoadingIndicator';
 const useStyles = makeStyles((theme) => ({
     preAchiveRoot: {
         marginLeft: '0.3rem',
+        borderRadius: '16px',
     },
     header: {
         textAlign: 'center',
@@ -40,7 +41,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export const Prearchive = () => {
+export const PrearchiveDashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -58,11 +59,8 @@ export const Prearchive = () => {
     }
 
     return (
-        console.log(preAchives),
         <>
-            <Typography className={classes.header} variant="h5">
-                Prearchive
-            </Typography>
+            <h3>Prearchive</h3>
             <TableContainer
                 className={classes.preAchiveRoot}
                 component={Paper}
@@ -108,4 +106,4 @@ export const Prearchive = () => {
     );
 };
 
-export default Prearchive;
+export default PrearchiveDashboard;

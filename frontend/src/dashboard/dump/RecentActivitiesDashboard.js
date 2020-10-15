@@ -6,15 +6,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import { Chip } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { fetchRecentActivities } from '../redux/dashboardDuck';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import { getXnatUri } from '../../utils/xnat';
 
 const useStyles = makeStyles((theme) => ({
     recentActivitiesRoot: {
         marginLeft: '0.3rem',
+        borderRadius: '16px',
     },
     header: {
         textAlign: 'center',
@@ -40,15 +42,16 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export const RecentActivities = () => {
+export const RecentActivitiesDashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const { recentActivities, loadingRecentActivities } = useSelector((state) => ({
+    const { recentActivities, loadingRecentActivities, xnatHost } = useSelector((state) => ({
         recentActivities: state.dashboard.recentActivities.data,
         loadingRecentActivities: state.dashboard.recentActivities.loading,
+        xnatHost: state.settings.xnatHost,
     }));
-
+    
     useEffect(() => {
         dispatch(fetchRecentActivities());
     }, [dispatch]);
@@ -59,9 +62,7 @@ export const RecentActivities = () => {
 
     return (
         <>
-            <Typography className={classes.header} variant="h5">
-                Recent Activities
-            </Typography>
+            <h3>Project Information</h3>
             <TableContainer
                 className={classes.recentActivitiesRoot}
                 component={Paper}
@@ -85,7 +86,16 @@ export const RecentActivities = () => {
                                     {activitie.typeDesc}
                                 </StyledTableCell>
                                 <StyledTableCell align="center">
-                                    {activitie.label}
+                                <Chip
+                                    label={activitie.label}
+                                    clickable
+                                    color="primary"
+                                    component="a"
+                                    href={getXnatUri(xnatHost, activitie.id)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    variant="outlined"
+                                />
                                 </StyledTableCell>
                                 <StyledTableCell align="center">
                                     {activitie.elementName}
@@ -99,4 +109,4 @@ export const RecentActivities = () => {
     );
 };
 
-export default RecentActivities;
+export default RecentActivitiesDashboard;
