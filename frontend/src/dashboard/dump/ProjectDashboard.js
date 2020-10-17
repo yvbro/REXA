@@ -10,9 +10,11 @@ import {
     ListItemText,
     ListItem,
     Card,
+    Chip,
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cardInfo: {
@@ -38,7 +40,7 @@ export const ProjectDashboard = () => {
 
     return (
         <>
-            <h3>Project Information</h3>
+            <h3>List of projects</h3>
             <Card className={classes.cardInfo}>
                 <List>
                     {projects.map((project) => (
@@ -48,7 +50,24 @@ export const ProjectDashboard = () => {
                                     <AccountCircleIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={project.name} />
+                            <ListItemText>
+                                <Link
+                                    to={{
+                                        pathname: '/rexa/project',
+                                        project: { name: project.name },
+                                    }}
+                                >
+                                    <Chip
+                                        label={project.name}
+                                        clickable
+                                        color="primary"
+                                        component="a"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        variant="outlined"
+                                    />
+                                </Link>
+                            </ListItemText>
                         </ListItem>
                     ))}
                 </List>

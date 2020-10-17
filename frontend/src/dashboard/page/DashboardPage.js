@@ -1,8 +1,8 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import AppLayout from '../../app/AppLayout';
-import { Grid, makeStyles, Paper } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import PrearchiveDashboard from '../dump/PrearchiveDashboard';
 import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import ProjectDashboard from '../dump/ProjectDashboard';
@@ -23,23 +23,23 @@ const DashboardPage = () => {
         dispatch(fetchSettings());
     }, [dispatch]);
 
-    return(
+    return (
         <AppLayout>
-        <div className={classes.root}>
-            <Grid container spacing={3}>
-                <Grid item xs={4}>
-                    <RecentActivitiesDashboard />
+            <div className={classes.root}>
+                <Grid container spacing={3}>
+                    <Grid item xs={5}>
+                        <RecentActivitiesDashboard />
+                    </Grid>
+                    <Grid item xs={7}>
+                        <PrearchiveDashboard />
+                    </Grid>
+                    <Grid item xs={1.5}>
+                        <ProjectDashboard />
+                    </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                    <PrearchiveDashboard />
-                </Grid>
-                <Grid item xs={2}>
-                    <ProjectDashboard />
-                </Grid>
-            </Grid>
-        </div>
-    </AppLayout>
-    )
-}
+            </div>
+        </AppLayout>
+    );
+};
 
 export default DashboardPage;

@@ -1,21 +1,24 @@
-import Paper from '@material-ui/core/Paper';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
-import { fetchPreAchives } from '../redux/dashboardDuck';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+    makeStyles,
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableBody,
+    TableRow,
+    withStyles,
+    Paper,
+} from '@material-ui/core';
+import { fetchPreAchives } from '../redux/dashboardDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
 
 const useStyles = makeStyles((theme) => ({
     preAchiveRoot: {
         marginLeft: '0.3rem',
         borderRadius: '16px',
+        maxHeight: '24rem',
     },
     header: {
         textAlign: 'center',
@@ -61,18 +64,19 @@ export const PrearchiveDashboard = () => {
     return (
         <>
             <h3>Prearchive</h3>
-            <TableContainer
-                className={classes.preAchiveRoot}
-                component={Paper}
-            >
+            <TableContainer className={classes.preAchiveRoot} component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="center">Project</StyledTableCell>
                             <StyledTableCell align="center">Subject</StyledTableCell>
                             <StyledTableCell align="center">Session</StyledTableCell>
-                            <StyledTableCell align="center">Scan Date</StyledTableCell>
-                            <StyledTableCell align="center">Upload Date</StyledTableCell>
+                            <StyledTableCell align="center">
+                                Scan Date
+                            </StyledTableCell>
+                            <StyledTableCell align="center">
+                                Upload Date
+                            </StyledTableCell>
                             <StyledTableCell align="center">Status</StyledTableCell>
                         </TableRow>
                     </TableHead>

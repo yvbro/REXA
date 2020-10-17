@@ -7,8 +7,6 @@ import fr.yvbro.rexa.controller.output.ProjectPreAchivesDto
 import fr.yvbro.rexa.controller.output.ProjectRecentActivitiesDto
 import fr.yvbro.rexa.controller.output.XnatInfoDto
 import fr.yvbro.rexa.model.Project
-import fr.yvbro.rexa.model.ProjectPreArchive
-import fr.yvbro.rexa.model.ProjectRecentActivities
 import fr.yvbro.rexa.service.XnatService
 import org.springframework.web.bind.annotation.*
 import java.util.stream.Collectors.toList
@@ -43,17 +41,13 @@ class XnatFrontController(private val xnatService: XnatService) {
     @GetMapping("/recentActivities")
     fun getXnatRecentActivities(): List<ProjectRecentActivitiesDto> {
         return xnatService.getRecentActivities()
-                .stream()
-                .map(this::mapToDtoRecentActivities)
-                .collect(toList())
+                .map{ it.toOutput()}
     }
 
     @GetMapping("/preArchives")
     fun getXnatPreArchives(): List<ProjectPreAchivesDto> {
         return xnatService.getPreArchive()
-                .stream()
-                .map(this::mapToDtoPreAchive)
-                .collect(toList())
+                .map{ it.toOutput()}
     }
 
     @PostMapping("/test")
@@ -64,28 +58,6 @@ class XnatFrontController(private val xnatService: XnatService) {
     private fun mapToDto(project: Project): ProjectDto {
         return ProjectDto(project.name, project.id, project.description, project.piFirstname, project.piLastname)
     }
-
-    private fun mapToDtoRecentActivities(projectRecentActivities: ProjectRecentActivities): ProjectRecentActivitiesDto {
-        return ProjectRecentActivitiesDto(
-                projectRecentActivities.workflowStatus,
-                projectRecentActivities.project,
-                projectRecentActivities.actionDate.toString(),
-                projectRecentActivities.label,
-                projectRecentActivities.typeDesc,
-                projectRecentActivities.elementName,
-                projectRecentActivities.id)
-    }
-
-    private fun mapToDtoPreAchive(projectPreArchive: ProjectPreArchive): ProjectPreAchivesDto {
-        return ProjectPreAchivesDto(
-                projectPreArchive.subject,
-                projectPreArchive.project,
-                projectPreArchive.session,
-                projectPreArchive.scanDate.toString(),
-                projectPreArchive.updloadDate.toString(),
-                projectPreArchive.status)
-    }
-
 
 }
 

@@ -3,6 +3,7 @@ package fr.yvbro.rexa.model
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import fr.yvbro.rexa.controller.output.ProjectRecentActivitiesDto
 import java.util.*
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -15,4 +16,16 @@ data class ProjectRecentActivities(
         @JsonProperty("element_name") var elementName: String,
         var project: String,
         var label: String,
-        var id: String)
+        var id: String){
+
+        fun toOutput(): ProjectRecentActivitiesDto = ProjectRecentActivitiesDto(
+                this.workflowStatus,
+                this.project,
+                this.actionDate.toString(),
+                this.label,
+                this.typeDesc,
+                this.elementName,
+                this.id)
+
+}
+

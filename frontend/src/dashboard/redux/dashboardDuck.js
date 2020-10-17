@@ -5,16 +5,16 @@ import { fulfilled, pending, rejected } from '../../helpers/promise';
 const initialState = {
     recentActivities: {
         data: [],
-        loading: true,
+        loading: false,
     },
     preAchives: {
-        data: undefined,
-        loading: true,
+        data: [],
+        loading: false,
     },
 };
 
-const FETCH_RECENT_ACTIVITIES = 'FETCH RECENT ACTIVITIES';
-const FETCH_PRE_ARCHIVE = 'FETCH PRE ACHIVE';
+const FETCH_RECENT_ACTIVITIES = '[dashboard] FETCH RECENT ACTIVITIES';
+const FETCH_PRE_ARCHIVE = '[dashboard] FETCH PRE ACHIVE';
 
 export default function dashboard(state = initialState, action) {
     switch (action.type) {
@@ -22,7 +22,7 @@ export default function dashboard(state = initialState, action) {
             return {
                 ...state,
                 recentActivities: {
-                    data: '',
+                    data: [],
                     loading: true,
                 },
             };
@@ -46,7 +46,7 @@ export default function dashboard(state = initialState, action) {
             return {
                 ...state,
                 preAchives: {
-                    data: '',
+                    data: [],
                     loading: true,
                 },
             };
@@ -62,7 +62,7 @@ export default function dashboard(state = initialState, action) {
             return {
                 ...state,
                 preAchives: {
-                    data: state.preAchive.data,
+                    data: state.preAchives.data,
                     loading: false,
                 },
             };

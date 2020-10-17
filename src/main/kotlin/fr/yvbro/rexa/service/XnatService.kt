@@ -32,15 +32,11 @@ class XnatService(private val xnatClient: XnatClient) {
     }
 
     fun getRecentActivities(): List<ProjectRecentActivities> {
-        val recentActivitiesUri = XnatGlossary.urlRecentActivities
-
-        return mapper.readValue(xnatClient.callXnatUri(recentActivitiesUri))
+        return mapper.readValue(xnatClient.callXnatUri(XnatGlossary.urlRecentActivities))
     }
 
     fun getPreArchive(): List<ProjectPreArchive> {
-        val preArchiveUri = XnatGlossary.urlPreArchive
-
-        return mapper.readValue(xnatClient.callXnatUri(preArchiveUri))
+        return mapper.readValue(xnatClient.callXnatUri(XnatGlossary.urlPreArchive))
     }
 
     fun testConnection(userSettingsRequest: UserSettingsRequest) {
