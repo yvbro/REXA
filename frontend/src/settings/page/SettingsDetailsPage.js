@@ -61,7 +61,7 @@ export const SettingsDetailsPage = () => {
 
     useEffect(() => {
         dispatch(fetchSettings());
-    }, []);
+    }, [dispatch]);
 
     if (loading) {
         return <LoadingIndicator />;

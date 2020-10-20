@@ -16,7 +16,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JUser extends TableImpl<JUserRecord> {
 
-    private static final long serialVersionUID = -1913586413;
+    private static final long serialVersionUID = 1656321406;
 
     /**
      * The reference instance of <code>rexa.user</code>
@@ -66,6 +66,11 @@ public class JUser extends TableImpl<JUserRecord> {
      * The column <code>rexa.user.auth_provider</code>.
      */
     public final TableField<JUserRecord, String> AUTH_PROVIDER = createField(DSL.name("auth_provider"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+
+    /**
+     * The column <code>rexa.user.enabled</code>.
+     */
+    public final TableField<JUserRecord, Boolean> ENABLED = createField(DSL.name("enabled"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * Create a <code>rexa.user</code> table reference
@@ -142,11 +147,11 @@ public class JUser extends TableImpl<JUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<UUID, String, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<UUID, String, String, String, Boolean> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

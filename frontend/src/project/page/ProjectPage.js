@@ -23,7 +23,7 @@ export const ProjectPage = () => {
 
     useEffect(() => {
         dispatch(fetchSettings());
-    }, []);
+    }, [dispatch]);
 
     return (
         <AppLayout>

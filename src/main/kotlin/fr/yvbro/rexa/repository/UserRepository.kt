@@ -20,10 +20,17 @@ class UserRepository(private val dsl: DSLContext,
             .orElseThrow { UsernameNotFoundException("User not found with email : $email") }
 
     fun save(email: String, password: String): UUID {
-            return dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD)
-                .values(UUID.randomUUID(), email, password)
+            return dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD, USER.ENABLED)
+                .values(UUID.randomUUID(), email, password, true)
                 .returningResult(USER.ID)
                 .fetchOne().get(USER.ID)
+    }
+
+    fun switchEnabledForUser(userEmail: String, enabled: Boolean) {
+        dsl.update(USER)
+                .set(USER.ENABLED, enabled)
+                .where(USER.EMAIL.eq(userEmail))
+                .execute()
     }
 
     fun getUserById(id: UUID?): User = dsl.select()
