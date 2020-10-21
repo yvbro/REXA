@@ -11,12 +11,12 @@ import {
     withStyles,
     Paper,
     Typography,
-    Switch
+    Switch,
 } from '@material-ui/core';
 
 import { NoUserData } from '../dumb/NoUserData';
 import { switchEnabledUser } from '../redux/userDuck';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -49,12 +49,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UserListPage = ({users}) => {
+const UserListPage = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
 
-    const handleChange = (userEmail, enabled) => dispatch(switchEnabledUser(userEmail, !enabled));
+    const { users } = useSelector((state) => ({
+        users: state.user.users.data,
+    }));
+
+    const handleChange = (userEmail, enabled) =>
+        dispatch(switchEnabledUser(userEmail, !enabled));
 
     return (
         <>
@@ -87,8 +92,15 @@ const UserListPage = ({users}) => {
                                         <StyledTableCell>
                                             <Switch
                                                 checked={user.enabled}
-                                                onChange={() => handleChange(user.email, user.enabled)}
-                                                disabled={user.roles.includes('ADMIN')}
+                                                onChange={() =>
+                                                    handleChange(
+                                                        user.email,
+                                                        user.enabled
+                                                    )
+                                                }
+                                                disabled={user.roles.includes(
+                                                    'ADMIN'
+                                                )}
                                                 color="primary"
                                                 name="disableUser"
                                                 inputProps={{

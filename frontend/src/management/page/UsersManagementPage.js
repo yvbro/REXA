@@ -15,14 +15,13 @@ const UsersManagementPage = () => {
         dispatch(fetchUsers());
     }, [dispatch]);
 
-    const { users, loading } = useSelector((state) => ({
-        users: state.user.users.data,
+    const { loading } = useSelector((state) => ({
         loading: state.user.users.loading,
     }));
 
     return (
         <AppLayout>
-            {loading ? <LoadingIndicator /> : <UserListPage users={users} />}
+            {loading ? <LoadingIndicator /> : <UserListPage />}
         </AppLayout>
     );
 };

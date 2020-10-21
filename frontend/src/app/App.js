@@ -23,13 +23,10 @@ import { getCurrentUser } from '../auth/redux/authDuck';
 import OAuth2RedirectHandler from '../auth/smart/OAuth2RedirectHandler';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.getCurrentUser();
-    }
 
     componentDidMount() {
         document.title = 'ReXA';
+        this.props.getCurrentUser();
     }
 
     render() {

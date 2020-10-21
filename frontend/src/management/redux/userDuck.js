@@ -13,7 +13,7 @@ const initialState = {
 
 const setEnabledForUser = (data, userEmail, enabled) => {
     for (var i in data) {
-        if (data[i].userEmail === userEmail) {
+        if (data[i].email === userEmail) {
             data[i].enabled = enabled;
             break;
         }
