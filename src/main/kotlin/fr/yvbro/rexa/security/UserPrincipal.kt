@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.core.user.OAuth2User
 import java.util.*
 
-class UserPrincipal(val id: UUID?, val email: String?, private val password: String?, private val authorities: Collection<GrantedAuthority>) : OAuth2User, UserDetails {
+class UserPrincipal(val id: UUID?, val email: String?, private val password: String?,
+                    private val authorities: Collection<GrantedAuthority>,
+                    private val enabled: Boolean?) : OAuth2User, UserDetails {
     private var attributes: Map<String, Any>? = null
 
     override fun getPassword(): String? {
@@ -31,7 +33,10 @@ class UserPrincipal(val id: UUID?, val email: String?, private val password: Str
     }
 
     override fun isEnabled(): Boolean {
-        return true
+        if (enabled != null) {
+            return enabled
+        }
+        return false
     }
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
@@ -58,7 +63,8 @@ class UserPrincipal(val id: UUID?, val email: String?, private val password: Str
                     user.id,
                     user.email,
                     user.password,
-                    authorities
+                    authorities,
+                    user.enabled
             )
         }
 
