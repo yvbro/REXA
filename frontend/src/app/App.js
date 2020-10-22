@@ -26,7 +26,8 @@ class App extends React.Component {
 
     componentDidMount() {
         document.title = 'ReXA';
-        this.props.getCurrentUser();
+        this.props.getCurrentUser()
+            .catch(); // No need to display errors on getCurrentUser
     }
 
     render() {
