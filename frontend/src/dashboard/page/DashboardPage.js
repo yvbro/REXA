@@ -1,66 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import BarChart from '../../chart/BarChart';
 import AppLayout from '../../app/AppLayout';
-import HeaderPage from '../../common/HeaderPage';
+import { Grid, makeStyles } from '@material-ui/core';
+import PrearchiveDashboard from '../dump/PrearchiveDashboard';
+import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
+import ProjectDashboard from '../dump/ProjectDashboard';
+import { fetchSettings } from '../../settings/redux/settingsDuck';
 
-const MOCK_DATA = [
-    {
-        label: 'NEED_INPUTS',
-        value: 45,
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
     },
-    {
-        label: 'NEED_TO_RUN',
-        value: 10,
-    },
-    {
-        label: 'JOB_RUNNING',
-        value: 15,
-    },
-    {
-        label: 'JOB_FAILED',
-        value: 3,
-    },
-    {
-        label: 'READY_TO_UPLOAD',
-        value: 20,
-    },
-    {
-        label: 'UPLOADING',
-        value: 13,
-    },
-    {
-        label: 'READY_TO_COMPLETE',
-        value: 21,
-    },
-    {
-        label: 'COMPLETE',
-        value: 87,
-    },
-    {
-        label: 'NO_DATA',
-        value: 1,
-    },
-    {
-        label: 'UNKNOWN',
-        value: 0,
-    },
-];
+}));
 
-class DashboardPage extends React.Component {
-    getMockData() {
-        return MOCK_DATA;
-    }
+const DashboardPage = () => {
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-    render() {
-        const myData = this.getMockData();
-        return (
-            <AppLayout>
-                <HeaderPage title={'Rexa Main Dashboard'} />
-                <BarChart data={myData} title="Processes Report" color="#70CAD1" />
-            </AppLayout>
-        );
-    }
-}
+    useEffect(() => {
+        dispatch(fetchSettings());
+    }, [dispatch]);
+
+    return (
+        <AppLayout>
+            <div className={classes.root}>
+                <Grid container spacing={3}>
+                    <Grid item xs={5}>
+                        <RecentActivitiesDashboard />
+                    </Grid>
+                    <Grid item xs={7}>
+                        <PrearchiveDashboard />
+                    </Grid>
+                    <Grid item xs={1.5}>
+                        <ProjectDashboard />
+                    </Grid>
+                </Grid>
+            </div>
+        </AppLayout>
+    );
+};
 
 export default DashboardPage;

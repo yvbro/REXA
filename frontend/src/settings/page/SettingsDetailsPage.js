@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const SettingsDetails = () => {
+export const SettingsDetailsPage = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
@@ -166,4 +166,4 @@ export const SettingsDetails = () => {
     );
 };
 
-export default SettingsDetails;
+export default SettingsDetailsPage;

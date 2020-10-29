@@ -3,6 +3,8 @@ package fr.yvbro.rexa.controller
 import fr.yvbro.rexa.config.WebConfig
 import fr.yvbro.rexa.controller.input.UserSettingsRequest
 import fr.yvbro.rexa.controller.output.ProjectDto
+import fr.yvbro.rexa.controller.output.ProjectPreAchivesDto
+import fr.yvbro.rexa.controller.output.ProjectRecentActivitiesDto
 import fr.yvbro.rexa.controller.output.XnatInfoDto
 import fr.yvbro.rexa.model.Project
 import fr.yvbro.rexa.service.XnatService
@@ -36,6 +38,18 @@ class XnatFrontController(private val xnatService: XnatService) {
                 .collect(toList())
     }
 
+    @GetMapping("/recentActivities")
+    fun getXnatRecentActivities(): List<ProjectRecentActivitiesDto> {
+        return xnatService.getRecentActivities()
+                .map{ it.toOutput()}
+    }
+
+    @GetMapping("/preArchives")
+    fun getXnatPreArchives(): List<ProjectPreAchivesDto> {
+        return xnatService.getPreArchive()
+                .map{ it.toOutput()}
+    }
+
     @PostMapping("/test")
     fun testCredentials(@RequestBody userSettingsRequest: UserSettingsRequest) {
         xnatService.testConnection(userSettingsRequest)
@@ -44,5 +58,6 @@ class XnatFrontController(private val xnatService: XnatService) {
     private fun mapToDto(project: Project): ProjectDto {
         return ProjectDto(project.name, project.id, project.description, project.piFirstname, project.piLastname)
     }
+
 }
 
