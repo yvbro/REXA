@@ -1,50 +1,18 @@
 import React from 'react';
 
+import {useDispatch, useSelector} from 'react-redux';
+
 import {
     makeStyles,
-    Table,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableBody,
-    TableRow,
-    withStyles,
-    Paper,
-    Switch
+    Switch,
 } from '@material-ui/core';
 
 import {switchEnabledUser} from '../redux/userDuck';
-import {useDispatch, useSelector} from 'react-redux';
-import {NoData} from "../../common/NoData";
-
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: '#2b78e3',
-        color: theme.palette.common.white,
-    },
-    body: {
-        fontSize: 14,
-    },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
-}))(TableRow);
+import RexaDataTable from "../../common/RexaDataTable";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(3),
-    },
-    table: {
-        minWidth: 700,
-    },
-    header: {
-        textAlign: 'center',
-        background: '#f1f0eb',
     },
 }));
 
@@ -60,61 +28,40 @@ const UserListPage = () => {
     const handleChange = (userEmail, enabled) =>
         dispatch(switchEnabledUser(userEmail, !enabled));
 
-    return (
-        <>
-            {users ? (
-                <div className={classes.root}>
-                    <h3>User Management</h3>
-                    <TableContainer component={Paper}>
-                        <Table
-                            className={classes.table}
-                            aria-label="customized table"
-                        >
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell>Email</StyledTableCell>
-                                    <StyledTableCell>Roles</StyledTableCell>
-                                    <StyledTableCell>Enabled</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {users.map((user, index) => (
-                                    <StyledTableRow key={`user_${index}`}>
-                                        <StyledTableCell component="th" scope="row">
-                                            {user.email}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            {user.roles.join(',')}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            <Switch
-                                                checked={user.enabled}
-                                                onChange={() =>
-                                                    handleChange(
-                                                        user.email,
-                                                        user.enabled
-                                                    )
-                                                }
-                                                disabled={user.roles.includes(
-                                                    'ADMIN'
-                                                )}
-                                                color="primary"
-                                                name="disableUser"
-                                                inputProps={{
-                                                    'aria-label': 'primary checkbox',
-                                                }}
-                                            />
-                                        </StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
-            ) : (
-                <NoData label='No users on the platform' />
+    const toSwitch = (user) => {
+        return (<Switch
+            checked={user.enabled}
+            onChange={() =>
+                handleChange(
+                    user.email,
+                    user.enabled
+                )
+            }
+            disabled={user.roles.includes(
+                'ADMIN'
             )}
-        </>
+            color="primary"
+            name="disableUser"
+            inputProps={{
+                'aria-label': 'primary checkbox',
+            }}
+        />);
+    }
+
+    const data = [
+        {name: 'Email', values: users.map(e => e.email)},
+        {name: 'Role', values: users.map(e => e.roles.join(','))},
+        {name: 'Enabled', values: users.map(e => toSwitch(e))},
+    ];
+
+    return (
+        <div className={classes.root}>
+            <RexaDataTable key='user'
+                               title='User Management'
+                               data={data}
+                               loading={false}
+                               noDataLabel='No users on the platform!'/>
+        </div>
     );
 };
 
