@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     makeStyles,
     Table,
@@ -12,12 +12,12 @@ import {
     Paper,
     Chip,
 } from '@material-ui/core';
-import { fetchRecentActivities } from '../redux/dashboardDuck';
+import {fetchRecentActivities} from '../redux/dashboardDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
-import { getXnatUri } from '../../utils/xnat';
-import { NoData } from '../../common/NoData';
+import {getXnatUri} from '../../utils/xnat';
+import {NoData} from '../../common/NoData';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     recentActivitiesRoot: {
         borderRadius: '16px',
         maxHeight: '24rem',
@@ -50,7 +50,7 @@ export const RecentActivitiesDashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const { recentActivities, loadingRecentActivities, xnatHost } = useSelector(
+    const {recentActivities, loadingRecentActivities, xnatHost} = useSelector(
         (state) => ({
             recentActivities: state.dashboard.recentActivities.data,
             loadingRecentActivities: state.dashboard.recentActivities.loading,
@@ -63,13 +63,8 @@ export const RecentActivitiesDashboard = () => {
     }, [dispatch]);
 
     if (loadingRecentActivities) {
-        return <LoadingIndicator />;
+        return <LoadingIndicator/>;
     }
-
-    const displayNoDataIfNeeded =
-        recentActivities.length === 0 ? (
-            <NoData label="No recent activities data" noRadius/>
-        ) : null;
 
     return (
         <>
@@ -115,7 +110,9 @@ export const RecentActivitiesDashboard = () => {
                         ))}
                     </TableBody>
                 </Table>
-                {displayNoDataIfNeeded}
+                {recentActivities.length === 0 && (
+                    <NoData label="No recent activities data" noRadius/>
+                )}
             </TableContainer>
         </>
     );

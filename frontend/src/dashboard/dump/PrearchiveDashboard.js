@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     makeStyles,
     Table,
@@ -11,11 +11,11 @@ import {
     withStyles,
     Paper,
 } from '@material-ui/core';
-import { fetchPreAchives } from '../redux/dashboardDuck';
+import {fetchPreAchives} from '../redux/dashboardDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
-import { NoData } from '../../common/NoData';
+import {NoData} from '../../common/NoData';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     preAchiveRoot: {
         borderRadius: '16px',
         maxHeight: '24rem',
@@ -48,7 +48,7 @@ export const PrearchiveDashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const { preAchives, loadingPreArchives } = useSelector((state) => ({
+    const {preAchives, loadingPreArchives} = useSelector((state) => ({
         preAchives: state.dashboard.preAchives.data,
         loadingPreArchives: state.dashboard.preAchives.loading,
     }));
@@ -58,11 +58,8 @@ export const PrearchiveDashboard = () => {
     }, [dispatch]);
 
     if (loadingPreArchives) {
-        return <LoadingIndicator />;
+        return <LoadingIndicator/>;
     }
-
-    const displayNoDataIfNeeded =
-        preAchives.length === 0 ? <NoData label="No pre archive data"  noRadius/> : null;
 
     return (
         <>
@@ -108,7 +105,7 @@ export const PrearchiveDashboard = () => {
                         ))}
                     </TableBody>
                 </Table>
-                {displayNoDataIfNeeded}
+                {preAchives.length === 0 && (<NoData label="No data in the PreArchive!"/>)}
             </TableContainer>
         </>
     );

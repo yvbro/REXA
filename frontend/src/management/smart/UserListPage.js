@@ -10,13 +10,12 @@ import {
     TableRow,
     withStyles,
     Paper,
-    Typography,
     Switch,
 } from '@material-ui/core';
 
-import { NoUserData } from '../dumb/NoUserData';
-import { switchEnabledUser } from '../redux/userDuck';
-import { useDispatch, useSelector } from 'react-redux';
+import {NoUserData} from '../dumb/NoUserData';
+import {switchEnabledUser} from '../redux/userDuck';
+import {useDispatch, useSelector} from 'react-redux';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -54,7 +53,7 @@ const UserListPage = () => {
 
     const dispatch = useDispatch();
 
-    const { users } = useSelector((state) => ({
+    const {users} = useSelector((state) => ({
         users: state.user.users.data,
     }));
 
@@ -65,9 +64,7 @@ const UserListPage = () => {
         <>
             {users ? (
                 <div className={classes.root}>
-                    <Typography className={classes.header} variant="h5">
-                        User Management
-                    </Typography>
+                    <h3>User Management</h3>
                     <TableContainer component={Paper}>
                         <Table
                             className={classes.table}
@@ -115,7 +112,7 @@ const UserListPage = () => {
                     </TableContainer>
                 </div>
             ) : (
-                <NoUserData />
+                <NoUserData/>
             )}
         </>
     );
