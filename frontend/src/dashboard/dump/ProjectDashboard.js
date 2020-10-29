@@ -15,10 +15,22 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { Link } from 'react-router-dom';
+import grey from '@material-ui/core/colors/grey';
+import { NoData } from '../../common/NoData';
 
 const useStyles = makeStyles((theme) => ({
     cardInfo: {
         borderRadius: '16px',
+    },
+    alignItemsAndJustifyContent: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        color: grey[500],
+    },
+    iconDef: {
+        fontSize: 80,
     },
 }));
 
@@ -42,35 +54,39 @@ export const ProjectDashboard = () => {
         <>
             <h3>List of projects</h3>
             <Card className={classes.cardInfo}>
-                <List>
-                    {projects.map((project) => (
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <AccountCircleIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText>
-                                <Link
-                                    to={{
-                                        pathname: '/rexa/project',
-                                        project: { name: project.name },
-                                    }}
-                                >
-                                    <Chip
-                                        label={project.name}
-                                        clickable
-                                        color="primary"
-                                        component="a"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        variant="outlined"
-                                    />
-                                </Link>
-                            </ListItemText>
-                        </ListItem>
-                    ))}
-                </List>
+                {projects.length === 0 ? (
+                    <NoData label="You don't have projects" />
+                ) : (
+                    <List>
+                        {projects.map((project) => (
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <AccountCircleIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText>
+                                    <Link
+                                        to={{
+                                            pathname: '/rexa/project',
+                                            project: { name: project.name },
+                                        }}
+                                    >
+                                        <Chip
+                                            label={project.name}
+                                            clickable
+                                            color="primary"
+                                            component="a"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            variant="outlined"
+                                        />
+                                    </Link>
+                                </ListItemText>
+                            </ListItem>
+                        ))}
+                    </List>
+                )}
             </Card>
         </>
     );

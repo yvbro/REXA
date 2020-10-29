@@ -13,10 +13,10 @@ import {
 } from '@material-ui/core';
 import { fetchPreAchives } from '../redux/dashboardDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import { NoData } from '../../common/NoData';
 
 const useStyles = makeStyles((theme) => ({
     preAchiveRoot: {
-        marginLeft: '0.3rem',
         borderRadius: '16px',
         maxHeight: '24rem',
     },
@@ -60,6 +60,9 @@ export const PrearchiveDashboard = () => {
     if (loadingPreArchives) {
         return <LoadingIndicator />;
     }
+
+    const displayNoDataIfNeeded =
+        preAchives.length === 0 ? <NoData label="No pre archive data"  noRadius/> : null;
 
     return (
         <>
@@ -105,6 +108,7 @@ export const PrearchiveDashboard = () => {
                         ))}
                     </TableBody>
                 </Table>
+                {displayNoDataIfNeeded}
             </TableContainer>
         </>
     );

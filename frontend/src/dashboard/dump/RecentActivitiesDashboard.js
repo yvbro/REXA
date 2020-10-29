@@ -14,11 +14,11 @@ import {
 } from '@material-ui/core';
 import { fetchRecentActivities } from '../redux/dashboardDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
-import { getXnatUri } from '../../utils/xnat'; 
+import { getXnatUri } from '../../utils/xnat';
+import { NoData } from '../../common/NoData';
 
 const useStyles = makeStyles((theme) => ({
     recentActivitiesRoot: {
-        marginLeft: '0.3rem',
         borderRadius: '16px',
         maxHeight: '24rem',
     },
@@ -66,6 +66,11 @@ export const RecentActivitiesDashboard = () => {
         return <LoadingIndicator />;
     }
 
+    const displayNoDataIfNeeded =
+        recentActivities.length === 0 ? (
+            <NoData label="No recent activities data" noRadius/>
+        ) : null;
+
     return (
         <>
             <h3>Recent Activities</h3>
@@ -110,6 +115,7 @@ export const RecentActivitiesDashboard = () => {
                         ))}
                     </TableBody>
                 </Table>
+                {displayNoDataIfNeeded}
             </TableContainer>
         </>
     );
