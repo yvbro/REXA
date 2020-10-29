@@ -33,7 +33,7 @@ const DashboardPage = () => {
                     <Grid item xs={7}>
                         <PrearchiveDashboard />
                     </Grid>
-                    <Grid item xs={1.5}>
+                    <Grid item xs={2}>
                         <ProjectDashboard />
                     </Grid>
                 </Grid>

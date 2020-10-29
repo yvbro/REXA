@@ -10,12 +10,12 @@ import {
     TableRow,
     withStyles,
     Paper,
-    Switch,
+    Switch
 } from '@material-ui/core';
 
-import {NoUserData} from '../dumb/NoUserData';
 import {switchEnabledUser} from '../redux/userDuck';
 import {useDispatch, useSelector} from 'react-redux';
+import {NoData} from "../../common/NoData";
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -112,7 +112,7 @@ const UserListPage = () => {
                     </TableContainer>
                 </div>
             ) : (
-                <NoUserData/>
+                <NoData label='No users on the platform' />
             )}
         </>
     );

@@ -105,7 +105,7 @@ export const PrearchiveDashboard = () => {
                         ))}
                     </TableBody>
                 </Table>
-                {preAchives.length === 0 && (<NoData label="No data in the PreArchive!"/>)}
+                {preAchives.length === 0 && (<NoData label="No data in the PreArchive!" noRadius/>)}
             </TableContainer>
         </>
     );

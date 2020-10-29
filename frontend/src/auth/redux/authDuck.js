@@ -94,7 +94,7 @@ export default function auth(state = initialState, action) {
 }
 
 function isAdmin(authorities) {
-    return authorities.filter(r => r === 'ADMIN').length > 0
+    return authorities.includes( 'ADMIN')
 }
 
 export const performLogin = (email, password) => (dispatch) =>
