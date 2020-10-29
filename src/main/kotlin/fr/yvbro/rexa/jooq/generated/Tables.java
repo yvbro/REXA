@@ -4,16 +4,23 @@
 package fr.yvbro.rexa.jooq.generated;
 
 
+import fr.yvbro.rexa.jooq.generated.tables.JRoles;
 import fr.yvbro.rexa.jooq.generated.tables.JSchemaVersion;
 import fr.yvbro.rexa.jooq.generated.tables.JUser;
+import fr.yvbro.rexa.jooq.generated.tables.JUserRole;
 import fr.yvbro.rexa.jooq.generated.tables.JUserSettings;
 
 
 /**
  * Convenience access to all tables in rexa
  */
-@SuppressWarnings({"all", "unchecked", "rawtypes"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>rexa.roles</code>.
+     */
+    public static final JRoles ROLES = JRoles.ROLES;
 
     /**
      * The table <code>rexa.schema_version</code>.
@@ -24,6 +31,11 @@ public class Tables {
      * The table <code>rexa.user</code>.
      */
     public static final JUser USER = JUser.USER;
+
+    /**
+     * The table <code>rexa.user_role</code>.
+     */
+    public static final JUserRole USER_ROLE = JUserRole.USER_ROLE;
 
     /**
      * The table <code>rexa.user_settings</code>.

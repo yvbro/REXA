@@ -8,7 +8,6 @@ CREATE TABLE rexa.user
     id uuid PRIMARY KEY,
     email VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
-    auth_provider VARCHAR NOT NULL
+    auth_provider VARCHAR NOT NULL,
+    enabled boolean NOT NULL
 );
-
-

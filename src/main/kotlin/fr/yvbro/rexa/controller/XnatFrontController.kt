@@ -7,12 +7,16 @@ import fr.yvbro.rexa.controller.output.ProjectPreAchivesDto
 import fr.yvbro.rexa.controller.output.ProjectRecentActivitiesDto
 import fr.yvbro.rexa.controller.output.XnatInfoDto
 import fr.yvbro.rexa.model.Project
+import fr.yvbro.rexa.model.role.ADMIN
+import fr.yvbro.rexa.model.role.USER
 import fr.yvbro.rexa.service.XnatService
+import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
 import java.util.stream.Collectors.toList
 
 @RestController
 @RequestMapping(WebConfig.FRONT_CONTEXT_PATH)
+@Secured(ADMIN, USER)
 class XnatFrontController(private val xnatService: XnatService) {
 
     @GetMapping("/projects/{id}")

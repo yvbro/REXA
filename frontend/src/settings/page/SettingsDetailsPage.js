@@ -10,6 +10,7 @@ import {
     updateSettings,
     testConnection,
 } from '../redux/settingsDuck';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,7 +64,7 @@ export const SettingsDetailsPage = () => {
     }, [dispatch]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <LoadingIndicator />;
     }
 
     const handleSubmit = (event) => {

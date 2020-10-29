@@ -14,6 +14,7 @@ import DashboardPage from '../dashboard/page/DashboardPage';
 import Header from './Header';
 import ProjectPage from '../project/page/ProjectPage';
 import SettingsDetailsPage from '../settings/page/SettingsDetailsPage';
+import UsersManagementPage from '../management/page/UsersManagementPage';
 import LoginPage from '../auth/page/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import LoadingIndicator from '../common/LoadingIndicator';
@@ -22,13 +23,11 @@ import { getCurrentUser } from '../auth/redux/authDuck';
 import OAuth2RedirectHandler from '../auth/smart/OAuth2RedirectHandler';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.getCurrentUser();
-    }
 
     componentDidMount() {
         document.title = 'ReXA';
+        this.props.getCurrentUser()
+            .catch(); // No need to display errors on getCurrentUser
     }
 
     render() {
@@ -88,8 +87,13 @@ class App extends React.Component {
                                     />
                                     <PrivateRoute
                                         authenticated={authenticated}
-                                        path="/rexa/Settings"
+                                        path="/rexa/settings"
                                         component={() => <SettingsDetailsPage />}
+                                    />
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        path="/rexa/management"
+                                        component={() => <UsersManagementPage />}
                                     />
                                     <PrivateRoute
                                         authenticated={authenticated}

@@ -2,6 +2,7 @@ package fr.yvbro.rexa.security.oauth2
 
 import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
 import fr.yvbro.rexa.repository.UserRepository
+import fr.yvbro.rexa.repository.UserRoleRepository
 import fr.yvbro.rexa.security.TokenAuthenticationFilter
 import fr.yvbro.rexa.security.UserPrincipal
 import org.slf4j.LoggerFactory
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 
 @Component
-class CustomOAuth2UserService(private val userRepository: UserRepository) : DefaultOAuth2UserService() {
+class CustomOAuth2UserService(private val userRepository: UserRepository,
+                              private val userRoleRepository: UserRoleRepository) : DefaultOAuth2UserService() {
 
     @Throws(OAuth2AuthenticationException::class)
     override fun loadUser(oAuth2UserRequest: OAuth2UserRequest): OAuth2User? {
@@ -40,7 +42,9 @@ class CustomOAuth2UserService(private val userRepository: UserRepository) : Defa
             throw RexaAuthentificationFailedException()
         }
 
-        return UserPrincipal.create(user, oAuth2User.attributes)
+        val userRoles = userRoleRepository.getRolesForUserId(user.id)
+
+        return UserPrincipal.create(user, userRoles, oAuth2User.attributes)
     }
 
     companion object {

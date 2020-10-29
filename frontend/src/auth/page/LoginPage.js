@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import _get from 'lodash/get';
 
 import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 
@@ -63,8 +65,12 @@ const LoginPage = (props) => {
                 );
                 history.push('/rexa/dashboard');
             })
-            .catch(() => {
-                toast.error('Login failed: Invalid username or password.');
+            .catch((error) => {
+                let errorMessage = _get(error, 'response.data.message', null);
+                if (!errorMessage || errorMessage !== "User is disabled") {
+                    errorMessage = "Invalid username or password";
+                }
+                toast.error(`Unsuccessful login attempt: ${errorMessage}`);
             });
     };
 

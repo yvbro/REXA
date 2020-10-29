@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -17,6 +17,10 @@ const Header = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
+
+    const { isAdmin } = useSelector((state) => ({
+        isAdmin: state.auth.isAdmin
+    }));
 
     const handleLogOut = (event) => {
         event.preventDefault();
@@ -76,7 +80,7 @@ const Header = (props) => {
                             >
                                 <NavIcon>
                                     <i
-                                        className="fa fa-fw fa-user-o"
+                                        className="fa fa-vcard"
                                         style={{ fontSize: '1.75em' }}
                                     />
                                 </NavIcon>
@@ -99,9 +103,29 @@ const Header = (props) => {
                                     />
                                 </NavIcon>
                                 <NavText>
-                                    <Link to="rexa/project">User settings</Link>
+                                    <Link to="rexa/settings">User settings</Link>
                                 </NavText>
                             </NavItem>
+
+                            { isAdmin && 
+                                <NavItem
+                                    eventKey="rexa/management"
+                                    active={props.location.pathname.startsWith(
+                                        '/rexa/management'
+                                    )}
+                                >
+                                    <NavIcon>
+                                        <i
+                                            className="fa fa-users"
+                                            aria-hidden="true"
+                                            style={{ fontSize: '1.75em' }}
+                                        />
+                                    </NavIcon>
+                                    <NavText>
+                                        <Link to="rexa/management">Users Management</Link>
+                                    </NavText>
+                                </NavItem>
+                            }
 
                             <NavItem onClick={handleLogOut} eventKey="logout">
                                 <NavIcon>

@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 import grey from '@material-ui/core/colors/grey';
 import { NoData } from '../../common/NoData';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     cardInfo: {
         borderRadius: '16px',
     },
@@ -58,8 +58,8 @@ export const ProjectDashboard = () => {
                     <NoData label="You don't have projects" />
                 ) : (
                     <List>
-                        {projects.map((project) => (
-                            <ListItem>
+                        {projects.map((project, index) => (
+                            <ListItem key={`dashboard_${index}`}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <AccountCircleIcon />
@@ -76,7 +76,6 @@ export const ProjectDashboard = () => {
                                             label={project.name}
                                             clickable
                                             color="primary"
-                                            component="a"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             variant="outlined"

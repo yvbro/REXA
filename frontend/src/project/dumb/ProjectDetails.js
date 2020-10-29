@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import { Grid } from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 
-import { NoProjectData } from './NoProjectData';
-import { ProjectInfo } from './ProjectInfo';
-import { ProcessorGrid } from './ProcessorGrid';
-import { ScanGrid } from './ScanGrid';
+import {ProjectInfo} from './ProjectInfo';
+import {ProcessorGrid} from './ProcessorGrid';
+import {ScanGrid} from './ScanGrid';
 
 import LoadingIndicator from '../../common/LoadingIndicator';
+import {NoData} from "../../common/NoData";
 
 export const ProjectDetails = () => {
-    const { project, loading, parentLoading } = useSelector((state) => ({
+    const {project, loading, parentLoading} = useSelector((state) => ({
         project: state.project.selectedProject.data,
         loading: state.project.selectedProject.loading,
         parentLoading: state.project.projectsList.loading,
@@ -21,22 +21,22 @@ export const ProjectDetails = () => {
     return (
         <>
             {loading || parentLoading ? (
-                <LoadingIndicator />
+                <LoadingIndicator/>
             ) : project && project.assessors ? (
                 <>
                     <Grid container spacing={3}>
                         <Grid item md={3} xs={12}>
-                            <ProjectInfo project={project} />
+                            <ProjectInfo project={project}/>
                         </Grid>
-                        <ScanGrid scans={project.scans} />
+                        <ScanGrid scans={project.scans}/>
                     </Grid>
-                    <ProcessorGrid processors={project.assessors} />
+                    <ProcessorGrid processors={project.assessors}/>
                 </>
             ) : (
                 <>
                     <Grid container spacing={3}>
                         <Grid item md={12} xs={12}>
-                            <NoProjectData />
+                            <NoData label='No project selected or no data found !'/>
                         </Grid>
                     </Grid>
                 </>

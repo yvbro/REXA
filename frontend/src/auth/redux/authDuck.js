@@ -6,6 +6,7 @@ import { fulfilled, pending, rejected } from '../../helpers/promise';
 const initialState = {
     authenticated: false,
     currentUser: null,
+    isAdmin: false,
     loading: false,
 };
 
@@ -20,13 +21,15 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: false,
                 currentUser: null,
+                isAdmin: false,
                 loading: true,
             };
         case fulfilled(LOGIN):
             return {
                 ...state,
                 authenticated: true,
-                currentUser: state.currentUser,
+                currentUser: action.payload.data,
+                isAdmin: isAdmin(action.payload.data.roles),
                 loading: false,
             };
         case rejected(LOGIN):
@@ -34,6 +37,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: false,
                 currentUser: null,
+                isAdmin: false,
                 loading: false,
             };
         case pending(LOGOUT):
@@ -41,6 +45,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: state.authenticated,
                 currentUser: state.currentUser,
+                isAdmin: false,
                 loading: true,
             };
         case fulfilled(LOGOUT):
@@ -48,6 +53,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: false,
                 currentUser: null,
+                isAdmin: false,
                 loading: false,
             };
         case rejected(LOGOUT):
@@ -55,6 +61,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: state.authenticated,
                 currentUser: state.currentUser,
+                isAdmin: state.isAdmin,
                 loading: false,
             };
         case pending(FETCH_USER):
@@ -62,13 +69,15 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: state.authenticated,
                 currentUser: state.currentUser,
+                isAdmin: state.isAdmin,
                 loading: true,
             };
         case fulfilled(FETCH_USER):
             return {
                 ...state,
                 authenticated: true,
-                currentUser: action.payload.data.name,
+                currentUser: action.payload.data,
+                isAdmin: isAdmin(action.payload.data.roles),
                 loading: false,
             };
         case rejected(FETCH_USER):
@@ -76,11 +85,16 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: false,
                 currentUser: null,
+                isAdmin: false,
                 loading: false,
             };
         default:
             return state;
     }
+}
+
+function isAdmin(authorities) {
+    return authorities.includes( 'ADMIN')
 }
 
 export const performLogin = (email, password) => (dispatch) =>
