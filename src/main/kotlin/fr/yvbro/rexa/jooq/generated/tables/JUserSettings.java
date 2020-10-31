@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JUserSettings extends TableImpl<JUserSettingsRecord> {
 
-    private static final long serialVersionUID = 1463979185;
+    private static final long serialVersionUID = -1291274252;
 
     /**
      * The reference instance of <code>rexa.user_settings</code>
@@ -48,6 +48,11 @@ public class JUserSettings extends TableImpl<JUserSettingsRecord> {
     }
 
     /**
+     * The column <code>rexa.user_settings.user_id</code>.
+     */
+    public final TableField<JUserSettingsRecord, UUID> USER_ID = createField(DSL.name("user_id"), org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+
+    /**
      * The column <code>rexa.user_settings.xnat_username</code>.
      */
     public final TableField<JUserSettingsRecord, String> XNAT_USERNAME = createField(DSL.name("xnat_username"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
@@ -61,11 +66,6 @@ public class JUserSettings extends TableImpl<JUserSettingsRecord> {
      * The column <code>rexa.user_settings.xnat_url</code>.
      */
     public final TableField<JUserSettingsRecord, String> XNAT_URL = createField(DSL.name("xnat_url"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
-
-    /**
-     * The column <code>rexa.user_settings.user_id</code>.
-     */
-    public final TableField<JUserSettingsRecord, UUID> USER_ID = createField(DSL.name("user_id"), org.jooq.impl.SQLDataType.UUID, this, "");
 
     /**
      * Create a <code>rexa.user_settings</code> table reference
@@ -107,12 +107,12 @@ public class JUserSettings extends TableImpl<JUserSettingsRecord> {
 
     @Override
     public UniqueKey<JUserSettingsRecord> getPrimaryKey() {
-        return Keys.PK_ID;
+        return Keys.USER_SETTINGS_PKEY;
     }
 
     @Override
     public List<UniqueKey<JUserSettingsRecord>> getKeys() {
-        return Arrays.<UniqueKey<JUserSettingsRecord>>asList(Keys.PK_ID);
+        return Arrays.<UniqueKey<JUserSettingsRecord>>asList(Keys.USER_SETTINGS_PKEY);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class JUserSettings extends TableImpl<JUserSettingsRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<String, String, String, UUID> fieldsRow() {
+    public Row4<UUID, String, String, String> fieldsRow() {
         return (Row4) super.fieldsRow();
     }
 }
