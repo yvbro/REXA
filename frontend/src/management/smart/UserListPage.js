@@ -56,11 +56,10 @@ const UserListPage = () => {
 
     return (
         <div className={classes.root}>
-            <RexaDataTable key='user'
-                               title='User Management'
-                               data={data}
-                               loading={false}
-                               noDataLabel='No users on the platform!'/>
+            <RexaDataTable title='User Management'
+                           data={data}
+                           loading={false}
+                           noDataLabel='No users on the platform!'/>
         </div>
     );
 };

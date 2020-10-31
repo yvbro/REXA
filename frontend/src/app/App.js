@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { connect, Provider } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import {connect, Provider} from 'react-redux';
+import {ToastContainer} from 'react-toastify';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
-import { bindActionCreators, compose } from 'redux';
+import {bindActionCreators, compose} from 'redux';
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -19,7 +19,7 @@ import LoginPage from '../auth/page/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import LoadingIndicator from '../common/LoadingIndicator';
 import NotFound from '../common/NotFound';
-import { getCurrentUser } from '../auth/redux/authDuck';
+import {getCurrentUser} from '../auth/redux/authDuck';
 import OAuth2RedirectHandler from '../auth/smart/OAuth2RedirectHandler';
 
 class App extends React.Component {
@@ -31,10 +31,10 @@ class App extends React.Component {
     }
 
     render() {
-        const { store, authenticated, loading } = this.props;
+        const {store, authenticated, loading} = this.props;
 
         if (loading) {
-            return <LoadingIndicator />;
+            return <LoadingIndicator/>;
         }
 
         return (
@@ -47,16 +47,12 @@ class App extends React.Component {
                     rel="stylesheet"
                     href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 />
-                <ToastContainer autoClose={5000} />
+                <ToastContainer autoClose={5000}/>
                 <Router>
                     <Route
-                        render={({ location, history }) => (
+                        render={({location}) => (
                             <div>
-                                <Header
-                                    location={location}
-                                    history={history}
-                                    authenticated={authenticated}
-                                />
+                                <Header/>
                                 <Switch>
                                     <Route
                                         path="/rexa/login"
@@ -73,36 +69,31 @@ class App extends React.Component {
 
                                     <Route
                                         path="/rexa/notfound"
-                                        component={() => <NotFound />}
+                                        component={() => <NotFound/>}
                                     />
                                     <PrivateRoute
-                                        authenticated={authenticated}
                                         path="/rexa/dashboard"
-                                        component={() => <DashboardPage />}
+                                        component={() => <DashboardPage/>}
                                     />
                                     <PrivateRoute
-                                        authenticated={authenticated}
                                         path="/rexa/project"
-                                        component={() => <ProjectPage />}
+                                        component={() => <ProjectPage/>}
                                     />
                                     <PrivateRoute
-                                        authenticated={authenticated}
                                         path="/rexa/settings"
-                                        component={() => <SettingsDetailsPage />}
+                                        component={() => <SettingsDetailsPage/>}
                                     />
                                     <PrivateRoute
-                                        authenticated={authenticated}
                                         path="/rexa/management"
-                                        component={() => <UsersManagementPage />}
+                                        component={() => <UsersManagementPage/>}
                                     />
                                     <PrivateRoute
-                                        authenticated={authenticated}
                                         path="/"
                                         component={() => (
                                             <Redirect
                                                 to={{
                                                     pathname: '/rexa/dashboard',
-                                                    state: { from: location },
+                                                    state: {from: location},
                                                 }}
                                             />
                                         )}
