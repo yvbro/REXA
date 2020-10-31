@@ -18,7 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class XnatClient(private val properties: XnatProperties, private val userSettingsService: UserSettingsService) {
+class XnatClient(private val userSettingsService: UserSettingsService) {
 
     private val logger = LoggerFactory.getLogger(XnatClient::class.java)
 

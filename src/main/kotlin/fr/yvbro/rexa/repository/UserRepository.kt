@@ -19,11 +19,18 @@ class UserRepository(private val dsl: DSLContext,
             .fetchOptional(userTupleMapper)
             .orElseThrow { UsernameNotFoundException("User not found with email : $email") }
 
-    fun save(email: String, password: String): UUID {
-            return dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD, USER.ENABLED)
-                .values(UUID.randomUUID(), email, password, true)
-                .returningResult(USER.ID)
-                .fetchOne().get(USER.ID)
+    fun findUserByEmail(email: String): Optional<User> = dsl.select()
+            .from(USER)
+            .where(USER.EMAIL.eq(email))
+            .limit(1)
+            .fetchOptional(userTupleMapper)
+
+    fun save(email: String, password: String, authProvider: String, enabled: Boolean): User {
+        val record = dsl.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD, USER.AUTH_PROVIDER, USER.ENABLED)
+                .values(UUID.randomUUID(), email, password, authProvider, enabled)
+                .returningResult(USER.ID, USER.EMAIL, USER.PASSWORD, USER.AUTH_PROVIDER, USER.ENABLED)
+                .fetchOne()
+        return userTupleMapper.map(record)
     }
 
     fun switchEnabledForUser(userEmail: String, enabled: Boolean) {

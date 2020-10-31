@@ -39,24 +39,24 @@ export default function project(state = initialState, action) {
         case rejected(FETCH_USERS):
             return {
                 ...state,
-                data: state.user.data,
+                data: state.data,
                 loading: false,
             };
         case pending(SWITCH_ENABLED_USER):
             return {
                 ...state,
                 data: setEnabledForUser(
-                    state.users.data,
+                    state.data,
                     action.payload.userEmail,
                     action.payload.enabled
                 ),
-                loading: state.users.loading,
+                loading: state.loading,
             };
         case rejected(SWITCH_ENABLED_USER):
             return {
                 ...state,
                 data: setEnabledForUser(
-                    state.users.data,
+                    state.data,
                     action.payload.userEmail,
                     !action.payload.enabled
                 ),
