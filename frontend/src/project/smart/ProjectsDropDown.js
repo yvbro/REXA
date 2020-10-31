@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 
 import { fetchProject, fetchProjects } from '../redux/projectDuck';
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -61,4 +62,8 @@ export const ProjectsDropDown = ({ projectSelected }) => {
             </Select>
         </FormControl>
     );
+};
+
+ProjectsDropDown.propTypes = {
+    projectSelected: PropTypes.string
 };
