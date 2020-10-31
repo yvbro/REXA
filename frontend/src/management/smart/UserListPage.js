@@ -22,7 +22,7 @@ const UserListPage = () => {
     const dispatch = useDispatch();
 
     const {users} = useSelector((state) => ({
-        users: state.user.users.data,
+        users: state.user.data,
     }));
 
     const handleChange = (userEmail, enabled) =>
