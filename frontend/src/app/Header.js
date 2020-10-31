@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import SideNav, {NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import ClickOutside from 'react-click-outside';
-import { performLogout } from '../auth/redux/authDuck';
-import { ACCESS_TOKEN } from '../constants';
-import { toast } from 'react-toastify';
+import {performLogout} from '../auth/redux/authDuck';
+import {ACCESS_TOKEN} from '../constants';
+import {toast} from 'react-toastify';
 
 import style from '../common/common.module.scss';
 import rexaLogo from "../assets/rexa-logo-svg.png";
 
-const Header = (props) => {
+const Header = () => {
     const [expanded, setExpanded] = useState(false);
 
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
 
-    const { isAdmin } = useSelector((state) => ({
-        isAdmin: state.auth.isAdmin
+    const {isAdmin, authenticated} = useSelector((state) => ({
+        isAdmin: state.auth.isAdmin,
+        authenticated: state.auth.authenticated
     }));
 
     const handleLogOut = (event) => {
@@ -39,7 +39,7 @@ const Header = (props) => {
 
     return (
         <>
-            {props.authenticated && (
+            {authenticated && (
                 <ClickOutside onClickOutside={() => setExpanded(false)}>
                     <SideNav
                         className={style.navBar}
@@ -54,18 +54,18 @@ const Header = (props) => {
                             }
                         }}
                     >
-                        <SideNav.Toggle />
+                        <SideNav.Toggle/>
                         <SideNav.Nav>
                             <NavItem
                                 eventKey="rexa/dashboard"
-                                active={props.location.pathname.startsWith(
+                                active={location.pathname.startsWith(
                                     '/rexa/dashboard'
                                 )}
                             >
                                 <NavIcon>
                                     <i
                                         className="fa fa-fw fa-home"
-                                        style={{ fontSize: '1.75em' }}
+                                        style={{fontSize: '1.75em'}}
                                     />
                                 </NavIcon>
                                 <NavText>
@@ -75,14 +75,14 @@ const Header = (props) => {
 
                             <NavItem
                                 eventKey="rexa/project"
-                                active={props.location.pathname.startsWith(
+                                active={location.pathname.startsWith(
                                     '/rexa/project'
                                 )}
                             >
                                 <NavIcon>
                                     <i
                                         className="fa fa-vcard"
-                                        style={{ fontSize: '1.75em' }}
+                                        style={{fontSize: '1.75em'}}
                                     />
                                 </NavIcon>
                                 <NavText>
@@ -92,7 +92,7 @@ const Header = (props) => {
 
                             <NavItem
                                 eventKey="rexa/settings"
-                                active={props.location.pathname.startsWith(
+                                active={location.pathname.startsWith(
                                     '/rexa/settings'
                                 )}
                             >
@@ -100,7 +100,7 @@ const Header = (props) => {
                                     <i
                                         className="fa fa-cogs"
                                         aria-hidden="true"
-                                        style={{ fontSize: '1.75em' }}
+                                        style={{fontSize: '1.75em'}}
                                     />
                                 </NavIcon>
                                 <NavText>
@@ -108,31 +108,31 @@ const Header = (props) => {
                                 </NavText>
                             </NavItem>
 
-                            { isAdmin && 
-                                <NavItem
-                                    eventKey="rexa/management"
-                                    active={props.location.pathname.startsWith(
-                                        '/rexa/management'
-                                    )}
-                                >
-                                    <NavIcon>
-                                        <i
-                                            className="fa fa-users"
-                                            aria-hidden="true"
-                                            style={{ fontSize: '1.75em' }}
-                                        />
-                                    </NavIcon>
-                                    <NavText>
-                                        <Link to="rexa/management">Users Management</Link>
-                                    </NavText>
-                                </NavItem>
+                            {isAdmin &&
+                            <NavItem
+                                eventKey="rexa/management"
+                                active={location.pathname.startsWith(
+                                    '/rexa/management'
+                                )}
+                            >
+                                <NavIcon>
+                                    <i
+                                        className="fa fa-users"
+                                        aria-hidden="true"
+                                        style={{fontSize: '1.75em'}}
+                                    />
+                                </NavIcon>
+                                <NavText>
+                                    <Link to="rexa/management">Users Management</Link>
+                                </NavText>
+                            </NavItem>
                             }
 
                             <NavItem onClick={handleLogOut} eventKey="logout">
                                 <NavIcon>
                                     <i
                                         className="fa fa-sign-out"
-                                        style={{ fontSize: '1.75em' }}
+                                        style={{fontSize: '1.75em'}}
                                     />
                                 </NavIcon>
                                 <NavText>Logout</NavText>
@@ -144,11 +144,6 @@ const Header = (props) => {
             )}
         </>
     );
-};
-
-Header.propTypes = {
-    authenticated: PropTypes.bool.isRequired,
-    location: PropTypes.object.isRequired,
 };
 
 export default Header;
