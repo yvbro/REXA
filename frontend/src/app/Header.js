@@ -10,6 +10,7 @@ import { ACCESS_TOKEN } from '../constants';
 import { toast } from 'react-toastify';
 
 import style from '../common/common.module.scss';
+import rexaLogo from "../assets/rexa-logo-svg.png";
 
 const Header = (props) => {
     const [expanded, setExpanded] = useState(false);
@@ -136,6 +137,7 @@ const Header = (props) => {
                                 </NavIcon>
                                 <NavText>Logout</NavText>
                             </NavItem>
+                            <img className='logoBottom' src={rexaLogo} alt="ReXA Logo" width="70" height="75"/>
                         </SideNav.Nav>
                     </SideNav>
                 </ClickOutside>

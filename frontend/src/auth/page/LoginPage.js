@@ -12,7 +12,7 @@ import { performLogin } from '../redux/authDuck';
 import SocialLogin from '../dumb/SocialLogin';
 import { ACCESS_TOKEN } from '../../constants';
 
-import style from '../dumb/auth.module.scss';
+import rexaLogo from "../../assets/rexa-logo-svg.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         width: 400,
-        height: 350,
+        height: 600,
         borderRadius: '16px',
     },
-    form: {
+    center: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -110,15 +110,11 @@ const LoginPage = (props) => {
         >
             <Grid item xs={3}>
                 <Card className={classes.card}>
-                    <div className={style.header}>
-                        <h1>
-                            <span className={style.blue30}>Welcome </span>
-                            <span className={style.black15}>to </span>
-                            <span className={style.red30}> ReXA</span>
-                        </h1>
+                    <div className={classes.center}>
+                        <img src={rexaLogo} alt="ReXA Logo" width="300" height="300"/>
                     </div>
                     <form
-                        className={classes.form}
+                        className={classes.center}
                         noValidate
                         autoComplete="off"
                         onSubmit={handleSubmit}
