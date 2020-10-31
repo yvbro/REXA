@@ -55,7 +55,7 @@ export const ProjectDashboard = () => {
             <h3>List of projects</h3>
             <Card className={classes.cardInfo}>
                 {projects.length === 0 ? (
-                    <NoData label="You don't have projects" />
+                    <NoData label="No project found" />
                 ) : (
                     <List>
                         {projects.map((project, index) => (
@@ -69,7 +69,7 @@ export const ProjectDashboard = () => {
                                     <Link
                                         to={{
                                             pathname: '/rexa/project',
-                                            project: { name: project.name },
+                                            project: project.id,
                                         }}
                                     >
                                         <Chip

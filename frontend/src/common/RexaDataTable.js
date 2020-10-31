@@ -43,7 +43,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export const RexaDataTable = ({key, title, data, loading, noDataLabel}) => {
+const RexaDataTable = ({title, data, loading, noDataLabel}) => {
     const classes = useStyles();
 
     if (loading) {
@@ -58,15 +58,15 @@ export const RexaDataTable = ({key, title, data, loading, noDataLabel}) => {
                     <TableHead>
                         <TableRow>
                             {data.map((column, index) => (
-                                <StyledTableCell key={`${key}_header_${index}`} align="center">{column.name}</StyledTableCell>
+                                <StyledTableCell key={`${title}_header_${index}`} align="center">{column.name}</StyledTableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {data[0].values.map((_, rowIndex) => (
-                            <StyledTableRow key={`${key}_row_${rowIndex}`}>
+                            <StyledTableRow key={`${title}_row_${rowIndex}`}>
                                 {data.map((row, colIndex) => (
-                                    <StyledTableCell key={`${key}_row_cell_${colIndex}`} align="center">
+                                    <StyledTableCell key={`${title}_row_cell_${colIndex}`} align="center">
                                         {row.values[rowIndex]}
                                     </StyledTableCell>
                                 ))}
@@ -81,7 +81,6 @@ export const RexaDataTable = ({key, title, data, loading, noDataLabel}) => {
 };
 
 RexaDataTable.propTypes = {
-    key: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,

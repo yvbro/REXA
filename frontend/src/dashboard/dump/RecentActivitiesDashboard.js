@@ -43,8 +43,7 @@ export const RecentActivitiesDashboard = () => {
     ];
 
     return (
-        <RexaDataTable key='activities'
-                       title='Recent Activities'
+        <RexaDataTable title='Recent Activities'
                        data={data}
                        loading={loadingRecentActivities}
                        noDataLabel='No recent activities data' />

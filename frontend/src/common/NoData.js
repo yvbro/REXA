@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import grey from '@material-ui/core/colors/grey';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     cardInfoWithRadius: {
         borderRadius: '16px',
     },
@@ -36,3 +37,8 @@ export const NoData = ({ label, noRadius }) => {
         </Card>
     );
 };
+
+NoData.propTypes = {
+    label: PropTypes.string,
+    noRadius: PropTypes.bool,
+}

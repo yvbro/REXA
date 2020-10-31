@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProjectsDropDown = ({ projectSelected }) => {
+    console.log(projectSelected);
     const classes = useStyles();
     const dispatch = useDispatch();
     const { projects, loading, project } = useSelector((state) => ({
@@ -33,7 +34,7 @@ export const ProjectsDropDown = ({ projectSelected }) => {
 
     useEffect(() => {
         projectSelected
-            ? dispatch(fetchProject(projectSelected.name))
+            ? dispatch(fetchProject(projectSelected))
             : dispatch(fetchProjects());
     }, [dispatch, projectSelected]);
 
