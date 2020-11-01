@@ -1,6 +1,7 @@
 package fr.yvbro.rexa.security
 
 import fr.yvbro.rexa.model.User
+import fr.yvbro.rexa.model.UserSettings
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -9,7 +10,8 @@ import java.util.*
 
 class UserPrincipal(val id: UUID?, val email: String?, private val password: String?,
                     private val authorities: Collection<GrantedAuthority>,
-                    private val enabled: Boolean?) : OAuth2User, UserDetails {
+                    private val enabled: Boolean?, var xnatUsername: String?,
+                    var xnatHost: String?) : OAuth2User, UserDetails {
     private var attributes: Map<String, Any>? = null
 
     override fun getPassword(): String? {
@@ -56,20 +58,22 @@ class UserPrincipal(val id: UUID?, val email: String?, private val password: Str
     }
 
     companion object {
-        fun create(user: User, userRoles: List<String>): UserPrincipal {
-            val authorities: List<GrantedAuthority> = userRoles.map {role -> SimpleGrantedAuthority(role)}
+        fun create(user: User, userRoles: List<String>, userSettings: UserSettings): UserPrincipal {
+            val authorities: List<GrantedAuthority> = userRoles.map { role -> SimpleGrantedAuthority(role) }
 
             return UserPrincipal(
                     user.id,
                     user.email,
                     user.password,
                     authorities,
-                    user.enabled
+                    user.enabled,
+                    userSettings.xnatUsername,
+                    userSettings.xnatHost
             )
         }
 
-        fun create(user: User, userRoles: List<String>, attributes: Map<String, Any>?): UserPrincipal {
-            val userPrincipal = create(user, userRoles)
+        fun create(user: User, userRoles: List<String>, userSettings: UserSettings, attributes: Map<String, Any>?): UserPrincipal {
+            val userPrincipal = create(user, userRoles, userSettings)
             userPrincipal.setAttributes(attributes)
             return userPrincipal
         }

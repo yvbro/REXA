@@ -73,7 +73,7 @@ export default function auth(state = initialState, action) {
                 loading: true,
             };
         case fulfilled(FETCH_USER):
-            return {
+                   return {
                 ...state,
                 authenticated: true,
                 currentUser: action.payload.data,

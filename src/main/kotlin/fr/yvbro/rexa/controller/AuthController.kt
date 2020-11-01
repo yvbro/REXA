@@ -3,8 +3,6 @@ package fr.yvbro.rexa.controller
 import fr.yvbro.rexa.config.WebConfig.Companion.AUTH_CONTEXT_PATH
 import fr.yvbro.rexa.controller.input.LoginRequest
 import fr.yvbro.rexa.controller.output.AuthResponse
-import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
-import fr.yvbro.rexa.exception.RexaUnauthorizedException
 import fr.yvbro.rexa.security.TokenProvider
 import fr.yvbro.rexa.security.UserPrincipal
 import org.springframework.http.ResponseEntity
@@ -55,7 +53,7 @@ class AuthController(private val authenticationManager: AuthenticationManager,
 
     @GetMapping("/userinfo")
     fun getUser(@AuthenticationPrincipal principal: UserPrincipal): Map<String, Any?> {
-        return mapOf("name" to principal.username, "roles" to getRoles(principal.authorities))
+        return mapOf("name" to principal.username, "roles" to getRoles(principal.authorities), "xnatHost" to principal.xnatHost, "xnatUsername" to principal.xnatUsername)
     }
 
     private fun getRoles(authorities: Collection<GrantedAuthority>): Set<String> {
