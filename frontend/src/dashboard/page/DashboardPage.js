@@ -38,12 +38,8 @@ const DashboardPage = () => {
         loadingPreArchives: state.dashboard.preArchives.loading,
         projects: state.project.projectsList.data,
         loadingProjects: state.project.projectsList.loading,
-        xnatHost: state.settings.xnatHost,
+        xnatHost: state.auth.currentUser.xnatHost,
     }));
-
-    useEffect(() => {
-        dispatch(fetchSettings());
-    }, [dispatch]);
 
     useEffect(() => {
         dispatch(fetchRecentActivities())
