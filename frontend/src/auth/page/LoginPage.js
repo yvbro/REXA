@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         width: 400,
-        height: 600,
+        height: 500,
         borderRadius: '16px',
     },
     center: {
@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
         width: 350,
         margin: theme.spacing(1),
     },
+    imgLogo: {
+        width: 230,
+        height: 230,
+    }
 }));
 
 // eslint-disable-next-line
@@ -84,7 +88,7 @@ const LoginPage = (props) => {
     };
 
     if (location.state && location.state.error) {
-        toast.error('This account is not allowed to sign in.');
+        toast.error('This account is not allowed to sign in or the user has been disabled.');
         location.state.error = null;
     }
 
@@ -111,7 +115,7 @@ const LoginPage = (props) => {
             <Grid item xs={3}>
                 <Card className={classes.card}>
                     <div className={classes.center}>
-                        <img src={rexaLogo} alt="ReXA Logo" width="300" height="300"/>
+                        <img className={classes.imgLogo} src={rexaLogo} alt="ReXA Logo"/>
                     </div>
                     <form
                         className={classes.center}

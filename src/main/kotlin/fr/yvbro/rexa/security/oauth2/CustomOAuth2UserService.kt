@@ -1,11 +1,16 @@
 package fr.yvbro.rexa.security.oauth2
 
 import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
+import fr.yvbro.rexa.exception.RexaUnauthorizedException
+import fr.yvbro.rexa.model.AuthProvider
+import fr.yvbro.rexa.model.User
+import fr.yvbro.rexa.model.role.USER
 import fr.yvbro.rexa.repository.UserRepository
 import fr.yvbro.rexa.repository.UserRoleRepository
 import fr.yvbro.rexa.security.TokenAuthenticationFilter
 import fr.yvbro.rexa.security.UserPrincipal
 import org.slf4j.LoggerFactory
+import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
@@ -37,12 +42,27 @@ class CustomOAuth2UserService(private val userRepository: UserRepository,
             logger.warn("Email not found from OAuth2 provider")
             throw RexaAuthentificationFailedException()
         }
-        val user = userRepository.getUserByEmail(oAuth2UserInfo.getEmail())
+
+        val user: User
+        val userRoles: List<String>
+        val userOptional = userRepository.findUserByEmail(oAuth2UserInfo.getEmail())
+        if (userOptional.isEmpty) {
+            // If user isn't known in database, add it for google sign in
+            user = userRepository.save(oAuth2UserInfo.getEmail(), "", oAuth2UserRequest.clientRegistration.registrationId, false)
+            user.id?.let { userRoleRepository.saveRolesForUser(it, listOf(USER)) }
+            userRoles = listOf("User")
+        } else {
+            user = userOptional.get()
+            userRoles = userRoleRepository.getRolesForUserId(user.id)
+        }
+
         if (!user.authProvider.equals(oAuth2UserRequest.clientRegistration.registrationId)) {
             throw RexaAuthentificationFailedException()
         }
 
-        val userRoles = userRoleRepository.getRolesForUserId(user.id)
+        if (!user.enabled!!) {
+            throw RexaAuthentificationFailedException()
+        }
 
         return UserPrincipal.create(user, userRoles, oAuth2User.attributes)
     }

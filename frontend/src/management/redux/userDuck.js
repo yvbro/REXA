@@ -1,18 +1,16 @@
 import axios from 'axios';
 
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
-import { fulfilled, pending, rejected } from '../../helpers/promise';
+import {fulfilled, pending, rejected} from '../../helpers/promise';
 
 const initialState = {
-    users: {
-        data: [],
-        loading: false,
-    },
+    data: [],
+    loading: false,
 };
 
 const setEnabledForUser = (data, userEmail, enabled) => {
-    for (var i in data) {
+    for (const i in data) {
         if (data[i].email === userEmail) {
             data[i].enabled = enabled;
             break;
@@ -29,50 +27,40 @@ export default function project(state = initialState, action) {
         case pending(FETCH_USERS):
             return {
                 ...state,
-                users: {
-                    data: [],
-                    loading: true,
-                },
+                data: [],
+                loading: true,
             };
         case fulfilled(FETCH_USERS):
             return {
                 ...state,
-                users: {
-                    data: action.payload.data,
-                    loading: false,
-                },
+                data: action.payload.data,
+                loading: false,
             };
         case rejected(FETCH_USERS):
             return {
                 ...state,
-                users: {
-                    data: state.user.data,
-                    loading: false,
-                },
+                data: state.data,
+                loading: false,
             };
         case pending(SWITCH_ENABLED_USER):
             return {
                 ...state,
-                users: {
-                    data: setEnabledForUser(
-                        state.users.data,
-                        action.payload.userEmail,
-                        action.payload.enabled
-                    ),
-                    loading: state.users.loading,
-                },
+                data: setEnabledForUser(
+                    state.data,
+                    action.payload.userEmail,
+                    action.payload.enabled
+                ),
+                loading: state.loading,
             };
         case rejected(SWITCH_ENABLED_USER):
             return {
                 ...state,
-                users: {
-                    data: setEnabledForUser(
-                        state.users.data,
-                        action.payload.userEmail,
-                        !action.payload.enabled
-                    ),
-                    loading: false,
-                },
+                data: setEnabledForUser(
+                    state.data,
+                    action.payload.userEmail,
+                    !action.payload.enabled
+                ),
+                loading: false,
             };
         default:
             return state;
@@ -86,7 +74,7 @@ export const fetchUsers = () => (dispatch) =>
     });
 
 export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
-    const param = { userEmail: userEmail, enabled: enabled };
+    const param = {userEmail: userEmail, enabled: enabled};
 
     dispatch({
         type: pending(SWITCH_ENABLED_USER),

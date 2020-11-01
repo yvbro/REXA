@@ -16,7 +16,7 @@ const UsersManagementPage = () => {
     }, [dispatch]);
 
     const { loading } = useSelector((state) => ({
-        loading: state.user.users.loading,
+        loading: state.user.loading,
     }));
 
     return (

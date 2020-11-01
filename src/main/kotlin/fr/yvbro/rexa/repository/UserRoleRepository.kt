@@ -19,7 +19,7 @@ class UserRoleRepository(private val dslContext: DSLContext) {
     fun saveRolesForUser(userId: UUID, userRoles: List<String>) {
         val roles = getRoles();
 
-        val inserts = userRoles.map {userRole -> dslContext.insertInto(USER_ROLE, USER_ROLE.USER_ID, USER_ROLE.ROLE_ID).values(userId, roles.get(userRole))}
+        val inserts = userRoles.map {userRole -> dslContext.insertInto(USER_ROLE, USER_ROLE.USER_ID, USER_ROLE.ROLE_ID).values(userId, roles[userRole])}
         dslContext.batch(inserts).execute()
     }
 

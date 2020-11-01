@@ -7,7 +7,7 @@ const initialState = {
         data: [],
         loading: false,
     },
-    preAchives: {
+    preArchives: {
         data: [],
         loading: false,
     },
@@ -45,7 +45,7 @@ export default function dashboard(state = initialState, action) {
         case pending(FETCH_PRE_ARCHIVE):
             return {
                 ...state,
-                preAchives: {
+                preArchives: {
                     data: [],
                     loading: true,
                 },
@@ -53,7 +53,7 @@ export default function dashboard(state = initialState, action) {
         case fulfilled(FETCH_PRE_ARCHIVE):
             return {
                 ...state,
-                preAchives: {
+                preArchives: {
                     data: action.payload.data,
                     loading: false,
                 },
@@ -61,8 +61,8 @@ export default function dashboard(state = initialState, action) {
         case rejected(FETCH_PRE_ARCHIVE):
             return {
                 ...state,
-                preAchives: {
-                    data: state.preAchives.data,
+                preArchives: {
+                    data: state.preArchives.data,
                     loading: false,
                 },
             };
