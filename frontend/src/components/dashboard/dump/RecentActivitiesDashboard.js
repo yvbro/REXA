@@ -1,10 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
-import {useDispatch, useSelector} from 'react-redux';
-
-import {Chip} from "@material-ui/core";
-
-import {fetchRecentActivities} from '../redux/dashboardDuck';
 import RexaDataTable from "../../common/RexaDataTable";
 
 import {getXnatUri} from "../../../helpers/xnat";
@@ -22,20 +17,8 @@ const toChip = (label, id, xnatHost) => {
     />);
 }
 
-const RecentActivitiesDashboard = () => {
-    const dispatch = useDispatch();
+export const RecentActivitiesDashboard = ({ recentActivities, loadingRecentActivities, xnatHost}) => {
 
-    const {recentActivities, loadingRecentActivities, xnatHost} = useSelector(
-        (state) => ({
-            recentActivities: state.dashboard.recentActivities.data,
-            loadingRecentActivities: state.dashboard.recentActivities.loading,
-            xnatHost: state.settings.xnatHost,
-        })
-    );
-
-    useEffect(() => {
-        dispatch(fetchRecentActivities());
-    }, [dispatch]);
 
     const data = [
         {name: 'Project', values: recentActivities.map(e => e.project)},

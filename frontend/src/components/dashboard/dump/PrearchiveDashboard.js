@@ -1,21 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
-import {useDispatch, useSelector} from 'react-redux';
 
-import {fetchPreAchives} from '../redux/dashboardDuck';
 import RexaDataTable from "../../common/RexaDataTable";
 
-const PrearchiveDashboard = () => {
-    const dispatch = useDispatch();
-
-    const {preArchives, loadingPreArchives} = useSelector((state) => ({
-        preArchives: state.dashboard.preArchives.data,
-        loadingPreArchives: state.dashboard.preArchives.loading,
-    }));
-
-    useEffect(() => {
-        dispatch(fetchPreAchives());
-    }, [dispatch]);
+export const PrearchiveDashboard = ({ preArchives, loadingPreArchives }) => {
 
     const data = [
         {name: 'Project', values: preArchives.map(e => e.project)},

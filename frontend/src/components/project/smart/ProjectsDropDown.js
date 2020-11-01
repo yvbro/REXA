@@ -14,6 +14,7 @@ import { fetchProject, fetchProjects } from '../redux/projectDuck';
 import classes from '../dumb/project.module.scss';
 
 export const ProjectsDropDown = ({ projectSelected }) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
     const { projects, loading, project } = useSelector((state) => ({
