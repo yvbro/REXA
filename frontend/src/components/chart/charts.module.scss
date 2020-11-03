@@ -1,0 +1,7 @@
+@import "src/helpers/constants/variables";
+
+.drawing {
+  border: 1px solid $borderColor;
+  border-radius: 15px;
+  background-color: white;
+}

@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import './index.scss';
-import App from './app/App';
+import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
-import configureStore from './app/store';
-import { ACCESS_TOKEN } from './constants';
+import configureStore from './containers/store';
+import { ACCESS_TOKEN } from './helpers/constants';
 
 const store = configureStore();
 
