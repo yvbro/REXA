@@ -1,51 +1,31 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 
 import AppLayout from '../../../containers/AppLayout';
-
 import {
     fetchSettings,
     updateSettings,
     testConnection,
 } from '../redux/settingsDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import classes from './settings.module.scss';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     card: {
         width: 400,
         height: 450,
         borderRadius: '16px',
     },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
+    input: {
         margin: theme.spacing(1),
         width: 350,
-    },
-    button: {
-        width: 350,
-        margin: theme.spacing(1),
-    },
-    header: {
-        textAlign: 'center',
     },
 }));
 
 export const SettingsDetailsPage = () => {
-    const classes = useStyles();
+    const style = useStyles();
 
     const dispatch = useDispatch();
 
@@ -95,16 +75,16 @@ export const SettingsDetailsPage = () => {
 
     return (
         <AppLayout>
-            <Grid container className={classes.root}>
+            <Grid container className={classes.rootDiv}>
                 <Grid item md={6} xs={12}>
-                    <Card className={classes.card}>
-                        <div className={classes.header}>
+                    <Card className={style.card}>
+                        <div className={classes.textAlignCenter}>
                             <h1>
                                 <span>Settings</span>
                             </h1>
                         </div>
                         <form
-                            className={classes.form}
+                            className={classes.formFlex}
                             noValidate
                             autoComplete="off"
                             onSubmit={handleSubmit}
@@ -116,7 +96,7 @@ export const SettingsDetailsPage = () => {
                                 variant="outlined"
                                 defaultValue={xnatUsername}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className={classes.text}
+                                className={style.input}
                             />
                             <TextField
                                 id="host-id"
@@ -125,7 +105,7 @@ export const SettingsDetailsPage = () => {
                                 variant="outlined"
                                 defaultValue={xnatHost}
                                 onChange={(e) => setHost(e.target.value)}
-                                className={classes.text}
+                                className={style.input}
                             />
                             <TextField
                                 id="filled-password-input"
@@ -135,7 +115,7 @@ export const SettingsDetailsPage = () => {
                                 variant="outlined"
                                 error={errorPassword}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className={classes.text}
+                                className={style.input}
                                 helperText="password is required."
                             />
                             <Button
@@ -147,14 +127,14 @@ export const SettingsDetailsPage = () => {
                                     (username === -1 || username === xnatUsername) &&
                                     !password
                                 }
-                                className={classes.button}
+                                className={style.input}
                             >
                                 Save
                             </Button>
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                className={classes.button}
+                                className={style.input}
                                 onClick={testCredentials}
                             >
                                 test connection

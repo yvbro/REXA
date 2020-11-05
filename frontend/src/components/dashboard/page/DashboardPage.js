@@ -8,7 +8,7 @@ import PrearchiveDashboard from '../dump/PrearchiveDashboard';
 import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import ProjectDashboard from '../dump/ProjectDashboard';
 import { fetchSettings } from '../../settings/redux/settingsDuck';
-import classes from './DashboardPage.module.scss';
+import classes from '../../common/common.module.scss';
 
 const DashboardPage = () => {
     const dispatch = useDispatch();

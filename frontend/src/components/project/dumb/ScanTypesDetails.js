@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const ScanTypesDetails = ({scans}) => {
+const ScanTypesDetails = ({scans}) => {
     const classes = useStyles();
 
     let scansByType = [];
@@ -38,3 +38,5 @@ export const ScanTypesDetails = ({scans}) => {
 ScanTypesDetails.propTypes = {
     scans: PropTypes.array.isRequired,
 };
+
+export default ScanTypesDetails;

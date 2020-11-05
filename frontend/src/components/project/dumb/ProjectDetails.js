@@ -4,9 +4,9 @@ import {useSelector} from 'react-redux';
 
 import {Grid} from '@material-ui/core';
 
-import {ProjectInfo} from './ProjectInfo';
-import {ProcessorGrid} from './ProcessorGrid';
-import {ScanGrid} from './ScanGrid';
+import ProjectInfo from './ProjectInfo';
+import ProcessorGrid from './ProcessorGrid';
+import ScanGrid from './ScanGrid';
 
 import LoadingIndicator from '../../common/LoadingIndicator';
 import NoData from "../../common/NoData";

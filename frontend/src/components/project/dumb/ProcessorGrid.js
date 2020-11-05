@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Grid } from '@material-ui/core';
-import { ProcessorDetails } from './ProcessorDetails';
-import { ListUnknownProcessorStatus } from './ListUnknownProcessorStatus';
+
+import ProcessorDetails from './ProcessorDetails';
+import ListUnknownProcessorStatus from './ListUnknownProcessorStatus';
 import { getUnknownProcStatus } from '../../../helpers/xnat';
 
-export const ProcessorGrid = ({ processors }) => {
-    let unknownProcStatus = getUnknownProcStatus(processors);
+const ProcessorGrid = ({ processors }) => {
+    const unknownProcStatus = getUnknownProcStatus(processors);
 
     return (
         <Grid container spacing={3}>
@@ -26,3 +27,5 @@ export const ProcessorGrid = ({ processors }) => {
 ProcessorGrid.propTypes = {
     processors: PropTypes.array.isRequired,
 };
+
+export default ProcessorGrid;

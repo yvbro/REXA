@@ -1,24 +1,13 @@
 import React from 'react';
-
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-    makeStyles,
-    Switch,
-} from '@material-ui/core';
+import { Switch } from '@material-ui/core';
 
 import {switchEnabledUser} from '../redux/userDuck';
 import RexaDataTable from "../../common/RexaDataTable";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(3),
-    },
-}));
+import classes from '../../common/common.module.scss';
 
 const UserListPage = () => {
-    const classes = useStyles();
-
     const dispatch = useDispatch();
 
     const {users} = useSelector((state) => ({
@@ -55,7 +44,7 @@ const UserListPage = () => {
     ];
 
     return (
-        <div className={classes.root}>
+        <div className={classes.rootDiv}>
             <RexaDataTable title='User Management'
                            data={data}
                            loading={false}
