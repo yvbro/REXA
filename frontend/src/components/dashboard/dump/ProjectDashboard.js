@@ -45,7 +45,7 @@ export const ProjectDashboard = () => {
     }, [dispatch]);
 
     if (loading) {
-        return;
+        return null;
     }
 
     return (
