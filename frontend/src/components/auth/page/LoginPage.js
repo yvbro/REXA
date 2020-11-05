@@ -11,43 +11,27 @@ import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 import { performLogin } from '../redux/authDuck';
 import SocialLogin from '../dumb/SocialLogin';
 import { ACCESS_TOKEN } from '../../../helpers/constants';
+import classes from '../dumb/auth.module.scss';
 
 import rexaLogo from "../../../assets/rexa-logo-svg.png";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        minHeight: '100vh',
-    },
     card: {
         width: 400,
         height: 500,
         borderRadius: '16px',
     },
-    center: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
+    input: {
         margin: theme.spacing(1),
         width: 350,
     },
-    button: {
-        width: 350,
-        margin: theme.spacing(1),
-    },
-    imgLogo: {
-        width: 230,
-        height: 230,
-    }
 }));
 
 // eslint-disable-next-line
 const regexEmail = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
 
 const LoginPage = (props) => {
-    const classes = useStyles();
+    const style = useStyles();
 
     const [email, setEmail] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
@@ -110,15 +94,15 @@ const LoginPage = (props) => {
             direction="column"
             alignItems="center"
             justify="center"
-            className={classes.root}
+            className={classes.rootDiv}
         >
             <Grid item xs={3}>
-                <Card className={classes.card}>
-                    <div className={classes.center}>
-                        <img className={classes.imgLogo} src={rexaLogo} alt="ReXA Logo"/>
+                <Card className={style.card}>
+                    <div className={classes.centered}>
+                        <img className={classes.imageLogo} src={rexaLogo} alt="ReXA Logo"/>
                     </div>
                     <form
-                        className={classes.center}
+                        className={classes.centered}
                         noValidate
                         autoComplete="off"
                         onSubmit={handleSubmit}
@@ -132,7 +116,7 @@ const LoginPage = (props) => {
                             error={!!errorEmail}
                             helperText={errorEmail}
                             onChange={onChangeEmail}
-                            className={classes.text}
+                            className={style.input}
                         />
                         <TextField
                             id="filled-password-input"
@@ -141,14 +125,14 @@ const LoginPage = (props) => {
                             type="password"
                             variant="outlined"
                             onChange={(e) => setPassword(e.target.value)}
-                            className={classes.text}
+                            className={style.input}
                         />
                         <Button
                             type="submit"
                             variant="outlined"
                             color="primary"
                             disabled={!!errorEmail}
-                            className={classes.button}
+                            className={style.input}
                         >
                             Sign in
                         </Button>
