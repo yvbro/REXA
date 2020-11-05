@@ -9,9 +9,9 @@ import {ProcessorGrid} from './ProcessorGrid';
 import {ScanGrid} from './ScanGrid';
 
 import LoadingIndicator from '../../common/LoadingIndicator';
-import {NoData} from "../../common/NoData";
+import NoData from "../../common/NoData";
 
-export const ProjectDetails = () => {
+const ProjectDetails = () => {
     const {project, loading, parentLoading} = useSelector((state) => ({
         project: state.project.selectedProject.data,
         loading: state.project.selectedProject.loading,
@@ -44,3 +44,5 @@ export const ProjectDetails = () => {
         </>
     );
 };
+
+export default ProjectDetails;

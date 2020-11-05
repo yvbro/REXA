@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import { ProjectsDropDown } from '../smart/ProjectsDropDown';
 import AppLayout from '../../../containers/AppLayout';
-import { ProjectDetails } from '../dumb/ProjectDetails';
+import ProjectDetails from '../dumb/ProjectDetails';
 import { fetchSettings } from '../../settings/redux/settingsDuck';
 
 const useStyles = makeStyles((theme) => ({

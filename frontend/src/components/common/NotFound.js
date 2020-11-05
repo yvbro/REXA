@@ -1,4 +1,5 @@
 import React from 'react';
+
 import NotFoundGif from '../../assets/404.gif';
 
 const NotFound = () => (

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import {makeStyles} from '@material-ui/core/styles';
 import {Card} from '@material-ui/core';
+
 import ScanTypePieChart from '../../chart/ScanTypePieChart';
+import NoData from "../../common/NoData";
 import {extractScanTypes} from '../../../helpers/xnat';
-import {NoData} from "../../common/NoData";
 
 const useStyles = makeStyles({
     cardInfo: {

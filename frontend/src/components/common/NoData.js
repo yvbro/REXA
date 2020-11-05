@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const NoData = ({ label, noRadius }) => {
+const NoData = ({ label, noRadius }) => {
     const classes = useStyles();
 
     return (
@@ -42,3 +42,5 @@ NoData.propTypes = {
     label: PropTypes.string,
     noRadius: PropTypes.bool,
 }
+
+export default NoData;
