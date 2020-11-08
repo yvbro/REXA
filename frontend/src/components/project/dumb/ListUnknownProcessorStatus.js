@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
     makeStyles,
@@ -9,27 +10,24 @@ import {
     ListItemIcon,
 } from '@material-ui/core';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
-import PropTypes from 'prop-types';
+
+import classes from './project.module.scss';
 
 const useStyles = makeStyles({
     cardInfo: {
         borderRadius: '16px',
         height: '365px',
     },
-    listScrollable: {
-        maxHeight: '100%',
-        overflow: 'auto',
-    },
 });
 
-export const ListUnknownProcessorStatus = ({ unknownStatus }) => {
-    const classes = useStyles();
+const ListUnknownProcessorStatus = ({ unknownStatus }) => {
+    const style = useStyles();
 
     return (
         <>
             <h3>Unknown Processing status</h3>
-            <Card className={classes.cardInfo}>
-                <List className={classes.listScrollable}>
+            <Card className={style.cardInfo}>
+                <List className={classes.scrollableList}>
                     {unknownStatus &&
                         unknownStatus.map((status) => (
                             <ListItem key={status}>
@@ -48,3 +46,5 @@ export const ListUnknownProcessorStatus = ({ unknownStatus }) => {
 ListUnknownProcessorStatus.propTypes = {
     unknownStatus: PropTypes.array.isRequired,
 };
+
+export default ListUnknownProcessorStatus;

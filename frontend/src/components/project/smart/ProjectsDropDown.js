@@ -1,31 +1,21 @@
 import React, { useEffect } from 'react';
+import PropTypes from "prop-types";
 
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
     InputLabel,
     Select,
     FormControl,
-    makeStyles,
     MenuItem,
 } from '@material-ui/core';
 
 import { fetchProject, fetchProjects } from '../redux/projectDuck';
-import PropTypes from "prop-types";
-
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        backgroundColor: 'white',
-        width: 300,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
+import classes from '../dumb/project.module.scss';
 
 export const ProjectsDropDown = ({ projectSelected }) => {
-    console.log(projectSelected);
-    const classes = useStyles();
     const dispatch = useDispatch();
+
     const { projects, loading, project } = useSelector((state) => ({
         projects: state.project.projectsList.data,
         loading: state.project.projectsList.loading,

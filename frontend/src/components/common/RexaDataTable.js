@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from "prop-types";
+
 import {
     makeStyles,
     Table,
@@ -10,9 +12,9 @@ import {
     withStyles,
     Paper,
 } from '@material-ui/core';
+
 import LoadingIndicator from './LoadingIndicator';
-import {NoData} from './NoData';
-import PropTypes from "prop-types";
+import NoData from './NoData';
 
 const useStyles = makeStyles(() => ({
     root: {

@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const ProjectInfo = ({ project }) => {
+const ProjectInfo = ({ project }) => {
     const classes = useStyles();
 
     return (
@@ -84,3 +84,5 @@ export const ProjectInfo = ({ project }) => {
 ProjectInfo.propTypes = {
     project: PropTypes.object.isRequired,
 };
+
+export default ProjectInfo;

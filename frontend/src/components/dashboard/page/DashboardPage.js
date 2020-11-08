@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Grid } from '@material-ui/core';
+
 import AppLayout from '../../../containers/AppLayout';
-import { Grid, makeStyles } from '@material-ui/core';
 import PrearchiveDashboard from '../dump/PrearchiveDashboard';
 import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import ProjectDashboard from '../dump/ProjectDashboard';
 import { fetchSettings } from '../../settings/redux/settingsDuck';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
-}));
+import classes from '../../common/common.module.scss';
 
 const DashboardPage = () => {
-    const classes = useStyles();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,7 +19,7 @@ const DashboardPage = () => {
 
     return (
         <AppLayout>
-            <div className={classes.root}>
+            <div className={classes.rootDiv}>
                 <Grid container spacing={3}>
                     <Grid item xs={5}>
                         <RecentActivitiesDashboard />

@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Grid } from '@material-ui/core';
-import { getUnusableScans } from '../../../helpers/xnat';
-import { ScanTypesDetails } from './ScanTypesDetails';
-import { UnusableScans } from './UnusableScans';
 
-export const ScanGrid = ({ scans }) => {
+import { getUnusableScans } from '../../../helpers/xnat';
+import ScanTypesDetails from './ScanTypesDetails';
+import UnusableScans from './UnusableScans';
+
+const ScanGrid = ({ scans }) => {
     let unusableScans = getUnusableScans(scans);
 
     return (
@@ -26,3 +27,5 @@ export const ScanGrid = ({ scans }) => {
 ScanGrid.propTypes = {
     scans: PropTypes.array.isRequired,
 };
+
+export default ScanGrid;

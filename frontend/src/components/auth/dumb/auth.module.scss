@@ -1,0 +1,23 @@
+.rootDiv {
+  min-height: 100vh;
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageLogo {
+  width: 230px;
+  height: 230px;
+}
+
+.imageIcon {
+  height: 100%;
+}
+
+.iconRoot {
+  text-align: center;
+}

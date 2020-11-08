@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchPreAchives} from '../redux/dashboardDuck';
 import RexaDataTable from "../../common/RexaDataTable";
 
-export const PrearchiveDashboard = () => {
+const PrearchiveDashboard = () => {
     const dispatch = useDispatch();
 
     const {preArchives, loadingPreArchives} = useSelector((state) => ({

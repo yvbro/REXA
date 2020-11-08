@@ -10,3 +10,18 @@
   top: 0;
   left: 0;
 }
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  height: 100vh;
+}
+
+.rootDiv {
+  flex-grow: 1;
+  padding: 24px;
+}

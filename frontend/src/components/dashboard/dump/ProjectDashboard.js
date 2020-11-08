@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 
+import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchProjects} from '../../project/redux/projectDuck';
+
 import {
     List,
     ListItemAvatar,
@@ -11,10 +11,12 @@ import {
     ListItem,
     Card,
     Chip,
+    makeStyles,
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {Link} from 'react-router-dom';
-import grey from '@material-ui/core/colors/grey';
+import grey from "@material-ui/core/colors/grey";
+
+import {fetchProjects} from '../../project/redux/projectDuck';
 
 const useStyles = makeStyles(() => ({
     cardInfo: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const ProjectDashboard = () => {
+const ProjectDashboard = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {projects, loading} = useSelector((state) => ({
@@ -45,7 +47,7 @@ export const ProjectDashboard = () => {
     }, [dispatch]);
 
     if (loading) {
-        return;
+        return null;
     }
 
     return (

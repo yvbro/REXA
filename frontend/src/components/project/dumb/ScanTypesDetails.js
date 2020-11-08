@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import {makeStyles} from '@material-ui/core/styles';
 import {Card} from '@material-ui/core';
+
 import ScanTypePieChart from '../../chart/ScanTypePieChart';
+import NoData from "../../common/NoData";
 import {extractScanTypes} from '../../../helpers/xnat';
-import {NoData} from "../../common/NoData";
 
 const useStyles = makeStyles({
     cardInfo: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const ScanTypesDetails = ({scans}) => {
+const ScanTypesDetails = ({scans}) => {
     const classes = useStyles();
 
     let scansByType = [];
@@ -37,3 +38,5 @@ export const ScanTypesDetails = ({scans}) => {
 ScanTypesDetails.propTypes = {
     scans: PropTypes.array.isRequired,
 };
+
+export default ScanTypesDetails;

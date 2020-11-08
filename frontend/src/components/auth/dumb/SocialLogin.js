@@ -4,22 +4,16 @@ import { Button, makeStyles, Icon } from '@material-ui/core';
 
 import { GOOGLE_AUTH_URL } from '../../../helpers/constants';
 import googleLogo from '../../../assets/google-logo.png';
+import classes from './auth.module.scss';
 
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
         width: 350,
     },
-    imageIcon: {
-        height: '100%',
-    },
-    iconRoot: {
-        textAlign: 'center',
-    },
 }));
 
 const GoogleIcon = () => {
-    const classes = useStyles();
     return (
         <Icon classes={{ root: classes.iconRoot }}>
             <img className={classes.imageIcon} src={googleLogo} alt="Google" />
@@ -28,13 +22,13 @@ const GoogleIcon = () => {
 };
 
 const SocialLogin = () => {
-    const classes = useStyles();
+    const style = useStyles();
 
     return (
         <Button
             variant="outlined"
             color="primary"
-            className={classes.button}
+            className={style.button}
             href={GOOGLE_AUTH_URL}
             startIcon={<GoogleIcon />}
         >

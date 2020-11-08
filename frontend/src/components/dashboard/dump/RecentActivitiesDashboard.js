@@ -2,9 +2,11 @@ import React, {useEffect} from 'react';
 
 import {useDispatch, useSelector} from 'react-redux';
 
+import {Chip} from "@material-ui/core";
+
 import {fetchRecentActivities} from '../redux/dashboardDuck';
 import RexaDataTable from "../../common/RexaDataTable";
-import {Chip} from "@material-ui/core";
+
 import {getXnatUri} from "../../../helpers/xnat";
 
 const toChip = (label, id, xnatHost) => {
@@ -20,7 +22,7 @@ const toChip = (label, id, xnatHost) => {
     />);
 }
 
-export const RecentActivitiesDashboard = () => {
+const RecentActivitiesDashboard = () => {
     const dispatch = useDispatch();
 
     const {recentActivities, loadingRecentActivities, xnatHost} = useSelector(

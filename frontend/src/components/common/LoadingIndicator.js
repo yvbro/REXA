@@ -1,21 +1,12 @@
 import React from 'react';
 
-import { CircularProgress, makeStyles } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
-    loader: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-    },
-}));
+import classes from './common.module.scss';
 
 const LoadingIndicator = () => {
-    const classes = useStyles();
-
     return (
-        <div className={classes.loader}>
+        <div className={`${classes.centered} ${classes.loader}`}>
             <CircularProgress />
         </div>
     );
