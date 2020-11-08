@@ -74,7 +74,7 @@ export default function auth(state = initialState, action) {
                 loading: true,
             };
         case fulfilled(FETCH_USER):
-                   return {
+            return {
                 ...state,
                 authenticated: true,
                 currentUser: action.payload.data,
@@ -96,7 +96,7 @@ export default function auth(state = initialState, action) {
                     ...state.currentUser,
                     xnatHost: action.xnatHost,
                     xnatUsername: action.xnatUsername,
-                }
+                },
             };
         default:
             return state;
@@ -104,7 +104,7 @@ export default function auth(state = initialState, action) {
 }
 
 function isAdmin(authorities) {
-    return authorities.includes( 'ADMIN')
+    return authorities.includes('ADMIN');
 }
 
 export const performLogin = (email, password) => (dispatch) =>

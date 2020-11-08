@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
 import {
     List,
@@ -14,6 +13,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
 import grey from '@material-ui/core/colors/grey';
+
 import LoadingIndicator from '../../common/LoadingIndicator';
 
 const useStyles = makeStyles(() => ({
@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const ProjectDashboard = ({ projects, loadingProjects }) => {
+const ProjectDashboard = ({ projects, loadingProjects }) => {
     const classes = useStyles();
 
     if (loadingProjects) {

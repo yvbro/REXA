@@ -61,18 +61,20 @@ class XnatClient(private val userSettingsService: UserSettingsService) {
             -1 -> {
                 throw UnknownXnatHostException()
             }
+            200 -> {
+                return data
+            }
             400 -> {
                 throw RexaBadRequestException(errorMessage)
             }
             401 -> {
                 throw XnatUnauthorizedException()
             }
-            500 -> {
+            else -> {
                 throw RexaUnknownException()
             }
         }
 
-        return data
     }
 
     fun jsonFormat(json: String): JSONArray {

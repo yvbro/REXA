@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
 export const updateSettings = (xnatUsername, xnatHost, xnatPassword) => {
-    const response = axios
+    return axios
         .post('/private/settings', { xnatUsername, xnatHost, xnatPassword })
         .then(() => {
             toast.info('Settings saved');
@@ -11,8 +11,6 @@ export const updateSettings = (xnatUsername, xnatHost, xnatPassword) => {
         .catch(() => {
             toast.error('Failed to save settings');
         });
-
-    return response.data;
 };
 
 export const testConnection = (xnatUsername, xnatHost, xnatPassword) => {
