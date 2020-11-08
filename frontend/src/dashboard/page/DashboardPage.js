@@ -6,7 +6,6 @@ import { Grid, makeStyles } from '@material-ui/core';
 import PrearchiveDashboard from '../dump/PrearchiveDashboard';
 import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import ProjectDashboard from '../dump/ProjectDashboard';
-import { fetchSettings } from '../../settings/redux/settingsDuck';
 import { fetchRecentActivities, fetchPreAchives } from '../redux/dashboardDuck';
 import { fetchProjects } from '../../project/redux/projectDuck';
 import { toast } from 'react-toastify';
@@ -42,15 +41,15 @@ const DashboardPage = () => {
     }));
 
     useEffect(() => {
-        dispatch(fetchRecentActivities())
+        dispatch(fetchProjects())
             .then(() => {
                 dispatch(fetchPreAchives());
-                dispatch(fetchProjects());
+                dispatch(fetchRecentActivities());
             })
             .catch((error) => {
-                let errorMessage = _get(error, 'response.data.message', null);
-                toast.error(`${errorMessage}`);
-            });
+                let errorCode = _get(error, 'response.data.errorCode', null);
+                errorCode === "XNAT_UNAUTHORIZED" && toast.error(_get(error, 'response.data.message', null));
+          });
     }, [dispatch]);
 
     return (

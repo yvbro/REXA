@@ -15,6 +15,7 @@ const initialState = {
 
 const FETCH_RECENT_ACTIVITIES = '[dashboard] FETCH RECENT ACTIVITIES';
 const FETCH_PRE_ARCHIVE = '[dashboard] FETCH PRE ACHIVE';
+const RESET_DATA_DASHBOARD = '[dashboard] RESET DATA DASHBOARD';
 
 export default function dashboard(state = initialState, action) {
     switch (action.type) {
@@ -66,6 +67,17 @@ export default function dashboard(state = initialState, action) {
                     loading: false,
                 },
             };
+        case RESET_DATA_DASHBOARD:
+            return {
+                recentActivities: {
+                    data: [],
+                    loading: false,
+                },
+                preArchives: {
+                    data: [],
+                    loading: false,
+                },
+            };
         default:
             return state;
     }
@@ -81,4 +93,9 @@ export const fetchPreAchives = () => (dispatch) =>
     dispatch({
         type: FETCH_PRE_ARCHIVE,
         payload: axios.get('/private/preArchives'),
+    });
+
+export const resetDataDashboard = () => (dispatch) =>
+    dispatch({
+        type: RESET_DATA_DASHBOARD,
     });

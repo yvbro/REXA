@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {connect, Provider} from 'react-redux';
-import {ToastContainer} from 'react-toastify';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import { connect, Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
-import {bindActionCreators, compose} from 'redux';
+import { bindActionCreators, compose } from 'redux';
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -23,18 +23,16 @@ import {getCurrentUser} from '../components/auth/redux/authDuck';
 import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandler';
 
 class App extends React.Component {
-
     componentDidMount() {
         document.title = 'ReXA';
-        this.props.getCurrentUser()
-            .catch(); // No need to display errors on getCurrentUser
+        this.props.getCurrentUser().catch(); // No need to display errors on getCurrentUser
     }
 
     render() {
-        const {store, authenticated, loading} = this.props;
+        const { store, authenticated, loading } = this.props;
 
         if (loading) {
-            return <LoadingIndicator/>;
+            return <LoadingIndicator />;
         }
 
         return (
@@ -47,12 +45,12 @@ class App extends React.Component {
                     rel="stylesheet"
                     href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 />
-                <ToastContainer autoClose={5000}/>
+                <ToastContainer autoClose={5000} />
                 <Router>
                     <Route
-                        render={({location}) => (
+                        render={({ location }) => (
                             <div>
-                                <Header/>
+                                <Header />
                                 <Switch>
                                     <Route
                                         path="/rexa/login"
@@ -69,23 +67,23 @@ class App extends React.Component {
 
                                     <Route
                                         path="/rexa/notfound"
-                                        component={() => <NotFound/>}
+                                        component={() => <NotFound />}
                                     />
                                     <PrivateRoute
                                         path="/rexa/dashboard"
-                                        component={() => <DashboardPage/>}
+                                        component={() => <DashboardPage />}
                                     />
                                     <PrivateRoute
                                         path="/rexa/project"
-                                        component={() => <ProjectPage/>}
+                                        component={() => <ProjectPage />}
                                     />
                                     <PrivateRoute
                                         path="/rexa/settings"
-                                        component={() => <SettingsDetailsPage/>}
+                                        component={() => <SettingsDetailsPage />}
                                     />
                                     <PrivateRoute
                                         path="/rexa/management"
-                                        component={() => <UsersManagementPage/>}
+                                        component={() => <UsersManagementPage />}
                                     />
                                     <PrivateRoute
                                         path="/"
@@ -93,7 +91,7 @@ class App extends React.Component {
                                             <Redirect
                                                 to={{
                                                     pathname: '/rexa/dashboard',
-                                                    state: {from: location},
+                                                    state: { from: location },
                                                 }}
                                             />
                                         )}
