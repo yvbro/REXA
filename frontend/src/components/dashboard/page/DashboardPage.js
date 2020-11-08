@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 
-import { Grid } from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 
-import AppLayout from '../../../containers/AppLayout';
 import PrearchiveDashboard from '../dump/PrearchiveDashboard';
 import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import ProjectDashboard from '../dump/ProjectDashboard';
-import { fetchSettings } from '../../settings/redux/settingsDuck';
+import {fetchSettings} from '../../settings/redux/settingsDuck';
 import classes from '../../common/common.module.scss';
+import withLayout from "../../../helpers/hoc/withLayout";
 
 const DashboardPage = () => {
     const dispatch = useDispatch();
@@ -18,22 +18,20 @@ const DashboardPage = () => {
     }, [dispatch]);
 
     return (
-        <AppLayout>
-            <div className={classes.rootDiv}>
-                <Grid container spacing={3}>
-                    <Grid item xs={5}>
-                        <RecentActivitiesDashboard />
-                    </Grid>
-                    <Grid item xs={7}>
-                        <PrearchiveDashboard />
-                    </Grid>
-                    <Grid item xs={2}>
-                        <ProjectDashboard />
-                    </Grid>
+        <div className={classes.rootDiv}>
+            <Grid container spacing={3}>
+                <Grid item xs={5}>
+                    <RecentActivitiesDashboard/>
                 </Grid>
-            </div>
-        </AppLayout>
+                <Grid item xs={7}>
+                    <PrearchiveDashboard/>
+                </Grid>
+                <Grid item xs={2}>
+                    <ProjectDashboard/>
+                </Grid>
+            </Grid>
+        </div>
     );
 };
 
-export default DashboardPage;
+export default withLayout(DashboardPage);
