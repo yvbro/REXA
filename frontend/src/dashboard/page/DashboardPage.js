@@ -10,6 +10,7 @@ import { fetchRecentActivities, fetchPreAchives } from '../redux/dashboardDuck';
 import { fetchProjects } from '../../project/redux/projectDuck';
 import { toast } from 'react-toastify';
 import _get from 'lodash/get';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,10 +48,13 @@ const DashboardPage = () => {
                 dispatch(fetchRecentActivities());
             })
             .catch((error) => {
-                let errorCode = _get(error, 'response.data.errorCode', null);
-                errorCode === "XNAT_UNAUTHORIZED" && toast.error(_get(error, 'response.data.message', null));
+                toast.error(_get(error, 'response.data.message', null));
           });
     }, [dispatch]);
+
+    if( loadingProjects ) {
+        return <LoadingIndicator />
+    }
 
     return (
         <AppLayout>
