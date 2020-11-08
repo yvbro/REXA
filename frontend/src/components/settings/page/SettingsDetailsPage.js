@@ -10,7 +10,6 @@ import {
 } from '../redux/settingsDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import classes from './settings.module.scss';
-import withLayout from "../../../helpers/hoc/withLayout";
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -145,4 +144,4 @@ export const SettingsDetailsPage = () => {
     );
 };
 
-export default withLayout(SettingsDetailsPage);
+export default SettingsDetailsPage;
