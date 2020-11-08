@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Redirect, Route, useLocation} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import LoadingIndicator from '../components/common/LoadingIndicator';
+import style from "../components/common/common.module.scss";
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     const location = useLocation();
@@ -22,7 +23,9 @@ const PrivateRoute = ({component: Component, ...rest}) => {
                 {...rest}
                 render={(props) =>
                     authenticated ? (
-                        <Component {...props} />
+                        <div className={style.wrapper}>
+                            <Component {...props} />
+                        </div>
                     ) : (
                         <Redirect
                             to={{

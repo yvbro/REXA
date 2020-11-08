@@ -8,7 +8,6 @@ import {ProjectsDropDown} from '../smart/ProjectsDropDown';
 import ProjectDetails from '../dumb/ProjectDetails';
 import {fetchSettings} from '../../settings/redux/settingsDuck';
 import classes from '../../common/common.module.scss';
-import withLayout from "../../../helpers/hoc/withLayout";
 
 export const ProjectPage = () => {
     const location = useLocation();
@@ -31,4 +30,4 @@ export const ProjectPage = () => {
     );
 };
 
-export default withLayout(ProjectPage);
+export default ProjectPage;

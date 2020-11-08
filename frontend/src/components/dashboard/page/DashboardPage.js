@@ -8,7 +8,6 @@ import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import ProjectDashboard from '../dump/ProjectDashboard';
 import {fetchSettings} from '../../settings/redux/settingsDuck';
 import classes from '../../common/common.module.scss';
-import withLayout from "../../../helpers/hoc/withLayout";
 
 const DashboardPage = () => {
     const dispatch = useDispatch();
@@ -34,4 +33,4 @@ const DashboardPage = () => {
     );
 };
 
-export default withLayout(DashboardPage);
+export default DashboardPage;

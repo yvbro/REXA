@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchUsers} from '../redux/userDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import UserListPage from '../smart/UserListPage';
-import withLayout from "../../../helpers/hoc/withLayout";
 
 const UsersManagementPage = () => {
 
@@ -21,4 +20,4 @@ const UsersManagementPage = () => {
     return (<>{loading ? <LoadingIndicator/> : <UserListPage/>}</>);
 };
 
-export default withLayout(UsersManagementPage);
+export default UsersManagementPage;
