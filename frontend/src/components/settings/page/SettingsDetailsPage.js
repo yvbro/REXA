@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
+import {Grid, Card, Button, TextField, makeStyles} from '@material-ui/core';
 
-import AppLayout from '../../../containers/AppLayout';
 import {
     fetchSettings,
     updateSettings,
@@ -11,6 +10,7 @@ import {
 } from '../redux/settingsDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import classes from './settings.module.scss';
+import withLayout from "../../../helpers/hoc/withLayout";
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -29,7 +29,7 @@ export const SettingsDetailsPage = () => {
 
     const dispatch = useDispatch();
 
-    const { xnatUsername, xnatHost, loading } = useSelector((state) => ({
+    const {xnatUsername, xnatHost, loading} = useSelector((state) => ({
         xnatUsername: state.settings.xnatUser,
         xnatHost: state.settings.xnatHost,
         loading: state.settings.loading,
@@ -44,7 +44,7 @@ export const SettingsDetailsPage = () => {
     }, [dispatch]);
 
     if (loading) {
-        return <LoadingIndicator />;
+        return <LoadingIndicator/>;
     }
 
     const handleSubmit = (event) => {
@@ -74,77 +74,75 @@ export const SettingsDetailsPage = () => {
     };
 
     return (
-        <AppLayout>
-            <Grid container className={classes.rootDiv}>
-                <Grid item md={6} xs={12}>
-                    <Card className={style.card}>
-                        <div className={classes.textAlignCenter}>
-                            <h1>
-                                <span>Settings</span>
-                            </h1>
-                        </div>
-                        <form
-                            className={classes.formFlex}
-                            noValidate
-                            autoComplete="off"
-                            onSubmit={handleSubmit}
+        <Grid container className={classes.rootDiv}>
+            <Grid item md={6} xs={12}>
+                <Card className={style.card}>
+                    <div className={classes.textAlignCenter}>
+                        <h1>
+                            <span>Settings</span>
+                        </h1>
+                    </div>
+                    <form
+                        className={classes.formFlex}
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={handleSubmit}
+                    >
+                        <TextField
+                            id="username-id"
+                            name="username"
+                            label="username"
+                            variant="outlined"
+                            defaultValue={xnatUsername}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className={style.input}
+                        />
+                        <TextField
+                            id="host-id"
+                            name="host"
+                            label="host"
+                            variant="outlined"
+                            defaultValue={xnatHost}
+                            onChange={(e) => setHost(e.target.value)}
+                            className={style.input}
+                        />
+                        <TextField
+                            id="filled-password-input"
+                            name="password"
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            error={errorPassword}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className={style.input}
+                            helperText="password is required."
+                        />
+                        <Button
+                            type="submit"
+                            variant="outlined"
+                            color="primary"
+                            disabled={
+                                (host === -1 || host === xnatHost) &&
+                                (username === -1 || username === xnatUsername) &&
+                                !password
+                            }
+                            className={style.input}
                         >
-                            <TextField
-                                id="username-id"
-                                name="username"
-                                label="username"
-                                variant="outlined"
-                                defaultValue={xnatUsername}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className={style.input}
-                            />
-                            <TextField
-                                id="host-id"
-                                name="host"
-                                label="host"
-                                variant="outlined"
-                                defaultValue={xnatHost}
-                                onChange={(e) => setHost(e.target.value)}
-                                className={style.input}
-                            />
-                            <TextField
-                                id="filled-password-input"
-                                name="password"
-                                label="Password"
-                                type="password"
-                                variant="outlined"
-                                error={errorPassword}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className={style.input}
-                                helperText="password is required."
-                            />
-                            <Button
-                                type="submit"
-                                variant="outlined"
-                                color="primary"
-                                disabled={
-                                    (host === -1 || host === xnatHost) &&
-                                    (username === -1 || username === xnatUsername) &&
-                                    !password
-                                }
-                                className={style.input}
-                            >
-                                Save
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={style.input}
-                                onClick={testCredentials}
-                            >
-                                test connection
-                            </Button>
-                        </form>
-                    </Card>
-                </Grid>
+                            Save
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className={style.input}
+                            onClick={testCredentials}
+                        >
+                            test connection
+                        </Button>
+                    </form>
+                </Card>
             </Grid>
-        </AppLayout>
+        </Grid>
     );
 };
 
-export default SettingsDetailsPage;
+export default withLayout(SettingsDetailsPage);

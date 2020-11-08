@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
-import { Grid } from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 
-import { ProjectsDropDown } from '../smart/ProjectsDropDown';
-import AppLayout from '../../../containers/AppLayout';
+import {ProjectsDropDown} from '../smart/ProjectsDropDown';
 import ProjectDetails from '../dumb/ProjectDetails';
-import { fetchSettings } from '../../settings/redux/settingsDuck';
+import {fetchSettings} from '../../settings/redux/settingsDuck';
 import classes from '../../common/common.module.scss';
+import withLayout from "../../../helpers/hoc/withLayout";
 
 export const ProjectPage = () => {
     const location = useLocation();
@@ -20,17 +20,15 @@ export const ProjectPage = () => {
     }, [dispatch]);
 
     return (
-        <AppLayout>
-            <div className={classes.rootDiv}>
-                <Grid container spacing={3}>
-                    <Grid item md={3} xs={12}>
-                        <ProjectsDropDown projectSelected={location.project} />
-                    </Grid>
+        <div className={classes.rootDiv}>
+            <Grid container spacing={3}>
+                <Grid item md={3} xs={12}>
+                    <ProjectsDropDown projectSelected={location.project}/>
                 </Grid>
-                <ProjectDetails />
-            </div>
-        </AppLayout>
+            </Grid>
+            <ProjectDetails/>
+        </div>
     );
 };
 
-export default ProjectPage;
+export default withLayout(ProjectPage);

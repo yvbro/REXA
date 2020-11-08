@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import AppLayout from '../../../containers/AppLayout';
-import { fetchUsers } from '../redux/userDuck';
+import {fetchUsers} from '../redux/userDuck';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import UserListPage from '../smart/UserListPage';
+import withLayout from "../../../helpers/hoc/withLayout";
 
 const UsersManagementPage = () => {
 
@@ -14,15 +14,11 @@ const UsersManagementPage = () => {
         dispatch(fetchUsers());
     }, [dispatch]);
 
-    const { loading } = useSelector((state) => ({
+    const {loading} = useSelector((state) => ({
         loading: state.user.loading,
     }));
 
-    return (
-        <AppLayout>
-            {loading ? <LoadingIndicator /> : <UserListPage />}
-        </AppLayout>
-    );
+    return (<>{loading ? <LoadingIndicator/> : <UserListPage/>}</>);
 };
 
-export default UsersManagementPage;
+export default withLayout(UsersManagementPage);
