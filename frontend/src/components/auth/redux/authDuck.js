@@ -13,6 +13,7 @@ const initialState = {
 const LOGIN = '[Auth] LOGIN';
 const LOGOUT = '[Auth] LOGOUT';
 const FETCH_USER = '[Auth] FETCH_USER';
+const UPDATE_USER_INFO = '[Auth] UPDATE_USER_INFO';
 
 export default function auth(state = initialState, action) {
     switch (action.type) {
@@ -88,6 +89,15 @@ export default function auth(state = initialState, action) {
                 isAdmin: false,
                 loading: false,
             };
+        case UPDATE_USER_INFO:
+            return {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    xnatHost: action.xnatHost,
+                    xnatUsername: action.xnatUsername,
+                }
+            };
         default:
             return state;
     }
@@ -116,4 +126,11 @@ export const getCurrentUser = () => (dispatch) =>
     dispatch({
         type: FETCH_USER,
         payload: axios.get('/auth/userinfo'),
+    });
+
+export const updateCurrentUserXnatInfos = (xnatUsername, xnatHost) => (dispatch) =>
+    dispatch({
+        type: UPDATE_USER_INFO,
+        xnatUsername: xnatUsername,
+        xnatHost: xnatHost,
     });
