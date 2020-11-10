@@ -13,7 +13,7 @@ import {
 import { fetchProject, fetchProjects } from '../redux/projectDuck';
 import classes from '../dumb/project.module.scss';
 
-export const ProjectsDropDown = ({ projectSelected }) => {
+const ProjectsDropDown = ({ projectSelected }) => {
     const dispatch = useDispatch();
 
     const { projects, loading, project } = useSelector((state) => ({
@@ -58,3 +58,5 @@ export const ProjectsDropDown = ({ projectSelected }) => {
 ProjectsDropDown.propTypes = {
     projectSelected: PropTypes.string
 };
+
+export default ProjectsDropDown;

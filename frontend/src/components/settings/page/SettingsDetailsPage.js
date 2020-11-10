@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState } from 'react';
 
-import {Grid, Card, Button, TextField, makeStyles} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 
-import {
-    fetchSettings,
-    updateSettings,
-    testConnection,
-} from '../redux/settingsDuck';
-import LoadingIndicator from '../../common/LoadingIndicator';
+import { updateSettings, testConnection } from '../api/apiSettings';
+import { resetDataDashboard } from '../../dashboard/redux/dashboardDuck';
+import { resetDataProjects } from '../../project/redux/projectDuck';
+import { updateCurrentUserXnatInfos } from '../../auth/redux/authDuck';
 import classes from './settings.module.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,28 +21,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const SettingsDetailsPage = () => {
+const SettingsDetailsPage = () => {
     const style = useStyles();
 
     const dispatch = useDispatch();
 
-    const {xnatUsername, xnatHost, loading} = useSelector((state) => ({
-        xnatUsername: state.settings.xnatUser,
-        xnatHost: state.settings.xnatHost,
-        loading: state.settings.loading,
+    const { xnatUsername, xnatHost } = useSelector((state) => ({
+        xnatUsername: state.auth.currentUser.xnatUsername,
+        xnatHost: state.auth.currentUser.xnatHost,
     }));
     const [username, setUsername] = useState(-1);
     const [host, setHost] = useState(-1);
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState(false);
-
-    useEffect(() => {
-        dispatch(fetchSettings());
-    }, [dispatch]);
-
-    if (loading) {
-        return <LoadingIndicator/>;
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -56,7 +45,16 @@ export const SettingsDetailsPage = () => {
                 username === -1 ? xnatUsername : username,
                 host === -1 ? xnatHost : host,
                 password
-            );
+            ).then(() => {
+                dispatch(
+                    updateCurrentUserXnatInfos(
+                        username === -1 ? xnatUsername : username,
+                        host === -1 ? xnatHost : host
+                    )
+                );
+                dispatch(resetDataDashboard());
+                dispatch(resetDataProjects());
+            });
         }
     };
 

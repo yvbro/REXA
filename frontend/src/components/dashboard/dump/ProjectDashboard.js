@@ -1,7 +1,4 @@
-import React, {useEffect} from 'react';
-
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import React from 'react';
 
 import {
     List,
@@ -14,9 +11,10 @@ import {
     makeStyles,
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import grey from "@material-ui/core/colors/grey";
+import { Link } from 'react-router-dom';
+import grey from '@material-ui/core/colors/grey';
 
-import {fetchProjects} from '../../project/redux/projectDuck';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 const useStyles = makeStyles(() => ({
     cardInfo: {
@@ -34,20 +32,11 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const ProjectDashboard = () => {
+const ProjectDashboard = ({ projects, loadingProjects }) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const {projects, loading} = useSelector((state) => ({
-        projects: state.project.projectsList.data,
-        loading: state.project.projectsList.loading,
-    }));
 
-    useEffect(() => {
-        dispatch(fetchProjects());
-    }, [dispatch]);
-
-    if (loading) {
-        return null;
+    if (loadingProjects) {
+        return <LoadingIndicator />;
     }
 
     return (
@@ -61,7 +50,7 @@ const ProjectDashboard = () => {
                                 <ListItem key={`dashboard_${index}`}>
                                     <ListItemAvatar>
                                         <Avatar>
-                                            <AccountCircleIcon/>
+                                            <AccountCircleIcon />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText>

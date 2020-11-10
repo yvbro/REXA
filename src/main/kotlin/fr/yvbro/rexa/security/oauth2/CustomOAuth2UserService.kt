@@ -4,9 +4,11 @@ import fr.yvbro.rexa.exception.RexaAuthentificationFailedException
 import fr.yvbro.rexa.exception.RexaUnauthorizedException
 import fr.yvbro.rexa.model.AuthProvider
 import fr.yvbro.rexa.model.User
+import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.model.role.USER
 import fr.yvbro.rexa.repository.UserRepository
 import fr.yvbro.rexa.repository.UserRoleRepository
+import fr.yvbro.rexa.repository.UserSettingsRepository
 import fr.yvbro.rexa.security.TokenAuthenticationFilter
 import fr.yvbro.rexa.security.UserPrincipal
 import org.slf4j.LoggerFactory
@@ -22,7 +24,8 @@ import org.springframework.util.StringUtils
 
 @Component
 class CustomOAuth2UserService(private val userRepository: UserRepository,
-                              private val userRoleRepository: UserRoleRepository) : DefaultOAuth2UserService() {
+                              private val userRoleRepository: UserRoleRepository,
+                              private val settingsRepository: UserSettingsRepository) : DefaultOAuth2UserService() {
 
     @Throws(OAuth2AuthenticationException::class)
     override fun loadUser(oAuth2UserRequest: OAuth2UserRequest): OAuth2User? {
@@ -38,6 +41,7 @@ class CustomOAuth2UserService(private val userRepository: UserRepository,
 
     private fun processOAuth2User(oAuth2UserRequest: OAuth2UserRequest, oAuth2User: OAuth2User): OAuth2User? {
         val oAuth2UserInfo = OAuth2UserInfo(oAuth2User.attributes)
+
         if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
             logger.warn("Email not found from OAuth2 provider")
             throw RexaAuthentificationFailedException()
@@ -64,7 +68,9 @@ class CustomOAuth2UserService(private val userRepository: UserRepository,
             throw RexaAuthentificationFailedException()
         }
 
-        return UserPrincipal.create(user, userRoles, oAuth2User.attributes)
+        val userSettings: UserSettings = settingsRepository.getSettingsByUserId(user.id)
+
+        return UserPrincipal.create(user, userRoles, userSettings, oAuth2User.attributes)
     }
 
     companion object {

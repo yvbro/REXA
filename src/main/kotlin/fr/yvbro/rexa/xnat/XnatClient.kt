@@ -9,6 +9,7 @@ import fr.yvbro.rexa.exception.RexaUnknownException
 import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.security.UserPrincipal
 import fr.yvbro.rexa.service.UserSettingsService
+import fr.yvbro.rexa.xnat.exception.UnknownXnatHostException
 import fr.yvbro.rexa.xnat.exception.XnatUnauthorizedException
 import org.json.JSONArray
 import org.json.JSONObject
@@ -57,19 +58,23 @@ class XnatClient(private val userSettingsService: UserSettingsService) {
         httpAsync.join()
 
         when (statusCode) {
+            -1 -> {
+                throw UnknownXnatHostException()
+            }
+            200 -> {
+                return data
+            }
             400 -> {
                 throw RexaBadRequestException(errorMessage)
             }
             401 -> {
                 throw XnatUnauthorizedException()
             }
-            500 -> {
-                logger.error(errorMessage)
+            else -> {
                 throw RexaUnknownException()
             }
         }
 
-        return data
     }
 
     fun jsonFormat(json: String): JSONArray {

@@ -16,6 +16,7 @@ const initialState = {
 
 const FETCH_PROJECTS = '[Project] FETCH LIST OF PROJECTS';
 const FETCH_PROJECT = '[Project] FETCH ONE PROJECT';
+const RESET_DATA_PROJECTS = '[dashboard] RESET DATA PROJECTS';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
@@ -67,6 +68,17 @@ export default function project(state = initialState, action) {
                     loading: false,
                 },
             };
+        case RESET_DATA_PROJECTS:
+            return {
+                projectsList: {
+                    data: [],
+                    loading: false,
+                },
+                selectedProject: {
+                    data: undefined,
+                    loading: false,
+                },
+            };
         default:
             return state;
     }
@@ -82,4 +94,9 @@ export const fetchProject = (projectId) => (dispatch) =>
     dispatch({
         type: FETCH_PROJECT,
         payload: axios.get(`/private/projects/${projectId}`),
+    });
+
+export const resetDataProjects = () => (dispatch) =>
+    dispatch({
+        type: RESET_DATA_PROJECTS,
     });

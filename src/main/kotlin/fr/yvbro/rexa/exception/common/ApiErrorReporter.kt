@@ -38,7 +38,7 @@ class ApiErrorReporter {
 
     fun buildUnknownErrorBean(ex: Exception?): ApiErrorBean? {
         logger.error("Internal Server Error: ", ex)
-        return ApiErrorBean(UNKNOWN_ERROR_MESSAGE, UNKNOWN_ERROR)
+        return ApiErrorBean(UNKNOWN_ERROR, UNKNOWN_ERROR_MESSAGE)
     }
 
     fun buildErrorBean(e: Exception?): ApiErrorBean? {
