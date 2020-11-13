@@ -41,6 +41,7 @@
 		<annotations.version>13.0</annotations.version>
 		<jakarta-validation.version>2.0.1</jakarta-validation.version>
 		<jjwt.version>0.5.1</jjwt.version>
+		<crypto.version>5.4.1</crypto.version>
 
 		<!-- Maven -->
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
@@ -103,7 +104,6 @@
 			</exclusions>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.github.kittinunf.fuel/fuel -->
 		<dependency>
 			<groupId>com.github.kittinunf.fuel</groupId>
 			<artifactId>fuel</artifactId>
@@ -115,14 +115,12 @@
 			<version>${kittinunf.version}</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-kotlin</artifactId>
@@ -154,6 +152,13 @@
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
 			<version>${jakarta-validation.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>${crypto.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Test -->
