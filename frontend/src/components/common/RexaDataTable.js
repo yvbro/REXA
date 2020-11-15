@@ -54,7 +54,7 @@ const RexaDataTable = ({title, data, loading, noDataLabel}) => {
 
     return (
         <>
-            <h3>{title}</h3>
+            {title && <h3>{title}</h3>}
             <TableContainer className={classes.root} component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
