@@ -1,6 +1,7 @@
 package fr.yvbro.rexa.controller
 
 import fr.yvbro.rexa.config.WebConfig
+import fr.yvbro.rexa.controller.input.AddUserRequest
 import fr.yvbro.rexa.controller.input.UserSwitchEnabledRequest
 import fr.yvbro.rexa.controller.output.UserDto
 import fr.yvbro.rexa.model.role.ADMIN
@@ -20,7 +21,12 @@ class UsersManagementFrontController(private val userService: UserService) {
     }
 
     @PostMapping("/switch")
-    fun disableUser(@RequestBody userSwitchEnabledrequest: UserSwitchEnabledRequest) {
-        userService.switchEnabledForUser(userSwitchEnabledrequest.userEmail, userSwitchEnabledrequest.enabled)
+    fun disableUser(@RequestBody userSwitchEnabledRequest: UserSwitchEnabledRequest) {
+        userService.switchEnabledForUser(userSwitchEnabledRequest.userEmail, userSwitchEnabledRequest.enabled)
+    }
+
+    @PostMapping("/add")
+    fun addUser(@RequestBody addUserRequest: AddUserRequest) {
+        userService.addUser(addUserRequest.email, addUserRequest.password)
     }
 }
