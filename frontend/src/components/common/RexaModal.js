@@ -57,7 +57,7 @@ const RexaModal = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(addUser(email, password));
+        dispatch(addUser(email, password)).then(() => props.closeModal());
     };
 
     const onChangeEmail = (event) => {

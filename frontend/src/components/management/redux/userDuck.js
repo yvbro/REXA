@@ -21,12 +21,11 @@ const setEnabledForUser = (data, userEmail, enabled) => {
 };
 
 const addNewUser = (data, userEmail) => {
-    return data.push({ email: userEmail, enabled: false, roles: DEFAULT_ROLES });
+    data.push({ email: userEmail, enabled: false, roles: DEFAULT_ROLES });
+    return data;
 };
 
-const removeNewUser = (data, userEmail) => {
-    return data.filter((user) => user.email !== userEmail);
-};
+const removeNewUser = (data, userEmail) => data.filter((user) => user.email !== userEmail);
 
 const FETCH_USERS = '[User] FETCH LIST OF USERS';
 const SWITCH_ENABLED_USER = '[User] EDIT ENABLED USER';
@@ -75,13 +74,13 @@ export default function project(state = initialState, action) {
         case pending(ADD_USER):
             return {
                 ...state,
-                data: addNewUser(state.data, action.payload.data),
+                data: addNewUser(state.data, action.payload),
                 loading: false,
             };
         case rejected(ADD_USER):
             return {
                 ...state,
-                data: removeNewUser(state.data, action.payload.data),
+                data: removeNewUser(state.data, action.payload),
                 loading: false,
             };
         default:
@@ -120,7 +119,7 @@ export const addUser = (email, password) => (dispatch) => {
 
     dispatch({
         type: pending(ADD_USER),
-        payload: param,
+        payload: email,
     });
 
     return axios
@@ -129,7 +128,7 @@ export const addUser = (email, password) => (dispatch) => {
         .catch(() => {
             dispatch({
                 type: rejected(ADD_USER),
-                payload: param,
+                payload: email,
             });
             toast.error('User could not be added.');
         });

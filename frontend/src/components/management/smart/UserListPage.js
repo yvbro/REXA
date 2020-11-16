@@ -68,6 +68,7 @@ const UserListPage = () => {
                 data={data}
                 loading={false}
                 noDataLabel="No users on the platform!"
+                fullHeight
             />
         </div>
     );
