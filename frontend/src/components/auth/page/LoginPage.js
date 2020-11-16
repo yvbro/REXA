@@ -13,6 +13,7 @@ import SocialLogin from '../dumb/SocialLogin';
 import { ACCESS_TOKEN } from '../../../helpers/constants';
 import classes from '../dumb/auth.module.scss';
 
+import { regexEmail } from '../../../helpers/constants/index';
 import rexaLogo from "../../../assets/rexa-logo-svg.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,9 +27,6 @@ const useStyles = makeStyles((theme) => ({
         width: 350,
     },
 }));
-
-// eslint-disable-next-line
-const regexEmail = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;
 
 const LoginPage = (props) => {
     const style = useStyles();

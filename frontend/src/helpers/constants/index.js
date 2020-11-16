@@ -7,3 +7,6 @@ export const GOOGLE_AUTH_URL =
     API_BASE_URL +
     '/oauth2/authorize-client/google?redirect_uri=' +
     OAUTH2_REDIRECT_URI;
+
+// eslint-disable-next-line
+export const regexEmail = /^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$/;

@@ -5,8 +5,9 @@ import { Button, Switch } from '@material-ui/core';
 
 import { switchEnabledUser } from '../redux/userDuck';
 import RexaDataTable from '../../common/RexaDataTable';
-import classes from '../../common/common.module.scss';
 import RexaModal from '../../common/RexaModal';
+import AddUserForm from '../smart/AddUserForm';
+import classes from './UserListPage.module.scss';
 
 const UserListPage = () => {
     const dispatch = useDispatch();
@@ -20,10 +21,8 @@ const UserListPage = () => {
     const handleChange = (userEmail, enabled) =>
         dispatch(switchEnabledUser(userEmail, !enabled));
 
-    const addUserHandler = (userEmail, enabled) =>
-        dispatch(switchEnabledUser(userEmail, !enabled));
-
     const openModalForNewUser = () => setOpenModal(true);
+    const closeModalForNewUser = () => setOpenModal(false);
 
     const toSwitch = (user) => {
         return (
@@ -48,11 +47,23 @@ const UserListPage = () => {
 
     return (
         <div className={classes.rootDiv}>
-            <h3>User Management</h3>
-            <Button variant="outlined" color="primary" onClick={openModalForNewUser}>
-                Add user
-            </Button>
-            <RexaModal open={openModal} />
+            <div className={classes.Header}>
+                <h3>User Management</h3>
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={openModalForNewUser}
+                >
+                    Add user
+                </Button>
+            </div>
+            <RexaModal
+                open={openModal}
+                closeModal={closeModalForNewUser}
+                /* addAction={addUserHandler} */
+            >
+                <AddUserForm />
+            </RexaModal>
             <RexaDataTable
                 data={data}
                 loading={false}

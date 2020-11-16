@@ -60,7 +60,7 @@ export default function project(state = initialState, action) {
                     action.payload.userEmail,
                     action.payload.enabled
                 ),
-                loading: true,
+                loading: false,
             };
         case rejected(SWITCH_ENABLED_USER):
             return {
@@ -76,7 +76,7 @@ export default function project(state = initialState, action) {
             return {
                 ...state,
                 data: addNewUser(state.data, action.payload.data),
-                loading: true,
+                loading: false,
             };
         case rejected(ADD_USER):
             return {

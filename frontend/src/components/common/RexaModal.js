@@ -1,41 +1,133 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
+import { useDispatch } from 'react-redux';
 
-import { Button, Modal, makeStyles } from '@material-ui/core';
+import {
+    Modal,
+    Card,
+    CardContent,
+    CardHeader,
+    TextField,
+    CardActions,
+    Button,
+    makeStyles,
+    Avatar,
+} from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        position: 'absolute',
+import { addUser } from '../management/redux/userDuck';
+
+import { regexEmail } from '../../helpers/constants/index';
+
+const useStyles = makeStyles({
+    root: {
+        margin: 'auto',
+        paddingTop: 20,
         width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        height: 450,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        borderRadius: '16px',
     },
-}));
+    modal: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    text: {
+        paddingBottom: 10,
+    },
+    cardContent: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+});
 
 const RexaModal = (props) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
-    const body = (
-        <div className={classes.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </p>
-            <Button>Add</Button>
-        </div>
-    );
+    const [email, setEmail] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        dispatch(addUser(email, password));
+    };
+
+    const onChangeEmail = (event) => {
+        if (event.target.value.match(regexEmail)) {
+            setEmail(event.target.value);
+            setErrorEmail('');
+        } else {
+            setErrorEmail('Email invalid');
+        }
+    };
 
     return (
         <Modal
+            className={classes.modal}
             open={props.open}
-/*             onClose={handleClose}
- */            aria-labelledby="simple-modal-title"
+            onClose={props.closeModal}
+            aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
         >
-            {body}
+            <Card className={classes.root}>
+                <CardHeader
+                    avatar={
+                        <Avatar aria-label="recipe" className={classes.avatar}>
+                            <AccountCircleIcon />
+                        </Avatar>
+                    }
+                    title="Add new user"
+                    subheader="Fill an email and password and click add"
+                />
+                <CardContent className={classes.cardContent}>
+                    <TextField
+                        className={classes.text}
+                        required
+                        label="User email"
+                        variant="outlined"
+                        error={!!errorEmail}
+                        helperText={errorEmail}
+                        onChange={onChangeEmail}
+                    />
+                    <TextField
+                        required
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                        variant="outlined"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </CardContent>
+                <CardActions>
+                    <Button size="small" onClick={handleSubmit} color="primary">
+                        Add
+                    </Button>
+                    <Button
+                        size="small"
+                        onClick={props.closeModal}
+                        color="secondary"
+                    >
+                        Cancel
+                    </Button>
+                </CardActions>
+            </Card>
         </Modal>
     );
+};
+
+RexaModal.propTypes = {
+    /*children: PropTypes.array,*/
+    open: PropTypes.bool.isRequired,
+    addAction: PropTypes.func,
+    closeModal: PropTypes.func.isRequired,
 };
 
 export default RexaModal;
