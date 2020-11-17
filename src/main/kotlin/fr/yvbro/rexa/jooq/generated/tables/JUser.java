@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JUser extends TableImpl<JUserRecord> {
 
-    private static final long serialVersionUID = 1656321406;
+    private static final long serialVersionUID = 2034143710;
 
     /**
      * The reference instance of <code>rexa.user</code>
@@ -117,7 +117,7 @@ public class JUser extends TableImpl<JUserRecord> {
 
     @Override
     public List<UniqueKey<JUserRecord>> getKeys() {
-        return Arrays.<UniqueKey<JUserRecord>>asList(Keys.USER_PKEY);
+        return Arrays.<UniqueKey<JUserRecord>>asList(Keys.USER_PKEY, Keys.USER_EMAIL_KEY);
     }
 
     @Override
