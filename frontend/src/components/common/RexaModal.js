@@ -53,15 +53,24 @@ const RexaModal = (props) => {
     const [email, setEmail] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(addUser(email, password)).then(() => props.closeModal());
+        if (!email) {
+            setErrorEmail('Email must be set.');
+        } else if (!password) {
+            setErrorPassword('Password must be set.');
+        } else {
+            dispatch(addUser(email, password)).then(() => props.closeModal());
+        }
     };
 
     const onChangeEmail = (event) => {
-        if (event.target.value.match(regexEmail)) {
+        if (props.users.includes(event.target.value)) {
+            setErrorEmail('Email already used');
+        } else if (event.target.value.match(regexEmail)) {
             setEmail(event.target.value);
             setErrorEmail('');
         } else {
@@ -101,13 +110,19 @@ const RexaModal = (props) => {
                         required
                         label="Password"
                         type="password"
-                        autoComplete="current-password"
                         variant="outlined"
+                        error={!!errorPassword}
+                        helperText={errorPassword}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={handleSubmit} color="primary">
+                    <Button
+                        size="small"
+                        onClick={handleSubmit}
+                        color="primary"
+                        disabled={errorEmail}
+                    >
                         Add
                     </Button>
                     <Button
@@ -126,6 +141,7 @@ const RexaModal = (props) => {
 RexaModal.propTypes = {
     /*children: PropTypes.array,*/
     open: PropTypes.bool.isRequired,
+    users: PropTypes.array.isRequired,
     addAction: PropTypes.func,
     closeModal: PropTypes.func.isRequired,
 };

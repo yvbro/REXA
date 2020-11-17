@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
+import _get from 'lodash/get';
 
 import { fulfilled, pending, rejected } from '../../../helpers/promise';
 
@@ -25,7 +26,8 @@ const addNewUser = (data, userEmail) => {
     return data;
 };
 
-const removeNewUser = (data, userEmail) => data.filter((user) => user.email !== userEmail);
+const removeNewUser = (data, userEmail) =>
+    data.filter((user) => user.email !== userEmail);
 
 const FETCH_USERS = '[User] FETCH LIST OF USERS';
 const SWITCH_ENABLED_USER = '[User] EDIT ENABLED USER';
@@ -125,11 +127,20 @@ export const addUser = (email, password) => (dispatch) => {
     return axios
         .post(`/private/management/users/add`, param)
         .then(() => toast.info('User added!'))
-        .catch(() => {
-            dispatch({
-                type: rejected(ADD_USER),
-                payload: email,
-            });
-            toast.error('User could not be added.');
+        .catch((error) => {
+            let errorMessage = _get(error, 'response.data.message', null);
+            if (
+                !errorMessage ||
+                errorMessage === 'Bad Request: email already used.'
+            ) {
+                errorMessage = 'Email address already used.';
+                toast.error(errorMessage);
+                fetchUsers();
+            } else {
+                dispatch({
+                    type: rejected(ADD_USER),
+                    payload: email,
+                });
+            }
         });
 };

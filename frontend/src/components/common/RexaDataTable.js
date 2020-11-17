@@ -102,7 +102,7 @@ const RexaDataTable = ({ title, data, loading, noDataLabel, fullHeight }) => {
 };
 
 RexaDataTable.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     data: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     noDataLabel: PropTypes.string,
