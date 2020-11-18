@@ -1,12 +1,11 @@
-package fr.yvbro.rexa.xnat
+package fr.yvbro.rexa.config
+
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationProperties(prefix = "xnat")
-class XnatProperties {
-    lateinit var url: String
-    lateinit var user: String
-    lateinit var password: String
+class Properties {
+    lateinit var secret: String
 }
