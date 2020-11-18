@@ -7,6 +7,7 @@ import { switchEnabledUser } from '../redux/userDuck';
 import RexaDataTable from '../../common/RexaDataTable';
 import RexaModal from '../../common/RexaModal';
 import AddUserForm from '../smart/AddUserForm';
+
 import classes from './UserListPage.module.scss';
 
 const UserListPage = () => {
@@ -60,10 +61,8 @@ const UserListPage = () => {
             <RexaModal
                 open={openModal}
                 closeModal={closeModalForNewUser}
-                users={users.map((e) => e.email)}
-                /* addAction={addUserHandler} */
             >
-                <AddUserForm />
+                <AddUserForm users={users.map((e) => e.email)} cancelAction={closeModalForNewUser}/>
             </RexaModal>
             <RexaDataTable
                 data={data}
