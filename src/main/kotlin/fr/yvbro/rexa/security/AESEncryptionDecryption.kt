@@ -1,5 +1,7 @@
 package fr.yvbro.rexa.security
 
+import fr.yvbro.rexa.exception.RexaException
+import fr.yvbro.rexa.exception.RexaUnknownException
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -27,28 +29,26 @@ class AESEncryptionDecryption {
         }
     }
 
-    fun encrypt(strToEncrypt: String, secret: String): String? {
+    fun encrypt(strToEncrypt: String, secret: String): String {
         try {
             prepareSecreteKey(secret)
             val cipher: Cipher = Cipher.getInstance(ALGORITHM)
             cipher.init(Cipher.ENCRYPT_MODE, secretKey)
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.toByteArray(charset("UTF-8"))))
         } catch (e: Exception) {
-            println("Error while encrypting: $e")
+            throw RexaException("500", "Error while decrypting: $e")
         }
-        return null
     }
 
-    fun decrypt(strToDecrypt: String?, secret: String): String? {
+    fun decrypt(strToDecrypt: String?, secret: String): String {
         try {
             prepareSecreteKey(secret)
             val cipher: Cipher = Cipher.getInstance(ALGORITHM)
             cipher.init(Cipher.DECRYPT_MODE, secretKey)
             return String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)))
         } catch (e: Exception) {
-            println("Error while decrypting: $e")
+            throw RexaException("500", "Error while decrypting: $e")
         }
-        return null
     }
 
     companion object {

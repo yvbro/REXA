@@ -1,17 +1,21 @@
 package fr.yvbro.rexa.service
 
+import fr.yvbro.rexa.config.Properties
 import fr.yvbro.rexa.exception.RexaBadRequestException
 import fr.yvbro.rexa.model.AuthProvider
 import fr.yvbro.rexa.model.User
 import fr.yvbro.rexa.model.role.USER
 import fr.yvbro.rexa.repository.UserRepository
 import fr.yvbro.rexa.repository.UserRoleRepository
+import fr.yvbro.rexa.security.AESEncryptionDecryption
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val userRepository: UserRepository,
-                  private val userRoleRepository: UserRoleRepository) {
+                  private val userRoleRepository: UserRoleRepository,
+                  private val securityConfiguration: AESEncryptionDecryption,
+                  private val properties: Properties) {
 
     fun getUsers(): List<User> {
         val users = userRepository.getUsers().toMutableList()
@@ -32,7 +36,7 @@ class UserService(private val userRepository: UserRepository,
         if (email != null && password != null) {
             val user: User
             try {
-                user = userRepository.save(email, password, AuthProvider.Local.toString(), false)
+                user = userRepository.save(email, securityConfiguration.encrypt(password, properties.secret), AuthProvider.Local.toString(), false)
             } catch (e: DuplicateKeyException) {
                 throw RexaBadRequestException("email already used")
             }
