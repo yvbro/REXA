@@ -12,7 +12,6 @@ import fr.yvbro.rexa.repository.UserSettingsRepository
 import fr.yvbro.rexa.security.TokenAuthenticationFilter
 import fr.yvbro.rexa.security.UserPrincipal
 import org.slf4j.LoggerFactory
-import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService

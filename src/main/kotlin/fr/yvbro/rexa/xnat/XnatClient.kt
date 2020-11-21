@@ -21,12 +21,15 @@ import org.springframework.stereotype.Service
 @Service
 class XnatClient(private val userSettingsService: UserSettingsService) {
 
-    private val logger = LoggerFactory.getLogger(XnatClient::class.java)
+    companion object {
+        private val logger = LoggerFactory.getLogger(XnatClient::class.java)
+    }
 
     fun callXnatUri(uri: String): String {
         val user = userSettingsService.getXnatSettings((SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id)
-        var fullUri = user.xnatHost + uri
+        val fullUri = user.xnatHost + uri
 
+        logger.info("Fetching Xnat data with URI $uri")
         return callXnatUriWithCredentials(fullUri, user)
     }
 

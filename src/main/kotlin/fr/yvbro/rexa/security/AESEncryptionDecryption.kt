@@ -1,7 +1,6 @@
 package fr.yvbro.rexa.security
 
 import fr.yvbro.rexa.exception.RexaException
-import fr.yvbro.rexa.exception.RexaUnknownException
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -17,7 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 class AESEncryptionDecryption {
 
     fun prepareSecreteKey(myKey: String) {
-        var sha: MessageDigest? = null
+        val sha: MessageDigest?
         try {
             key = myKey.toByteArray(StandardCharsets.UTF_8)
             sha = MessageDigest.getInstance("SHA-1")
@@ -25,7 +24,7 @@ class AESEncryptionDecryption {
             key = Arrays.copyOf(key, 16)
             secretKey = SecretKeySpec(key, ALGORITHM)
         } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
+            throw RexaException("500", "Error while preparing key: $e")
         }
     }
 

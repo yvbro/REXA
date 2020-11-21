@@ -1,6 +1,7 @@
 package fr.yvbro.rexa.service
 
 import fr.yvbro.rexa.config.Properties
+import fr.yvbro.rexa.exception.RexaBadRequestException
 import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.repository.UserSettingsRepository
 import fr.yvbro.rexa.security.AESEncryptionDecryption
@@ -17,7 +18,11 @@ class UserSettingsService(private val xnatRepository: UserSettingsRepository,
     }
 
     fun upsertXnatSettings(userId: UUID?, xnatUsername: String?, xnatHost: String?, xnatPassword: String?) {
-        xnatRepository.upsert(userId, xnatUsername, xnatHost, securityConfiguration.encrypt(xnatPassword!!, properties.secret))
+        if (xnatPassword != null) {
+            xnatRepository.upsert(userId, xnatUsername, xnatHost, securityConfiguration.encrypt(xnatPassword, properties.secret))
+        } else {
+            throw RexaBadRequestException("You must set the Xnat Password.")
+        }
     }
 
 }
