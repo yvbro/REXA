@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
     List,
@@ -32,10 +33,10 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const ProjectDashboard = ({ projects, loadingProjects }) => {
+const ProjectDashboard = ({ projects, loading }) => {
     const classes = useStyles();
 
-    if (loadingProjects) {
+    if (loading) {
         return <LoadingIndicator />;
     }
 
@@ -79,5 +80,10 @@ const ProjectDashboard = ({ projects, loadingProjects }) => {
         </>
     );
 };
+
+ProjectDashboard.propTypes = {
+    projects: PropTypes.array,
+    loading: PropTypes.bool,
+}
 
 export default ProjectDashboard;

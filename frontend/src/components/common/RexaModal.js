@@ -18,7 +18,7 @@ const RexaModal = (props) => (
 );
 
 RexaModal.propTypes = {
-    children: PropTypes.array,
+    children: PropTypes.object,
     open: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
 };

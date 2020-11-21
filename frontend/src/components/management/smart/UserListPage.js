@@ -58,11 +58,13 @@ const UserListPage = () => {
                     Add user
                 </Button>
             </div>
-            <RexaModal
-                open={openModal}
-                closeModal={closeModalForNewUser}
-            >
-                <AddUserForm users={users.map((e) => e.email)} cancelAction={closeModalForNewUser}/>
+            <RexaModal open={openModal} closeModal={closeModalForNewUser}>
+                <div>
+                    <AddUserForm
+                        users={users.map((e) => e.email)}
+                        cancelAction={closeModalForNewUser}
+                    />
+                </div>
             </RexaModal>
             <RexaDataTable
                 data={data}

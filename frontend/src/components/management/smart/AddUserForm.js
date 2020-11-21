@@ -17,8 +17,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { addUser } from '../redux/userDuck';
 import { regexEmail } from '../../../helpers/constants/index';
 
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
         paddingTop: 20,
@@ -41,7 +40,14 @@ const useStyles = makeStyles({
     button: {
         width: 100,
     },
-});
+    avatar: {
+        width: theme.spacing(10),
+        height: theme.spacing(10),
+    },
+    iconDef: {
+        fontSize: 50,
+    },
+}));
 
 const AddUserForm = (props) => {
     const classes = useStyles();
@@ -81,10 +87,11 @@ const AddUserForm = (props) => {
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                        <AccountCircleIcon />
+                        <AccountCircleIcon className={classes.iconDef}/>
                     </Avatar>
                 }
-                title="Add new user"
+                title="Add New User"
+                titleTypographyProps={{variant:'h3', color: 'primary'}}
             />
             <CardContent className={classes.cardContent}>
                 <TextField
@@ -111,7 +118,7 @@ const AddUserForm = (props) => {
                     size="small"
                     onClick={handleSubmit}
                     color="primary"
-                    disabled={errorEmail}
+                    disabled={errorEmail ? true : false}
                     className={classes.button}
                 >
                     Add

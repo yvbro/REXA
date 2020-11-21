@@ -73,16 +73,10 @@ export default function project(state = initialState, action) {
                 ),
                 loading: false,
             };
-        case pending(ADD_USER):
+        case ADD_USER:
             return {
                 ...state,
                 data: addNewUser(state.data, action.payload),
-                loading: false,
-            };
-        case rejected(ADD_USER):
-            return {
-                ...state,
-                data: removeNewUser(state.data, action.payload),
                 loading: false,
             };
         default:
@@ -119,28 +113,17 @@ export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
 export const addUser = (email, password) => (dispatch) => {
     const param = { email: email, password: password };
 
-    dispatch({
-        type: pending(ADD_USER),
-        payload: email,
-    });
-
     return axios
         .post(`/private/management/users/add`, param)
-        .then(() => toast.info('User added!'))
+        .then(() => {
+            dispatch({
+                type: ADD_USER,
+                payload: email,
+            });
+            toast.info('User added!');
+        })
         .catch((error) => {
             let errorMessage = _get(error, 'response.data.message', null);
-            if (
-                !errorMessage ||
-                errorMessage === 'Bad Request: email already used.'
-            ) {
-                errorMessage = 'Email address already used.';
-                toast.error(errorMessage);
-                fetchUsers();
-            } else {
-                dispatch({
-                    type: rejected(ADD_USER),
-                    payload: email,
-                });
-            }
+            toast.error(errorMessage);
         });
 };
