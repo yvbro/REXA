@@ -1,0 +1,22 @@
+.rootDiv {
+    flex-grow: 1;
+    padding: 24px;
+  }
+  
+  .Header {
+    display: flex;
+    justify-content: 'row';
+    align-content: center;
+    height: 80px;
+  }
+
+  .Header h3 {
+    flex-grow: 1;
+  }
+
+  .Header Button {
+    height: 50px;
+    margin: auto;
+    background-color: white;
+  }
+  

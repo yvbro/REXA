@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import RexaDataTable from '../../common/RexaDataTable';
 
-export const PrearchiveDashboard = ({ preArchives, loadingPreArchives }) => {
+export const PrearchiveDashboard = ({ preArchives, loading }) => {
     const data = [
         { name: 'Project', values: preArchives.map((e) => e.project) },
         { name: 'Subject', values: preArchives.map((e) => e.subject) },
@@ -16,10 +17,15 @@ export const PrearchiveDashboard = ({ preArchives, loadingPreArchives }) => {
         <RexaDataTable
             title="Prearchive"
             data={data}
-            loading={loadingPreArchives}
+            loading={loading}
             noDataLabel="No data in the PreArchive!"
         />
     );
 };
+
+PrearchiveDashboard.propTypes = {
+    preArchives: PropTypes.array,
+    loading: PropTypes.bool,
+}
 
 export default PrearchiveDashboard;

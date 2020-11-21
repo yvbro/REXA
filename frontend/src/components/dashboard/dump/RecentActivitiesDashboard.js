@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Chip } from '@material-ui/core';
 
@@ -22,7 +23,7 @@ const toChip = (label, id, xnatHost) => {
 
 const RecentActivitiesDashboard = ({
     recentActivities,
-    loadingRecentActivities,
+    loading,
     xnatHost,
 }) => {
     const data = [
@@ -39,10 +40,16 @@ const RecentActivitiesDashboard = ({
         <RexaDataTable
             title="Recent Activities"
             data={data}
-            loading={loadingRecentActivities}
+            loading={loading}
             noDataLabel="No recent activities data"
         />
     );
 };
+
+RecentActivitiesDashboard.propTypes = {
+    recentActivities: PropTypes.array,
+    loading: PropTypes.bool,
+    xnatHost: PropTypes.string,
+}
 
 export default RecentActivitiesDashboard;

@@ -56,20 +56,20 @@ const DashboardPage = () => {
                 <Grid item xs={5}>
                     <RecentActivitiesDashboard
                         recentActivities={recentActivities}
-                        loadingRecentActivities={loadingRecentActivities}
+                        loading={loadingRecentActivities}
                         xnatHost={xnatHost}
                     />
                 </Grid>
                 <Grid item xs={7}>
                     <PrearchiveDashboard
                         preArchives={preArchives}
-                        loadingPreArchives={loadingPreArchives}
+                        loading={loadingPreArchives}
                     />
                 </Grid>
                 <Grid item xs={2}>
                     <ProjectDashboard
                         projects={projects}
-                        loadingProjects={loadingProjects}
+                        loading={loadingProjects}
                     />
                 </Grid>
             </Grid>

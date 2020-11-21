@@ -40,6 +40,7 @@ public class Keys {
     public static final UniqueKey<JRolesRecord> ROLES_PKEY = UniqueKeys0.ROLES_PKEY;
     public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = UniqueKeys0.SCHEMA_VERSION_PK;
     public static final UniqueKey<JUserRecord> USER_PKEY = UniqueKeys0.USER_PKEY;
+    public static final UniqueKey<JUserRecord> USER_EMAIL_KEY = UniqueKeys0.USER_EMAIL_KEY;
     public static final UniqueKey<JUserSettingsRecord> USER_SETTINGS_PKEY = UniqueKeys0.USER_SETTINGS_PKEY;
 
     // -------------------------------------------------------------------------
@@ -58,6 +59,7 @@ public class Keys {
         public static final UniqueKey<JRolesRecord> ROLES_PKEY = Internal.createUniqueKey(JRoles.ROLES, "roles_pkey", new TableField[] { JRoles.ROLES.ID }, true);
         public static final UniqueKey<JSchemaVersionRecord> SCHEMA_VERSION_PK = Internal.createUniqueKey(JSchemaVersion.SCHEMA_VERSION, "schema_version_pk", new TableField[] { JSchemaVersion.SCHEMA_VERSION.VERSION }, true);
         public static final UniqueKey<JUserRecord> USER_PKEY = Internal.createUniqueKey(JUser.USER, "user_pkey", new TableField[] { JUser.USER.ID }, true);
+        public static final UniqueKey<JUserRecord> USER_EMAIL_KEY = Internal.createUniqueKey(JUser.USER, "user_email_key", new TableField[] { JUser.USER.EMAIL }, true);
         public static final UniqueKey<JUserSettingsRecord> USER_SETTINGS_PKEY = Internal.createUniqueKey(JUserSettings.USER_SETTINGS, "user_settings_pkey", new TableField[] { JUserSettings.USER_SETTINGS.USER_ID }, true);
     }
 

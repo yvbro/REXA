@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserSettingsMapper(private val securityConfiguration: AESEncryptionDecryption, private val properties: Properties) : RecordMapper<Record, UserSettings> {
-    override fun map(record: Record?): UserSettings {
+    override fun map(record: Record): UserSettings {
         return UserSettings.Builder()
-                .xnatUsername(record?.get(Tables.USER_SETTINGS.XNAT_USERNAME))
-                .xnatPassword(securityConfiguration.decrypt(record?.get(Tables.USER_SETTINGS.XNAT_PASSWORD), properties.secret))
-                .xnatHost(record?.get(Tables.USER_SETTINGS.XNAT_URL))
-                .userId(record?.get(Tables.USER_SETTINGS.USER_ID))
+                .xnatUsername(record.get(Tables.USER_SETTINGS.XNAT_USERNAME))
+                .xnatPassword(securityConfiguration.decrypt(record.get(Tables.USER_SETTINGS.XNAT_PASSWORD), properties.secret))
+                .xnatHost(record.get(Tables.USER_SETTINGS.XNAT_URL))
+                .userId(record.get(Tables.USER_SETTINGS.USER_ID))
                 .build()
     }
 }

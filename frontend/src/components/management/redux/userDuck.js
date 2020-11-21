@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
+import _get from 'lodash/get';
 
-import {fulfilled, pending, rejected} from '../../../helpers/promise';
+import { fulfilled, pending, rejected } from '../../../helpers/promise';
 
+const DEFAULT_ROLES = ['USER'];
 const initialState = {
     data: [],
     loading: false,
@@ -19,8 +21,14 @@ const setEnabledForUser = (data, userEmail, enabled) => {
     return data;
 };
 
+const addNewUser = (data, userEmail) => {
+    data.push({ email: userEmail, enabled: false, roles: DEFAULT_ROLES });
+    return data;
+};
+
 const FETCH_USERS = '[User] FETCH LIST OF USERS';
 const SWITCH_ENABLED_USER = '[User] EDIT ENABLED USER';
+const ADD_USER = '[User] ADD USER';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
@@ -50,7 +58,7 @@ export default function project(state = initialState, action) {
                     action.payload.userEmail,
                     action.payload.enabled
                 ),
-                loading: state.loading,
+                loading: false,
             };
         case rejected(SWITCH_ENABLED_USER):
             return {
@@ -60,6 +68,12 @@ export default function project(state = initialState, action) {
                     action.payload.userEmail,
                     !action.payload.enabled
                 ),
+                loading: false,
+            };
+        case ADD_USER:
+            return {
+                ...state,
+                data: addNewUser(state.data, action.payload),
                 loading: false,
             };
         default:
@@ -74,7 +88,7 @@ export const fetchUsers = () => (dispatch) =>
     });
 
 export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
-    const param = {userEmail: userEmail, enabled: enabled};
+    const param = { userEmail: userEmail, enabled: enabled };
 
     dispatch({
         type: pending(SWITCH_ENABLED_USER),
@@ -90,5 +104,23 @@ export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
                 payload: param,
             });
             toast.error('Your changes could not be saved.');
+        });
+};
+
+export const addUser = (email, password) => (dispatch) => {
+    const param = { email: email, password: password };
+
+    return axios
+        .post(`/private/management/users/add`, param)
+        .then(() => {
+            dispatch({
+                type: ADD_USER,
+                payload: email,
+            });
+            toast.info('User added!');
+        })
+        .catch((error) => {
+            let errorMessage = _get(error, 'response.data.message', null);
+            toast.error(errorMessage);
         });
 };
