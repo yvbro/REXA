@@ -26,9 +26,6 @@ const addNewUser = (data, userEmail) => {
     return data;
 };
 
-const removeNewUser = (data, userEmail) =>
-    data.filter((user) => user.email !== userEmail);
-
 const FETCH_USERS = '[User] FETCH LIST OF USERS';
 const SWITCH_ENABLED_USER = '[User] EDIT ENABLED USER';
 const ADD_USER = '[User] ADD USER';
