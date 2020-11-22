@@ -25,7 +25,7 @@ import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandle
 class App extends React.Component {
     componentDidMount() {
         document.title = 'ReXA';
-        this.props.getCurrentUser();
+        this.props.getCurrentUser().catch(() => {/*need to log in */});
     }
 
     render() {
