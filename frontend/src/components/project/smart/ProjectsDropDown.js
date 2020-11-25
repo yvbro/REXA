@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
-import PropTypes from "prop-types";
-
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
+import _get from 'lodash/get';
 
-import {
-    InputLabel,
-    Select,
-    FormControl,
-    MenuItem,
-} from '@material-ui/core';
+import { InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 
 import { fetchProject, fetchProjects } from '../redux/projectDuck';
 import classes from '../dumb/project.module.scss';
@@ -24,8 +20,12 @@ const ProjectsDropDown = ({ projectSelected }) => {
 
     useEffect(() => {
         projectSelected
-            ? dispatch(fetchProject(projectSelected))
-            : dispatch(fetchProjects());
+            ? dispatch(fetchProject(projectSelected)).catch((error) => {
+                  toast.error(_get(error, 'response.data.message', null));
+              })
+            : dispatch(fetchProjects()).catch((error) => {
+                  toast.error(_get(error, 'response.data.message', null));
+              });
     }, [dispatch, projectSelected]);
 
     const onChange = (event) => dispatch(fetchProject(event.target.value));
@@ -56,7 +56,7 @@ const ProjectsDropDown = ({ projectSelected }) => {
 };
 
 ProjectsDropDown.propTypes = {
-    projectSelected: PropTypes.string
+    projectSelected: PropTypes.string,
 };
 
 export default ProjectsDropDown;
