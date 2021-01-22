@@ -23,23 +23,30 @@ const useStyles = makeStyles((theme) => ({
 
 const SettingsDetailsPage = () => {
     const style = useStyles();
-
     const dispatch = useDispatch();
-
+    const regexHttp = /^((http|https|ftp):\/\/)/;
     const { xnatUsername, xnatHost } = useSelector((state) => ({
         xnatUsername: state.auth.currentUser.xnatUsername,
         xnatHost: state.auth.currentUser.xnatHost,
     }));
-    const [username, setUsername] = useState(-1);
     const [host, setHost] = useState(-1);
+    const [username, setUsername] = useState(-1);
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState(false);
+    const [isErrorHost, setIsErrorHost] = useState(
+        regexHttp.test(host) || regexHttp.test(xnatHost)
+    );
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (!password) {
             setErrorPassword(true);
+        } else if (
+            (host !== -1 && !regexHttp.test(host)) ||
+            !regexHttp.test(xnatHost)
+        ) {
+            setIsErrorHost(false);
         } else {
             updateSettings(
                 username === -1 ? xnatUsername : username,
@@ -70,6 +77,13 @@ const SettingsDetailsPage = () => {
         }
     };
 
+    const onChangeHost = (event) => {
+        regexHttp.test(event.target.value)
+            ? setIsErrorHost(true)
+            : setIsErrorHost(false);
+        setHost(event.target.value);
+    };
+
     return (
         <Grid container className={classes.rootDiv}>
             <Grid item md={6} xs={12}>
@@ -81,31 +95,45 @@ const SettingsDetailsPage = () => {
                     </div>
                     <form
                         className={classes.formFlex}
-                        noValidate
-                        autoComplete="off"
                         onSubmit={handleSubmit}
+                        key={`settingsForm_${xnatHost}_${xnatUsername}`}
+                        id={`settingsForm_${xnatHost}_${xnatUsername}`}
                     >
                         <TextField
-                            id="username-id"
-                            name="username"
+                            id="usernameSettings"
+                            name="usernameSettings"
                             label="username"
                             variant="outlined"
                             defaultValue={xnatUsername}
                             onChange={(e) => setUsername(e.target.value)}
                             className={style.input}
+                            inputProps={{
+                                form: {
+                                    autocomplete: 'off',
+                                },
+                            }}
                         />
                         <TextField
-                            id="host-id"
-                            name="host"
+                            id="hostSettings"
+                            name="hostSettings"
                             label="host"
                             variant="outlined"
                             defaultValue={xnatHost}
-                            onChange={(e) => setHost(e.target.value)}
+                            error={!isErrorHost}
+                            helperText={
+                                !isErrorHost ? 'Invalid host name (http/https)' : ''
+                            }
+                            onChange={onChangeHost}
                             className={style.input}
+                            inputProps={{
+                                form: {
+                                    autocomplete: 'off',
+                                },
+                            }}
                         />
                         <TextField
-                            id="filled-password-input"
-                            name="password"
+                            id="passwordSettings"
+                            name="passwordSettings"
                             label="Password"
                             type="password"
                             variant="outlined"
@@ -113,6 +141,12 @@ const SettingsDetailsPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             className={style.input}
                             helperText="password is required."
+                            inputProps={{
+                                autocomplete: 'new-password',
+                                form: {
+                                    autocomplete: 'off',
+                                },
+                            }}
                         />
                         <Button
                             type="submit"
