@@ -19,7 +19,7 @@ class CustomUserDetailsService(private val userRepository: UserRepository,
 
     @Transactional
     @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(email: String): UserDetails {
+    override fun loadUserByUsername(email: String): UserPrincipal {
         val user: User = userRepository.getUserByEmail(email)
         val userRoles: List<String> = userRoleRepository.getRolesForUserId(user.id)
         val userSettings: UserSettings = settingsRepository.getSettingsByUserId(user.id)
@@ -27,7 +27,7 @@ class CustomUserDetailsService(private val userRepository: UserRepository,
     }
 
     @Transactional
-    fun loadUserById(id: UUID?): UserDetails {
+    fun loadUserById(id: UUID?): UserPrincipal {
         val user: User = userRepository.getUserById(id)
         val userRoles: List<String> = userRoleRepository.getRolesForUserId(user.id)
         val userSettings: UserSettings = settingsRepository.getSettingsByUserId(id)
