@@ -16,20 +16,21 @@ import ProjectPage from '../components/project/page/ProjectPage';
 import SettingsDetailsPage from '../components/settings/page/SettingsDetailsPage';
 import UsersManagementPage from '../components/management/page/UsersManagementPage';
 import LoginPage from '../components/auth/page/LoginPage';
+import Logout from '../components/auth/smart/Logout';
 import PrivateRoute from './PrivateRoute';
 import LoadingIndicator from '../components/common/LoadingIndicator';
 import NotFound from '../components/common/NotFound';
-import {getCurrentUser} from '../components/auth/redux/authDuck';
+import {authCheckState} from '../components/auth/redux/authDuck';
 import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandler';
 
 class App extends React.Component {
     componentDidMount() {
         document.title = 'ReXA';
-        this.props.getCurrentUser().catch(() => {/*need to log in */});
+        this.props.authCheckState();
     }
 
     render() {
-        const { store, authenticated, loading } = this.props;
+        const { store, loading } = this.props;
 
         if (loading) {
             return <LoadingIndicator />;
@@ -48,17 +49,17 @@ class App extends React.Component {
                 <ToastContainer autoClose={5000} />
                 <Router>
                     <Route
-                        render={({ location }) => (
+                        render={() => (
                             <div>
                                 <Header />
                                 <Switch>
                                     <Route
                                         path="/rexa/login"
-                                        component={() => (
-                                            <LoginPage
-                                                authenticated={authenticated}
-                                            />
-                                        )}
+                                        component={LoginPage}
+                                    />
+                                    <Route
+                                        path="/rexa/logout"
+                                        component={Logout}
                                     />
                                     <Route
                                         path="/oauth2/redirect"
@@ -67,35 +68,25 @@ class App extends React.Component {
 
                                     <Route
                                         path="/rexa/notfound"
-                                        component={() => <NotFound />}
+                                        component={NotFound}
                                     />
                                     <PrivateRoute
                                         path="/rexa/dashboard"
-                                        component={() => <DashboardPage />}
+                                        component={DashboardPage}
                                     />
                                     <PrivateRoute
                                         path="/rexa/project"
-                                        component={() => <ProjectPage />}
+                                        component={ProjectPage}
                                     />
                                     <PrivateRoute
                                         path="/rexa/settings"
-                                        component={() => <SettingsDetailsPage />}
+                                        component={SettingsDetailsPage}
                                     />
                                     <PrivateRoute
                                         path="/rexa/management"
-                                        component={() => <UsersManagementPage />}
+                                        component={UsersManagementPage}
                                     />
-                                    <PrivateRoute
-                                        path="/"
-                                        component={() => (
-                                            <Redirect
-                                                to={{
-                                                    pathname: '/rexa/dashboard',
-                                                    state: { from: location },
-                                                }}
-                                            />
-                                        )}
-                                    />
+                                    <Redirect to="/rexa/dashboard" />
                                 </Switch>
                             </div>
                         )}
@@ -108,23 +99,21 @@ class App extends React.Component {
 
 App.propTypes = {
     store: PropTypes.object.isRequired,
-    getCurrentUser: PropTypes.func.isRequired,
-    authenticated: PropTypes.bool.isRequired,
+    authCheckState: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    authenticated: state.auth.authenticated,
     loading: state.auth.loading,
 });
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators(
         {
-            getCurrentUser,
+            authCheckState,
         },
         dispatch
     );
-}
+};
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(App);

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { ACCESS_TOKEN } from '../../../helpers/constants';
+import {loginSuccess} from '../redux/authDuck';
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
@@ -21,15 +22,23 @@ class OAuth2RedirectHandler extends Component {
         const error = this.getUrlParameter('error');
 
         if (token) {
-            localStorage.setItem(ACCESS_TOKEN, `Bearer ${token}`);
-            return (
-                <Redirect
-                    to={{
-                        pathname: '/rexa/dashboard',
-                        state: { from: this.props.location },
-                    }}
-                />
-            );
+            const payload = {
+                token: token,
+                username: "google",
+                xnatUser: "",
+                xnatHost: "",
+                isAdmin: false,
+            }
+            this.props.login(payload).then(() => {
+                return (
+                    <Redirect
+                        to={{
+                            pathname: '/rexa/dashboard',
+                            state: { from: this.props.location },
+                        }}
+                    />
+                );
+            })
         } else {
             return (
                 <Redirect
@@ -51,4 +60,10 @@ OAuth2RedirectHandler.propTypes = {
     location: PropTypes.object,
 };
 
-export default OAuth2RedirectHandler;
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (payload) => dispatch( loginSuccess(payload) )
+    };
+  };
+
+export default connect(null, mapDispatchToProps)(OAuth2RedirectHandler);

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Redirect, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import _get from 'lodash/get';
 
 import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 
 import { performLogin } from '../redux/authDuck';
 import SocialLogin from '../dumb/SocialLogin';
-import { ACCESS_TOKEN } from '../../../helpers/constants';
 import classes from '../dumb/auth.module.scss';
 
 import { regexEmail } from '../../../helpers/constants/index';
@@ -28,36 +25,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LoginPage = (props) => {
+const LoginPage = () => {
     const style = useStyles();
+
+    const { authenticated } = useSelector((state) => ({
+        authenticated: state.auth.token !== null
+    }));
 
     const [email, setEmail] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const location = useLocation();
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(performLogin(email, password))
-            .then((response) => {
-                toast.info('Welcome to Rexa');
-                localStorage.setItem(
-                    ACCESS_TOKEN,
-                    `Bearer ${response.value.data.accessToken}`
-                );
-                history.push('/rexa/dashboard');
-            })
-            .catch((error) => {
-                let errorMessage = _get(error, 'response.data.message', null);
-                if (!errorMessage || errorMessage !== "User is disabled") {
-                    errorMessage = "Invalid username or password";
-                }
-                toast.error(`Unsuccessful login attempt: ${errorMessage}`);
-            });
+        dispatch(performLogin(email, password));
     };
 
     const onChangeEmail = (event) => {
@@ -69,20 +54,17 @@ const LoginPage = (props) => {
         }
     };
 
-    if (location.state && location.state.error) {
+    if (location.state?.error) {
         toast.error('This account is not allowed to sign in or the user has been disabled.');
         location.state.error = null;
     }
 
-    if (props.authenticated) {
-        return (
-            <Redirect
-                to={{
-                    pathname: '/rexa/dashboard',
-                    state: { from: location },
-                }}
-            />
-        );
+    if (authenticated) {
+        let redirectPath = '/rexa/dashboard';
+        if (location?.state?.from) {
+            redirectPath = location.state.from;
+        }
+        return <Redirect to={redirectPath} />
     }
 
     return (
@@ -140,10 +122,6 @@ const LoginPage = (props) => {
             </Grid>
         </Grid>
     );
-};
-
-LoginPage.propTypes = {
-    authenticated: PropTypes.bool.isRequired,
 };
 
 export default LoginPage;

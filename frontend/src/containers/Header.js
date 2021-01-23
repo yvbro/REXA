@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import SideNav, {NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav';
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import ClickOutside from 'react-click-outside';
-import {performLogout} from '../components/auth/redux/authDuck';
-import {ACCESS_TOKEN} from '../helpers/constants';
-import {toast} from 'react-toastify';
 
 import style from '../components/common/common.module.scss';
 import rexaLogo from "../assets/rexa-logo-svg.png";
@@ -14,28 +11,13 @@ import rexaLogo from "../assets/rexa-logo-svg.png";
 const Header = () => {
     const [expanded, setExpanded] = useState(false);
 
-    const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
 
     const {isAdmin, authenticated} = useSelector((state) => ({
-        isAdmin: state.auth.isAdmin,
-        authenticated: state.auth.authenticated
+        isAdmin: state.auth.user.isAdmin,
+        authenticated: state.auth.token !== null
     }));
-
-    const handleLogOut = (event) => {
-        event.preventDefault();
-
-        dispatch(performLogout())
-            .then(() => {
-                toast.info('Logged out');
-                localStorage.removeItem(ACCESS_TOKEN);
-                history.push('/rexa/login');
-            })
-            .catch(() => {
-                toast.error('Could not log out');
-            });
-    };
 
     return (
         <>
@@ -128,7 +110,7 @@ const Header = () => {
                             </NavItem>
                             }
 
-                            <NavItem onClick={handleLogOut} eventKey="logout">
+                            <NavItem eventKey="rexa/logout">
                                 <NavIcon>
                                     <i
                                         className="fa fa-sign-out"

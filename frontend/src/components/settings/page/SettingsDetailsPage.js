@@ -27,8 +27,8 @@ const SettingsDetailsPage = () => {
     const dispatch = useDispatch();
 
     const { xnatUsername, xnatHost } = useSelector((state) => ({
-        xnatUsername: state.auth.currentUser.xnatUsername,
-        xnatHost: state.auth.currentUser.xnatHost,
+        xnatUsername: state.auth.user.xnatUser,
+        xnatHost: state.auth.user.xnatHost,
     }));
     const [username, setUsername] = useState(-1);
     const [host, setHost] = useState(-1);
