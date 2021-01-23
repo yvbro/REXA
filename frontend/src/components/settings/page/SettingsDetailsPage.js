@@ -33,20 +33,18 @@ const SettingsDetailsPage = () => {
     const [username, setUsername] = useState(-1);
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState(false);
-    const [isErrorHost, setIsErrorHost] = useState(
-        regexHttp.test(host) || regexHttp.test(xnatHost)
-    );
+    const [errorHost, setErrorHost] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (!password) {
-            setErrorPassword(true);
+            setErrorPassword(false);
         } else if (
             (host !== -1 && !regexHttp.test(host)) ||
             !regexHttp.test(xnatHost)
         ) {
-            setIsErrorHost(false);
+            setErrorHost(false);
         } else {
             updateSettings(
                 username === -1 ? xnatUsername : username,
@@ -79,8 +77,8 @@ const SettingsDetailsPage = () => {
 
     const onChangeHost = (event) => {
         regexHttp.test(event.target.value)
-            ? setIsErrorHost(true)
-            : setIsErrorHost(false);
+            ? setErrorHost(false)
+            : setErrorHost(true);
         setHost(event.target.value);
     };
 
@@ -101,7 +99,7 @@ const SettingsDetailsPage = () => {
                     >
                         <TextField
                             id="usernameSettings"
-                            name="usernameSettings"
+                            name="username"
                             label="username"
                             variant="outlined"
                             defaultValue={xnatUsername}
@@ -115,13 +113,13 @@ const SettingsDetailsPage = () => {
                         />
                         <TextField
                             id="hostSettings"
-                            name="hostSettings"
+                            name="host"
                             label="host"
                             variant="outlined"
                             defaultValue={xnatHost}
-                            error={!isErrorHost}
+                            error={errorHost}
                             helperText={
-                                !isErrorHost ? 'Invalid host name (http/https)' : ''
+                                errorHost ? 'Invalid host name (http/https)' : ''
                             }
                             onChange={onChangeHost}
                             className={style.input}
@@ -133,7 +131,7 @@ const SettingsDetailsPage = () => {
                         />
                         <TextField
                             id="passwordSettings"
-                            name="passwordSettings"
+                            name="password"
                             label="Password"
                             type="password"
                             variant="outlined"
