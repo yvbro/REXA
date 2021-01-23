@@ -23,7 +23,7 @@ spring:
             scope:
               - email
               - profile
-
+l
 app:
   oauth2:
     authorizedRedirectUris: http://localhost:8080/oauth2/redirect

@@ -154,7 +154,7 @@ export const updateCurrentUserXnatInfos = (xnatUser, xnatHost) => (dispatch) =>
         xnatHost: xnatHost,
     });
 
-const extractPayload = token => {
+export const extractPayload = token => {
     var decoded = jwt_decode(token);
     return {
         token: token,

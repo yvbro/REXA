@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import {loginSuccess} from '../redux/authDuck';
+import {loginSuccess, extractPayload} from '../redux/authDuck';
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
@@ -22,14 +22,7 @@ class OAuth2RedirectHandler extends Component {
         const error = this.getUrlParameter('error');
 
         if (token) {
-            const payload = {
-                token: token,
-                username: "google",
-                xnatUser: "",
-                xnatHost: "",
-                isAdmin: false,
-            }
-            this.props.login(payload).then(() => {
+            this.props.login(extractPayload(token)).then(() => {
                 return (
                     <Redirect
                         to={{
@@ -56,6 +49,7 @@ class OAuth2RedirectHandler extends Component {
 }
 
 OAuth2RedirectHandler.propTypes = {
+    login: PropTypes.func.isRequired,
     // react-router provided
     location: PropTypes.object,
 };

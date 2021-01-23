@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,6 +15,10 @@ class Logout extends Component {
         return <Redirect to="/rexa/login"/>;
     }
 }
+
+Logout.propTypes = {
+    performLogout: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
