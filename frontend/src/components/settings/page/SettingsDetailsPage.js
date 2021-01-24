@@ -9,6 +9,10 @@ import { resetDataProjects } from '../../project/redux/projectDuck';
 import { updateCurrentUserXnatInfos } from '../../auth/redux/authDuck';
 import classes from './settings.module.scss';
 
+const REGEX_PROTOCOL = /^((http|https):\/\/)/;
+const ERROR_PASSWORD = "Password is required.";
+const ERROR_HOST = 'Invalid host name (Must start by http(s))';
+
 const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
@@ -24,38 +28,33 @@ const useStyles = makeStyles((theme) => ({
 const SettingsDetailsPage = () => {
     const style = useStyles();
     const dispatch = useDispatch();
-    const regexHttp = /^((http|https|ftp):\/\/)/;
+    
     const { xnatUsername, xnatHost } = useSelector((state) => ({
         xnatUsername: state.auth.currentUser.xnatUsername,
         xnatHost: state.auth.currentUser.xnatHost,
     }));
-    const [host, setHost] = useState(-1);
-    const [username, setUsername] = useState(-1);
+
+    const [host, setHost] = useState(xnatHost);
+    const [username, setUsername] = useState(xnatUsername);
     const [password, setPassword] = useState('');
-    const [errorPassword, setErrorPassword] = useState(false);
-    const [errorHost, setErrorHost] = useState(false);
+    const [errorPassword, setErrorPassword] = useState('');
+    const [errorHost, setErrorHost] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (!password) {
-            setErrorPassword(false);
-        } else if (
-            (host !== -1 && !regexHttp.test(host)) ||
-            !regexHttp.test(xnatHost)
-        ) {
-            setErrorHost(false);
+            setErrorPassword(ERROR_PASSWORD);
+        } else if (!host || !host.match(REGEX_PROTOCOL)) {
+            setErrorHost(ERROR_HOST);
         } else {
             updateSettings(
-                username === -1 ? xnatUsername : username,
-                host === -1 ? xnatHost : host,
+                !username ? xnatUsername : username,
+                !host ? xnatHost : host,
                 password
             ).then(() => {
                 dispatch(
-                    updateCurrentUserXnatInfos(
-                        username === -1 ? xnatUsername : username,
-                        host === -1 ? xnatHost : host
-                    )
+                    updateCurrentUserXnatInfos(username, host)
                 );
                 dispatch(resetDataDashboard());
                 dispatch(resetDataProjects());
@@ -65,20 +64,18 @@ const SettingsDetailsPage = () => {
 
     const testCredentials = () => {
         if (!password) {
-            setErrorPassword(true);
+            setErrorPassword(ERROR_PASSWORD);
         } else {
-            testConnection(
-                username === -1 ? xnatUsername : username,
-                host === -1 ? xnatHost : host,
-                password
-            );
+            testConnection(username, host, password);
         }
     };
 
     const onChangeHost = (event) => {
-        regexHttp.test(event.target.value)
-            ? setErrorHost(false)
-            : setErrorHost(true);
+        if(!event.target.value.match(REGEX_PROTOCOL)) {
+            setErrorHost(ERROR_HOST);
+        } else {
+            setErrorHost('');
+        }
         setHost(event.target.value);
     };
 
@@ -102,12 +99,12 @@ const SettingsDetailsPage = () => {
                             name="username"
                             label="username"
                             variant="outlined"
-                            defaultValue={xnatUsername}
+                            defaultValue={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className={style.input}
                             inputProps={{
                                 form: {
-                                    autocomplete: 'off',
+                                    autoComplete: 'off',
                                 },
                             }}
                         />
@@ -116,16 +113,14 @@ const SettingsDetailsPage = () => {
                             name="host"
                             label="host"
                             variant="outlined"
-                            defaultValue={xnatHost}
-                            error={errorHost}
-                            helperText={
-                                errorHost ? 'Invalid host name (http/https)' : ''
-                            }
+                            defaultValue={host}
+                            error={!!errorHost}
+                            helperText={errorHost}
                             onChange={onChangeHost}
                             className={style.input}
                             inputProps={{
                                 form: {
-                                    autocomplete: 'off',
+                                    autoComplete: 'off',
                                 },
                             }}
                         />
@@ -135,14 +130,13 @@ const SettingsDetailsPage = () => {
                             label="Password"
                             type="password"
                             variant="outlined"
-                            error={errorPassword}
+                            error={!!errorPassword}
                             onChange={(e) => setPassword(e.target.value)}
                             className={style.input}
-                            helperText="password is required."
+                            helperText={errorPassword}
                             inputProps={{
-                                autocomplete: 'new-password',
                                 form: {
-                                    autocomplete: 'off',
+                                    autoComplete: 'off',
                                 },
                             }}
                         />
@@ -151,9 +145,7 @@ const SettingsDetailsPage = () => {
                             variant="outlined"
                             color="primary"
                             disabled={
-                                (host === -1 || host === xnatHost) &&
-                                (username === -1 || username === xnatUsername) &&
-                                !password
+                                !host || !username || !password
                             }
                             className={style.input}
                         >
