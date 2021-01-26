@@ -1,32 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 
 import {performLogout} from '../redux/authDuck';
 
-class Logout extends Component {
-    componentDidMount () {
-        this.props.performLogout();
-    }
+const Logout = () => {
+    const dispatch = useDispatch();
 
-    render () {
-        return <Redirect to="/rexa/login"/>;
-    }
+    useEffect(() => {
+        dispatch(performLogout());
+    }, [dispatch]);
+
+    return <Redirect to="/rexa/login"/>;
 }
 
-Logout.propTypes = {
-    performLogout: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators(
-        {
-            performLogout,
-        },
-        dispatch
-    );
-};
-
-export default connect(null, mapDispatchToProps)(Logout);
+export default Logout;
