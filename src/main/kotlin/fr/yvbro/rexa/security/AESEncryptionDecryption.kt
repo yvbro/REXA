@@ -11,7 +11,6 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-
 @Component
 class AESEncryptionDecryption {
 
@@ -35,7 +34,7 @@ class AESEncryptionDecryption {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey)
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.toByteArray(charset("UTF-8"))))
         } catch (e: Exception) {
-            throw RexaException("500", "Error while decrypting: $e")
+            throw RexaException("500", "Error while encrypting: $e")
         }
     }
 

@@ -1,22 +1,42 @@
 package fr.yvbro.rexa.security
 
 import fr.yvbro.rexa.config.AppProperties
+import fr.yvbro.rexa.model.role.ADMIN
 import io.jsonwebtoken.*
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import java.security.SignatureException
 import java.util.*
+import kotlin.collections.HashMap
 
 class TokenProvider(private var appProperties: AppProperties) {
+    private val REXA_APP: String = "ReXA"
+
     fun createToken(authentication: Authentication): String {
-        val userPrincipal = authentication.principal as UserPrincipal
-        val expiryDate = Date(Date().time + appProperties.appTokenExpirationMsec.toInt())
+        val user = authentication.principal as UserPrincipal
+        val expiryDate = Date(Date().time + getExpirationTime())
         return Jwts.builder()
-                .setSubject(userPrincipal.id.toString())
+                .setClaims(buildUserClaims(user))
                 .setIssuedAt(Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, appProperties.appTokenSecret)
                 .compact()
+    }
+
+    private fun buildUserClaims(user: UserPrincipal): HashMap<String, Any?> {
+        val isAdmin : Boolean = user.authorities.any { authority -> authority.authority == ADMIN }
+        return hashMapOf(
+                "iss" to REXA_APP,
+                "sub" to user.id.toString(),
+                "username" to user.username,
+                "xnatUser" to user.xnatUsername,
+                "xnatHost" to user.xnatHost,
+                "isAdmin" to isAdmin
+                )
+    }
+
+    fun getExpirationTime(): Int {
+        return appProperties.appTokenExpirationMsec.toInt()
     }
 
     fun getUserIdFromToken(token: String?): UUID? {

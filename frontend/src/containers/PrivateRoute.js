@@ -9,7 +9,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     const location = useLocation();
 
     const {authenticated, loading} = useSelector((state) => ({
-        authenticated: state.auth.authenticated,
+        authenticated: state.auth.token !== null,
         loading: state.auth.loading,
     }));
 

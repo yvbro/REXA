@@ -20,7 +20,7 @@ const UnusableScans = ({ unusableScans }) => {
     const style = useStyles();
 
     const { xnatHost } = useSelector((state) => ({
-        xnatHost: state.auth.currentUser.xnatHost,
+        xnatHost: state.auth.user.xnatHost,
     }));
 
     return (

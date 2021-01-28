@@ -7,13 +7,13 @@ import './index.scss';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './containers/store';
-import { ACCESS_TOKEN } from './helpers/constants';
+import { ACCESS_TOKEN, TOKEN_TYPE } from './helpers/constants';
 
 const store = configureStore();
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
-    config.headers.Authorization = localStorage.getItem(ACCESS_TOKEN);
+    config.headers.Authorization = `${TOKEN_TYPE} ${localStorage.getItem(ACCESS_TOKEN)}`;
     return config;
 });
 

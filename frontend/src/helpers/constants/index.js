@@ -1,5 +1,7 @@
 export const API_BASE_URL = 'http://localhost:8080';
 export const ACCESS_TOKEN = 'accessToken';
+export const TOKEN_TYPE = 'Bearer';
+export const EXPIRATION_DATE = 'expirationDate';
 
 export const OAUTH2_REDIRECT_URI = 'http://localhost:8080/oauth2/redirect';
 

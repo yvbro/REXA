@@ -32,7 +32,7 @@ const DashboardPage = () => {
         loadingPreArchives: state.dashboard.preArchives.loading,
         projects: state.project.projectsList.data,
         loadingProjects: state.project.projectsList.loading,
-        xnatHost: state.auth.currentUser.xnatHost,
+        xnatHost: state.auth.user.xnatHost,
     }));
 
     useEffect(() => {

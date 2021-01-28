@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.core.user.OAuth2User
 import java.util.*
 
-class UserPrincipal(val id: UUID?, val email: String?, private val password: String?,
+class UserPrincipal(val id: UUID?, private val email: String?, private val password: String?,
                     private val authorities: Collection<GrantedAuthority>,
                     private val enabled: Boolean?, var xnatUsername: String?,
                     var xnatHost: String?) : OAuth2User, UserDetails {
