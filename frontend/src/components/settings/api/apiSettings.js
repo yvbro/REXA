@@ -2,14 +2,29 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-export const updateSettings = (xnatUsername, xnatHost, xnatPassword) => {
+export const updateUserSettings = (currentPassword, newPassword) => {
     return axios
-        .post('/private/settings', { xnatUsername, xnatHost, xnatPassword })
+        .post('/private/user/settings', { currentPassword, newPassword })
         .then(() => {
-            toast.info('Settings saved');
+            toast.info('New password saved!');
+        })
+        .catch( error => {
+            let errorMessage = error?.response?.data?.message;
+            if (!errorMessage) {
+                errorMessage = "toast.error('Failed to save your new password";
+            }
+            toast.error(errorMessage);
+        });
+};
+
+export const updateXnatSettings = (xnatUsername, xnatHost, xnatPassword) => {
+    return axios
+        .post('/private/xnat/settings', { xnatUsername, xnatHost, xnatPassword })
+        .then(() => {
+            toast.info('Xnat settings saved');
         })
         .catch(() => {
-            toast.error('Failed to save settings');
+            toast.error('Failed to save xnat settings');
         });
 };
 
