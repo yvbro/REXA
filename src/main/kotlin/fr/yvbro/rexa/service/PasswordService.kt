@@ -12,6 +12,11 @@ class PasswordService(private val passwordEncoder: PasswordEncoder) {
         return passwordEncoder.encode(unencodedPassword)
     }
 
+    @Transactional(readOnly = true)
+    fun matches(rawPassword: String, encodedPassword: String?): Boolean {
+        return passwordEncoder.matches(rawPassword, encodedPassword)
+    }
+
     companion object {
         const val MIN_PASSWORD_LENGTH = 8
     }

@@ -3,7 +3,7 @@ package fr.yvbro.rexa.service
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import fr.yvbro.rexa.controller.input.UserSettingsRequest
+import fr.yvbro.rexa.controller.input.XnatSettingsRequest
 import fr.yvbro.rexa.model.*
 import fr.yvbro.rexa.xnat.XnatClient
 import fr.yvbro.rexa.xnat.XnatGlossary
@@ -26,7 +26,6 @@ class XnatService(private val xnatClient: XnatClient) {
 
     fun getAssessorsForProject(projectId: String): List<Assessor> {
         val assessorUri = "${XnatGlossary.urlArchiveLabel}?project=$projectId${XnatGlossary.assessorUrlLabel}"
-        //TODO: Add FreeSurfer assessor get
 
         return mapper.readValue(xnatClient.callXnatUri(assessorUri))
     }
@@ -39,9 +38,9 @@ class XnatService(private val xnatClient: XnatClient) {
         return mapper.readValue(xnatClient.callXnatUri(XnatGlossary.urlPreArchive))
     }
 
-    fun testConnection(userSettingsRequest: UserSettingsRequest) {
-        val fullUri = userSettingsRequest.xnatHost + XnatGlossary.urlProjectLabel
-        xnatClient.callXnatUriWithCredentials(fullUri, UserSettings(userSettingsRequest.xnatUsername, userSettingsRequest.xnatPassword, userSettingsRequest.xnatHost, null))
+    fun testConnection(xnatSettingsRequest: XnatSettingsRequest) {
+        val fullUri = xnatSettingsRequest.xnatHost + XnatGlossary.urlProjectLabel
+        xnatClient.callXnatUriWithCredentials(fullUri, UserSettings(xnatSettingsRequest.xnatUsername, xnatSettingsRequest.xnatPassword, xnatSettingsRequest.xnatHost, null))
     }
 
 }

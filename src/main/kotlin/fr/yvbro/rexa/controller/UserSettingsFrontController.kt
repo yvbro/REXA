@@ -2,7 +2,7 @@ package fr.yvbro.rexa.controller
 
 import fr.yvbro.rexa.config.WebConfig
 import fr.yvbro.rexa.controller.input.UserSettingsRequest
-import fr.yvbro.rexa.controller.output.UserSettingsDto
+import fr.yvbro.rexa.controller.input.XnatSettingsRequest
 import fr.yvbro.rexa.model.role.ADMIN
 import fr.yvbro.rexa.model.role.USER
 import fr.yvbro.rexa.security.UserPrincipal
@@ -16,19 +16,14 @@ import org.springframework.web.bind.annotation.*
 @Secured(ADMIN, USER)
 class UserSettingsFrontController(private val userSettingsService: UserSettingsService) {
 
-    @GetMapping("/settings")
-    fun getXnatSettings(): UserSettingsDto {
-        var userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
-        val userSettings = userSettingsService.getXnatSettings(userId)
-        return UserSettingsDto(
-                userSettings.xnatUsername,
-                userSettings.xnatHost
-        )
+    @PostMapping("/xnat/settings")
+    fun updateXnatSettings(@RequestBody xnatSettingsRequest: XnatSettingsRequest) {
+        val userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
+        userSettingsService.upsertXnatSettings(userId, xnatSettingsRequest.xnatUsername, xnatSettingsRequest.xnatHost, xnatSettingsRequest.xnatPassword)
     }
 
-    @PostMapping("/settings")
-    fun updateXnatSettings(@RequestBody userSettingsRequest: UserSettingsRequest) {
-        var userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
-        userSettingsService.upsertXnatSettings(userId, userSettingsRequest.xnatUsername, userSettingsRequest.xnatHost, userSettingsRequest.xnatPassword)
+    @PostMapping("/user/settings")
+    fun updateUserSettings(@RequestBody userSettingsRequest: UserSettingsRequest) {
+        userSettingsService.upsertUserSettings(userSettingsRequest)
     }
 }

@@ -1,7 +1,7 @@
 package fr.yvbro.rexa.controller
 
 import fr.yvbro.rexa.config.WebConfig
-import fr.yvbro.rexa.controller.input.UserSettingsRequest
+import fr.yvbro.rexa.controller.input.XnatSettingsRequest
 import fr.yvbro.rexa.controller.output.ProjectDto
 import fr.yvbro.rexa.controller.output.ProjectPreAchivesDto
 import fr.yvbro.rexa.controller.output.ProjectRecentActivitiesDto
@@ -55,8 +55,8 @@ class XnatFrontController(private val xnatService: XnatService) {
     }
 
     @PostMapping("/test")
-    fun testCredentials(@RequestBody userSettingsRequest: UserSettingsRequest) {
-        xnatService.testConnection(userSettingsRequest)
+    fun testCredentials(@RequestBody xnatSettingsRequest: XnatSettingsRequest) {
+        xnatService.testConnection(xnatSettingsRequest)
     }
 
     private fun mapToDto(project: Project): ProjectDto {

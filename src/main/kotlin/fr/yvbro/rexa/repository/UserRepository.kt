@@ -33,6 +33,13 @@ class UserRepository(private val dsl: DSLContext,
         return userTupleMapper.map(record)
     }
 
+    fun editPassword(userId: UUID, password: String) {
+        dsl.update(USER)
+                .set(USER.PASSWORD, password)
+                .where(USER.ID.eq(userId))
+                .execute()
+    }
+
     fun switchEnabledForUser(userEmail: String, enabled: Boolean) {
         dsl.update(USER)
                 .set(USER.ENABLED, enabled)
