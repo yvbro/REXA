@@ -10,8 +10,8 @@ import java.util.*
 
 class UserPrincipal(val id: UUID?, private val email: String?, private val password: String?,
                     private val authorities: Collection<GrantedAuthority>,
-                    private val enabled: Boolean?, var xnatUsername: String?,
-                    var xnatHost: String?) : OAuth2User, UserDetails {
+                    private val enabled: Boolean?, val xnatUsername: String?,
+                    val xnatHost: String?, val authProvider: String?) : OAuth2User, UserDetails {
     private var attributes: Map<String, Any>? = null
 
     override fun getPassword(): String? {
@@ -68,7 +68,8 @@ class UserPrincipal(val id: UUID?, private val email: String?, private val passw
                     authorities,
                     user.enabled,
                     userSettings.xnatUsername,
-                    userSettings.xnatHost
+                    userSettings.xnatHost,
+                    user.authProvider
             )
         }
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useSelector } from 'react-redux';
+
 import { Grid, AppBar, Box, Tab, Tabs, Typography} from '@material-ui/core';
 
 import XnatSettingsForm from '../smart/XnatSettingsForm';
@@ -45,9 +47,15 @@ const SettingsDetailsPage = () => {
     
     const [value, setValue] = React.useState(0);
 
+    const { authProvider } = useSelector((state) => ({
+        authProvider: state.auth.authProvider,
+    }));
+
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
+
+    const isGoogleAuthProvider = authProvider !== 'google';
 
     return (
         <Grid container className={classes.rootDiv}>
@@ -56,11 +64,11 @@ const SettingsDetailsPage = () => {
                     <AppBar position="static" style={{ background: '#2b78e3', width: '400px' }}>
                         <Tabs value={value} onChange={handleChange} indicatorColor="primary">
                             <Tab label="Xnat Settings" {...a11yProps(0)} />
-                            <Tab label="User Settings" {...a11yProps(1)} />
+                            {isGoogleAuthProvider && <Tab label="User Settings" {...a11yProps(1)} />}
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}><XnatSettingsForm /></TabPanel>
-                    <TabPanel value={value} index={1}><UserSettingsForm /></TabPanel>
+                    {isGoogleAuthProvider && <TabPanel value={value} index={1}><UserSettingsForm /></TabPanel>}
                 </div>
             </Grid>
         </Grid>
