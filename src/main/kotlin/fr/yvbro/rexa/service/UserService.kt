@@ -22,6 +22,10 @@ class UserService(private val userRepository: UserRepository,
         return users
     }
 
+    fun getUsersPaginate() {
+        val users = userRepository.getUsers().toMutableList()
+    }
+
     fun switchEnabledForUser(userEmail: String?, enabled: Boolean?) {
         if (userEmail != null && enabled != null) {
             userRepository.switchEnabledForUser(userEmail, enabled)

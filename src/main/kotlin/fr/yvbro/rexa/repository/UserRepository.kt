@@ -53,4 +53,7 @@ class UserRepository(private val dsl: DSLContext,
     fun getUsers(): List<User> = dsl.select()
             .from(USER)
             .fetch(userTupleMapper)
+
+    fun getUsersPage() = dsl.select()
+            .from(USER)
 }

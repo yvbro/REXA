@@ -22,6 +22,11 @@ class UsersManagementFrontController(private val userService: UserService) {
                 .map{ it.toOutput()}
     }
 
+    @GetMapping
+    fun getUsersPage() {
+        return userService.getUsersPaginate()
+    }
+
     @PostMapping("/switch")
     fun disableUser(@RequestBody userSwitchEnabledRequest: UserSwitchEnabledRequest) {
         userService.switchEnabledForUser(userSwitchEnabledRequest.userEmail, userSwitchEnabledRequest.enabled)
