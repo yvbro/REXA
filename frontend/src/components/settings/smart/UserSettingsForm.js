@@ -51,7 +51,7 @@ const UserSettingsForm = () => {
     return (
         <Card className={style.card}>
             <div className={classes.title}>
-                <Typography>Change your ReXA password</Typography>
+                <Typography variant="button">Change your ReXA password</Typography>
             </div>
             <form
                 className={classes.formFlex}

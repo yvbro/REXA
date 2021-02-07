@@ -83,7 +83,7 @@ const XnatSettingsForm = () => {
     return (
         <Card className={style.card}>
             <div className={classes.title}>
-                <Typography>Edit your settings to access XNAT</Typography>
+                <Typography variant="button">Edit your settings to access XNAT</Typography>
             </div>
             <form
                 className={classes.formFlex}

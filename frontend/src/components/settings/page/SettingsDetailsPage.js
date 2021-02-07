@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ const TabPanel = (props) => {
         >
             {value === index && (
                 <Box p={3} style={{padding: '0px'}}>
-                <Typography component={'span'}>{children}</Typography>
+                <Typography component="span">{children}</Typography>
                 </Box>
             )}
         </div>
@@ -45,7 +45,7 @@ const a11yProps = index => {
 
 const SettingsDetailsPage = () => {
     
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const { authProvider } = useSelector((state) => ({
         authProvider: state.auth.authProvider,
@@ -61,8 +61,8 @@ const SettingsDetailsPage = () => {
         <Grid container className={classes.rootDiv}>
             <Grid item md={6} xs={12}>
                 <div className={classes.rootDiv}>
-                    <AppBar position="static" style={{ background: '#2b78e3', width: '400px' }}>
-                        <Tabs value={value} onChange={handleChange} indicatorColor="primary">
+                    <AppBar position="static" style={{ background: '#2b78e3' }}>
+                        <Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary">
                             <Tab label="Xnat Settings" {...a11yProps(0)} />
                             {isGoogleAuthProvider && <Tab label="User Settings" {...a11yProps(1)} />}
                         </Tabs>
