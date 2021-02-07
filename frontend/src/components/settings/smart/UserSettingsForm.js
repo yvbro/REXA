@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 
 import { Card, Button, TextField, makeStyles, Typography } from '@material-ui/core';
 
+import PasswordRules from '../../common/PasswordRules';
+
 import { updateUserSettings } from '../api/apiSettings';
 import classes from './XnatSettingsForm.module.scss';
+import { regexOneCapitalLetter, regexOneNumber } from '../../../helpers/constants';
 
 const ERROR_PASSWORD = "The entered value does not match the password you entered.";
+const ERROR_INVALID_PASSWORD = "The new password is invalid. Please follow the rules.";
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -16,11 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         margin: theme.spacing(1),
-        width: 350,
-    },
-    inputSave: {
-        margin: theme.spacing(1),
-        marginTop: 30,
         width: 350,
     },
 }));
@@ -38,6 +37,8 @@ const UserSettingsForm = () => {
 
         if(newPassword !== confirmedNewPassword) {
             setErrorPassword(ERROR_PASSWORD);
+        } else if (!newPassword.match(regexOneCapitalLetter) || !newPassword.match(regexOneNumber)) {
+            setErrorPassword(ERROR_INVALID_PASSWORD);
         } else {
             setErrorPassword('');
             updateUserSettings(currentPassword, newPassword).then(() => {
@@ -52,6 +53,7 @@ const UserSettingsForm = () => {
         <Card className={style.card}>
             <div className={classes.title}>
                 <Typography variant="button">Change your ReXA password</Typography>
+                <PasswordRules />
             </div>
             <form
                 className={classes.formFlex}
@@ -113,7 +115,7 @@ const UserSettingsForm = () => {
                     disabled={
                         !currentPassword || !newPassword || !confirmedNewPassword
                     }
-                    className={style.inputSave}
+                    className={style.input}
                 >
                     Save
                 </Button>

@@ -14,6 +14,8 @@ import {
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import PasswordRules from '../../common/PasswordRules';
+
 import { addUser } from '../redux/userDuck';
 import { regexEmail } from '../../../helpers/constants/index';
 
@@ -41,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
         width: 100,
     },
     avatar: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
+        width: theme.spacing(8),
+        height: theme.spacing(8),
     },
     iconDef: {
         fontSize: 50,
@@ -91,7 +93,8 @@ const AddUserForm = (props) => {
                     </Avatar>
                 }
                 title="Add New User"
-                titleTypographyProps={{variant:'h3', color: 'primary'}}
+                titleTypographyProps={{variant:'button', color: 'primary'}}
+                subheader={(<PasswordRules />)}
             />
             <CardContent className={classes.cardContent}>
                 <TextField

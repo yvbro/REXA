@@ -39,6 +39,8 @@ class UserSettingsService(private val xnatRepository: UserSettingsRepository,
             throw RexaBadRequestException("You entered a wrong password.")
         }
 
+        passwordService.checkPasswordRules(userSettingsRequest.newPassword)
+
         userId?.let { userRepository.editPassword(it, passwordService.encodePassword(userSettingsRequest.newPassword)) }
     }
 

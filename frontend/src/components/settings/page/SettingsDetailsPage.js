@@ -8,6 +8,7 @@ import { Grid, AppBar, Box, Tab, Tabs, Typography} from '@material-ui/core';
 import XnatSettingsForm from '../smart/XnatSettingsForm';
 import UserSettingsForm from '../smart/UserSettingsForm';
 
+import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 import classes from './SettingsDetails.module.scss';
 
 const TabPanel = (props) => {
@@ -23,7 +24,7 @@ const TabPanel = (props) => {
         >
             {value === index && (
                 <Box p={3} style={{padding: '0px'}}>
-                <Typography component="span">{children}</Typography>
+                    <Typography component="span">{children}</Typography>
                 </Box>
             )}
         </div>
@@ -55,7 +56,7 @@ const SettingsDetailsPage = () => {
         setValue(newValue);
     };
 
-    const isGoogleAuthProvider = authProvider !== 'google';
+    const isGoogleAuthProvider = authProvider !== GOOGLE_AUTH_PROVIDER;
 
     return (
         <Grid container className={classes.rootDiv}>
