@@ -31,7 +31,8 @@ class TokenProvider(private var appProperties: AppProperties) {
                 "username" to user.username,
                 "xnatUser" to user.xnatUsername,
                 "xnatHost" to user.xnatHost,
-                "isAdmin" to isAdmin
+                "isAdmin" to isAdmin,
+                "authProvider" to user.authProvider
                 )
     }
 

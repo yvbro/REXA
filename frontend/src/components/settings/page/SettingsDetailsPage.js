@@ -1,166 +1,75 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
-import { updateSettings, testConnection } from '../api/apiSettings';
-import { resetDataDashboard } from '../../dashboard/redux/dashboardDuck';
-import { resetDataProjects } from '../../project/redux/projectDuck';
-import { updateCurrentUserXnatInfos } from '../../auth/redux/authDuck';
-import classes from './settings.module.scss';
+import { Grid, AppBar, Box, Tab, Tabs, Typography} from '@material-ui/core';
 
-const REGEX_PROTOCOL = /^((http|https):\/\/)/;
-const ERROR_PASSWORD = "Password is required.";
-const ERROR_HOST = 'Invalid host name (Must start by http(s))';
+import XnatSettingsForm from '../smart/XnatSettingsForm';
+import UserSettingsForm from '../smart/UserSettingsForm';
 
-const useStyles = makeStyles((theme) => ({
-    card: {
-        width: 400,
-        height: 450,
-        borderRadius: '16px',
-    },
-    input: {
-        margin: theme.spacing(1),
-        width: 350,
-    },
-}));
+import classes from './SettingsDetails.module.scss';
+
+const TabPanel = (props) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3} style={{padding: '0px'}}>
+                <Typography component="span">{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+const a11yProps = index => {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  };
 
 const SettingsDetailsPage = () => {
-    const style = useStyles();
-    const dispatch = useDispatch();
     
-    const { xnatUsername, xnatHost } = useSelector((state) => ({
-        xnatUsername: state.auth.user.xnatUser,
-        xnatHost: state.auth.user.xnatHost,
+    const [value, setValue] = useState(0);
+
+    const { authProvider } = useSelector((state) => ({
+        authProvider: state.auth.authProvider,
     }));
 
-    const [host, setHost] = useState(xnatHost);
-    const [username, setUsername] = useState(xnatUsername);
-    const [password, setPassword] = useState('');
-    const [errorPassword, setErrorPassword] = useState('');
-    const [errorHost, setErrorHost] = useState('');
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        if (!password) {
-            setErrorPassword(ERROR_PASSWORD);
-        } else if (!host || !host.match(REGEX_PROTOCOL)) {
-            setErrorHost(ERROR_HOST);
-        } else {
-            updateSettings(
-                !username ? xnatUsername : username,
-                !host ? xnatHost : host,
-                password
-            ).then(() => {
-                dispatch(
-                    updateCurrentUserXnatInfos(username, host)
-                );
-                dispatch(resetDataDashboard());
-                dispatch(resetDataProjects());
-            });
-        }
+    const handleChange = (_, newValue) => {
+        setValue(newValue);
     };
 
-    const testCredentials = () => {
-        if (!password) {
-            setErrorPassword(ERROR_PASSWORD);
-        } else {
-            testConnection(username, host, password);
-        }
-    };
-
-    const onChangeHost = (event) => {
-        if(!event.target.value.match(REGEX_PROTOCOL)) {
-            setErrorHost(ERROR_HOST);
-        } else {
-            setErrorHost('');
-        }
-        setHost(event.target.value);
-    };
+    const isGoogleAuthProvider = authProvider !== 'google';
 
     return (
         <Grid container className={classes.rootDiv}>
             <Grid item md={6} xs={12}>
-                <Card className={style.card}>
-                    <div className={classes.textAlignCenter}>
-                        <h1>
-                            <span>Settings</span>
-                        </h1>
-                    </div>
-                    <form
-                        className={classes.formFlex}
-                        onSubmit={handleSubmit}
-                        key={`settingsForm_${xnatHost}_${xnatUsername}`}
-                        id={`settingsForm_${xnatHost}_${xnatUsername}`}
-                    >
-                        <TextField
-                            id="usernameSettings"
-                            name="username"
-                            label="username"
-                            variant="outlined"
-                            defaultValue={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className={style.input}
-                            inputProps={{
-                                form: {
-                                    autoComplete: 'off',
-                                },
-                            }}
-                        />
-                        <TextField
-                            id="hostSettings"
-                            name="host"
-                            label="host"
-                            variant="outlined"
-                            defaultValue={host}
-                            error={!!errorHost}
-                            helperText={errorHost}
-                            onChange={onChangeHost}
-                            className={style.input}
-                            inputProps={{
-                                form: {
-                                    autoComplete: 'off',
-                                },
-                            }}
-                        />
-                        <TextField
-                            id="passwordSettings"
-                            name="password"
-                            label="Password"
-                            type="password"
-                            variant="outlined"
-                            error={!!errorPassword}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className={style.input}
-                            helperText={errorPassword}
-                            inputProps={{
-                                form: {
-                                    autoComplete: 'off',
-                                },
-                            }}
-                        />
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                            color="primary"
-                            disabled={
-                                !host || !username || !password
-                            }
-                            className={style.input}
-                        >
-                            Save
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            className={style.input}
-                            onClick={testCredentials}
-                        >
-                            test connection
-                        </Button>
-                    </form>
-                </Card>
+                <div className={classes.rootDiv}>
+                    <AppBar position="static" style={{ background: '#2b78e3' }}>
+                        <Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary">
+                            <Tab label="Xnat Settings" {...a11yProps(0)} />
+                            {isGoogleAuthProvider && <Tab label="User Settings" {...a11yProps(1)} />}
+                        </Tabs>
+                    </AppBar>
+                    <TabPanel value={value} index={0}><XnatSettingsForm /></TabPanel>
+                    {isGoogleAuthProvider && <TabPanel value={value} index={1}><UserSettingsForm /></TabPanel>}
+                </div>
             </Grid>
         </Grid>
     );

@@ -7,6 +7,7 @@ import { ACCESS_TOKEN, EXPIRATION_DATE } from '../../../helpers/constants';
 
 const initialState = {
     token: null,
+    authProvider: null,
     user: {
         username: null,
         xnatHost: null,
@@ -33,6 +34,7 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 token: action.payload.token,
+                authProvider: action.payload.authProvider,
                 user: {
                     username: action.payload.username,
                     xnatHost: action.payload.xnatHost,
@@ -52,6 +54,7 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 token: null,
+                authProvider: null,
                 user: {
                     username: null,
                     xnatHost: null,
@@ -162,6 +165,7 @@ export const extractPayload = token => {
         xnatUser: decoded.xnatUser,
         xnatHost: decoded.xnatHost,
         isAdmin: decoded.isAdmin,
+        authProvider: decoded.authProvider,
     };
 }
 
