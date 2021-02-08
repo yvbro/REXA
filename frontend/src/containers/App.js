@@ -20,7 +20,7 @@ import Logout from '../components/auth/smart/Logout';
 import PrivateRoute from './PrivateRoute';
 import LoadingIndicator from '../components/common/LoadingIndicator';
 import NotFound from '../components/common/NotFound';
-import {authCheckState} from '../components/auth/redux/authDuck';
+import { authCheckState } from '../components/auth/redux/authDuck';
 import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandler';
 
 class App extends React.Component {
@@ -57,10 +57,7 @@ class App extends React.Component {
                                         path="/rexa/login"
                                         component={LoginPage}
                                     />
-                                    <Route
-                                        path="/rexa/logout"
-                                        component={Logout}
-                                    />
+                                    <Route path="/rexa/logout" component={Logout} />
                                     <Route
                                         path="/oauth2/redirect"
                                         component={OAuth2RedirectHandler}
@@ -107,7 +104,7 @@ const mapStateToProps = (state) => ({
     loading: state.auth.loading,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(
         {
             authCheckState,

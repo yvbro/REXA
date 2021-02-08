@@ -6,10 +6,12 @@ import PasswordRules from '../../common/PasswordRules';
 
 import { updateUserSettings } from '../api/apiSettings';
 import classes from './XnatSettingsForm.module.scss';
-import { regexOneCapitalLetter, regexOneNumber } from '../../../helpers/constants';
+import {
+    ERROR_INVALID_PASSWORD,
+    isPasswordInvalid,
+} from '../../../helpers/constants';
 
-const ERROR_PASSWORD = "The entered value does not match the password you entered.";
-const ERROR_INVALID_PASSWORD = "The new password is invalid. Please follow the rules.";
+const ERROR_PASSWORD = 'The entered value does not match the password you entered.';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -35,9 +37,9 @@ const UserSettingsForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if(newPassword !== confirmedNewPassword) {
+        if (newPassword !== confirmedNewPassword) {
             setErrorPassword(ERROR_PASSWORD);
-        } else if (!newPassword.match(regexOneCapitalLetter) || !newPassword.match(regexOneNumber)) {
+        } else if (isPasswordInvalid(newPassword)) {
             setErrorPassword(ERROR_INVALID_PASSWORD);
         } else {
             setErrorPassword('');

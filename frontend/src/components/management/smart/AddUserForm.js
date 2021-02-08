@@ -17,7 +17,11 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PasswordRules from '../../common/PasswordRules';
 
 import { addUser } from '../redux/userDuck';
-import { regexEmail } from '../../../helpers/constants/index';
+import {
+    regexEmail,
+    isPasswordInvalid,
+    ERROR_INVALID_PASSWORD,
+} from '../../../helpers/constants/index';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,6 +72,8 @@ const AddUserForm = (props) => {
             setErrorEmail('Email must be set.');
         } else if (!password) {
             setErrorPassword('Password must be set.');
+        } else if (isPasswordInvalid(password)) {
+            setErrorPassword(ERROR_INVALID_PASSWORD);
         } else {
             dispatch(addUser(email, password)).then(() => props.cancelAction());
         }
@@ -84,17 +90,22 @@ const AddUserForm = (props) => {
         }
     };
 
+    const onChangePassword = (event) => {
+        setPassword(event.target.value);
+        setErrorEmail('');
+    };
+
     return (
         <Card className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                        <AccountCircleIcon className={classes.iconDef}/>
+                        <AccountCircleIcon className={classes.iconDef} />
                     </Avatar>
                 }
                 title="Add New User"
-                titleTypographyProps={{variant:'button', color: 'primary'}}
-                subheader={(<PasswordRules />)}
+                titleTypographyProps={{ variant: 'button', color: 'primary' }}
+                subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
                 <TextField
@@ -113,7 +124,7 @@ const AddUserForm = (props) => {
                     variant="outlined"
                     error={!!errorPassword}
                     helperText={errorPassword}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={onChangePassword}
                 />
             </CardContent>
             <CardActions>
@@ -121,7 +132,7 @@ const AddUserForm = (props) => {
                     size="small"
                     onClick={handleSubmit}
                     color="primary"
-                    disabled={errorEmail ? true : false}
+                    disabled={errorEmail || errorPassword}
                     className={classes.button}
                 >
                     Add

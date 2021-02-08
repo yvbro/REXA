@@ -13,7 +13,9 @@ const store = configureStore();
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
-    config.headers.Authorization = `${TOKEN_TYPE} ${localStorage.getItem(ACCESS_TOKEN)}`;
+    config.headers.Authorization = `${TOKEN_TYPE} ${localStorage.getItem(
+        ACCESS_TOKEN
+    )}`;
     return config;
 });
 

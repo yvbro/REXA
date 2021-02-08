@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import {loginSuccess, extractPayload} from '../redux/authDuck';
+import { loginSuccess, extractPayload } from '../redux/authDuck';
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
@@ -31,7 +31,7 @@ class OAuth2RedirectHandler extends Component {
                         }}
                     />
                 );
-            })
+            });
         } else {
             return (
                 <Redirect
@@ -54,10 +54,10 @@ OAuth2RedirectHandler.propTypes = {
     location: PropTypes.object,
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        login: (payload) => dispatch( loginSuccess(payload) )
+        login: (payload) => dispatch(loginSuccess(payload)),
     };
-  };
+};
 
 export default connect(null, mapDispatchToProps)(OAuth2RedirectHandler);

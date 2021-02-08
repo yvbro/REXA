@@ -8,7 +8,7 @@ export const updateUserSettings = (currentPassword, newPassword) => {
         .then(() => {
             toast.info('New password saved!');
         })
-        .catch( error => {
+        .catch((error) => {
             let errorMessage = error?.response?.data?.message;
             if (!errorMessage) {
                 errorMessage = "toast.error('Failed to save your new password";

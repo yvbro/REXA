@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 
-import { Grid, AppBar, Box, Tab, Tabs, Typography} from '@material-ui/core';
+import { Grid, AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core';
 
 import XnatSettingsForm from '../smart/XnatSettingsForm';
 import UserSettingsForm from '../smart/UserSettingsForm';
@@ -23,13 +23,13 @@ const TabPanel = (props) => {
             {...other}
         >
             {value === index && (
-                <Box p={3} style={{padding: '0px'}}>
+                <Box p={3} style={{ padding: '0px' }}>
                     <Typography component="span">{children}</Typography>
                 </Box>
             )}
         </div>
     );
-}
+};
 
 TabPanel.propTypes = {
     children: PropTypes.node,
@@ -37,15 +37,14 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-const a11yProps = index => {
+const a11yProps = (index) => {
     return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
     };
-  };
+};
 
 const SettingsDetailsPage = () => {
-    
     const [value, setValue] = useState(0);
 
     const { authProvider } = useSelector((state) => ({
@@ -63,13 +62,26 @@ const SettingsDetailsPage = () => {
             <Grid item md={6} xs={12}>
                 <div className={classes.rootDiv}>
                     <AppBar position="static" style={{ background: '#2b78e3' }}>
-                        <Tabs value={value} onChange={handleChange} variant="fullWidth" indicatorColor="primary">
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            variant="fullWidth"
+                            indicatorColor="primary"
+                        >
                             <Tab label="Xnat Settings" {...a11yProps(0)} />
-                            {isGoogleAuthProvider && <Tab label="User Settings" {...a11yProps(1)} />}
+                            {isGoogleAuthProvider && (
+                                <Tab label="User Settings" {...a11yProps(1)} />
+                            )}
                         </Tabs>
                     </AppBar>
-                    <TabPanel value={value} index={0}><XnatSettingsForm /></TabPanel>
-                    {isGoogleAuthProvider && <TabPanel value={value} index={1}><UserSettingsForm /></TabPanel>}
+                    <TabPanel value={value} index={0}>
+                        <XnatSettingsForm />
+                    </TabPanel>
+                    {isGoogleAuthProvider && (
+                        <TabPanel value={value} index={1}>
+                            <UserSettingsForm />
+                        </TabPanel>
+                    )}
                 </div>
             </Grid>
         </Grid>

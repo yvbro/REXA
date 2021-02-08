@@ -84,6 +84,6 @@ const ProjectDashboard = ({ projects, loading }) => {
 ProjectDashboard.propTypes = {
     projects: PropTypes.array,
     loading: PropTypes.bool,
-}
+};
 
 export default ProjectDashboard;
