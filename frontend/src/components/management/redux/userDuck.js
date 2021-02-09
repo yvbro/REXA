@@ -21,14 +21,9 @@ const setEnabledForUser = (data, userEmail, enabled) => {
     return data;
 };
 
-const addNewUser = (data, userEmail) => {
-    data.push({ email: userEmail, enabled: false, roles: DEFAULT_ROLES });
-    return data;
-};
-
-const FETCH_USERS = '[User] FETCH LIST OF USERS';
-const SWITCH_ENABLED_USER = '[User] EDIT ENABLED USER';
-const ADD_USER = '[User] ADD USER';
+export const FETCH_USERS = '[User] FETCH LIST OF USERS';
+export const SWITCH_ENABLED_USER = '[User] EDIT ENABLED USER';
+export const ADD_USER = '[User] ADD USER';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
@@ -73,7 +68,7 @@ export default function project(state = initialState, action) {
         case ADD_USER:
             return {
                 ...state,
-                data: addNewUser(state.data, action.payload),
+                data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
                 loading: false,
             };
         default:
