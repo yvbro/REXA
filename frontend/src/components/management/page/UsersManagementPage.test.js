@@ -1,26 +1,35 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import {render, cleanup} from '../../../helpers/test/test-utils';
+import '@testing-library/jest-dom/extend-expect';
+import * as ReactRedux from 'react-redux';
 
 import UsersManagementPage from "./UsersManagementPage";
+import LoadingIndicator from '../../common/LoadingIndicator';
+import UserListPage from '../smart/UserListPage';
 
-configure({
-    adapter: new Adapter()
-});
+afterEach(cleanup)
 
-describe('<UsersManagementPage />', () => {
-    let wrapper;
+test('should take a snapshot', () => {
+    const mockXXXFn = jest.fn();
+    const spyOnUseDispatch = jest
+      .spyOn(ReactRedux, 'useDispatch')
+      .mockReturnValue(mockXXXFn);
 
-    beforeEach(() => {
-        wrapper = shallow(<UsersManagementPage />);
-    })
+    const { asFragment } = render(<UsersManagementPage />);
 
-    it('should render a <UserListPage /> if not loading', () => {
-        expect(wrapper.find(UserListPage)).toHaveLength(1);
-    });
+    expect(asFragment(<UsersManagementPage />)).toMatchSnapshot();
+})
 
-    it('should render a <LoadingIndicator /> if loading', () => {
-        wrapper.setProps({});
-        expect(wrapper.find(UserListPage)).toHaveLength(1);
-    });
-});
+// test('should display LoadingIndicator if loading', () => {
+//     const mockXXXFn = jest.fn();
+//     const spyOnUseDispatch = jest
+//       .spyOn(ReactRedux, 'useDispatch')
+//       .mockReturnValue(mockXXXFn);
+//     const spyOnUseSelector = jest
+//       .spyOn(ReactRedux, 'useSelector')
+//       .mockReturnValue(() => {user: {loading: true}});
+
+//     const { container } = render(<UsersManagementPage />, {user: {loading: true}});
+
+//     expect(container.firstChild).toMatchInlineSnapshot(`<LoadingIndicator />`);
+// })

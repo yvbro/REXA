@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="rootDiv"
+  >
+    <div
+      class="Header"
+    >
+      <h3>
+        User Management
+      </h3>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          Add user
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+    <div
+      class="MuiPaper-root MuiTableContainer-root makeStyles-root100-2 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <table
+        aria-label="sticky table"
+        class="MuiTable-root MuiTable-stickyHeader"
+      >
+        <thead
+          class="MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head WithStyles(ForwardRef(TableCell))-head-4 MuiTableCell-alignCenter MuiTableCell-stickyHeader"
+              scope="col"
+            >
+              Email
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head WithStyles(ForwardRef(TableCell))-head-4 MuiTableCell-alignCenter MuiTableCell-stickyHeader"
+              scope="col"
+            >
+              Role
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head WithStyles(ForwardRef(TableCell))-head-4 MuiTableCell-alignCenter MuiTableCell-stickyHeader"
+              scope="col"
+            >
+              Enabled
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="MuiTableBody-root"
+        />
+      </table>
+      <div
+        class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+      >
+        <div
+          class="MuiCardContent-root makeStyles-alignItemsAndJustifyContent-7"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root makeStyles-iconDef-8"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+            />
+          </svg>
+          <h2
+            class="MuiTypography-root MuiTypography-h5"
+          >
+            No users on the platform!
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
