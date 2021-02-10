@@ -2,9 +2,9 @@ import { pending, fulfilled, rejected } from '../../../helpers/promise';
 import reducer, { FETCH_USERS, SWITCH_ENABLED_USER, ADD_USER } from './userDuck';
 
 const TEST_USERS = [
-    { email: 'admin@test.com', role: ['ADMIN', 'USER'], enabled: true},
-    { email: 'user@test.com', role: ['USER'], enabled: true},
-    { email: 'disabled@test.com', role: ['USER'], enabled: false},
+    { email: 'admin@test.com', roles: ['ADMIN', 'USER'], enabled: true},
+    { email: 'user@test.com', roles: ['USER'], enabled: true},
+    { email: 'disabled@test.com', roles: ['USER'], enabled: false},
 ];
 
 const INITIAL_STATE = {
@@ -47,9 +47,9 @@ describe('User Reducer', () => {
     it('should enable user when sending the request for disabled user', () => {
         expect(reducer(REGULAR_STATE, {type: pending(SWITCH_ENABLED_USER), payload: {userEmail: 'disabled@test.com', enabled: true}})).toEqual({
             data: [
-                { email: 'admin@test.com', role: ['ADMIN', 'USER'], enabled: true},
-                { email: 'user@test.com', role: ['USER'], enabled: true},
-                { email: 'disabled@test.com', role: ['USER'], enabled: true},
+                { email: 'admin@test.com', roles: ['ADMIN', 'USER'], enabled: true},
+                { email: 'user@test.com', roles: ['USER'], enabled: true},
+                { email: 'disabled@test.com', roles: ['USER'], enabled: true},
             ],
             loading: false
         });
@@ -58,9 +58,9 @@ describe('User Reducer', () => {
     it('should undo action if request rejected for switching enabled user', () => {
         expect(reducer(REGULAR_STATE, {type: rejected(SWITCH_ENABLED_USER), payload: {userEmail: 'disabled@test.com', enabled: true}})).toEqual({
             data: [
-                { email: 'admin@test.com', role: ['ADMIN', 'USER'], enabled: true},
-                { email: 'user@test.com', role: ['USER'], enabled: true},
-                { email: 'disabled@test.com', role: ['USER'], enabled: false},
+                { email: 'admin@test.com', roles: ['ADMIN', 'USER'], enabled: true},
+                { email: 'user@test.com', roles: ['USER'], enabled: true},
+                { email: 'disabled@test.com', roles: ['USER'], enabled: false},
             ],
             loading: false
         });
