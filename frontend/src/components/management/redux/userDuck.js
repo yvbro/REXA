@@ -27,52 +27,52 @@ export const ADD_USER = '[User] ADD USER';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
-        case pending(FETCH_USERS):
-            return {
-                ...state,
-                data: [],
-                loading: true,
-            };
-        case fulfilled(FETCH_USERS):
-            return {
-                ...state,
-                data: action.payload.data,
-                loading: false,
-            };
-        case rejected(FETCH_USERS):
-            return {
-                ...state,
-                data: state.data,
-                loading: false,
-            };
-        case pending(SWITCH_ENABLED_USER):
-            return {
-                ...state,
-                data: setEnabledForUser(
-                    state.data,
-                    action.payload.userEmail,
-                    action.payload.enabled
-                ),
-                loading: false,
-            };
-        case rejected(SWITCH_ENABLED_USER):
-            return {
-                ...state,
-                data: setEnabledForUser(
-                    state.data,
-                    action.payload.userEmail,
-                    !action.payload.enabled
-                ),
-                loading: false,
-            };
-        case ADD_USER:
-            return {
-                ...state,
-                data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
-                loading: false,
-            };
-        default:
-            return state;
+    case pending(FETCH_USERS):
+        return {
+            ...state,
+            data: [],
+            loading: true,
+        };
+    case fulfilled(FETCH_USERS):
+        return {
+            ...state,
+            data: action.payload.data,
+            loading: false,
+        };
+    case rejected(FETCH_USERS):
+        return {
+            ...state,
+            data: state.data,
+            loading: false,
+        };
+    case pending(SWITCH_ENABLED_USER):
+        return {
+            ...state,
+            data: setEnabledForUser(
+                state.data,
+                action.payload.userEmail,
+                action.payload.enabled
+            ),
+            loading: false,
+        };
+    case rejected(SWITCH_ENABLED_USER):
+        return {
+            ...state,
+            data: setEnabledForUser(
+                state.data,
+                action.payload.userEmail,
+                !action.payload.enabled
+            ),
+            loading: false,
+        };
+    case ADD_USER:
+        return {
+            ...state,
+            data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
+            loading: false,
+        };
+    default:
+        return state;
     }
 }
 
@@ -91,7 +91,7 @@ export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
     });
 
     return axios
-        .post(`/private/management/users/switch`, param)
+        .post('/private/management/users/switch', param)
         .then(() => toast.info('Changes saved!'))
         .catch(() => {
             dispatch({
@@ -106,7 +106,7 @@ export const addUser = (email, password) => (dispatch) => {
     const param = { email: email, password: password };
 
     return axios
-        .post(`/private/management/users/add`, param)
+        .post('/private/management/users/add', param)
         .then(() => {
             dispatch({
                 type: ADD_USER,

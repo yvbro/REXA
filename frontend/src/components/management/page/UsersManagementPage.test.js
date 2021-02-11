@@ -1,9 +1,8 @@
 import React from 'react';
-import {render, cleanup} from '../../../helpers/test/test-utils';
+import {renderWithStore, cleanup} from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
-import * as ReactRedux from 'react-redux';
 
-import UsersManagementPage from "./UsersManagementPage";
+import UsersManagementPage from './UsersManagementPage';
 
 const TEST_USERS = [
     { email: 'admin@test.com', roles: ['ADMIN', 'USER'], enabled: true},
@@ -12,42 +11,31 @@ const TEST_USERS = [
 ];
 
 const REGULAR_STATE = {
-    data: TEST_USERS,
-    loading: false,
+    user: {
+        data: TEST_USERS,
+        loading: false,
+    }
 };
 
-afterEach(cleanup)
+describe('The UsersManagementPage component', () => {
+    afterEach(cleanup);
 
-test('should take a snapshot', () => {
-    const mockXXXFn = jest.fn();
-    const spyOnUseDispatch = jest
-      .spyOn(ReactRedux, 'useDispatch')
-      .mockReturnValue(mockXXXFn);
+    test('should take a snapshot', () => {
+        const { asFragment } = renderWithStore(<UsersManagementPage />, REGULAR_STATE);
 
-    const { asFragment } = render(<UsersManagementPage />);
+        expect(asFragment(<UsersManagementPage />)).toMatchSnapshot();
+    });
 
-    expect(asFragment(<UsersManagementPage />)).toMatchSnapshot();
-})
+    test('should display LoadingIndicator if loading', () => {
+        const { getByRole } = renderWithStore(<UsersManagementPage />, {user: {loading: true}});
 
-test('should display LoadingIndicator if loading', () => {
-    const mockXXXFn = jest.fn();
-    const spyOnUseDispatch = jest
-      .spyOn(ReactRedux, 'useDispatch')
-      .mockReturnValue(mockXXXFn);
+        expect(getByRole('progressbar')).toBeInTheDocument();
+    });
 
-    const { getByRole } = render(<UsersManagementPage />, {initialState: {user: {loading: true}}});
+    test('should display table if not loading', () => {
+        const { getByRole } = renderWithStore(<UsersManagementPage />, REGULAR_STATE);
 
-    expect(getByRole('progressbar')).toBeInTheDocument();
-})
-
-test('should display user table if not loading', () => {
-    const mockXXXFn = jest.fn();
-    const spyOnUseDispatch = jest
-      .spyOn(ReactRedux, 'useDispatch')
-      .mockReturnValue(mockXXXFn);
-
-    const { getByRole, getAllByRole } = render(<UsersManagementPage />, {initialState: {user: REGULAR_STATE}});
-
-    expect(getByRole('heading')).toHaveTextContent('User Management');
-    expect(getByRole('table')).toBeInTheDocument();
-})
+        expect(getByRole('heading')).toHaveTextContent('User Management');
+        expect(getByRole('table')).toBeInTheDocument();
+    });
+});

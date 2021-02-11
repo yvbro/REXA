@@ -1,45 +1,32 @@
-import React from 'react'
-import { render as rtlRender } from '@testing-library/react'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-// Import your own reducer
-import reducer from '../../containers/reducers'
+import React from 'react';
+import { render as rtlRender } from '@testing-library/react';
 
-function render(
-  ui,
-  {
-    initialState,
-    store = createStore(reducer, initialState),
-    ...renderOptions
-  } = {}
-) {
-  function Wrapper({ children }) {
-    return <Provider store={store}>{children}</Provider>
-  }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+export function makeTestStore(initialState = {}) {
+    const store = mockStore(initialState);
+    const origDispatch = store.dispatch;
+    store.dispatch = jest.fn(origDispatch);
+    const origGetState = store.getState;
+    store.getState = jest.fn(origGetState);
+    return store;
 }
 
-const thunk = ({ dispatch, getState }) => next => action => {
-    if (typeof action === 'function') {
-        return action(dispatch, getState)
-    }
-
-    return next(action)
+export function renderWithStore(ui, initialState = {}) {
+    const store = makeTestStore(initialState);
+    return rtlRender(<Provider store={store}>{ui}</Provider>);
 }
 
-const create = () => {
-    const store = {
-        getState: jest.fn(() => ({})),
-        dispatch: jest.fn()
-    }
-    const next = jest.fn()
-
-    const invoke = action => thunk(store)(next)(action)
-
-    return { store, next, invoke }
-}
+const render = (ui, { store, ...otherOpts }) => {
+    return rtlRender(<Provider store={store}>{ui}</Provider>, otherOpts);
+};
 
 // re-export everything
-export * from '@testing-library/react'
-// override render method
-export { render }
+export * from '@testing-library/react';
+// Keep our render instead
+export { render };
