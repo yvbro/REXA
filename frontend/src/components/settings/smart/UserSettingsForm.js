@@ -7,16 +7,19 @@ import PasswordRules from '../../common/PasswordRules';
 import { updateUserSettings } from '../api/apiSettings';
 import classes from './XnatSettingsForm.module.scss';
 import {
-    ERROR_INVALID_PASSWORD,
-    isPasswordInvalid,
+    isPasswordTooShort,
+    ERROR_PASSWORD_LENGTH,
+    passwordDoesNotContainACapitalLetter,
+    ERROR_PASSWORD_CAPITAL_LETTER,
+    passwordDoesNotContainANumber,
+    ERROR_PASSWORD_NUMBER,
+    ERROR_PASSWORD_NOT_MATCH
 } from '../../../helpers/constants';
-
-const ERROR_PASSWORD = 'The entered value does not match the password you entered.';
 
 const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
-        height: 400,
+        height: 450,
         borderBottomLeftRadius: '16px',
         borderBottomRightRadius: '16px',
     },
@@ -31,24 +34,45 @@ const UserSettingsForm = () => {
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [confirmedNewPassword, setConfirmedNewPassword] = useState('');
+    const [confirmationPassword, setConfirmationPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+    const [errorConfirmationPassword, setErrorConfirmationPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (newPassword !== confirmedNewPassword) {
-            setErrorPassword(ERROR_PASSWORD);
-        } else if (isPasswordInvalid(newPassword)) {
-            setErrorPassword(ERROR_INVALID_PASSWORD);
+        if (confirmationPassword !== newPassword) {
+            setErrorConfirmationPassword(ERROR_PASSWORD_NOT_MATCH);
         } else {
-            setErrorPassword('');
-            updateUserSettings(currentPassword, newPassword).then(() => {
+            updateUserSettings(currentPassword, newPassword, confirmationPassword).then(() => {
                 setCurrentPassword('');
                 setNewPassword('');
-                setConfirmedNewPassword('');
+                setConfirmationPassword('');
             });
         }
+    };
+
+    const onChangePassword = (event) => {
+        if (isPasswordTooShort(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_LENGTH);
+        } else if (passwordDoesNotContainACapitalLetter(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_CAPITAL_LETTER);
+        } else if (passwordDoesNotContainANumber(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_NUMBER);
+        } else {
+            setErrorPassword('');
+        }
+
+        setNewPassword(event.target.value);
+    };
+
+    const onChangeConfirmedPassword = (event) => {
+        if (event.target.value !== newPassword) {
+            setErrorConfirmationPassword('Password and confirmation does not match.');
+        } else {
+            setErrorConfirmationPassword('');
+        }
+        setConfirmationPassword(event.target.value);
     };
 
     return (
@@ -84,8 +108,10 @@ const UserSettingsForm = () => {
                     label="New password"
                     type="password"
                     variant="outlined"
+                    error={!!errorPassword}
+                    helperText={errorPassword}
                     value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
+                    onChange={onChangePassword}
                     className={style.input}
                     inputProps={{
                         form: {
@@ -94,16 +120,16 @@ const UserSettingsForm = () => {
                     }}
                 />
                 <TextField
-                    id="confirmedNewPassword"
-                    name="confirmedNewPassword"
+                    id="confirmationPassword"
+                    name="confirmationPassword"
                     label="Confirm new password"
                     type="password"
                     variant="outlined"
-                    value={confirmedNewPassword}
-                    error={!!errorPassword}
-                    onChange={(e) => setConfirmedNewPassword(e.target.value)}
+                    error={!!errorConfirmationPassword}
+                    helperText={errorConfirmationPassword}
+                    value={confirmationPassword}
+                    onChange={onChangeConfirmedPassword}
                     className={style.input}
-                    helperText={errorPassword}
                     inputProps={{
                         form: {
                             autoComplete: 'off',
@@ -115,7 +141,8 @@ const UserSettingsForm = () => {
                     variant="outlined"
                     color="primary"
                     disabled={
-                        !currentPassword || !newPassword || !confirmedNewPassword
+                        !currentPassword || !newPassword || !confirmationPassword ||
+                        errorPassword || errorConfirmationPassword
                     }
                     className={style.input}
                 >

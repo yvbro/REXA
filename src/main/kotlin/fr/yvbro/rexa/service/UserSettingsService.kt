@@ -35,8 +35,12 @@ class UserSettingsService(private val xnatRepository: UserSettingsRepository,
         val userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
         val encodedPassword = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).password
 
+        if (!userSettingsRequest.confirmationPassword.equals(userSettingsRequest.newPassword)) {
+            throw RexaBadRequestException("Password and confirmation does not match.")
+        }
+
         if (!passwordService.matches(userSettingsRequest.currentPassword, encodedPassword)) {
-            throw RexaBadRequestException("You entered a wrong password.")
+            throw RexaBadRequestException("The current password is not valid.")
         }
 
         passwordService.checkPasswordRules(userSettingsRequest.newPassword)

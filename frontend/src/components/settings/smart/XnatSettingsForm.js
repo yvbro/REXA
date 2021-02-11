@@ -16,7 +16,7 @@ const ERROR_HOST = 'Invalid host name (Must start by http(s))';
 const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
-        height: 400,
+        height: 450,
         borderBottomLeftRadius: '16px',
         borderBottomRightRadius: '16px',
     },

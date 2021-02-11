@@ -19,8 +19,12 @@ import PasswordRules from '../../common/PasswordRules';
 import { addUser } from '../redux/userDuck';
 import {
     regexEmail,
-    isPasswordInvalid,
-    ERROR_INVALID_PASSWORD,
+    isPasswordTooShort,
+    ERROR_PASSWORD_LENGTH,
+    passwordDoesNotContainACapitalLetter,
+    ERROR_PASSWORD_CAPITAL_LETTER,
+    passwordDoesNotContainANumber,
+    ERROR_PASSWORD_NUMBER,
 } from '../../../helpers/constants/index';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,8 +76,6 @@ const AddUserForm = (props) => {
             setErrorEmail('Email must be set.');
         } else if (!password) {
             setErrorPassword('Password must be set.');
-        } else if (isPasswordInvalid(password)) {
-            setErrorPassword(ERROR_INVALID_PASSWORD);
         } else {
             dispatch(addUser(email, password)).then(() => props.cancelAction());
         }
@@ -91,8 +93,16 @@ const AddUserForm = (props) => {
     };
 
     const onChangePassword = (event) => {
-        setPassword(event.target.value);
-        setErrorEmail('');
+        if (isPasswordTooShort(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_LENGTH);
+        } else if (passwordDoesNotContainACapitalLetter(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_CAPITAL_LETTER);
+        } else if (passwordDoesNotContainANumber(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_NUMBER);
+        } else {
+            setPassword(event.target.value);
+            setErrorPassword('');
+        }
     };
 
     return (
