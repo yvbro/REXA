@@ -3,13 +3,19 @@ import { cleanup, fireEvent, renderWithStore, render, makeTestStore } from '../.
 import '@testing-library/jest-dom/extend-expect';
 
 import UserListPage from './UserListPage';
-import { switchEnabledUser } from '../redux/userDuck';
+import { SWITCH_ENABLED_USER } from '../redux/userDuck';
+import { pending } from '../../../helpers/promise';
 
 const TEST_USERS = [
     { email: 'admin@test.com', roles: ['ADMIN', 'USER'], enabled: true},
     { email: 'user@test.com', roles: ['USER'], enabled: true},
     { email: 'disabled@test.com', roles: ['USER'], enabled: false},
 ];
+
+const TEST_ACTION = {
+    type: pending(SWITCH_ENABLED_USER),
+    payload: { userEmail: TEST_USERS[2].email, enabled: !TEST_USERS[2].enabled }
+};
 
 const REGULAR_STATE = {
     user: {
@@ -66,7 +72,6 @@ describe('The UserListPage component', () => {
 
     it('should dispatch action if click on checkbox', () => {
         const store = makeTestStore(REGULAR_STATE);
-        store.dispatch(switchEnabledUser(TEST_USERS[2].email, TEST_USERS[2].enabled));
 
         const { getAllByRole } = render(<UserListPage />, { store });
 
@@ -75,6 +80,6 @@ describe('The UserListPage component', () => {
 
         fireEvent.click(checkbox);
 
-        expect(store.dispatch).toHaveBeenCalled();
+        expect(store.getActions()).toStrictEqual([TEST_ACTION]);
     });
 });
