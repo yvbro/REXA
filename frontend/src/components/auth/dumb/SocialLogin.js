@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const GoogleIcon = () => {
+export const GoogleIcon = () => {
     return (
         <Icon classes={{ root: classes.iconRoot }}>
             <img className={classes.imageIcon} src={googleLogo} alt="Google" />

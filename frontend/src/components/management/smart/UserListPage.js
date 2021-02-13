@@ -9,15 +9,12 @@ import RexaDataTable from '../../common/RexaDataTable';
 import RexaModal from '../../common/RexaModal';
 import AddUserForm from '../smart/AddUserForm';
 import ChangePasswordForm from '../smart/ChangePasswordForm';
+import { GoogleIcon } from '../../auth/dumb/SocialLogin';
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 
 import classes from './UserListPage.module.scss';
 
 const DEFAULT_MODAL_PASSWORD_STATE = {open: false, userEmail: ''};
-
-const canEditPassword = user => {
-    return user.roles.includes('ADMIN') || user.authProvider === GOOGLE_AUTH_PROVIDER;
-};
 
 const UserListPage = () => {
     const dispatch = useDispatch();
@@ -53,19 +50,31 @@ const UserListPage = () => {
         );
     };
 
-    const toPassword = user => {
-        return (
+    const toEditComponent = user => {
+        let component = (
             <IconButton color="primary" aria-label="edit password" component="span" onClick={() => openModalForNewPassword(user.email)}> 
                 <EditIcon />
             </IconButton>
         );
+
+        if (user.roles.includes('ADMIN')) {
+            component = (
+                <IconButton color="primary" aria-label="edit password" component="span" disabled > 
+                    <EditIcon />
+                </IconButton>
+            );
+        } else if (user.authProvider === GOOGLE_AUTH_PROVIDER) {
+            component = <GoogleIcon />;
+        }
+
+        return component;
     };
 
     const data = [
         { name: 'Email', values: users.map((e) => e.email) },
         { name: 'Role', values: users.map((e) => e.roles.join(',')) },
         { name: 'Enabled', values: users.map((e) => toSwitch(e)) },
-        { name: 'Password', values: users.map((e) => canEditPassword(e) ? '' : toPassword(e)) },
+        { name: 'Edit', values: users.map((e) => toEditComponent(e)) },
     ];
 
     return (
