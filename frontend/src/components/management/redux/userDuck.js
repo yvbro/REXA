@@ -119,3 +119,17 @@ export const addUser = (email, password) => (dispatch) => {
             toast.error(errorMessage);
         });
 };
+
+
+export const updatePassword = async (userEmail, newPassword, confirmationPassword)  => {
+    const param = { email: userEmail, newPassword: newPassword, confirmationPassword: confirmationPassword};
+
+    try {
+        await axios
+            .post(`/private/management/users/edit`, param);
+        toast.info('Password edited!');
+    } catch (error) {
+        let errorMessage = _get(error, 'response.data.message', null);
+        toast.error(`Password not changed: ${errorMessage}`);
+    }
+};

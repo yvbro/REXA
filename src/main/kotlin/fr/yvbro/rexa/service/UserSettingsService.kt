@@ -32,20 +32,14 @@ class UserSettingsService(private val xnatRepository: UserSettingsRepository,
     }
 
     fun upsertUserSettings(userSettingsRequest: UserSettingsRequest) {
-        val userId = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id
+        val email = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).username
         val encodedPassword = (SecurityContextHolder.getContext().authentication.principal as UserPrincipal).password
 
-        if (!userSettingsRequest.confirmationPassword.equals(userSettingsRequest.newPassword)) {
-            throw RexaBadRequestException("Password and confirmation does not match.")
-        }
-
-        if (!passwordService.matches(userSettingsRequest.currentPassword, encodedPassword)) {
-            throw RexaBadRequestException("The current password is not valid.")
-        }
-
+        passwordService.checkConfirmationPassword(userSettingsRequest.newPassword, userSettingsRequest.confirmationPassword)
         passwordService.checkPasswordRules(userSettingsRequest.newPassword)
 
-        userId?.let { userRepository.editPassword(it, passwordService.encodePassword(userSettingsRequest.newPassword)) }
-    }
+        passwordService.checkCurrentPassword(userSettingsRequest.currentPassword, encodedPassword)
 
+        email?.let { userRepository.editPassword(it, passwordService.encodePassword(userSettingsRequest.newPassword)) }
+    }
 }

@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Switch } from '@material-ui/core';
+import { Button, Switch, IconButton,  } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import { switchEnabledUser } from '../redux/userDuck';
 import RexaDataTable from '../../common/RexaDataTable';
 import RexaModal from '../../common/RexaModal';
 import AddUserForm from '../smart/AddUserForm';
+import ChangePasswordForm from '../smart/ChangePasswordForm';
+import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 
 import classes from './UserListPage.module.scss';
+
+const DEFAULT_MODAL_PASSWORD_STATE = {open: false, userEmail: ''};
+
+const canEditPassword = user => {
+    return user.roles.includes('ADMIN') || user.authProvider === GOOGLE_AUTH_PROVIDER;
+};
 
 const UserListPage = () => {
     const dispatch = useDispatch();
 
-    const [openModal, setOpenModal] = useState(false);
+    const [openModalNewUser, setOpenModalNewUser] = useState(false);
+    const [openModalPassword, setOpenModalPassword] = useState(DEFAULT_MODAL_PASSWORD_STATE);
 
     const { users } = useSelector((state) => ({
         users: state.user.data,
@@ -22,10 +32,13 @@ const UserListPage = () => {
     const handleChange = (userEmail, enabled) =>
         dispatch(switchEnabledUser(userEmail, !enabled));
 
-    const openModalForNewUser = () => setOpenModal(true);
-    const closeModalForNewUser = () => setOpenModal(false);
+    const openModalForNewUser = () => setOpenModalNewUser(true);
+    const closeModalForNewUser = () => setOpenModalNewUser(false);
 
-    const toSwitch = (user) => {
+    const openModalForNewPassword = (userEmail) => setOpenModalPassword({open: true, userEmail: userEmail});
+    const closeModalForNewPassword = () => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE);
+
+    const toSwitch = user => {
         return (
             <Switch
                 checked={user.enabled}
@@ -40,10 +53,19 @@ const UserListPage = () => {
         );
     };
 
+    const toPassword = user => {
+        return (
+            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => openModalForNewPassword(user.email)}> 
+                <EditIcon />
+            </IconButton>
+        );
+    };
+
     const data = [
         { name: 'Email', values: users.map((e) => e.email) },
         { name: 'Role', values: users.map((e) => e.roles.join(',')) },
         { name: 'Enabled', values: users.map((e) => toSwitch(e)) },
+        { name: 'Password', values: users.map((e) => canEditPassword(e) ? '' : toPassword(e)) },
     ];
 
     return (
@@ -58,11 +80,19 @@ const UserListPage = () => {
                     Add user
                 </Button>
             </div>
-            <RexaModal open={openModal} closeModal={closeModalForNewUser}>
+            <RexaModal open={openModalNewUser} closeModal={closeModalForNewUser}>
                 <div>
                     <AddUserForm
                         users={users.map((e) => e.email)}
                         cancelAction={closeModalForNewUser}
+                    />
+                </div>
+            </RexaModal>
+            <RexaModal open={openModalPassword.open} closeModal={closeModalForNewPassword}>
+                <div>
+                    <ChangePasswordForm
+                        userEmail={openModalPassword.userEmail}
+                        cancelAction={closeModalForNewPassword}
                     />
                 </div>
             </RexaModal>
