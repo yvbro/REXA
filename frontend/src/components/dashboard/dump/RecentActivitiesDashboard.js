@@ -21,11 +21,7 @@ const toChip = (label, id, xnatHost) => {
     );
 };
 
-const RecentActivitiesDashboard = ({
-    recentActivities,
-    loading,
-    xnatHost,
-}) => {
+const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
     const data = [
         { name: 'Project', values: recentActivities.map((e) => e.project) },
         { name: 'Type', values: recentActivities.map((e) => e.typeDesc) },
@@ -50,6 +46,6 @@ RecentActivitiesDashboard.propTypes = {
     recentActivities: PropTypes.array,
     loading: PropTypes.bool,
     xnatHost: PropTypes.string,
-}
+};
 
 export default RecentActivitiesDashboard;

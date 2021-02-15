@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {makeStyles} from '@material-ui/core/styles';
-import {Card} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Card } from '@material-ui/core';
 
 import ScanTypePieChart from '../../chart/ScanTypePieChart';
-import NoData from "../../common/NoData";
-import {extractScanTypes} from '../../../helpers/xnat';
+import NoData from '../../common/NoData';
+import { extractScanTypes } from '../../../helpers/xnat';
 
 const useStyles = makeStyles({
     cardInfo: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     },
 });
 
-const ScanTypesDetails = ({scans}) => {
+const ScanTypesDetails = ({ scans }) => {
     const classes = useStyles();
 
     let scansByType = [];
@@ -26,9 +26,9 @@ const ScanTypesDetails = ({scans}) => {
             <h3>Scan types</h3>
             <Card className={classes.cardInfo}>
                 {scansByType && scansByType.length > 0 ? (
-                    <ScanTypePieChart scans={scansByType}/>
+                    <ScanTypePieChart scans={scansByType} />
                 ) : (
-                    <NoData label='No scan found'/>
+                    <NoData label="No scan found" />
                 )}
             </Card>
         </>

@@ -31,6 +31,7 @@ class UserService(private val userRepository: UserRepository,
 
     fun addUser(email: String?, password: String?) {
         if (email != null && password != null) {
+            passwordService.checkPasswordRules(password)
             val user: User
             try {
                 user = userRepository.save(email, passwordService.encodePassword(password), AuthProvider.Local.toString(), false)

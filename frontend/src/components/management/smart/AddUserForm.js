@@ -14,8 +14,18 @@ import {
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import PasswordRules from '../../common/PasswordRules';
+
 import { addUser } from '../redux/userDuck';
-import { regexEmail } from '../../../helpers/constants/index';
+import {
+    regexEmail,
+    isPasswordTooShort,
+    ERROR_PASSWORD_LENGTH,
+    passwordDoesNotContainACapitalLetter,
+    ERROR_PASSWORD_CAPITAL_LETTER,
+    passwordDoesNotContainANumber,
+    ERROR_PASSWORD_NUMBER,
+} from '../../../helpers/constants/index';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
         width: 100,
     },
     avatar: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
+        width: theme.spacing(8),
+        height: theme.spacing(8),
     },
     iconDef: {
         fontSize: 50,
@@ -82,16 +92,30 @@ const AddUserForm = (props) => {
         }
     };
 
+    const onChangePassword = (event) => {
+        if (isPasswordTooShort(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_LENGTH);
+        } else if (passwordDoesNotContainACapitalLetter(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_CAPITAL_LETTER);
+        } else if (passwordDoesNotContainANumber(event.target.value)) {
+            setErrorPassword(ERROR_PASSWORD_NUMBER);
+        } else {
+            setPassword(event.target.value);
+            setErrorPassword('');
+        }
+    };
+
     return (
         <Card className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                        <AccountCircleIcon className={classes.iconDef}/>
+                        <AccountCircleIcon className={classes.iconDef} />
                     </Avatar>
                 }
                 title="Add New User"
-                titleTypographyProps={{variant:'h3', color: 'primary'}}
+                titleTypographyProps={{ variant: 'button', color: 'primary' }}
+                subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
                 <TextField
@@ -110,7 +134,7 @@ const AddUserForm = (props) => {
                     variant="outlined"
                     error={!!errorPassword}
                     helperText={errorPassword}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={onChangePassword}
                 />
             </CardContent>
             <CardActions>
@@ -118,7 +142,7 @@ const AddUserForm = (props) => {
                     size="small"
                     onClick={handleSubmit}
                     color="primary"
-                    disabled={errorEmail ? true : false}
+                    disabled={errorEmail || errorPassword}
                     className={classes.button}
                 >
                     Add

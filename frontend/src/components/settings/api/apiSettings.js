@@ -2,13 +2,13 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-export const updateUserSettings = (currentPassword, newPassword) => {
+export const updateUserSettings = (currentPassword, newPassword, confirmationPassword) => {
     return axios
-        .post('/private/user/settings', { currentPassword, newPassword })
+        .post('/private/user/settings', { currentPassword, newPassword, confirmationPassword })
         .then(() => {
             toast.info('New password saved!');
         })
-        .catch( error => {
+        .catch((error) => {
             let errorMessage = error?.response?.data?.message;
             if (!errorMessage) {
                 errorMessage = "toast.error('Failed to save your new password";

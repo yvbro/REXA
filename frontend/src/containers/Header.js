@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import SideNav, {NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav';
-import {Link, useHistory, useLocation} from 'react-router-dom';
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import ClickOutside from 'react-click-outside';
 
 import style from '../components/common/common.module.scss';
-import rexaLogo from "../assets/rexa-logo-svg.png";
+import rexaLogo from '../assets/rexa-logo-svg.png';
 
 const Header = () => {
     const [expanded, setExpanded] = useState(false);
@@ -14,9 +14,9 @@ const Header = () => {
     const history = useHistory();
     const location = useLocation();
 
-    const {isAdmin, authenticated} = useSelector((state) => ({
+    const { isAdmin, authenticated } = useSelector((state) => ({
         isAdmin: state.auth.user.isAdmin,
-        authenticated: state.auth.token !== null
+        authenticated: state.auth.token !== null,
     }));
 
     return (
@@ -36,7 +36,7 @@ const Header = () => {
                             }
                         }}
                     >
-                        <SideNav.Toggle/>
+                        <SideNav.Toggle />
                         <SideNav.Nav>
                             <NavItem
                                 eventKey="rexa/dashboard"
@@ -47,7 +47,7 @@ const Header = () => {
                                 <NavIcon>
                                     <i
                                         className="fa fa-fw fa-home"
-                                        style={{fontSize: '1.75em'}}
+                                        style={{ fontSize: '1.75em' }}
                                     />
                                 </NavIcon>
                                 <NavText>
@@ -64,7 +64,7 @@ const Header = () => {
                                 <NavIcon>
                                     <i
                                         className="fa fa-vcard"
-                                        style={{fontSize: '1.75em'}}
+                                        style={{ fontSize: '1.75em' }}
                                     />
                                 </NavIcon>
                                 <NavText>
@@ -82,7 +82,7 @@ const Header = () => {
                                     <i
                                         className="fa fa-cogs"
                                         aria-hidden="true"
-                                        style={{fontSize: '1.75em'}}
+                                        style={{ fontSize: '1.75em' }}
                                     />
                                 </NavIcon>
                                 <NavText>
@@ -90,36 +90,44 @@ const Header = () => {
                                 </NavText>
                             </NavItem>
 
-                            {isAdmin &&
-                            <NavItem
-                                eventKey="rexa/management"
-                                active={location.pathname.startsWith(
-                                    '/rexa/management'
-                                )}
-                            >
-                                <NavIcon>
-                                    <i
-                                        className="fa fa-users"
-                                        aria-hidden="true"
-                                        style={{fontSize: '1.75em'}}
-                                    />
-                                </NavIcon>
-                                <NavText>
-                                    <Link to="rexa/management">Users Management</Link>
-                                </NavText>
-                            </NavItem>
-                            }
+                            {isAdmin && (
+                                <NavItem
+                                    eventKey="rexa/management"
+                                    active={location.pathname.startsWith(
+                                        '/rexa/management'
+                                    )}
+                                >
+                                    <NavIcon>
+                                        <i
+                                            className="fa fa-users"
+                                            aria-hidden="true"
+                                            style={{ fontSize: '1.75em' }}
+                                        />
+                                    </NavIcon>
+                                    <NavText>
+                                        <Link to="rexa/management">
+                                            Users Management
+                                        </Link>
+                                    </NavText>
+                                </NavItem>
+                            )}
 
                             <NavItem eventKey="rexa/logout">
                                 <NavIcon>
                                     <i
                                         className="fa fa-sign-out"
-                                        style={{fontSize: '1.75em'}}
+                                        style={{ fontSize: '1.75em' }}
                                     />
                                 </NavIcon>
                                 <NavText>Logout</NavText>
                             </NavItem>
-                            <img className='logoBottom' src={rexaLogo} alt="ReXA Logo" width="70" height="75"/>
+                            <img
+                                className="logoBottom"
+                                src={rexaLogo}
+                                alt="ReXA Logo"
+                                width="70"
+                                height="75"
+                            />
                         </SideNav.Nav>
                     </SideNav>
                 </ClickOutside>

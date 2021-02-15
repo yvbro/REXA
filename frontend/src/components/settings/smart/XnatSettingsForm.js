@@ -10,13 +10,13 @@ import { updateCurrentUserXnatInfos } from '../../auth/redux/authDuck';
 import classes from './XnatSettingsForm.module.scss';
 
 const REGEX_PROTOCOL = /^((http|https):\/\/)/;
-const ERROR_PASSWORD = "Password is required.";
+const ERROR_PASSWORD = 'Password is required.';
 const ERROR_HOST = 'Invalid host name (Must start by http(s))';
 
 const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
-        height: 400,
+        height: 450,
         borderBottomLeftRadius: '16px',
         borderBottomRightRadius: '16px',
     },
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const XnatSettingsForm = () => {
     const style = useStyles();
     const dispatch = useDispatch();
-    
+
     const { xnatUsername, xnatHost } = useSelector((state) => ({
         xnatUsername: state.auth.user.xnatUser,
         xnatHost: state.auth.user.xnatHost,
@@ -54,9 +54,7 @@ const XnatSettingsForm = () => {
                 !host ? xnatHost : host,
                 password
             ).then(() => {
-                dispatch(
-                    updateCurrentUserXnatInfos(username, host)
-                );
+                dispatch(updateCurrentUserXnatInfos(username, host));
                 dispatch(resetDataDashboard());
                 dispatch(resetDataProjects());
             });
@@ -72,7 +70,7 @@ const XnatSettingsForm = () => {
     };
 
     const onChangeHost = (event) => {
-        if(!event.target.value.match(REGEX_PROTOCOL)) {
+        if (!event.target.value.match(REGEX_PROTOCOL)) {
             setErrorHost(ERROR_HOST);
         } else {
             setErrorHost('');
@@ -83,7 +81,9 @@ const XnatSettingsForm = () => {
     return (
         <Card className={style.card}>
             <div className={classes.title}>
-                <Typography variant="button">Edit your settings to access XNAT</Typography>
+                <Typography variant="button">
+                    Edit your settings to access XNAT
+                </Typography>
             </div>
             <form
                 className={classes.formFlex}
@@ -141,9 +141,7 @@ const XnatSettingsForm = () => {
                     type="submit"
                     variant="outlined"
                     color="primary"
-                    disabled={
-                        !host || !username || !password
-                    }
+                    disabled={!host || !username || !password}
                     className={style.input}
                 >
                     Save

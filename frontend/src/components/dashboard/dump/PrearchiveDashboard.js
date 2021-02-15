@@ -26,6 +26,6 @@ export const PrearchiveDashboard = ({ preArchives, loading }) => {
 PrearchiveDashboard.propTypes = {
     preArchives: PropTypes.array,
     loading: PropTypes.bool,
-}
+};
 
 export default PrearchiveDashboard;

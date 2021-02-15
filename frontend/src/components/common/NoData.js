@@ -41,6 +41,6 @@ const NoData = ({ label, noRadius }) => {
 NoData.propTypes = {
     label: PropTypes.string,
     noRadius: PropTypes.bool,
-}
+};
 
 export default NoData;

@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import ProjectsDropDown from '../smart/ProjectsDropDown';
 import ProjectDetails from '../dumb/ProjectDetails';
-import classes from '../../common/common.module.scss'; 
+import classes from '../../common/common.module.scss';
 
 export const ProjectPage = () => {
     const location = useLocation();

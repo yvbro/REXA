@@ -11,8 +11,7 @@ import { fetchRecentActivities, fetchPreAchives } from '../redux/dashboardDuck';
 import { fetchProjects } from '../../project/redux/projectDuck';
 import { toast } from 'react-toastify';
 import LoadingIndicator from '../../common/LoadingIndicator';
-import classes from '../../common/common.module.scss'; 
-
+import classes from '../../common/common.module.scss';
 
 const DashboardPage = () => {
     const dispatch = useDispatch();

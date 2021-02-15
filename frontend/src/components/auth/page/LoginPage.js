@@ -11,7 +11,7 @@ import SocialLogin from '../dumb/SocialLogin';
 import classes from '../dumb/auth.module.scss';
 
 import { regexEmail } from '../../../helpers/constants/index';
-import rexaLogo from "../../../assets/rexa-logo-svg.png";
+import rexaLogo from '../../../assets/rexa-logo-svg.png';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -29,7 +29,7 @@ const LoginPage = () => {
     const style = useStyles();
 
     const { authenticated } = useSelector((state) => ({
-        authenticated: state.auth.token !== null
+        authenticated: state.auth.token !== null,
     }));
 
     const [email, setEmail] = useState('');
@@ -55,7 +55,9 @@ const LoginPage = () => {
     };
 
     if (location.state?.error) {
-        toast.error('This account is not allowed to sign in or the user has been disabled.');
+        toast.error(
+            'This account is not allowed to sign in or the user has been disabled.'
+        );
         location.state.error = null;
     }
 
@@ -64,7 +66,7 @@ const LoginPage = () => {
         if (location?.state?.from) {
             redirectPath = location.state.from;
         }
-        return <Redirect to={redirectPath} />
+        return <Redirect to={redirectPath} />;
     }
 
     return (
@@ -79,7 +81,11 @@ const LoginPage = () => {
             <Grid item xs={3}>
                 <Card className={style.card}>
                     <div className={classes.centered}>
-                        <img className={classes.imageLogo} src={rexaLogo} alt="ReXA Logo"/>
+                        <img
+                            className={classes.imageLogo}
+                            src={rexaLogo}
+                            alt="ReXA Logo"
+                        />
                     </div>
                     <form
                         className={classes.centered}
