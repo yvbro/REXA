@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Switch, IconButton,  } from '@material-ui/core';
+import { Button, Switch, IconButton, } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { switchEnabledUser } from '../redux/userDuck';
@@ -89,7 +89,10 @@ const UserListPage = () => {
                     Add user
                 </Button>
             </div>
-            <RexaModal open={openModalNewUser} closeModal={closeModalForNewUser}>
+            <RexaModal
+                open={openModalNewUser}
+                closeModal={closeModalForNewUser}
+                title='addUserModal'>
                 <div>
                     <AddUserForm
                         users={users.map((e) => e.email)}
@@ -97,7 +100,10 @@ const UserListPage = () => {
                     />
                 </div>
             </RexaModal>
-            <RexaModal open={openModalPassword.open} closeModal={closeModalForNewPassword}>
+            <RexaModal 
+                open={openModalPassword.open} 
+                closeModal={closeModalForNewPassword}
+                title="editPasswordModal">
                 <div>
                     <ChangePasswordForm
                         userEmail={openModalPassword.userEmail}
