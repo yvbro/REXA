@@ -121,12 +121,12 @@ export const addUser = (email, password) => (dispatch) => {
 };
 
 
-export const updatePassword = async (userEmail, newPassword, confirmationPassword)  => {
+export const updatePassword = async (userEmail, newPassword, confirmationPassword) => {
     const param = { email: userEmail, newPassword: newPassword, confirmationPassword: confirmationPassword};
 
     try {
         await axios
-            .post(`/private/management/users/edit`, param);
+            .post('/private/management/users/edit', param);
         toast.info('Password edited!');
     } catch (error) {
         let errorMessage = _get(error, 'response.data.message', null);

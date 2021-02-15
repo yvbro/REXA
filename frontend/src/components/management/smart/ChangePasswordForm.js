@@ -72,10 +72,7 @@ const ChangePasswordForm = (props) => {
         if (confirmationPassword !== newPassword) {
             setErrorConfirmationPassword(ERROR_PASSWORD_NOT_MATCH);
         } else {
-            updatePassword(props.userEmail, newPassword, confirmationPassword).then(() => {
-                setNewPassword('');
-                setConfirmationPassword('');
-            });
+            updatePassword(props.userEmail, newPassword, confirmationPassword).then(() => props.closeAction());
         }
     };
 
@@ -118,8 +115,7 @@ const ChangePasswordForm = (props) => {
                 <TextField
                     className={classes.text}
                     id="newPassword"
-                    name="newPassword"
-                    label="New password"
+                    label="newPassword"
                     type="password"
                     variant="outlined"
                     required
@@ -131,12 +127,12 @@ const ChangePasswordForm = (props) => {
                         form: {
                             autoComplete: 'off',
                         },
+                        'data-testid': 'newPassword'
                     }}
                 />
                 <TextField
                     id="confirmationPassword"
-                    name="confirmationPassword"
-                    label="Confirm new password"
+                    label="confirmationPassword"
                     type="password"
                     variant="outlined"
                     required
@@ -148,6 +144,7 @@ const ChangePasswordForm = (props) => {
                         form: {
                             autoComplete: 'off',
                         },
+                        'data-testid': 'confirmationPassword'
                     }}
                 />
             </CardContent>
@@ -165,7 +162,7 @@ const ChangePasswordForm = (props) => {
                 </Button>
                 <Button
                     size="small"
-                    onClick={props.cancelAction}
+                    onClick={props.closeAction}
                     color="secondary"
                     className={classes.button}
                 >
@@ -178,7 +175,7 @@ const ChangePasswordForm = (props) => {
 
 ChangePasswordForm.propTypes = {
     userEmail: PropTypes.string,
-    cancelAction: PropTypes.func.isRequired,
+    closeAction: PropTypes.func.isRequired,
 };
 
 export default ChangePasswordForm;

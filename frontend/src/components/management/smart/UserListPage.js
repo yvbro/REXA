@@ -107,7 +107,7 @@ const UserListPage = () => {
                 <div>
                     <ChangePasswordForm
                         userEmail={openModalPassword.userEmail}
-                        cancelAction={closeModalForNewPassword}
+                        closeAction={closeModalForNewPassword}
                     />
                 </div>
             </RexaModal>
