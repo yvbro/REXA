@@ -28,14 +28,6 @@ describe('The ChangePasswordForm component', () => {
         expect(asFragment(<ChangePasswordForm closeAction={CLOSE_ACTION}/>)).toMatchSnapshot();
     });
 
-    it('should contain two buttons with save and cancel', () => {
-        const { getAllByRole, getByRole } = renderWithStore(<ChangePasswordForm closeAction={CLOSE_ACTION}/>, {});
-
-        expect(getAllByRole('button')).toHaveLength(2);
-        expect(getByRole('button', {name: 'Save'})).toBeInTheDocument();
-        expect(getByRole('button', {name: 'Cancel'})).toBeInTheDocument();
-    });
-
     it('should display the password rules', () => {
         const { getByTestId } = renderWithStore(<ChangePasswordForm closeAction={CLOSE_ACTION}/>, {});
 

@@ -15,6 +15,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import PasswordRules from '../../common/PasswordRules';
+import PasswordField from '../../common/PasswordField';
 
 import { addUser } from '../redux/userDuck';
 import {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
         paddingTop: 20,
         width: 500,
-        height: 350,
+        height: 400,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -85,11 +86,11 @@ const AddUserForm = (props) => {
         if (props.users.includes(event.target.value)) {
             setErrorEmail('Email already used');
         } else if (event.target.value.match(regexEmail)) {
-            setEmail(event.target.value);
             setErrorEmail('');
         } else {
             setErrorEmail('Email invalid');
         }
+        setEmail(event.target.value);
     };
 
     const onChangePassword = (event) => {
@@ -100,9 +101,9 @@ const AddUserForm = (props) => {
         } else if (passwordDoesNotContainANumber(event.target.value)) {
             setErrorPassword(ERROR_PASSWORD_NUMBER);
         } else {
-            setPassword(event.target.value);
             setErrorPassword('');
         }
+        setPassword(event.target.value);
     };
 
     return (
@@ -114,7 +115,7 @@ const AddUserForm = (props) => {
                     </Avatar>
                 }
                 title="Add New User"
-                titleTypographyProps={{ variant: 'button', color: 'primary' }}
+                titleTypographyProps={{ variant: 'h6', color: 'primary' }}
                 subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
@@ -123,17 +124,15 @@ const AddUserForm = (props) => {
                     required
                     label="User email"
                     variant="outlined"
+                    value={email}
                     error={!!errorEmail}
                     helperText={errorEmail}
                     onChange={onChangeEmail}
                 />
-                <TextField
-                    required
+                <PasswordField 
+                    value={password}
                     label="Password"
-                    type="password"
-                    variant="outlined"
-                    error={!!errorPassword}
-                    helperText={errorPassword}
+                    error={errorPassword}
                     onChange={onChangePassword}
                 />
             </CardContent>

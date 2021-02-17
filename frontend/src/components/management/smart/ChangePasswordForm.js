@@ -7,13 +7,13 @@ import {
     CardContent,
     CardActions,
     Button,
-    TextField,
     makeStyles,
-    Avatar
+    Avatar,
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
 import PasswordRules from '../../common/PasswordRules';
+import PasswordField from '../../common/PasswordField';
 
 import { updatePassword } from '../redux/userDuck';
 import {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
         paddingTop: 20,
         width: 500,
-        height: 350,
+        height: 400,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -107,45 +107,26 @@ const ChangePasswordForm = (props) => {
                         <EditIcon className={classes.iconDef} />
                     </Avatar>
                 }
-                title="Edit User password"
-                titleTypographyProps={{ variant: 'button', color: 'primary' }}
+                title={`Edit password for ${props.userEmail}`}
+                titleTypographyProps={{ variant: 'h6', color: 'primary' }}
                 subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
-                <TextField
-                    className={classes.text}
-                    id="newPassword"
-                    label="newPassword"
-                    type="password"
-                    variant="outlined"
-                    required
-                    error={!!errorPassword}
-                    helperText={errorPassword}
+                <PasswordField 
                     value={newPassword}
+                    label="New password"
+                    error={errorPassword}
                     onChange={onChangePassword}
-                    inputProps={{
-                        form: {
-                            autoComplete: 'off',
-                        },
-                        'data-testid': 'newPassword'
-                    }}
+                    testId={'newPassword'}
+                    className={classes.text}
                 />
-                <TextField
-                    id="confirmationPassword"
-                    label="confirmationPassword"
-                    type="password"
-                    variant="outlined"
-                    required
-                    error={!!errorConfirmationPassword}
-                    helperText={errorConfirmationPassword}
+                <PasswordField 
                     value={confirmationPassword}
+                    label="Confirm new password"
+                    error={errorConfirmationPassword}
                     onChange={onChangeConfirmedPassword}
-                    inputProps={{
-                        form: {
-                            autoComplete: 'off',
-                        },
-                        'data-testid': 'confirmationPassword'
-                    }}
+                    testId={'confirmationPassword'}
+                    className={classes.text}
                 />
             </CardContent>
             <CardActions>

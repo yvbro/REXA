@@ -29,12 +29,6 @@ const UserListPage = () => {
     const handleChange = (userEmail, enabled) =>
         dispatch(switchEnabledUser(userEmail, !enabled));
 
-    const openModalForNewUser = () => setOpenModalNewUser(true);
-    const closeModalForNewUser = () => setOpenModalNewUser(false);
-
-    const openModalForNewPassword = (userEmail) => setOpenModalPassword({open: true, userEmail: userEmail});
-    const closeModalForNewPassword = () => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE);
-
     const toSwitch = user => {
         return (
             <Switch
@@ -52,7 +46,7 @@ const UserListPage = () => {
 
     const toEditComponent = user => {
         let component = (
-            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => openModalForNewPassword(user.email)}> 
+            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => setOpenModalPassword({open: true, userEmail: user.email})}> 
                 <EditIcon />
             </IconButton>
         );
@@ -84,30 +78,30 @@ const UserListPage = () => {
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={openModalForNewUser}
+                    onClick={() => setOpenModalNewUser(true)}
                 >
                     Add user
                 </Button>
             </div>
             <RexaModal
                 open={openModalNewUser}
-                closeModal={closeModalForNewUser}
+                closeModal={() => setOpenModalNewUser(false)}
                 title='addUserModal'>
                 <div>
                     <AddUserForm
                         users={users.map((e) => e.email)}
-                        cancelAction={closeModalForNewUser}
+                        cancelAction={() => setOpenModalNewUser(false)}
                     />
                 </div>
             </RexaModal>
             <RexaModal 
                 open={openModalPassword.open} 
-                closeModal={closeModalForNewPassword}
+                closeModal={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
                 title="editPasswordModal">
                 <div>
                     <ChangePasswordForm
                         userEmail={openModalPassword.userEmail}
-                        closeAction={closeModalForNewPassword}
+                        closeAction={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
                     />
                 </div>
             </RexaModal>
