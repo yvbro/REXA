@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
-import PasswordRules from '../../common/PasswordRules';
-import PasswordField from '../../common/PasswordField';
+import PasswordRules from '../../common/password/PasswordRules';
+import PasswordField from '../../common/password/PasswordField';
 
 import { updatePassword } from '../redux/userDuck';
 import {

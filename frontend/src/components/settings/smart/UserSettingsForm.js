@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { Card, Button, makeStyles, Typography } from '@material-ui/core';
 
-import PasswordRules from '../../common/PasswordRules';
-import PasswordField from '../../common/PasswordField';
+import PasswordRules from '../../common/password/PasswordRules';
+import PasswordField from '../../common/password/PasswordField';
 
 import { updateUserSettings } from '../api/apiSettings';
 import classes from './XnatSettingsForm.module.scss';

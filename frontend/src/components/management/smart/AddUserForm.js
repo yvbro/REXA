@@ -14,8 +14,8 @@ import {
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import PasswordRules from '../../common/PasswordRules';
-import PasswordField from '../../common/PasswordField';
+import PasswordRules from '../../common/password/PasswordRules';
+import PasswordField from '../../common/password/PasswordField';
 
 import { addUser } from '../redux/userDuck';
 import {
