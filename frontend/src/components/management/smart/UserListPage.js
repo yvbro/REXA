@@ -90,7 +90,7 @@ const UserListPage = () => {
                 <div>
                     <AddUserForm
                         users={users.map((e) => e.email)}
-                        cancelAction={() => setOpenModalNewUser(false)}
+                        closeAction={() => setOpenModalNewUser(false)}
                     />
                 </div>
             </RexaModal>

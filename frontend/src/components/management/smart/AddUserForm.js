@@ -78,7 +78,7 @@ const AddUserForm = (props) => {
         } else if (!password) {
             setErrorPassword('Password must be set.');
         } else {
-            dispatch(addUser(email, password)).then(() => props.cancelAction());
+            dispatch(addUser(email, password)).then(() => props.closeAction());
         }
     };
 
@@ -128,12 +128,16 @@ const AddUserForm = (props) => {
                     error={!!errorEmail}
                     helperText={errorEmail}
                     onChange={onChangeEmail}
+                    inputProps={
+                        {'data-testid': 'email'}
+                    }
                 />
                 <PasswordField 
                     value={password}
                     label="Password"
                     error={errorPassword}
                     onChange={onChangePassword}
+                    testId='password'
                 />
             </CardContent>
             <CardActions>
@@ -148,7 +152,7 @@ const AddUserForm = (props) => {
                 </Button>
                 <Button
                     size="small"
-                    onClick={props.cancelAction}
+                    onClick={props.closeAction}
                     color="secondary"
                     className={classes.button}
                 >
@@ -161,7 +165,7 @@ const AddUserForm = (props) => {
 
 AddUserForm.propTypes = {
     users: PropTypes.array.isRequired,
-    cancelAction: PropTypes.func.isRequired,
+    closeAction: PropTypes.func.isRequired,
 };
 
 export default AddUserForm;
