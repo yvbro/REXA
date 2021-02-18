@@ -39,6 +39,7 @@ const PasswordField = (props) => {
                             aria-label="toggle password visibility"
                             onClick={() => setShowPassword(!showPassword)}
                             onMouseDown={() => setShowPassword(!showPassword)}
+                            data-testid="visibilityButton"
                         >
                             {showPassword ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
