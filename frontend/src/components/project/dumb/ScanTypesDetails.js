@@ -8,9 +8,11 @@ import ScanTypePieChart from '../../chart/ScanTypePieChart';
 import NoData from '../../common/NoData';
 import { extractScanTypes } from '../../../helpers/xnat';
 
+import { borderRadius } from '../../../helpers/constants/variables.scss';
+
 const useStyles = makeStyles({
     cardInfo: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
     },
 });
 

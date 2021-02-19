@@ -28,6 +28,8 @@ import {
     ERROR_PASSWORD_NUMBER,
 } from '../../../helpers/constants/index';
 
+import { borderRadius } from '../../../helpers/constants/variables.scss';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        borderRadius: '16px',
+        borderRadius: borderRadius,
     },
     text: {
         paddingBottom: 10,

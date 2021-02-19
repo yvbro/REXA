@@ -9,9 +9,11 @@ import MoodBadIcon from '@material-ui/icons/MoodBad';
 import { getXnatUri } from '../../../helpers/xnat';
 import classes from './project.module.scss';
 
+import { borderRadius } from '../../../helpers/constants/variables.scss';
+
 const useStyles = makeStyles(() => ({
     cardInfo: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
         height: '350px',
     },
 }));

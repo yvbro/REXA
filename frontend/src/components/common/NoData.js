@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import grey from '@material-ui/core/colors/grey';
+
+import { themeColor } from '../../helpers/constants/variables.scss';
 
 const useStyles = makeStyles(() => ({
     cardInfoWithRadius: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        color: grey[500],
+        color: themeColor,
     },
     iconDef: {
         fontSize: 80,

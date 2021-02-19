@@ -11,13 +11,14 @@ import SocialLogin from '../dumb/SocialLogin';
 import classes from '../dumb/auth.module.scss';
 
 import { regexEmail } from '../../../helpers/constants/index';
+import { borderRadius } from '../../../helpers/constants/variables.scss';
 import rexaLogo from '../../../assets/rexa-logo-svg.png';
 
 const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
         height: 500,
-        borderRadius: '16px',
+        borderRadius: borderRadius,
     },
     input: {
         margin: theme.spacing(1),

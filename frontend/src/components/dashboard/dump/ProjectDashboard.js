@@ -7,34 +7,26 @@ import {
     Avatar,
     ListItemText,
     ListItem,
-    Card,
     Chip,
-    makeStyles,
+    makeStyles
 } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import WorkIcon from '@material-ui/icons/Work';
 import { Link } from 'react-router-dom';
-import grey from '@material-ui/core/colors/grey';
 
 import LoadingIndicator from '../../common/LoadingIndicator';
+import RexaCard from '../../common/RexaCard';
+
+import { themeColor } from '../../../helpers/constants/variables.scss';
+import classes from './dashboard.module.scss';
 
 const useStyles = makeStyles(() => ({
-    cardInfo: {
-        borderRadius: '16px',
-    },
-    alignItemsAndJustifyContent: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        color: grey[500],
-    },
-    iconDef: {
-        fontSize: 80,
+    avatar: {
+        backgroundColor: themeColor,
     },
 }));
 
 const ProjectDashboard = ({ projects, loading }) => {
-    const classes = useStyles();
+    const style = useStyles();
 
     if (loading) {
         return <LoadingIndicator />;
@@ -43,39 +35,36 @@ const ProjectDashboard = ({ projects, loading }) => {
     return (
         <>
             {projects.length > 0 && (
-                <>
-                    <h3>List of projects</h3>
-                    <Card className={classes.cardInfo}>
-                        <List>
-                            {projects.map((project, index) => (
-                                <ListItem key={`dashboard_${index}`}>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <AccountCircleIcon />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText>
-                                        <Link
-                                            to={{
-                                                pathname: '/rexa/project',
-                                                project: project.id,
-                                            }}
-                                        >
-                                            <Chip
-                                                label={project.name}
-                                                clickable
-                                                color="primary"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                variant="outlined"
-                                            />
-                                        </Link>
-                                    </ListItemText>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Card>
-                </>
+                <RexaCard title='Projects' className={classes.tableCard} classNameContent={classes.tableCardContent}>
+                    <List className={classes.listProjects}>
+                        {projects.map((project, index) => (
+                            <ListItem key={`dashboard_${index}`}>
+                                <ListItemAvatar>
+                                    <Avatar className={style.avatar}>
+                                        <WorkIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText>
+                                    <Link
+                                        to={{
+                                            pathname: '/rexa/project',
+                                            project: project.id,
+                                        }}
+                                    >
+                                        <Chip
+                                            label={project.name}
+                                            clickable
+                                            color="primary"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            variant="outlined"
+                                        />
+                                    </Link>
+                                </ListItemText>
+                            </ListItem>
+                        ))}
+                    </List>
+                </RexaCard>
             )}
         </>
     );

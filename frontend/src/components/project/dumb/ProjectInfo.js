@@ -13,6 +13,7 @@ import {
     ListItemText,
     ListItem,
     Card,
+    Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -26,7 +27,7 @@ const ProjectInfo = ({ project }) => {
 
     return (
         <>
-            <h3>Project Information</h3>
+            <Typography variant="h5" gutterBottom>Project Information</Typography>
             <Card className={classes.cardInfo}>
                 <List>
                     <ListItem>

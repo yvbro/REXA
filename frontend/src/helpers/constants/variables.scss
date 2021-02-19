@@ -1,8 +1,30 @@
-$navSize: 64px;
-$headerTextSize: 30px;
-$iconSize: 1.75em;
-$spacingSize: 20px;
-$borderColor: #e1e4e7;
-$backgroundColor: #f1f0eb;
-$menuColor: #2b78e3;
-$borderRadius: 16px;
+$theme-core: (
+  'headerTextSize': 30px,
+  'navSize': 64px,
+);
+
+$theme-size: (
+  'borderRadius': 5px,
+  'spacingSize': 20px,
+  'iconSize': 1.75em,
+);
+
+$theme-colors: (
+  'borderColor': #fff,
+  'backgroundColor': #f0f2f5,
+  'themeColor': #001529,
+);
+
+:export {
+  @each $key, $value in $theme-core {
+    #{$key}: #{$value};
+  }
+
+  @each $key, $value in $theme-size {
+    #{$key}: #{$value};
+  }
+
+  @each $key, $value in $theme-colors {
+    #{$key}: #{$value};
+  }
+}

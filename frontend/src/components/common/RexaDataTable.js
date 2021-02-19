@@ -10,30 +10,32 @@ import {
     TableBody,
     TableRow,
     withStyles,
-    Paper,
+    Paper, Typography,
 } from '@material-ui/core';
 
 import LoadingIndicator from './LoadingIndicator';
 import NoData from './NoData';
 
+import { themeColor, backgroundColor, borderRadius } from '../../helpers/constants/variables.scss';
+
 const useStyles = makeStyles(() => ({
     root: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
         maxHeight: '24rem',
     },
     root100: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
         maxHeight: '34rem',
     },
     header: {
         textAlign: 'center',
-        background: '#f1f0eb',
+        background: backgroundColor,
     },
 }));
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: '#2b78e3',
+        backgroundColor: themeColor,
         color: theme.palette.common.white,
     },
     body: {
@@ -60,7 +62,7 @@ const RexaDataTable = ({ title, data, loading, noDataLabel, fullHeight }) => {
 
     return (
         <>
-            {title && <h3>{title}</h3>}
+            {title && <Typography variant="h5" gutterBottom>{title}</Typography>}
             <TableContainer className={className} component={Paper}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

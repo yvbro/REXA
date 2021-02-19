@@ -1,11 +1,11 @@
 @import 'src/helpers/constants/variables';
 
 .wrapper {
-    padding-left: $navSize;
+    padding-left: map-get($theme-core, 'navSize');
 }
 
 .navBar {
-    background-color: $menuColor;
+    background-color: map-get($theme-colors, 'themeColor');
     position: fixed;
     top: 0;
     left: 0;

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Grid } from '@material-ui/core';
-import _get from 'lodash/get';
 
 import PrearchiveDashboard from '../dump/PrearchiveDashboard';
 import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
@@ -41,7 +40,7 @@ const DashboardPage = () => {
                 dispatch(fetchRecentActivities());
             })
             .catch((error) => {
-                toast.error(_get(error, 'response.data.message', null));
+                toast.error(error?.response?.data?.message);
             });
     }, [dispatch]);
 
@@ -52,23 +51,25 @@ const DashboardPage = () => {
     return (
         <div className={classes.rootDiv}>
             <Grid container spacing={3}>
-                <Grid item xs={5}>
+                <Grid item xs={9}>
                     <RecentActivitiesDashboard
                         recentActivities={recentActivities}
                         loading={loadingRecentActivities}
                         xnatHost={xnatHost}
                     />
                 </Grid>
-                <Grid item xs={7}>
-                    <PrearchiveDashboard
-                        preArchives={preArchives}
-                        loading={loadingPreArchives}
-                    />
-                </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <ProjectDashboard
                         projects={projects}
                         loading={loadingProjects}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <PrearchiveDashboard
+                        preArchives={preArchives}
+                        loading={loadingPreArchives}
                     />
                 </Grid>
             </Grid>
