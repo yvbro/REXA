@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { makeStyles, Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
-import { themeColor } from '../../helpers/constants/variables.scss';
+import { borderRadius, themeColor } from '../../helpers/constants/variables.scss';
 
 const useStyles = makeStyles(() => ({
     cardInfoWithRadius: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
     },
     alignItemsAndJustifyContent: {
         display: 'flex',

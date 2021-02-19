@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Chart from 'react-apexcharts';
-import { PROC_STATUS } from '../../helpers/xnat';
+import {extractAssessorsProcTypeAndStatus, PROC_STATUS} from '../../helpers/xnat';
 
-import style from './charts.module.scss';
+import classes from './charts.module.scss';
 
 class StackedProjectColumnChart extends React.Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class StackedProjectColumnChart extends React.Component {
             options: {
                 chart: {
                     type: 'bar',
-                    height: 350,
+                    height: 400,
                     stacked: true,
                     toolbar: {
                         show: false,
@@ -58,13 +58,18 @@ class StackedProjectColumnChart extends React.Component {
     render() {
         const { assessors } = this.props;
 
+        let processorsStats = [];
+        if (assessors) {
+            processorsStats = extractAssessorsProcTypeAndStatus(assessors);
+        }
+
         return (
-            <div id="chart" className={style.drawing}>
+            <div id="chart" className={classes.drawing}>
                 <Chart
                     options={this.state.options}
-                    series={assessors}
+                    series={processorsStats}
                     type="bar"
-                    height={350}
+                    height={400}
                 />
             </div>
         );

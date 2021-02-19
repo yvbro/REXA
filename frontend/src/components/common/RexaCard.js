@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    bold: {
+        fontWeight: 600
+    }
+});
 
 const RexaCard = (props) => {
+    const style = useStyles();
     return (
         <Card className={props.className} variant="outlined">
             <CardContent className={props.classNameContent}>
-                <Typography variant="h5" gutterBottom>{props.title}</Typography>
+                <Typography variant="h5" gutterBottom className={style.bold}>{props.title}</Typography>
                 {props.children}
             </CardContent>
         </Card>

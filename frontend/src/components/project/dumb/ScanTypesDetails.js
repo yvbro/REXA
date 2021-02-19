@@ -1,39 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Card } from '@material-ui/core';
-
 import ScanTypePieChart from '../../chart/ScanTypePieChart';
 import NoData from '../../common/NoData';
 import { extractScanTypes } from '../../../helpers/xnat';
 
-import { borderRadius } from '../../../helpers/constants/variables.scss';
-
-const useStyles = makeStyles({
-    cardInfo: {
-        borderRadius: borderRadius,
-    },
-});
+import RexaCard from '../../common/RexaCard';
+import classes from './project.module.scss';
 
 const ScanTypesDetails = ({ scans }) => {
-    const classes = useStyles();
-
     let scansByType = [];
     if (scans) {
         scansByType = extractScanTypes(scans);
     }
+
     return (
-        <>
-            <h3>Scan types</h3>
-            <Card className={classes.cardInfo}>
-                {scansByType && scansByType.length > 0 ? (
-                    <ScanTypePieChart scans={scansByType} />
-                ) : (
-                    <NoData label="No scan found" />
-                )}
-            </Card>
-        </>
+        <RexaCard title='Scan types' className={classes.card}>
+            {scansByType && scansByType.length > 0 ? (
+                <ScanTypePieChart scans={scansByType} />
+            ) : (
+                <NoData label="No scan found" />
+            )}
+        </RexaCard>
     );
 };
 

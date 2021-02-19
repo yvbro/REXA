@@ -12,7 +12,7 @@ class ScanTypePieChart extends React.Component {
         this.state = {
             options: {
                 chart: {
-                    width: 380,
+                    width: 350,
                     type: 'donut',
                 },
                 dataLabels: {
@@ -54,7 +54,7 @@ class ScanTypePieChart extends React.Component {
                     }}
                     series={scans.map((obj) => obj.data)}
                     type="donut"
-                    height={350}
+                    height={300}
                 />
             </div>
         );
