@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Card, List, ListItem, Chip } from '@material-ui/core';
+import { List, ListItem, Chip } from '@material-ui/core';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 
 import { getXnatUri } from '../../../helpers/xnat';

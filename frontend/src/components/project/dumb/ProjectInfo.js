@@ -15,12 +15,12 @@ import {
 } from '@material-ui/core';
 import RexaCard from '../../common/RexaCard';
 
-import { themeColor } from '../../../helpers/constants/variables.scss';
+import { textColor } from '../../../helpers/constants/variables.scss';
 import classes from './project.module.scss';
 
 const useStyles = makeStyles({
     avatar: {
-        backgroundColor: themeColor,
+        backgroundColor: textColor,
     },
 });
 

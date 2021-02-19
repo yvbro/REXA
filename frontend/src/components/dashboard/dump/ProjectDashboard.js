@@ -16,12 +16,12 @@ import { Link } from 'react-router-dom';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import RexaCard from '../../common/RexaCard';
 
-import { themeColor } from '../../../helpers/constants/variables.scss';
+import { textColor } from '../../../helpers/constants/variables.scss';
 import classes from './dashboard.module.scss';
 
 const useStyles = makeStyles(() => ({
     avatar: {
-        backgroundColor: themeColor,
+        backgroundColor: textColor,
     },
 }));
 

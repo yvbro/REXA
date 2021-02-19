@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent, Typography, makeStyles } from '@material-ui/core';
+import {Card, CardContent, Typography, makeStyles, CardActions} from '@material-ui/core';
+
+import { textColor } from '../../helpers/constants/variables.scss';
 
 const useStyles = makeStyles({
     bold: {
-        fontWeight: 600
+        fontWeight: 600,
+        color: textColor,
     }
 });
 
@@ -16,6 +19,11 @@ const RexaCard = (props) => {
                 <Typography variant="h5" gutterBottom className={style.bold}>{props.title}</Typography>
                 {props.children}
             </CardContent>
+            {props.actions && (
+                <CardActions>
+                    {props.actions}
+                </CardActions>
+            )}
         </Card>
     );
 };
@@ -25,6 +33,7 @@ RexaCard.propTypes = {
     className: PropTypes.string,
     classNameContent: PropTypes.string,
     title: PropTypes.string,
+    actions: PropTypes.object,
 };
 
 export default RexaCard;

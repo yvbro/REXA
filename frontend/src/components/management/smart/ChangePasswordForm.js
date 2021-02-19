@@ -26,6 +26,14 @@ import {
     ERROR_PASSWORD_NOT_MATCH
 } from '../../../helpers/constants';
 
+import {
+    borderRadius,
+    primaryButtonColor,
+    secondaryButtonColor,
+    themeColor,
+    textColor,
+} from '../../../helpers/constants/variables.scss';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
@@ -36,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        borderRadius: '16px',
+        borderRadius: borderRadius,
     },
     text: {
         paddingBottom: 10,
@@ -46,12 +54,20 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    button: {
-        width: 100,
+    saveButton: {
+        width: 120,
+        backgroundColor: primaryButtonColor,
+        color: 'white',
+    },
+    cancelButton: {
+        width: 120,
+        backgroundColor: secondaryButtonColor,
+        color: 'white',
     },
     avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
+        backgroundColor: textColor,
     },
     iconDef: {
         fontSize: 50,
@@ -108,7 +124,7 @@ const ChangePasswordForm = (props) => {
                     </Avatar>
                 }
                 title={`Edit password for ${props.userEmail}`}
-                titleTypographyProps={{ variant: 'h6', color: 'primary' }}
+                titleTypographyProps={{ variant: 'h6', color: themeColor }}
                 subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
@@ -131,21 +147,17 @@ const ChangePasswordForm = (props) => {
             </CardContent>
             <CardActions>
                 <Button
-                    size="small"
                     onClick={handleSubmit}
-                    color="primary"
                     disabled={
                         !newPassword || !confirmationPassword ||
                         !!errorPassword || !!errorConfirmationPassword}
-                    className={classes.button}
+                    className={classes.saveButton}
                 >
                     Save
                 </Button>
                 <Button
-                    size="small"
                     onClick={props.closeAction}
-                    color="secondary"
-                    className={classes.button}
+                    className={classes.cancelButton}
                 >
                     Cancel
                 </Button>

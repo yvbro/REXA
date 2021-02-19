@@ -28,7 +28,13 @@ import {
     ERROR_PASSWORD_NUMBER,
 } from '../../../helpers/constants/index';
 
-import { borderRadius } from '../../../helpers/constants/variables.scss';
+import {
+    borderRadius,
+    primaryButtonColor,
+    secondaryButtonColor,
+    themeColor,
+    textColor,
+} from '../../../helpers/constants/variables.scss';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,12 +56,20 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    button: {
-        width: 100,
+    addButton: {
+        width: 120,
+        backgroundColor: primaryButtonColor,
+        color: 'white',
+    },
+    cancelButton: {
+        width: 120,
+        backgroundColor: secondaryButtonColor,
+        color: 'white',
     },
     avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
+        backgroundColor: textColor,
     },
     iconDef: {
         fontSize: 50,
@@ -117,7 +131,7 @@ const AddUserForm = (props) => {
                     </Avatar>
                 }
                 title="Add New User"
-                titleTypographyProps={{ variant: 'h6', color: 'primary' }}
+                titleTypographyProps={{ variant: 'h6', color: themeColor }}
                 subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
@@ -144,19 +158,15 @@ const AddUserForm = (props) => {
             </CardContent>
             <CardActions>
                 <Button
-                    size="small"
                     onClick={handleSubmit}
-                    color="primary"
                     disabled={!!errorEmail || !!errorPassword}
-                    className={classes.button}
+                    className={classes.addButton}
                 >
                     Add
                 </Button>
                 <Button
-                    size="small"
                     onClick={props.closeAction}
-                    color="secondary"
-                    className={classes.button}
+                    className={classes.cancelButton}
                 >
                     Cancel
                 </Button>

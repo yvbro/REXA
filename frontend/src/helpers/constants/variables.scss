@@ -12,7 +12,11 @@ $theme-size: (
 $theme-colors: (
   'borderColor': #fff,
   'backgroundColor': #f0f2f5,
-  'themeColor': #001529,
+  'themeColor': #031831,
+  'textColor': #30373e,
+  'primaryButtonColor': #3f51b5,
+  'primaryButtonDisabledColor': #4762a6,
+  'secondaryButtonColor': #bd0f0f,
 );
 
 :export {
