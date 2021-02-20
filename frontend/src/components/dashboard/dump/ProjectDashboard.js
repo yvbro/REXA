@@ -16,12 +16,13 @@ import { Link } from 'react-router-dom';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import RexaCard from '../../common/RexaCard';
 
-import { textColor } from '../../../helpers/constants/variables.scss';
+import { avatarColor } from '../../common/theme/theme.scss';
 import classes from './dashboard.module.scss';
+import NoData from '../../common/NoData';
 
 const useStyles = makeStyles(() => ({
     avatar: {
-        backgroundColor: textColor,
+        backgroundColor: avatarColor,
     },
 }));
 
@@ -34,8 +35,8 @@ const ProjectDashboard = ({ projects, loading }) => {
 
     return (
         <>
-            {projects.length > 0 && (
-                <RexaCard title='Projects' className={classes.tableCard} classNameContent={classes.tableCardContent}>
+            <RexaCard title='Projects' className={classes.tableCard} classNameContent={classes.tableCardContent}>
+                {projects.length > 0 ? (
                     <List className={classes.listProjects}>
                         {projects.map((project, index) => (
                             <ListItem key={`dashboard_${index}`}>
@@ -64,8 +65,14 @@ const ProjectDashboard = ({ projects, loading }) => {
                             </ListItem>
                         ))}
                     </List>
-                </RexaCard>
-            )}
+                ) : (
+                    <NoData
+                        label={'No projects'}
+                        noRadius
+                        noBorder
+                    />
+                )}
+            </RexaCard>
         </>
     );
 };

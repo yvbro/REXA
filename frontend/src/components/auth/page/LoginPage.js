@@ -11,7 +11,7 @@ import SocialLogin from '../dumb/SocialLogin';
 import classes from '../dumb/auth.module.scss';
 
 import { regexEmail } from '../../../helpers/constants/index';
-import { borderRadius } from '../../../helpers/constants/variables.scss';
+import { borderRadius } from '../../common/theme/theme.scss';
 import rexaLogo from '../../../assets/rexa-logo-svg.png';
 
 const useStyles = makeStyles((theme) => ({

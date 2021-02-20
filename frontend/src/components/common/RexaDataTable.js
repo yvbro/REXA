@@ -16,7 +16,7 @@ import {
 import LoadingIndicator from './LoadingIndicator';
 import NoData from './NoData';
 
-import { themeColor, backgroundColor, borderRadius } from '../../helpers/constants/variables.scss';
+import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -94,7 +94,7 @@ const RexaDataTable = ({ title, data, loading, noDataLabel, fullHeight }) => {
                 </Table>
                 {data[0].values.length === 0 && (
                     <NoData
-                        label={noDataLabel ? noDataLabel : 'No data found.'}
+                        label={noDataLabel ? noDataLabel : 'No data found'}
                         noRadius
                     />
                 )}

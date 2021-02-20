@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardContent, Typography, makeStyles, CardActions} from '@material-ui/core';
 
-import { textColor } from '../../helpers/constants/variables.scss';
+import { textColor } from './theme/theme.scss';
 
 const useStyles = makeStyles({
     bold: {

@@ -1,4 +1,4 @@
-@import "src/helpers/constants/variables";
+@import "src/components/common/theme/theme";
 
 .drawing {
   border: 1px solid map-get($theme-colors, 'borderColor');

@@ -10,7 +10,7 @@ import UserSettingsForm from '../smart/UserSettingsForm';
 
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 import classes from './SettingsDetails.module.scss';
-import { themeColor } from '../../../helpers/constants/variables.scss';
+import { themeColor } from '../../common/theme/theme.scss';
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;

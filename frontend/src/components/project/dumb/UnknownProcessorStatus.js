@@ -12,7 +12,7 @@ import LabelOffIcon from '@material-ui/icons/LabelOff';
 
 import classes from './project.module.scss';
 import RexaCard from '../../common/RexaCard';
-import { themeColor } from '../../../helpers/constants/variables.scss';
+import { themeColor } from '../../common/theme/theme.scss';
 
 const useStyles = makeStyles({
     avatar: {

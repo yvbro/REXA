@@ -13,7 +13,7 @@ import ChangePasswordForm from '../smart/ChangePasswordForm';
 import { GoogleIcon } from '../../auth/dumb/SocialLogin';
 
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
-import { primaryButtonColor } from '../../../helpers/constants/variables.scss';
+import { primaryButtonColor } from '../../common/theme/theme.scss';
 
 import classes from './UserListPage.module.scss';
 
@@ -129,7 +129,7 @@ const UserListPage = () => {
                     <RexaDataTable
                         data={data}
                         loading={false}
-                        noDataLabel="No users on the platform!"
+                        noDataLabel="No users on the platform"
                         fullHeight
                     />
                 </RexaCard>

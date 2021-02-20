@@ -21,7 +21,7 @@ export const PrearchiveDashboard = ({ preArchives, loading }) => {
             <RexaDataTable
                 data={data}
                 loading={loading}
-                noDataLabel="No data in the PreArchive!"
+                noDataLabel="No data in the PreArchive"
             />
         </RexaCard>
     );

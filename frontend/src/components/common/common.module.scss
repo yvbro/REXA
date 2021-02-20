@@ -1,4 +1,4 @@
-@import 'src/helpers/constants/variables';
+@import 'src/components/common/theme/theme';
 
 .wrapper {
     padding-left: map-get($theme-core, 'navSize');

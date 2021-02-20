@@ -31,8 +31,8 @@ import {
     primaryButtonColor,
     secondaryButtonColor,
     themeColor,
-    textColor,
-} from '../../../helpers/constants/variables.scss';
+    avatarColor,
+} from '../../common/theme/theme.scss';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
-        backgroundColor: textColor,
+        backgroundColor: avatarColor,
     },
     iconDef: {
         fontSize: 50,
