@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         borderRadius: borderRadius,
     },
+    header: {
+        width: 430,
+    },
     text: {
         paddingBottom: 10,
         width: 400,
@@ -126,6 +129,7 @@ const ChangePasswordForm = (props) => {
                 title={`Edit password for ${props.userEmail}`}
                 titleTypographyProps={{ variant: 'h6', color: themeColor }}
                 subheader={<PasswordRules />}
+                className={classes.header}
             />
             <CardContent className={classes.cardContent}>
                 <PasswordField 
@@ -147,6 +151,7 @@ const ChangePasswordForm = (props) => {
             </CardContent>
             <CardActions>
                 <Button
+                    variant='contained'
                     onClick={handleSubmit}
                     disabled={
                         !newPassword || !confirmationPassword ||
@@ -156,6 +161,7 @@ const ChangePasswordForm = (props) => {
                     Save
                 </Button>
                 <Button
+                    variant='contained'
                     onClick={props.closeAction}
                     className={classes.cancelButton}
                 >

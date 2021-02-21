@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         borderRadius: borderRadius,
     },
+    header: {
+        width: 430,
+    },
     text: {
         paddingBottom: 10,
         width: 400,
@@ -133,6 +136,7 @@ const AddUserForm = (props) => {
                 title="Add New User"
                 titleTypographyProps={{ variant: 'h6', color: themeColor }}
                 subheader={<PasswordRules />}
+                className={classes.header}
             />
             <CardContent className={classes.cardContent}>
                 <TextField
@@ -158,6 +162,7 @@ const AddUserForm = (props) => {
             </CardContent>
             <CardActions>
                 <Button
+                    variant='contained'
                     onClick={handleSubmit}
                     disabled={!!errorEmail || !!errorPassword}
                     className={classes.addButton}
@@ -165,6 +170,7 @@ const AddUserForm = (props) => {
                     Add
                 </Button>
                 <Button
+                    variant='contained'
                     onClick={props.closeAction}
                     className={classes.cancelButton}
                 >

@@ -83,13 +83,12 @@ const UserListPage = () => {
         { name: 'Email', values: users.map((e) => e.email) },
         { name: 'Role', values: users.map((e) => e.roles.join(',')) },
         { name: 'Enabled', values: users.map((e) => toSwitch(e)) },
-        { name: 'Edit', values: users.map((e) => toEditComponent(e)) },
+        { name: 'Actions', values: users.map((e) => toEditComponent(e)) },
     ];
 
     const action = (
         <Button
-            variant="outlined"
-            color="primary"
+            variant="contained"
             onClick={() => setOpenModalNewUser(true)}
             className={style.button}
         >
@@ -100,32 +99,32 @@ const UserListPage = () => {
     return (
         <Grid container className={classes.rootDiv} spacing={3}>
             <Grid item md={12} xs={12}>
+                <RexaModal
+                    open={openModalNewUser}
+                    closeModal={() => setOpenModalNewUser(false)}
+                    title='addUserModal'>
+                    <div>
+                        <AddUserForm
+                            users={users.map((e) => e.email)}
+                            closeAction={() => setOpenModalNewUser(false)}
+                        />
+                    </div>
+                </RexaModal>
+                <RexaModal
+                    open={openModalPassword.open}
+                    closeModal={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
+                    title="editPasswordModal">
+                    <div>
+                        <ChangePasswordForm
+                            userEmail={openModalPassword.userEmail}
+                            closeAction={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
+                        />
+                    </div>
+                </RexaModal>
                 <RexaCard 
                     title='User Management'
                     className={classes.card}
                     actions={action}>
-                    <RexaModal
-                        open={openModalNewUser}
-                        closeModal={() => setOpenModalNewUser(false)}
-                        title='addUserModal'>
-                        <div>
-                            <AddUserForm
-                                users={users.map((e) => e.email)}
-                                closeAction={() => setOpenModalNewUser(false)}
-                            />
-                        </div>
-                    </RexaModal>
-                    <RexaModal
-                        open={openModalPassword.open}
-                        closeModal={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
-                        title="editPasswordModal">
-                        <div>
-                            <ChangePasswordForm
-                                userEmail={openModalPassword.userEmail}
-                                closeAction={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
-                            />
-                        </div>
-                    </RexaModal>
                     <RexaDataTable
                         data={data}
                         loading={false}
