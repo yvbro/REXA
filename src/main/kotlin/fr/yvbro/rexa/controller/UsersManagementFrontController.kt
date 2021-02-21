@@ -6,7 +6,6 @@ import fr.yvbro.rexa.controller.input.UserChangePasswordRequest
 import fr.yvbro.rexa.controller.input.UserSettingsRequest
 import fr.yvbro.rexa.controller.input.UserSwitchEnabledRequest
 import fr.yvbro.rexa.controller.output.UserDto
-import fr.yvbro.rexa.model.User
 import fr.yvbro.rexa.model.role.ADMIN
 import fr.yvbro.rexa.service.UserService
 import org.springframework.http.MediaType

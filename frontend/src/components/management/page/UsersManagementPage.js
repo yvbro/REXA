@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUsers } from '../redux/userDuck';
@@ -7,16 +7,31 @@ import UserListPage from '../smart/UserListPage';
 
 const UsersManagementPage = () => {
     const dispatch = useDispatch();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
-        dispatch(fetchUsers());
-    }, [dispatch]);
+        dispatch(fetchUsers(page, rowsPerPage));
+    }, [dispatch, page, rowsPerPage]);
 
     const { loading } = useSelector((state) => ({
         loading: state.user.loading,
     }));
 
-    return <>{loading ? <LoadingIndicator /> : <UserListPage />}</>;
+    return (
+        <>
+            {loading ? (
+                <LoadingIndicator />
+            ) : (
+                <UserListPage
+                    page={page}
+                    setPage={setPage}
+                    rowsPerPage={rowsPerPage}
+                    setRowsPerPage={setRowsPerPage}
+                />
+            )}
+        </>
+    );
 };
 
 export default UsersManagementPage;

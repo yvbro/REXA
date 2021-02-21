@@ -8,6 +8,8 @@ import { fulfilled, pending, rejected } from '../../../helpers/promise';
 const DEFAULT_ROLES = ['USER'];
 const initialState = {
     data: [],
+    totalElements: 0,
+    totalPages: 0,
     loading: false,
 };
 
@@ -27,60 +29,72 @@ export const ADD_USER = '[User] ADD USER';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
-    case pending(FETCH_USERS):
-        return {
-            ...state,
-            data: [],
-            loading: true,
-        };
-    case fulfilled(FETCH_USERS):
-        return {
-            ...state,
-            data: action.payload.data,
-            loading: false,
-        };
-    case rejected(FETCH_USERS):
-        return {
-            ...state,
-            data: state.data,
-            loading: false,
-        };
-    case pending(SWITCH_ENABLED_USER):
-        return {
-            ...state,
-            data: setEnabledForUser(
-                state.data,
-                action.payload.userEmail,
-                action.payload.enabled
-            ),
-            loading: false,
-        };
-    case rejected(SWITCH_ENABLED_USER):
-        return {
-            ...state,
-            data: setEnabledForUser(
-                state.data,
-                action.payload.userEmail,
-                !action.payload.enabled
-            ),
-            loading: false,
-        };
-    case ADD_USER:
-        return {
-            ...state,
-            data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
-            loading: false,
-        };
-    default:
-        return state;
+        case pending(FETCH_USERS):
+            return {
+                ...state,
+                data: [],
+                totalElements: 0,
+                totalPages: 0,
+                loading: true,
+            };
+        case fulfilled(FETCH_USERS):
+            return {
+                ...state,
+                data: action.payload.data.content,
+                totalElements: action.payload.data.totalElements,
+                totalPages: action.payload.data.totalPages,
+                loading: false,
+            };
+        case rejected(FETCH_USERS):
+            return {
+                ...state,
+                data: state.data,
+                totalElements: state.totalElements,
+                totalPages: state.totalPages,
+                loading: false,
+            };
+        case pending(SWITCH_ENABLED_USER):
+            return {
+                ...state,
+                data: setEnabledForUser(
+                    state.data,
+                    action.payload.userEmail,
+                    action.payload.enabled
+                ),
+                loading: false,
+            };
+        case rejected(SWITCH_ENABLED_USER):
+            return {
+                ...state,
+                data: setEnabledForUser(
+                    state.data,
+                    action.payload.userEmail,
+                    !action.payload.enabled
+                ),
+                loading: false,
+            };
+        case ADD_USER:
+            return {
+                ...state,
+                data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
+                loading: false,
+            };
+        default:
+            return state;
     }
 }
 
-export const fetchUsers = () => (dispatch) =>
+export const fetchUsers = (page, size) => (dispatch) =>  {
+
+    const sizeQuery = size ? `&size=${size}` : ''
+
+    const request = `/private/management/users/page?page=${page}${sizeQuery}`
+
     dispatch({
         type: FETCH_USERS,
-        payload: axios.get('/private/management/users'),
+        payload: axios.get(request),
     });
+}
 
 export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
     const param = { userEmail: userEmail, enabled: enabled };
