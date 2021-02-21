@@ -43,7 +43,7 @@ describe('The UserListPage component', () => {
         expect(getByRole('heading')).toHaveTextContent('User Management');
         expect(getByRole('table')).toBeInTheDocument();
         // Title
-        expect(getByRole('row', { name: 'Email Role Enabled Edit'})).toBeInTheDocument();
+        expect(getByRole('row', { name: 'Email Role Enabled Actions'})).toBeInTheDocument();
         // Content
         expect(getByRole('row', { name: 'admin@test.com ADMIN,USER primary checkbox'})).toBeInTheDocument();
         expect(getByRole('row', { name: 'user@test.com USER primary checkbox'})).toBeInTheDocument();
@@ -131,7 +131,7 @@ describe('The UserListPage component', () => {
     it('should open modal if click on add user', () => {
         const { getByRole, getAllByRole } = renderWithStore(<UserListPage />, REGULAR_STATE);
 
-        const addUserButton = getAllByRole('button')[0];
+        const addUserButton = getAllByRole('button')[2];
 
         fireEvent.click(addUserButton);
 
