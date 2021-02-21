@@ -26,7 +26,6 @@ const NoData = ({ label, noRadius }) => {
 
     return (
         <Card
-            variant="outlined"
             className={noRadius ? '' : classes.cardInfoWithRadius}
         >
             <CardContent className={classes.alignItemsAndJustifyContent}>

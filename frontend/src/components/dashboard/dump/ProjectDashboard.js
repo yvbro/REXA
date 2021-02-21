@@ -69,7 +69,6 @@ const ProjectDashboard = ({ projects, loading }) => {
                     <NoData
                         label={'No projects'}
                         noRadius
-                        noBorder
                     />
                 )}
             </RexaCard>
