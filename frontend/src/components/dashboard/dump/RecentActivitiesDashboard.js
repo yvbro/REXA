@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 
 import { Chip } from '@material-ui/core';
 
+import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
 import { getXnatUri } from '../../../helpers/xnat';
+
+import classes from './dashboard.module.scss';
 
 const toChip = (label, id, xnatHost) => {
     return (
@@ -33,12 +36,13 @@ const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
     ];
 
     return (
-        <RexaDataTable
-            title="Recent Activities"
-            data={data}
-            loading={loading}
-            noDataLabel="No recent activities data"
-        />
+        <RexaCard title="Recent Activities" className={classes.tableCard}>
+            <RexaDataTable
+                data={data}
+                loading={loading}
+                noDataLabel="No recent activities"
+            />
+        </RexaCard>
     );
 };
 

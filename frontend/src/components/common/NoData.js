@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import grey from '@material-ui/core/colors/grey';
+
+import { borderRadius, avatarColor } from './theme/theme.scss';
 
 const useStyles = makeStyles(() => ({
     cardInfoWithRadius: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
     },
     alignItemsAndJustifyContent: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        color: grey[500],
+        color: avatarColor,
     },
     iconDef: {
         fontSize: 80,
@@ -25,7 +26,6 @@ const NoData = ({ label, noRadius }) => {
 
     return (
         <Card
-            variant="outlined"
             className={noRadius ? '' : classes.cardInfoWithRadius}
         >
             <CardContent className={classes.alignItemsAndJustifyContent}>

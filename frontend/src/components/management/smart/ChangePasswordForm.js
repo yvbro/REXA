@@ -26,6 +26,14 @@ import {
     ERROR_PASSWORD_NOT_MATCH
 } from '../../../helpers/constants';
 
+import {
+    borderRadius,
+    primaryButtonColor,
+    secondaryButtonColor,
+    themeColor,
+    avatarColor,
+} from '../../common/theme/theme.scss';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
@@ -36,7 +44,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        borderRadius: '16px',
+        borderRadius: borderRadius,
+    },
+    header: {
+        width: 430,
     },
     text: {
         paddingBottom: 10,
@@ -46,12 +57,20 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    button: {
-        width: 100,
+    saveButton: {
+        width: 120,
+        backgroundColor: primaryButtonColor,
+        color: 'white',
+    },
+    cancelButton: {
+        width: 120,
+        backgroundColor: secondaryButtonColor,
+        color: 'white',
     },
     avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
+        backgroundColor: avatarColor,
     },
     iconDef: {
         fontSize: 50,
@@ -108,8 +127,9 @@ const ChangePasswordForm = (props) => {
                     </Avatar>
                 }
                 title={`Edit password for ${props.userEmail}`}
-                titleTypographyProps={{ variant: 'h6', color: 'primary' }}
+                titleTypographyProps={{ variant: 'h6', color: themeColor }}
                 subheader={<PasswordRules />}
+                className={classes.header}
             />
             <CardContent className={classes.cardContent}>
                 <PasswordField 
@@ -131,21 +151,19 @@ const ChangePasswordForm = (props) => {
             </CardContent>
             <CardActions>
                 <Button
-                    size="small"
+                    variant='contained'
                     onClick={handleSubmit}
-                    color="primary"
                     disabled={
                         !newPassword || !confirmationPassword ||
                         !!errorPassword || !!errorConfirmationPassword}
-                    className={classes.button}
+                    className={classes.saveButton}
                 >
                     Save
                 </Button>
                 <Button
-                    size="small"
+                    variant='contained'
                     onClick={props.closeAction}
-                    color="secondary"
-                    className={classes.button}
+                    className={classes.cancelButton}
                 >
                     Cancel
                 </Button>

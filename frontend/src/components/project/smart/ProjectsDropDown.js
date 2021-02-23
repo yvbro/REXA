@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import _get from 'lodash/get';
 
 import { InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 
@@ -21,11 +20,11 @@ const ProjectsDropDown = ({ projectSelected }) => {
     useEffect(() => {
         projectSelected
             ? dispatch(fetchProject(projectSelected)).catch((error) => {
-                  toast.error(_get(error, 'response.data.message', null));
-              })
+                toast.error(error?.response?.data?.message);
+            })
             : dispatch(fetchProjects()).catch((error) => {
-                  toast.error(_get(error, 'response.data.message', null));
-              });
+                toast.error(error?.response?.data?.message);
+            });
     }, [dispatch, projectSelected]);
 
     const onChange = (event) => dispatch(fetchProject(event.target.value));

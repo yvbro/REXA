@@ -12,72 +12,72 @@ import {
     Avatar,
     ListItemText,
     ListItem,
-    Card,
 } from '@material-ui/core';
+import RexaCard from '../../common/RexaCard';
+
+import { avatarColor } from '../../common/theme/theme.scss';
+import classes from './project.module.scss';
 
 const useStyles = makeStyles({
-    cardInfo: {
-        borderRadius: '16px',
+    avatar: {
+        backgroundColor: avatarColor,
     },
 });
 
 const ProjectInfo = ({ project }) => {
-    const classes = useStyles();
+    const style = useStyles();
 
     return (
-        <>
-            <h3>Project Information</h3>
-            <Card className={classes.cardInfo}>
-                <List>
+        <RexaCard title='Project information' className={classes.card}>
+            <List>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar className={style.avatar}>
+                            <AccountCircleIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Subject"
+                        secondary={project.numberOfSubject}
+                    />
+                </ListItem>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar className={style.avatar}>
+                            <EventNoteIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Session"
+                        secondary={project.numberOfSession}
+                    />
+                </ListItem>
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar className={style.avatar}>
+                            <CameraIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Scan"
+                        secondary={project.numberOfScan}
+                    />
+                </ListItem>
+                {project.assessors && (
                     <ListItem>
                         <ListItemAvatar>
-                            <Avatar>
-                                <AccountCircleIcon />
+                            <Avatar className={style.avatar}>
+                                <DeviceHubIcon />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary="Subject"
-                            secondary={project.numberOfSubject}
+                            primary="Processes"
+                            secondary={project.assessors.length}
                         />
                     </ListItem>
-                    <ListItem>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <EventNoteIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary="Session"
-                            secondary={project.numberOfSession}
-                        />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <CameraIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary="Scan"
-                            secondary={project.numberOfScan}
-                        />
-                    </ListItem>
-                    {project.assessors && (
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <DeviceHubIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary="Processes"
-                                secondary={project.assessors.length}
-                            />
-                        </ListItem>
-                    )}
-                </List>
-            </Card>
-        </>
+                )}
+            </List>
+        </RexaCard>
     );
 };
 

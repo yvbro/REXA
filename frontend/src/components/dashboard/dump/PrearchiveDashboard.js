@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import RexaDataTable from '../../common/RexaDataTable';
+import RexaCard from '../../common/RexaCard';
+
+import classes from './dashboard.module.scss';
 
 export const PrearchiveDashboard = ({ preArchives, loading }) => {
     const data = [
@@ -14,12 +17,13 @@ export const PrearchiveDashboard = ({ preArchives, loading }) => {
     ];
 
     return (
-        <RexaDataTable
-            title="Prearchive"
-            data={data}
-            loading={loading}
-            noDataLabel="No data in the PreArchive!"
-        />
+        <RexaCard title="Prearchive" className={classes.tableCard}>
+            <RexaDataTable
+                data={data}
+                loading={loading}
+                noDataLabel="No data in the PreArchive"
+            />
+        </RexaCard>
     );
 };
 

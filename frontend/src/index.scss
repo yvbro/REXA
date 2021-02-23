@@ -1,4 +1,4 @@
-@import "src/helpers/constants/variables.scss";
+@import "src/components/common/theme/theme";
 
 body {
   margin: 0;
@@ -40,7 +40,7 @@ body {
   font-weight: 400;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: rgba(0,0,0,.80);
-  background-color: $backgroundColor;
+  background-color: map-get($theme-colors, 'backgroundColor')
 }
 
 .container {

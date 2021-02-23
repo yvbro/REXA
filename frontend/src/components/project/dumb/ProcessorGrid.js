@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 import { Grid } from '@material-ui/core';
 
-import ProcessorDetails from './ProcessorDetails';
-import ListUnknownProcessorStatus from './ListUnknownProcessorStatus';
+import UnknownProcessorStatus from './UnknownProcessorStatus';
 import { getUnknownProcStatus } from '../../../helpers/xnat';
+import StackedProjectColumnChart from '../../chart/StackedProjectColumnChart';
+import RexaCard from '../../common/RexaCard';
+
+import classes from './project.module.scss';
 
 const ProcessorGrid = ({ processors }) => {
     const unknownProcStatus = getUnknownProcStatus(processors);
@@ -13,11 +16,13 @@ const ProcessorGrid = ({ processors }) => {
     return (
         <Grid container spacing={3}>
             <Grid item md={unknownProcStatus.length > 0 ? 9 : 12} xs={12}>
-                <ProcessorDetails processors={processors} />
+                <RexaCard title='Processor Board' className={classes.cardExtra}>
+                    <StackedProjectColumnChart assessors={processors} />
+                </RexaCard>
             </Grid>
             {unknownProcStatus.length > 0 && (
                 <Grid item md={3} xs={12}>
-                    <ListUnknownProcessorStatus unknownStatus={unknownProcStatus} />
+                    <UnknownProcessorStatus unknownStatus={unknownProcStatus} />
                 </Grid>
             )}
         </Grid>

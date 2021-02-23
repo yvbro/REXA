@@ -26,32 +26,35 @@ class XnatFrontController(private val xnatService: XnatService) {
         val assessors = xnatService.getAssessorsForProject(id)
 
         return XnatInfoDto(
-                id,
-                scans.size,
-                scans.groupBy { it.sessionLabel }.size,
-                scans.groupBy { it.subjectLabel }.size,
-                scans,
-                assessors)
+            id,
+            scans.size,
+            scans.groupBy { it.sessionLabel }.size,
+            scans.groupBy { it.subjectLabel }.size,
+            scans,
+            assessors
+        )
     }
 
     @GetMapping("/projects")
     fun getXnatProjects(): List<ProjectDto> {
         return xnatService.getProjects()
-                .stream()
-                .map(this::mapToDto)
-                .collect(toList())
+            .stream()
+            .map(this::mapToDto)
+            .collect(toList())
     }
 
     @GetMapping("/recentActivities")
     fun getXnatRecentActivities(): List<ProjectRecentActivitiesDto> {
         return xnatService.getRecentActivities()
-                .map{ it.toOutput()}
+            .take(4)  // need pagination
+            .map { it.toOutput() }
     }
 
     @GetMapping("/preArchives")
     fun getXnatPreArchives(): List<ProjectPreAchivesDto> {
         return xnatService.getPreArchive()
-                .map{ it.toOutput()}
+            .take(4)  // need pagination
+            .map { it.toOutput() }
     }
 
     @PostMapping("/test")

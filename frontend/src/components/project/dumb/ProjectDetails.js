@@ -36,7 +36,7 @@ const ProjectDetails = () => {
                 <>
                     <Grid container spacing={3}>
                         <Grid item md={12} xs={12}>
-                            <NoData label="No project selected or no data found !" />
+                            <NoData label="No project selected or no data found" />
                         </Grid>
                     </Grid>
                 </>

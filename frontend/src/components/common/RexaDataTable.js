@@ -16,24 +16,26 @@ import {
 import LoadingIndicator from './LoadingIndicator';
 import NoData from './NoData';
 
+import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
+
 const useStyles = makeStyles(() => ({
     root: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
         maxHeight: '24rem',
     },
     root100: {
-        borderRadius: '16px',
+        borderRadius: borderRadius,
         maxHeight: '34rem',
     },
     header: {
         textAlign: 'center',
-        background: '#f1f0eb',
+        background: backgroundColor,
     },
 }));
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: '#2b78e3',
+        backgroundColor: themeColor,
         color: theme.palette.common.white,
     },
     body: {
@@ -49,7 +51,7 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const RexaDataTable = ({ title, data, loading, noDataLabel, fullHeight }) => {
+const RexaDataTable = ({ key, data, loading, noDataLabel, fullHeight }) => {
     const classes = useStyles();
 
     if (loading) {
@@ -59,50 +61,47 @@ const RexaDataTable = ({ title, data, loading, noDataLabel, fullHeight }) => {
     const className = fullHeight ? classes.root100 : classes.root;
 
     return (
-        <>
-            {title && <h3>{title}</h3>}
-            <TableContainer className={className} component={Paper}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {data.map((column, index) => (
+        <TableContainer className={className} component={Paper}>
+            <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                    <TableRow>
+                        {data.map((column, index) => (
+                            <StyledTableCell
+                                key={`${key}_header_${index}`}
+                                align="center"
+                            >
+                                {column.name}
+                            </StyledTableCell>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data[0].values.map((_, rowIndex) => (
+                        <StyledTableRow key={`${key}_row_${rowIndex}`}>
+                            {data.map((row, colIndex) => (
                                 <StyledTableCell
-                                    key={`${title}_header_${index}`}
+                                    key={`${key}_row_cell_${colIndex}`}
                                     align="center"
                                 >
-                                    {column.name}
+                                    {row.values[rowIndex]}
                                 </StyledTableCell>
                             ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data[0].values.map((_, rowIndex) => (
-                            <StyledTableRow key={`${title}_row_${rowIndex}`}>
-                                {data.map((row, colIndex) => (
-                                    <StyledTableCell
-                                        key={`${title}_row_cell_${colIndex}`}
-                                        align="center"
-                                    >
-                                        {row.values[rowIndex]}
-                                    </StyledTableCell>
-                                ))}
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                {data[0].values.length === 0 && (
-                    <NoData
-                        label={noDataLabel ? noDataLabel : 'No data found.'}
-                        noRadius
-                    />
-                )}
-            </TableContainer>
-        </>
+                        </StyledTableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            {data[0].values.length === 0 && (
+                <NoData
+                    label={noDataLabel ? noDataLabel : 'No data found'}
+                    noRadius
+                />
+            )}
+        </TableContainer>
     );
 };
 
 RexaDataTable.propTypes = {
-    title: PropTypes.string,
+    key: PropTypes.string,
     data: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     noDataLabel: PropTypes.string,
