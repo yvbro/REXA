@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The SocialLogin component should take a snapshot 1`] = `
+<DocumentFragment>
+  <a
+    aria-disabled="false"
+    class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1 MuiButton-outlinedPrimary"
+    href="http://localhost:8080/oauth2/authorize-client/google?redirect_uri=http://localhost:8080/oauth2/redirect"
+    tabindex="0"
+  >
+    <span
+      class="MuiButton-label"
+    >
+      <span
+        class="MuiButton-startIcon MuiButton-iconSizeMedium"
+      >
+        <span
+          aria-hidden="true"
+          class="material-icons MuiIcon-root iconRoot"
+        >
+          <img
+            alt="Google"
+            class="imageIcon"
+            src="google-logo.png"
+          />
+        </span>
+      </span>
+      Sign in with Google
+    </span>
+    <span
+      class="MuiTouchRipple-root"
+    />
+  </a>
+</DocumentFragment>
+`;
