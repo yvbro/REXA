@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Switch } from '@material-ui/core';
+import { Button, Switch, IconButton, } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import { switchEnabledUser } from '../redux/userDuck';
 import RexaDataTable from '../../common/RexaDataTable';
 import RexaModal from '../../common/RexaModal';
 import AddUserForm from '../smart/AddUserForm';
+import ChangePasswordForm from '../smart/ChangePasswordForm';
+import { GoogleIcon } from '../../auth/dumb/SocialLogin';
+import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 
 import classes from './UserListPage.module.scss';
+
+const DEFAULT_MODAL_PASSWORD_STATE = {open: false, userEmail: ''};
 
 const UserListPage = () => {
     const dispatch = useDispatch();
 
-    const [openModal, setOpenModal] = useState(false);
+    const [openModalNewUser, setOpenModalNewUser] = useState(false);
+    const [openModalPassword, setOpenModalPassword] = useState(DEFAULT_MODAL_PASSWORD_STATE);
 
     const { users } = useSelector((state) => ({
         users: state.user.data,
@@ -22,10 +29,7 @@ const UserListPage = () => {
     const handleChange = (userEmail, enabled) =>
         dispatch(switchEnabledUser(userEmail, !enabled));
 
-    const openModalForNewUser = () => setOpenModal(true);
-    const closeModalForNewUser = () => setOpenModal(false);
-
-    const toSwitch = (user) => {
+    const toSwitch = user => {
         return (
             <Switch
                 checked={user.enabled}
@@ -40,10 +44,31 @@ const UserListPage = () => {
         );
     };
 
+    const toEditComponent = user => {
+        let component = (
+            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => setOpenModalPassword({open: true, userEmail: user.email})}> 
+                <EditIcon />
+            </IconButton>
+        );
+
+        if (user.roles.includes('ADMIN')) {
+            component = (
+                <IconButton color="primary" aria-label="edit password" component="span" disabled > 
+                    <EditIcon />
+                </IconButton>
+            );
+        } else if (user.authProvider === GOOGLE_AUTH_PROVIDER) {
+            component = <GoogleIcon />;
+        }
+
+        return component;
+    };
+
     const data = [
         { name: 'Email', values: users.map((e) => e.email) },
         { name: 'Role', values: users.map((e) => e.roles.join(',')) },
         { name: 'Enabled', values: users.map((e) => toSwitch(e)) },
+        { name: 'Edit', values: users.map((e) => toEditComponent(e)) },
     ];
 
     return (
@@ -53,16 +78,30 @@ const UserListPage = () => {
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={openModalForNewUser}
+                    onClick={() => setOpenModalNewUser(true)}
                 >
                     Add user
                 </Button>
             </div>
-            <RexaModal open={openModal} closeModal={closeModalForNewUser}>
+            <RexaModal
+                open={openModalNewUser}
+                closeModal={() => setOpenModalNewUser(false)}
+                title='addUserModal'>
                 <div>
                     <AddUserForm
                         users={users.map((e) => e.email)}
-                        cancelAction={closeModalForNewUser}
+                        closeAction={() => setOpenModalNewUser(false)}
+                    />
+                </div>
+            </RexaModal>
+            <RexaModal 
+                open={openModalPassword.open} 
+                closeModal={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
+                title="editPasswordModal">
+                <div>
+                    <ChangePasswordForm
+                        userEmail={openModalPassword.userEmail}
+                        closeAction={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
                     />
                 </div>
             </RexaModal>

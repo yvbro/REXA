@@ -30,7 +30,8 @@ data class User(
     fun toOutput(): UserDto = UserDto(
             this.email,
             this.userRoles,
-            this.enabled)
+            this.enabled,
+            this.authProvider)
 }
 
 enum class AuthProvider {

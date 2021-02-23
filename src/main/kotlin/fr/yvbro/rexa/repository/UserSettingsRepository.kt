@@ -1,6 +1,5 @@
 package fr.yvbro.rexa.repository
 
-import fr.yvbro.rexa.exception.RexaNotFoundException
 import fr.yvbro.rexa.jooq.generated.Tables.USER_SETTINGS
 import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.repository.mapper.UserSettingsMapper
@@ -17,7 +16,7 @@ class UserSettingsRepository(private val dsl: DSLContext,
             .where(USER_SETTINGS.USER_ID.eq(userId))
             .limit(1)
             .fetchOptional(userSettingsMapper)
-            .orElseThrow { RexaNotFoundException("Settings") }
+            .orElse(UserSettings(null, null, null, null))
 
     fun upsert(userId: UUID?, xnatUsername: String?, xnatHost: String?, xnatPassword: String?) {
         dsl.insertInto(USER_SETTINGS)

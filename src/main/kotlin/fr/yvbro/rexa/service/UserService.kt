@@ -1,5 +1,6 @@
 package fr.yvbro.rexa.service
 
+import fr.yvbro.rexa.controller.input.UserChangePasswordRequest
 import fr.yvbro.rexa.exception.RexaBadRequestException
 import fr.yvbro.rexa.model.AuthProvider
 import fr.yvbro.rexa.model.User
@@ -41,6 +42,16 @@ class UserService(private val userRepository: UserRepository,
             userRoleRepository.saveRolesForUser(user.id!!, listOf(USER))
         } else {
             throw RexaBadRequestException("The email or the password can not be null.")
+        }
+    }
+
+    fun editPassword(userChangePasswordRequest: UserChangePasswordRequest) {
+        passwordService.checkConfirmationPassword(userChangePasswordRequest.newPassword, userChangePasswordRequest.confirmationPassword)
+        passwordService.checkPasswordRules(userChangePasswordRequest.newPassword)
+
+        val updated = userRepository.editPassword(userChangePasswordRequest.email, passwordService.encodePassword(userChangePasswordRequest.newPassword))
+        if (updated == 0) {
+            throw RexaBadRequestException("Password not changed for user {}", userChangePasswordRequest.email.toString())
         }
     }
 }

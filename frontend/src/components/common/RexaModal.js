@@ -10,8 +10,7 @@ const RexaModal = (props) => (
         className={classes.modal}
         open={props.open}
         onClose={props.closeModal}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby={props.title}
     >
         {props.children}
     </Modal>
@@ -19,6 +18,7 @@ const RexaModal = (props) => (
 
 RexaModal.propTypes = {
     children: PropTypes.object,
+    title: PropTypes.string,
     open: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
 };

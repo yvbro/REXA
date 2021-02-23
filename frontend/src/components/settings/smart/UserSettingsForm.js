@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { Card, Button, TextField, makeStyles, Typography } from '@material-ui/core';
+import { Card, Button, makeStyles, Typography } from '@material-ui/core';
 
-import PasswordRules from '../../common/PasswordRules';
+import PasswordRules from '../../common/password/PasswordRules';
+import PasswordField from '../../common/password/PasswordField';
 
 import { updateUserSettings } from '../api/apiSettings';
 import classes from './XnatSettingsForm.module.scss';
@@ -87,54 +88,28 @@ const UserSettingsForm = () => {
                 key={'userSettingsForm'}
                 id={'userSettingsForm'}
             >
-                <TextField
-                    id="CurrentPassword"
-                    name="currentPassword"
-                    label="current password"
-                    type="password"
-                    variant="outlined"
+                <PasswordField 
                     value={currentPassword}
+                    label="Current password"
                     onChange={(e) => setCurrentPassword(e.target.value)}
+                    testId={'Password'}
                     className={style.input}
-                    inputProps={{
-                        form: {
-                            autoComplete: 'off',
-                        },
-                    }}
                 />
-                <TextField
-                    id="newPassword"
-                    name="newPassword"
-                    label="New password"
-                    type="password"
-                    variant="outlined"
-                    error={!!errorPassword}
-                    helperText={errorPassword}
+                <PasswordField 
                     value={newPassword}
+                    label="New password"
+                    error={errorPassword}
                     onChange={onChangePassword}
+                    testId={'newPassword'}
                     className={style.input}
-                    inputProps={{
-                        form: {
-                            autoComplete: 'off',
-                        },
-                    }}
                 />
-                <TextField
-                    id="confirmationPassword"
-                    name="confirmationPassword"
-                    label="Confirm new password"
-                    type="password"
-                    variant="outlined"
-                    error={!!errorConfirmationPassword}
-                    helperText={errorConfirmationPassword}
+                <PasswordField 
                     value={confirmationPassword}
+                    label="Confirm new password"
+                    error={errorConfirmationPassword}
                     onChange={onChangeConfirmedPassword}
+                    testId={'confirmationPassword'}
                     className={style.input}
-                    inputProps={{
-                        form: {
-                            autoComplete: 'off',
-                        },
-                    }}
                 />
                 <Button
                     type="submit"

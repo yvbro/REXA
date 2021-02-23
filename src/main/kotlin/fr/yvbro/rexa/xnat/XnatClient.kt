@@ -5,6 +5,7 @@ import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import fr.yvbro.rexa.exception.RexaBadRequestException
+import fr.yvbro.rexa.exception.RexaNotFoundException
 import fr.yvbro.rexa.exception.RexaUnknownException
 import fr.yvbro.rexa.model.UserSettings
 import fr.yvbro.rexa.security.UserPrincipal
@@ -26,11 +27,14 @@ class XnatClient(private val userSettingsService: UserSettingsService) {
     }
 
     fun callXnatUri(uri: String): String {
-        val user = userSettingsService.getXnatSettings((SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id)
-        val fullUri = user.xnatHost + uri
+        val xnatSettingsForUser = userSettingsService.getXnatSettings((SecurityContextHolder.getContext().authentication.principal as UserPrincipal).id)
+        if (xnatSettingsForUser.xnatHost == null) {
+            throw RexaNotFoundException("Xnat settings")
+        }
+        val fullUri = xnatSettingsForUser.xnatHost + uri
 
         logger.info("Fetching Xnat data with URI $uri")
-        return callXnatUriWithCredentials(fullUri, user)
+        return callXnatUriWithCredentials(fullUri, xnatSettingsForUser)
     }
 
     fun callXnatUriWithCredentials(uri: String, userSettings: UserSettings): String {

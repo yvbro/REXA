@@ -1,32 +1,30 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import {
-    TextField,
     Card,
-    CardContent,
     CardHeader,
+    CardContent,
     CardActions,
     Button,
     makeStyles,
     Avatar,
 } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import EditIcon from '@material-ui/icons/Edit';
 
 import PasswordRules from '../../common/password/PasswordRules';
 import PasswordField from '../../common/password/PasswordField';
 
-import { addUser } from '../redux/userDuck';
+import { updatePassword } from '../redux/userDuck';
 import {
-    regexEmail,
     isPasswordTooShort,
     ERROR_PASSWORD_LENGTH,
     passwordDoesNotContainACapitalLetter,
     ERROR_PASSWORD_CAPITAL_LETTER,
     passwordDoesNotContainANumber,
     ERROR_PASSWORD_NUMBER,
-} from '../../../helpers/constants/index';
+    ERROR_PASSWORD_NOT_MATCH
+} from '../../../helpers/constants';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,37 +58,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AddUserForm = (props) => {
+const ChangePasswordForm = (props) => {
     const classes = useStyles();
 
-    const dispatch = useDispatch();
-
-    const [email, setEmail] = useState('');
-    const [errorEmail, setErrorEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmationPassword, setConfirmationPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+    const [errorConfirmationPassword, setErrorConfirmationPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!email) {
-            setErrorEmail('Email must be set.');
-        } else if (!password) {
-            setErrorPassword('Password must be set.');
+        if (confirmationPassword !== newPassword) {
+            setErrorConfirmationPassword(ERROR_PASSWORD_NOT_MATCH);
         } else {
-            dispatch(addUser(email, password)).then(() => props.closeAction());
+            updatePassword(props.userEmail, newPassword, confirmationPassword).then(() => props.closeAction());
         }
-    };
-
-    const onChangeEmail = (event) => {
-        if (props.users.includes(event.target.value)) {
-            setErrorEmail('Email already used');
-        } else if (event.target.value.match(regexEmail)) {
-            setErrorEmail('');
-        } else {
-            setErrorEmail('Email invalid');
-        }
-        setEmail(event.target.value);
     };
 
     const onChangePassword = (event) => {
@@ -103,7 +86,17 @@ const AddUserForm = (props) => {
         } else {
             setErrorPassword('');
         }
-        setPassword(event.target.value);
+
+        setNewPassword(event.target.value);
+    };
+
+    const onChangeConfirmedPassword = (event) => {
+        if (event.target.value !== newPassword) {
+            setErrorConfirmationPassword('Password and confirmation does not match.');
+        } else {
+            setErrorConfirmationPassword('');
+        }
+        setConfirmationPassword(event.target.value);
     };
 
     return (
@@ -111,33 +104,29 @@ const AddUserForm = (props) => {
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                        <AccountCircleIcon className={classes.iconDef} />
+                        <EditIcon className={classes.iconDef} />
                     </Avatar>
                 }
-                title="Add New User"
+                title={`Edit password for ${props.userEmail}`}
                 titleTypographyProps={{ variant: 'h6', color: 'primary' }}
                 subheader={<PasswordRules />}
             />
             <CardContent className={classes.cardContent}>
-                <TextField
-                    className={classes.text}
-                    required
-                    label="User email"
-                    variant="outlined"
-                    value={email}
-                    error={!!errorEmail}
-                    helperText={errorEmail}
-                    onChange={onChangeEmail}
-                    inputProps={
-                        {'data-testid': 'email'}
-                    }
-                />
                 <PasswordField 
-                    value={password}
-                    label="Password"
+                    value={newPassword}
+                    label="New password"
                     error={errorPassword}
                     onChange={onChangePassword}
-                    testId='password'
+                    testId={'newPassword'}
+                    className={classes.text}
+                />
+                <PasswordField 
+                    value={confirmationPassword}
+                    label="Confirm new password"
+                    error={errorConfirmationPassword}
+                    onChange={onChangeConfirmedPassword}
+                    testId={'confirmationPassword'}
+                    className={classes.text}
                 />
             </CardContent>
             <CardActions>
@@ -145,10 +134,12 @@ const AddUserForm = (props) => {
                     size="small"
                     onClick={handleSubmit}
                     color="primary"
-                    disabled={!!errorEmail || !!errorPassword}
+                    disabled={
+                        !newPassword || !confirmationPassword ||
+                        !!errorPassword || !!errorConfirmationPassword}
                     className={classes.button}
                 >
-                    Add
+                    Save
                 </Button>
                 <Button
                     size="small"
@@ -163,9 +154,9 @@ const AddUserForm = (props) => {
     );
 };
 
-AddUserForm.propTypes = {
-    users: PropTypes.array.isRequired,
+ChangePasswordForm.propTypes = {
+    userEmail: PropTypes.string,
     closeAction: PropTypes.func.isRequired,
 };
 
-export default AddUserForm;
+export default ChangePasswordForm;
