@@ -6,10 +6,6 @@ import AddUserForm from './AddUserForm';
 
 import * as userDuck from '../redux/userDuck';
 
-// With jest.mock our API method does nothing
-// we don't want to hit the server in our tests
-jest.mock('../redux/userDuck');
-
 const CLOSE_ACTION = jest.fn();
 const TEST_USERS = [
     { email: 'admin@test.com', roles: ['ADMIN', 'USER'], enabled: true, authProvider: 'local'},
@@ -25,6 +21,7 @@ const REGULAR_STATE = {
 };
 
 const VALID_EMAIL = 'test@gmail.com';
+const INVALID_EMAIL = 'username';
 const VALID_PASSWORD = 'Qwer1234';
 const SHORT_PASSWORD = 'wrong';
 const NO_NUMBER_PASSWORD = 'No number password';
@@ -55,99 +52,88 @@ describe('The AddUserForm component', () => {
         expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
     });
 
-    // it('should call updatePassword on Save if no errors and close modal', () => {
-    //     const store = makeTestStore(REGULAR_STATE);
+    it('should call addUser on Add if no errors and close modal', () => {
+        const store = makeTestStore(REGULAR_STATE);
 
-    //     const { getByRole, getByTestId } = render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, { store });
+        const addUser = jest.spyOn(userDuck, 'addUser');
 
-    //     userDuck.addUser = jest.fn(() => Promise.resolve());
+        const { getByRole, getByTestId } = render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, { store });
         
-    //     const email = getByTestId('email');
-    //     const passwordInput = getByTestId('password');
+        const email = getByTestId('email');
+        const passwordInput = getByTestId('password');
 
-    //     fireEvent.change(email, { target: { value: VALID_EMAIL } });
-    //     fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
+        fireEvent.change(email, { target: { value: VALID_EMAIL } });
+        fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
 
-    //     const add = getByRole('button', {name: 'Add'});
-    //     fireEvent.click(add);
+        const add = getByRole('button', {name: 'Add'});
+        fireEvent.click(add);
 
-    //     expect(userDuck.addUser).toHaveBeenCalledTimes(1);
-    //     expect(userDuck.addUser).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD);
-    //     expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
-    // });
+        expect(addUser).toHaveBeenCalledTimes(1);
+        expect(addUser).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD);
+        expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
+    });
 
-    // it('should dispatch action if click on checkbox', () => {
-    //     const store = makeTestStore(REGULAR_STATE);
-
-    //     const { getAllByRole } = render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, { store });
-
-    //     const checkbox = getAllByRole('checkbox')[2];
-    //     expect(checkbox).not.toHaveAttribute('checked');
-
-    //     fireEvent.click(checkbox);
-
-    //     expect(store.getActions()).toStrictEqual([TEST_ACTION]);
-    // });
-
-    // it('should display error if password to short', () => {
-    //     const { getByTestId, getByText } = renderWithStore(<AddUserForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION}/>, {});
+    it('should display error if password to short', () => {
+        const { getByTestId, getByText } = renderWithStore(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, {});
         
-    //     const passwordInput = getByTestId('newPassword');
+        const passwordInput = getByTestId('password');
 
-    //     fireEvent.change(passwordInput, { target: { value: SHORT_PASSWORD } });
+        fireEvent.change(passwordInput, { target: { value: SHORT_PASSWORD } });
 
-    //     expect(getByText('Password must be at least 8 characters long.')).toBeInTheDocument();
-    // });
+        expect(getByText('Password must be at least 8 characters long.')).toBeInTheDocument();
+    });
 
-    // it('should display error if no number in password', () => {
-    //     const { getByTestId, getByText } = renderWithStore(<AddUserForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION}/>, {});
+    it('should display error if no number in password', () => {
+        const { getByTestId, getByText } = renderWithStore(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, {});
         
-    //     const passwordInput = getByTestId('newPassword');
+        const passwordInput = getByTestId('password');
 
-    //     fireEvent.change(passwordInput, { target: { value: NO_NUMBER_PASSWORD } });
+        fireEvent.change(passwordInput, { target: { value: NO_NUMBER_PASSWORD } });
 
-    //     expect(getByText('Password must contain a number.')).toBeInTheDocument();
-    // });
+        expect(getByText('Password must contain a number.')).toBeInTheDocument();
+    });
 
-    // it('should display error if no capital letter in password', () => {
-    //     const { getByTestId, getByText } = renderWithStore(<AddUserForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION}/>, {});
+    it('should display error if no capital letter in password', () => {
+        const { getByTestId, getByText } = renderWithStore(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, {});
         
-    //     const passwordInput = getByTestId('newPassword');
+        const passwordInput = getByTestId('password');
 
-    //     fireEvent.change(passwordInput, { target: { value: NO_CAPITAL_LETTER_PASSWORD } });
+        fireEvent.change(passwordInput, { target: { value: NO_CAPITAL_LETTER_PASSWORD } });
 
-    //     expect(getByText('Password must contain a capital letter.')).toBeInTheDocument();
-    // });
+        expect(getByText('Password must contain a capital letter.')).toBeInTheDocument();
+    });
 
-    // it('should display error if no match between password and confirmation', () => {
-    //     const { getByTestId, getByText } = renderWithStore(<AddUserForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION}/>, {});
+    it('should display error if add click with empty user email', () => {
+        const { getByRole, getByText } = renderWithStore(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, {});
         
-    //     const passwordInput = getByTestId('newPassword');
-    //     const confirmationpasswordInput = getByTestId('confirmationPassword');
+        const add = getByRole('button', {name: 'Add'});
+        fireEvent.click(add);
 
-    //     fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
-    //     fireEvent.change(confirmationpasswordInput, { target: { value: SHORT_PASSWORD } });
+        expect(getByText('Email must be set.')).toBeInTheDocument();
+    });
 
-    //     expect(getByText('Password and confirmation does not match.')).toBeInTheDocument();
-    // });
+    it('should display error if add click with invalid email', () => {
+        const { getByTestId, getByRole, getByText } = renderWithStore(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, {});
+        
+        const passwordInput = getByTestId('email');
+        fireEvent.change(passwordInput, { target: { value: INVALID_EMAIL } });
 
-    // it('should have button Save disabled if missing confirmation password', () => {
-    //     const { getByRole, getByTestId } = renderWithStore(<AddUserForm closeAction={CLOSE_ACTION}/>, {});
+        const add = getByRole('button', {name: 'Add'});
+        fireEvent.click(add);
 
-    //     const passwordInput = getByTestId('newPassword');
+        expect(getByText('Email invalid')).toBeInTheDocument();
+    });
 
-    //     fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
+    it('should display error if add click with valid user email but empty password', () => {
+        const { getByTestId, getByRole, getByText } = renderWithStore(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION}/>, {});
+        
+        const passwordInput = getByTestId('email');
+        fireEvent.change(passwordInput, { target: { value: VALID_EMAIL } });
 
-    //     expect(getByRole('button', {name: 'Save'})).toBeDisabled();
-    // });
+        const add = getByRole('button', {name: 'Add'});
+        fireEvent.click(add);
 
-    // it('should have button Save disabled if missing new password', () => {
-    //     const { getByRole, getByTestId } = renderWithStore(<AddUserForm closeAction={CLOSE_ACTION}/>, {});
+        expect(getByText('Password must be set.')).toBeInTheDocument();
+    });
 
-    //     const confirmationpasswordInput = getByTestId('confirmationPassword');
-
-    //     fireEvent.change(confirmationpasswordInput, { target: { value: VALID_PASSWORD } });
-
-    //     expect(getByRole('button', {name: 'Save'})).toBeDisabled();
-    // });
 });
