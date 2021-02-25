@@ -26,7 +26,7 @@ class UserService(private val userRepository: UserRepository,
         if (userEmail != null && enabled != null) {
             userRepository.switchEnabledForUser(userEmail, enabled)
         } else {
-            throw RexaBadRequestException(String.format("The input can not be null: %s / %s", userEmail, enabled))
+            throw RexaBadRequestException("The email or enabled can not be null")
         }
     }
 
@@ -51,7 +51,7 @@ class UserService(private val userRepository: UserRepository,
 
         val updated = userRepository.editPassword(userChangePasswordRequest.email, passwordService.encodePassword(userChangePasswordRequest.newPassword))
         if (updated == 0) {
-            throw RexaBadRequestException("Password not changed for user {}", userChangePasswordRequest.email.toString())
+            throw RexaBadRequestException("Password not changed for user {}", userChangePasswordRequest.email)
         }
     }
 }

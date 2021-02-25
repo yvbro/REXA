@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserSettingsService(private val xnatRepository: UserSettingsRepository,
+class UserSettingsService(private val userSettingsRepository: UserSettingsRepository,
                           private val userRepository: UserRepository,
                           private val passwordService: PasswordService,
                           private val securityConfiguration: AESEncryptionDecryption,
                           private val properties: Properties) {
 
     fun getXnatSettings(userId: UUID?): UserSettings {
-        return xnatRepository.getSettingsByUserId(userId)
+        return userSettingsRepository.getSettingsByUserId(userId)
     }
 
     fun upsertXnatSettings(userId: UUID?, xnatUsername: String?, xnatHost: String?, xnatPassword: String?) {
         if (xnatPassword != null) {
-            xnatRepository.upsert(userId, xnatUsername, xnatHost, securityConfiguration.encrypt(xnatPassword, properties.secret))
+            userSettingsRepository.upsert(userId, xnatUsername, xnatHost, securityConfiguration.encrypt(xnatPassword, properties.secret))
         } else {
             throw RexaBadRequestException("You must set the Xnat Password.")
         }
