@@ -42,12 +42,14 @@ class UserSettingsServiceTest {
 
     @Test
     fun `upsertXnatSettings should encrypt password before upserting`() {
-        Mockito.`when`(properties.secret).thenReturn("test")
+        val userId = UUID.randomUUID()
+        val xnatUsername = "username"
+        val xnatPassword = "password"
+        val xnatHost = "http://test.com"
 
-        var userId = UUID.randomUUID()
-        var xnatUsername = "test"
-        var xnatPassword = "password"
-        var xnatHost = "http://test.com"
+        Mockito.`when`(properties.secret).thenReturn("test")
+        Mockito.`when`(securityConfiguration.encrypt(xnatPassword, "test")).thenReturn(xnatPassword)
+
         userSettingsService.upsertXnatSettings(userId, xnatUsername, xnatHost, xnatPassword)
 
         Mockito.verify(securityConfiguration, Mockito.times(1)).encrypt(xnatPassword, "test")
