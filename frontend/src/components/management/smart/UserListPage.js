@@ -139,11 +139,11 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
                         loading={false}
                         noDataLabel="No users on the platform"
                         fullHeight
-                                        currentPage={page}
-                                        totalElements={totalElements}
-                                        rowsPerPage={rowsPerPage}
-                                        handleChangeRowsPerPage={handleChangeRowsPerPage}
-                                        handleChangePage={handleChangePage}
+                        currentPage={page}
+                        totalElements={totalElements}
+                        rowsPerPage={rowsPerPage}
+                        handleChangeRowsPerPage={handleChangeRowsPerPage}
+                        handleChangePage={handleChangePage}
                     />
                 </RexaCard>
             </Grid>

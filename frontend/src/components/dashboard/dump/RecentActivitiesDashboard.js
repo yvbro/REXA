@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Chip } from '@material-ui/core';
@@ -6,8 +6,6 @@ import { Chip } from '@material-ui/core';
 import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
 import { getXnatUri } from '../../../helpers/xnat';
-
-import classes from './dashboard.module.scss';
 
 const toChip = (label, id, xnatHost) => {
     return (
@@ -25,6 +23,18 @@ const toChip = (label, id, xnatHost) => {
 };
 
 const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(4);
+    
+    const handleChangePage = (_, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
     const data = [
         { name: 'Project', values: recentActivities.map((e) => e.project) },
         { name: 'Type', values: recentActivities.map((e) => e.typeDesc) },
@@ -36,11 +46,16 @@ const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
     ];
 
     return (
-        <RexaCard title="Recent Activities" className={classes.tableCard}>
+        <RexaCard title="Recent Activities" >
             <RexaDataTable
                 data={data}
                 loading={loading}
                 noDataLabel="No recent activities"
+                currentPage={page}
+                rowsPerPage={rowsPerPage}
+                handleChangePage={handleChangePage}
+                totalElements={recentActivities.length}
+                handleChangeRowsPerPage={handleChangeRowsPerPage}
             />
         </RexaCard>
     );

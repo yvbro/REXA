@@ -23,7 +23,7 @@ import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
 const useStyles = makeStyles(() => ({
     root: {
         borderRadius: borderRadius,
-        maxHeight: '35rem',
+        maxHeight: '25rem',
     },
     root100: {
         borderRadius: borderRadius,

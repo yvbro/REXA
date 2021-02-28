@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import RexaDataTable from '../../common/RexaDataTable';
 import RexaCard from '../../common/RexaCard';
 
-import classes from './dashboard.module.scss';
-
 export const PrearchiveDashboard = ({ preArchives, loading }) => {
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(4);
+    
+    const handleChangePage = (_, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
     const data = [
         { name: 'Project', values: preArchives.map((e) => e.project) },
         { name: 'Subject', values: preArchives.map((e) => e.subject) },
@@ -17,11 +27,16 @@ export const PrearchiveDashboard = ({ preArchives, loading }) => {
     ];
 
     return (
-        <RexaCard title="Prearchive" className={classes.tableCard}>
+        <RexaCard title="Prearchive" >
             <RexaDataTable
                 data={data}
                 loading={loading}
                 noDataLabel="No data in the PreArchive"
+                currentPage={page}
+                rowsPerPage={rowsPerPage}
+                handleChangePage={handleChangePage}
+                totalElements={preArchives.length}
+                handleChangeRowsPerPage={handleChangeRowsPerPage}
             />
         </RexaCard>
     );
