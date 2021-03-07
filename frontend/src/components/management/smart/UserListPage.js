@@ -59,15 +59,6 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
         );
     };
 
-    const handleChangePage = (_, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
     const toEditComponent = user => {
         let component = (
             <IconButton color="primary" aria-label="edit password" component="span" onClick={() => setOpenModalPassword({open: true, userEmail: user.email})}>
@@ -136,14 +127,14 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
                     actions={action}>
                     <RexaDataTable
                         data={data}
+                        setPage={setPage}
+                        setRowsPerPage={setRowsPerPage}
                         loading={false}
                         noDataLabel="No users on the platform"
                         fullHeight
                         currentPage={page}
                         totalElements={totalElements}
                         rowsPerPage={rowsPerPage}
-                        handleChangeRowsPerPage={handleChangeRowsPerPage}
-                        handleChangePage={handleChangePage}
                     />
                 </RexaCard>
             </Grid>

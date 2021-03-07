@@ -25,15 +25,6 @@ const toChip = (label, id, xnatHost) => {
 const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
-    
-    const handleChangePage = (_, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
 
     const data = [
         { name: 'Project', values: recentActivities.map((e) => e.project) },
@@ -53,9 +44,9 @@ const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
                 noDataLabel="No recent activities"
                 currentPage={page}
                 rowsPerPage={rowsPerPage}
-                handleChangePage={handleChangePage}
                 totalElements={recentActivities.length}
-                handleChangeRowsPerPage={handleChangeRowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                setPage={setPage}
             />
         </RexaCard>
     );

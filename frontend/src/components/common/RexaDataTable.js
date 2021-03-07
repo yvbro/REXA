@@ -56,16 +56,25 @@ const StyledTableRow = withStyles((theme) => ({
 const RexaDataTable = ({
     key,
     data,
+    setPage,
     loading,
     noDataLabel,
     fullHeight,
     rowsPerPage,
     currentPage,
     totalElements,
-    handleChangePage,
-    handleChangeRowsPerPage,
+    setRowsPerPage,
 }) => {
     const classes = useStyles();
+
+    const handleChangePage = (_, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
 
     if (loading) {
         return <LoadingIndicator />;
@@ -134,8 +143,8 @@ RexaDataTable.propTypes = {
     currentPage: PropTypes.number.isRequired,
     totalElements: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number,
-    handleChangePage: PropTypes.func.isRequired,
-    handleChangeRowsPerPage: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
+    setRowsPerPage: PropTypes.func.isRequired,
 };
 
 RexaDataTable.defaultProps = {
