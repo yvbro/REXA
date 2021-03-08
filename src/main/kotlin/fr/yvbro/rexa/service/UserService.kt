@@ -9,7 +9,6 @@ import fr.yvbro.rexa.repository.UserRepository
 import fr.yvbro.rexa.repository.UserRoleRepository
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
@@ -25,7 +24,12 @@ class UserService(private val userRepository: UserRepository,
         return users
     }
 
-    fun getUsersPaginate(pageable: Pageable): Page<User> = userRepository.getUsersByPage(pageable)
+    fun getUsersPaginate(pageable: Pageable): Page<User> {
+        val users = userRepository.getUsersByPage(pageable)
+        val roles = userRoleRepository.getUserRoles()
+        users.content.map { it.userRoles = roles[it.id]!! }
+        return users
+    }
 
     fun switchEnabledForUser(userEmail: String?, enabled: Boolean?) {
         if (userEmail != null && enabled != null) {
