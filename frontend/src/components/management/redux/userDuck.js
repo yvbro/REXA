@@ -31,8 +31,8 @@ export default function project(state = initialState, action) {
         case pending(FETCH_USERS):
             return {
                 ...state,
-                data: [],
-                totalElements: 0,
+                data: state.data,
+                totalElements: state.totalElements,
                 loading: true,
             };
         case fulfilled(FETCH_USERS):

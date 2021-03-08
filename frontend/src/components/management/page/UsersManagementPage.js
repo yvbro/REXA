@@ -14,23 +14,13 @@ const UsersManagementPage = () => {
         dispatch(fetchUsers(page, rowsPerPage));
     }, [dispatch, page, rowsPerPage]);
 
-    const { loading } = useSelector((state) => ({
-        loading: state.user.loading,
-    }));
-
     return (
-        <>
-            {loading ? (
-                <LoadingIndicator />
-            ) : (
-                <UserListPage
-                    page={page}
-                    setPage={setPage}
-                    rowsPerPage={rowsPerPage}
-                    setRowsPerPage={setRowsPerPage}
-                />
-            )}
-        </>
+        <UserListPage
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+        />
     );
 };
 
