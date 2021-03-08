@@ -9,7 +9,6 @@ const DEFAULT_ROLES = ['USER'];
 const initialState = {
     data: [],
     totalElements: 0,
-    totalPages: 0,
     loading: false,
 };
 
@@ -34,7 +33,6 @@ export default function project(state = initialState, action) {
                 ...state,
                 data: [],
                 totalElements: 0,
-                totalPages: 0,
                 loading: true,
             };
         case fulfilled(FETCH_USERS):
@@ -42,7 +40,6 @@ export default function project(state = initialState, action) {
                 ...state,
                 data: action.payload.data.content,
                 totalElements: action.payload.data.totalElements,
-                totalPages: action.payload.data.totalPages,
                 loading: false,
             };
         case rejected(FETCH_USERS):
@@ -50,7 +47,6 @@ export default function project(state = initialState, action) {
                 ...state,
                 data: state.data,
                 totalElements: state.totalElements,
-                totalPages: state.totalPages,
                 loading: false,
             };
         case pending(SWITCH_ENABLED_USER):
