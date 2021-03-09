@@ -22,7 +22,7 @@
 		<postgresql.version>42.2.11</postgresql.version>
 		<jooq.version>3.13.1</jooq.version>
 		<!-- Flyway -->
-		<flyway-core.version>3.0</flyway-core.version>
+		<flyway-core.version>6.5.7</flyway-core.version>
 		<flyway.user>rexaAdmin</flyway.user>
 		<flyway.password>rexaAdmin</flyway.password>
 		<flyway.schemas>rexa</flyway.schemas>
@@ -30,8 +30,11 @@
 
 		<!-- Test -->
 		<junit.version>5.5.2</junit.version>
+		<junit4.version>4.13.2</junit4.version>
 		<mockito.version>2.23.4</mockito.version>
 		<assert.verison>3.8.0</assert.verison>
+		<testcontainers.version>1.15.2</testcontainers.version>
+		<kotest.version>4.4.3</kotest.version>
 
 		<!-- Other Libs -->
 		<jackson.version>2.10.0</jackson.version>
@@ -169,6 +172,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit4.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
@@ -192,6 +201,36 @@
 			<version>${kotlin.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.kotest</groupId>
+			<artifactId>kotest-assertions-core-jvm</artifactId>
+			<version>${kotest.version}</version>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-core.version}</version>
+            <scope>test</scope>
+        </dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
 		<dependency>

@@ -16,7 +16,7 @@ data class User(
             var email: String? = null,
             var password: String? = null,
             var authProvider: String? = null,
-            var userRoles: List<String> = listOf("USER"),
+            var userRoles: List<String> = emptyList(),
             var enabled: Boolean? = false) {
         fun id(id: UUID?) = apply { this.id = id }
         fun email(email: String?) = apply { this.email = email }
