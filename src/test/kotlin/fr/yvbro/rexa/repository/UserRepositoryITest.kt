@@ -16,11 +16,14 @@ import kotlin.test.assertFailsWith
 
 class UserRepositoryITest : AbstractTestConfiguration() {
 
-    val USER_ID: UUID = UUID.randomUUID()
+    val USER_ID: UUID = UUID.fromString("059ed9d4-5f21-4483-9960-fd7a8bba79b2")
+    val USER_ID2: UUID = UUID.fromString("c2df0244-0a21-4f9c-8e64-7eef17a6e89d")
     val USER_EMAIL: String = "email"
+    val USER_EMAIL_DISABLED: String = "emailDisabled"
     val USER_PASSWORD: String = "passworD1"
     val USER_AUTH: String = "test"
     val USER_EXPECTED: User = User(USER_ID, USER_EMAIL, USER_PASSWORD, USER_AUTH, emptyList(), false)
+    val USER_DISABLED: User = User(USER_ID2, USER_EMAIL_DISABLED, USER_PASSWORD, USER_AUTH, emptyList(), false)
 
     @Autowired
     lateinit var flyway: Flyway
@@ -38,6 +41,10 @@ class UserRepositoryITest : AbstractTestConfiguration() {
 
         dslContext.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD, USER.AUTH_PROVIDER, USER.ENABLED)
             .values(USER_EXPECTED.id, USER_EXPECTED.email, USER_EXPECTED.password, USER_EXPECTED.authProvider, USER_EXPECTED.enabled)
+            .returningResult(USER.ID, USER.EMAIL, USER.PASSWORD, USER.AUTH_PROVIDER, USER.ENABLED)
+            .fetchOne()
+        dslContext.insertInto(USER, USER.ID, USER.EMAIL, USER.PASSWORD, USER.AUTH_PROVIDER, USER.ENABLED)
+            .values(USER_DISABLED.id, USER_DISABLED.email, USER_DISABLED.password, USER_DISABLED.authProvider, USER_DISABLED.enabled)
             .returningResult(USER.ID, USER.EMAIL, USER.PASSWORD, USER.AUTH_PROVIDER, USER.ENABLED)
             .fetchOne()
     }
@@ -87,11 +94,14 @@ class UserRepositoryITest : AbstractTestConfiguration() {
 
     @Test
     fun `edit password should change user password if exists`() {
-        val edited = userRepository.editPassword(USER_EMAIL, "passworD2")
+        val userWithPassword = userRepository.getUserByEmail(USER_EMAIL_DISABLED)
+        assertEquals(userWithPassword.password, USER_PASSWORD)
+
+        val edited = userRepository.editPassword(USER_EMAIL_DISABLED, "passworD2")
         assertEquals(edited, 1)
 
         // Check with inserted user
-        val userEdited = userRepository.getUserByEmail(USER_EMAIL)
+        val userEdited = userRepository.getUserByEmail(USER_EMAIL_DISABLED)
         assertEquals(userEdited.password, "passworD2")
     }
 
@@ -103,14 +113,14 @@ class UserRepositoryITest : AbstractTestConfiguration() {
 
     @Test
     fun `switch enabled for user should set enable on user`() {
-        val userBeforeSwitch = userRepository.getUserByEmail(USER_EMAIL)
+        val userBeforeSwitch = userRepository.getUserByEmail(USER_EMAIL_DISABLED)
         assertEquals(userBeforeSwitch.enabled, false)
 
-        val edited = userRepository.switchEnabledForUser(USER_EMAIL, true)
+        val edited = userRepository.switchEnabledForUser(USER_EMAIL_DISABLED, true)
         assertEquals(edited, 1)
 
         // Check with inserted user
-        val userEdited = userRepository.getUserByEmail(USER_EMAIL)
+        val userEdited = userRepository.getUserByEmail(USER_EMAIL_DISABLED)
         assertEquals(userEdited.enabled, true)
     }
 
@@ -140,9 +150,9 @@ class UserRepositoryITest : AbstractTestConfiguration() {
     fun `get users return the list of all users`() {
         val users = userRepository.getUsers()
 
-        assertEquals(users.size, 3)
+        assertEquals(users.size, 4)
         val ids = users.map { user -> user.email }
-        assertThat(ids).containsExactlyInAnyOrder("admin@rexa.fr", "user@rexa.fr", USER_EMAIL)
+        assertThat(ids).containsExactlyInAnyOrder("admin@rexa.fr", "user@rexa.fr", USER_EMAIL, USER_EMAIL_DISABLED)
     }
 
 }
