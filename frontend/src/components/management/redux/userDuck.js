@@ -72,7 +72,11 @@ export default function project(state = initialState, action) {
         case ADD_USER:
             return {
                 ...state,
-                data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
+                data: [
+                    ...state.data,
+                    { email: action.payload, enabled: false, roles: DEFAULT_ROLES },
+                ],
+                totalElements: state.totalElements + 1,
                 loading: false,
             };
         default:
@@ -80,17 +84,16 @@ export default function project(state = initialState, action) {
     }
 }
 
-export const fetchUsers = (page, size) => (dispatch) =>  {
+export const fetchUsers = (page, size) => (dispatch) => {
+    const sizeQuery = size ? `&size=${size}` : '';
 
-    const sizeQuery = size ? `&size=${size}` : ''
-
-    const request = `/private/management/users/page?page=${page}${sizeQuery}`
+    const request = `/private/management/users/page?page=${page}${sizeQuery}`;
 
     dispatch({
         type: FETCH_USERS,
         payload: axios.get(request),
     });
-}
+};
 
 export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
     const param = { userEmail: userEmail, enabled: enabled };
@@ -130,13 +133,19 @@ export const addUser = (email, password) => (dispatch) => {
         });
 };
 
-
-export const updatePassword = async (userEmail, newPassword, confirmationPassword) => {
-    const param = { email: userEmail, newPassword: newPassword, confirmationPassword: confirmationPassword};
+export const updatePassword = async (
+    userEmail,
+    newPassword,
+    confirmationPassword
+) => {
+    const param = {
+        email: userEmail,
+        newPassword: newPassword,
+        confirmationPassword: confirmationPassword,
+    };
 
     try {
-        await axios
-            .post('/private/management/users/edit', param);
+        await axios.post('/private/management/users/edit', param);
         toast.info('Password edited!');
     } catch (error) {
         let errorMessage = _get(error, 'response.data.message', null);
