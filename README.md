@@ -1,4 +1,4 @@
-![Java CI with Maven](https://github.com/yvbro/ReXA/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![build](https://github.com/yvbro/ReXA/actions/workflows/build.yml/badge.svg)](https://github.com/yvbro/ReXA/actions/workflows/build.yml)
 
 ![](./frontend/src/assets/rexa-logo.png)
 # REXA
