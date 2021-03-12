@@ -1,4 +1,5 @@
 [![build](https://github.com/yvbro/ReXA/actions/workflows/build.yml/badge.svg)](https://github.com/yvbro/ReXA/actions/workflows/build.yml)
+[![tests](https://github.com/yvbro/ReXA/actions/workflows/test.yml/badge.svg)](https://github.com/yvbro/ReXA/actions/workflows/test.yml)
 
 ![](./frontend/src/assets/rexa-logo.png)
 # REXA
