@@ -58,29 +58,6 @@ const REGULAR_STATE = {
 describe('The UserListPage component', () => {
     afterEach(cleanup);
 
-    it('should take a snapshot', () => {
-        const { asFragment } = renderWithStore(
-            <UserListPage
-                page={PAGE}
-                setPage={SET_PAGE_ACTION}
-                rowsPerPage={ROW_PER_PAGE}
-                setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
-            />,
-            REGULAR_STATE
-        );
-
-        expect(
-            asFragment(
-                <UserListPage
-                    page={PAGE}
-                    setPage={SET_PAGE_ACTION}
-                    rowsPerPage={ROW_PER_PAGE}
-                    setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
-                />
-            )
-        ).toMatchSnapshot();
-    });
-
     it('should display user table properly', () => {
         const { getByRole, getAllByRole } = renderWithStore(
             <UserListPage

@@ -21,15 +21,6 @@ const REGULAR_STATE = {
 describe('The UsersManagementPage component', () => {
     afterEach(cleanup);
 
-    test('should take a snapshot', () => {
-        const { asFragment } = renderWithStore(
-            <UsersManagementPage />,
-            REGULAR_STATE
-        );
-
-        expect(asFragment(<UsersManagementPage />)).toMatchSnapshot();
-    });
-
     test('should display table if not loading', () => {
         const { getByRole, getAllByRole } = renderWithStore(
             <UsersManagementPage />,

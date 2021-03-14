@@ -20,7 +20,6 @@ import LoadingIndicator from './LoadingIndicator';
 import NoData from './NoData';
 
 import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
-import { Style } from '../../../node_modules/@material-ui/icons/index';
 
 const useStyles = makeStyles(() => ({
     root: {
