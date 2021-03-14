@@ -300,7 +300,7 @@ exports[`The UserListPage component should take a snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTablePagination-caption MuiTypography-body2 MuiTypography-colorInherit"
-                        id="mui-63356"
+                        id="mui-56720"
                       >
                         Rows per page:
                       </p>
@@ -309,9 +309,9 @@ exports[`The UserListPage component should take a snapshot 1`] = `
                       >
                         <div
                           aria-haspopup="listbox"
-                          aria-labelledby="mui-63356 mui-31396"
+                          aria-labelledby="mui-56720 mui-58646"
                           class="MuiSelect-root MuiSelect-select MuiTablePagination-select MuiSelect-selectMenu MuiInputBase-input"
-                          id="mui-31396"
+                          id="mui-58646"
                           role="button"
                           tabindex="0"
                         >
