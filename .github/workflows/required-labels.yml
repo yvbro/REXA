@@ -1,4 +1,4 @@
-name: Pull Request Labels
+name: Verify Review Done label on PR
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize]

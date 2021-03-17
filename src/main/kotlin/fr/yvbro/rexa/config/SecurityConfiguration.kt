@@ -30,7 +30,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration(private val customUserDetailsService: CustomUserDetailsService,
