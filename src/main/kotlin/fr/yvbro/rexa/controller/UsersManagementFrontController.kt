@@ -30,7 +30,7 @@ class UsersManagementFrontController(private val userService: UserService) {
                        @RequestParam(required = false, defaultValue = "10") size: Int,
                        @RequestParam(required = false, defaultValue = "id") sort: String
     ): Page<UserDto> {
-        return userService.getUsersPaginate(PageRequest.of(page, size, Sort.by(sort))).map { it.toOutput() }
+        return userService.getPaginatedUsers(PageRequest.of(page, size, Sort.by(sort))).map { it.toOutput() }
     }
 
     @PostMapping("/switch")

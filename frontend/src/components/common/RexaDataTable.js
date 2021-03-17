@@ -24,11 +24,9 @@ import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
 const useStyles = makeStyles(() => ({
     root: {
         borderRadius: borderRadius,
-        maxHeight: '25rem',
     },
     root100: {
         borderRadius: borderRadius,
-        maxHeight: '35rem',
     },
     header: {
         textAlign: 'center',
@@ -113,6 +111,20 @@ const RexaDataTable = ({
                             </StyledTableRow>
                         ))}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 15]}
+                                colSpan={3}
+                                count={totalElements}
+                                rowsPerPage={rowsPerPage}
+                                page={currentPage}
+                                onChangePage={handleChangePage}
+                                onChangeRowsPerPage={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
                 {data[0].values.length === 0 && (
                     <NoData
@@ -121,22 +133,6 @@ const RexaDataTable = ({
                     />
                 )}
             </TableContainer>
-            <Table aria-label="pagination table">
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 15]}
-                            colSpan={3}
-                            count={totalElements}
-                            rowsPerPage={rowsPerPage}
-                            page={currentPage}
-                            onChangePage={handleChangePage}
-                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
-                </TableFooter>
-            </Table>
         </Paper>
     );
 };

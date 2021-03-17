@@ -72,7 +72,7 @@ class UserServiceTest {
         user2.userRoles = listOf("USER")
         user3.userRoles = listOf("USER")
         user4.userRoles = listOf("USER")
-        assertEquals(userService.getUsersPaginate(pageable), PageImpl(listOf(user1, user2, user3, user4), pageable, 4))
+        assertEquals(userService.getPaginatedUsers(pageable), PageImpl(listOf(user1, user2, user3, user4), pageable, 4))
     }
 
 

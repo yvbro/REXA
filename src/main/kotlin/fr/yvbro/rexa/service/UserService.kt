@@ -24,7 +24,7 @@ class UserService(private val userRepository: UserRepository,
         return users
     }
 
-    fun getUsersPaginate(pageable: Pageable): Page<User> {
+    fun getPaginatedUsers(pageable: Pageable): Page<User> {
         val users = userRepository.getUsersByPage(pageable)
         val roles = userRoleRepository.getUserRoles()
         users.content.map { it.userRoles = roles[it.id]!! }
