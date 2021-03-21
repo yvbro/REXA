@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { Button, Switch, IconButton, Grid, makeStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
@@ -28,17 +29,16 @@ const useStyles = makeStyles(() => ({
         color: 'white',
     },
 }));
-
-const UserListPage = () => {
-    const style = useStyles();
-
+const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
     const dispatch = useDispatch();
+    const style = useStyles();
 
     const [openModalNewUser, setOpenModalNewUser] = useState(false);
     const [openModalPassword, setOpenModalPassword] = useState(DEFAULT_MODAL_PASSWORD_STATE);
 
-    const { users } = useSelector((state) => ({
+    const { users, totalElements} = useSelector((state) => ({
         users: state.user.data,
+        totalElements: state.user.totalElements
     }));
 
     const handleChange = (userEmail, enabled) =>
@@ -61,14 +61,14 @@ const UserListPage = () => {
 
     const toEditComponent = user => {
         let component = (
-            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => setOpenModalPassword({open: true, userEmail: user.email})}> 
+            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => setOpenModalPassword({open: true, userEmail: user.email})}>
                 <EditIcon />
             </IconButton>
         );
 
         if (user.roles.includes('ADMIN')) {
             component = (
-                <IconButton color="primary" aria-label="edit password" component="span" disabled > 
+                <IconButton color="primary" aria-label="edit password" component="span" disabled >
                     <EditIcon />
                 </IconButton>
             );
@@ -95,7 +95,7 @@ const UserListPage = () => {
             Add user
         </Button>
     );
-    
+
     return (
         <Grid container className={classes.rootDiv} spacing={3}>
             <Grid item md={12} xs={12}>
@@ -121,20 +121,32 @@ const UserListPage = () => {
                         />
                     </div>
                 </RexaModal>
-                <RexaCard 
+                <RexaCard
                     title='User Management'
                     className={classes.card}
                     actions={action}>
                     <RexaDataTable
                         data={data}
+                        setPage={setPage}
+                        setRowsPerPage={setRowsPerPage}
                         loading={false}
                         noDataLabel="No users on the platform"
                         fullHeight
+                        currentPage={page}
+                        totalElements={totalElements}
+                        rowsPerPage={rowsPerPage}
                     />
                 </RexaCard>
             </Grid>
         </Grid>
     );
+};
+
+UserListPage.propTypes = {
+    page: PropTypes.number.isRequired,
+    setPage: PropTypes.func.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    setRowsPerPage: PropTypes.func.isRequired,
 };
 
 export default UserListPage;

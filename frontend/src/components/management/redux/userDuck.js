@@ -8,6 +8,7 @@ import { fulfilled, pending, rejected } from '../../../helpers/promise';
 const DEFAULT_ROLES = ['USER'];
 const initialState = {
     data: [],
+    totalElements: 0,
     loading: false,
 };
 
@@ -27,60 +28,72 @@ export const ADD_USER = '[User] ADD USER';
 
 export default function project(state = initialState, action) {
     switch (action.type) {
-    case pending(FETCH_USERS):
-        return {
-            ...state,
-            data: [],
-            loading: true,
-        };
-    case fulfilled(FETCH_USERS):
-        return {
-            ...state,
-            data: action.payload.data,
-            loading: false,
-        };
-    case rejected(FETCH_USERS):
-        return {
-            ...state,
-            data: state.data,
-            loading: false,
-        };
-    case pending(SWITCH_ENABLED_USER):
-        return {
-            ...state,
-            data: setEnabledForUser(
-                state.data,
-                action.payload.userEmail,
-                action.payload.enabled
-            ),
-            loading: false,
-        };
-    case rejected(SWITCH_ENABLED_USER):
-        return {
-            ...state,
-            data: setEnabledForUser(
-                state.data,
-                action.payload.userEmail,
-                !action.payload.enabled
-            ),
-            loading: false,
-        };
-    case ADD_USER:
-        return {
-            ...state,
-            data: [...state.data, { email: action.payload, enabled: false, roles: DEFAULT_ROLES }],
-            loading: false,
-        };
-    default:
-        return state;
+        case pending(FETCH_USERS):
+            return {
+                ...state,
+                data: state.data,
+                totalElements: state.totalElements,
+                loading: true,
+            };
+        case fulfilled(FETCH_USERS):
+            return {
+                ...state,
+                data: action.payload.data.content,
+                totalElements: action.payload.data.totalElements,
+                loading: false,
+            };
+        case rejected(FETCH_USERS):
+            return {
+                ...state,
+                data: state.data,
+                totalElements: state.totalElements,
+                loading: false,
+            };
+        case pending(SWITCH_ENABLED_USER):
+            return {
+                ...state,
+                data: setEnabledForUser(
+                    state.data,
+                    action.payload.userEmail,
+                    action.payload.enabled
+                ),
+                loading: false,
+            };
+        case rejected(SWITCH_ENABLED_USER):
+            return {
+                ...state,
+                data: setEnabledForUser(
+                    state.data,
+                    action.payload.userEmail,
+                    !action.payload.enabled
+                ),
+                loading: false,
+            };
+        case ADD_USER:
+            return {
+                ...state,
+                data: [
+                    ...state.data,
+                    { email: action.payload, enabled: false, roles: DEFAULT_ROLES },
+                ],
+                totalElements: state.totalElements + 1,
+                loading: false,
+            };
+        default:
+            return state;
     }
 }
 
-export const fetchUsers = () => (dispatch) =>
+export const fetchUsers = (page, size) => (dispatch) => {
+    const sizeQuery = size ? `&size=${size}` : '';
+
+    const request = `/private/management/users/page?page=${page}${sizeQuery}`;
+
     dispatch({
         type: FETCH_USERS,
-        payload: axios.get('/private/management/users'),
+        payload: axios.get(request),
     });
+};
 
 export const switchEnabledUser = (userEmail, enabled) => (dispatch) => {
     const param = { userEmail: userEmail, enabled: enabled };
@@ -120,13 +133,19 @@ export const addUser = (email, password) => (dispatch) => {
         });
 };
 
-
-export const updatePassword = async (userEmail, newPassword, confirmationPassword) => {
-    const param = { email: userEmail, newPassword: newPassword, confirmationPassword: confirmationPassword};
+export const updatePassword = async (
+    userEmail,
+    newPassword,
+    confirmationPassword
+) => {
+    const param = {
+        email: userEmail,
+        newPassword: newPassword,
+        confirmationPassword: confirmationPassword,
+    };
 
     try {
-        await axios
-            .post('/private/management/users/edit', param);
+        await axios.post('/private/management/users/edit', param);
         toast.info('Password edited!');
     } catch (error) {
         let errorMessage = _get(error, 'response.data.message', null);

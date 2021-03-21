@@ -35,7 +35,7 @@ const ProjectDashboard = ({ projects, loading }) => {
 
     return (
         <>
-            <RexaCard title='Projects' className={classes.tableCard} classNameContent={classes.tableCardContent}>
+            <RexaCard title='Projects' classNameContent={classes.tableCardContent} className={classes.tableCard}>
                 {projects.length > 0 ? (
                     <List className={classes.listProjects}>
                         {projects.map((project, index) => (

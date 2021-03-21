@@ -15,6 +15,9 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.dao.DuplicateKeyException
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -50,6 +53,28 @@ class UserServiceTest {
         user2.userRoles = listOf("USER")
         assertEquals(userService.getUsers(), listOf(user1, user2))
     }
+
+    @Test
+    fun `getUsersPaginate returns users with roles with pagination`() {
+        val userId1 = UUID.randomUUID()
+        val userId2 = UUID.randomUUID()
+        val userId3 = UUID.randomUUID()
+        val userId4 = UUID.randomUUID()
+        val user1 = User(userId1, TEST_EMAIL, TEST_PASSWORD, AuthProvider.Local.toString(), emptyList(), true)
+        val user2 = User(userId2, "test2@gmail.com", "Password2", AuthProvider.Local.toString(), emptyList(), true)
+        val user3 = User(userId3, "test3@gmail.com", "Password3", AuthProvider.Local.toString(), emptyList(), true)
+        val user4 = User(userId4, "test5@gmail.com", "Password4", AuthProvider.Local.toString(), emptyList(), true)
+        var pageable = PageRequest.of(0, 10, Sort.by("id"))
+        Mockito.`when`(userRepository.getUsersByPage(pageable)).thenReturn(PageImpl(listOf(user1, user2, user3, user4), pageable, 4))
+        Mockito.`when`(userRoleRepository.getUserRoles()).thenReturn(mapOf(userId1 to listOf("ADMIN"), userId2 to listOf("USER"), userId3 to listOf("USER"), userId4 to listOf("USER")))
+
+        user1.userRoles = listOf("ADMIN")
+        user2.userRoles = listOf("USER")
+        user3.userRoles = listOf("USER")
+        user4.userRoles = listOf("USER")
+        assertEquals(userService.getPaginatedUsers(pageable), PageImpl(listOf(user1, user2, user3, user4), pageable, 4))
+    }
+
 
     @Test
     fun `switchEnabledForUser call repository method if email and enabled given`() {

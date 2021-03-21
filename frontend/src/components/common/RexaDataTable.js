@@ -9,9 +9,12 @@ import {
     TableHead,
     TableBody,
     TableRow,
-    withStyles,
     Paper,
+    withStyles,
+    TablePagination,
+    TableFooter,
 } from '@material-ui/core';
+import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 
 import LoadingIndicator from './LoadingIndicator';
 import NoData from './NoData';
@@ -21,11 +24,9 @@ import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
 const useStyles = makeStyles(() => ({
     root: {
         borderRadius: borderRadius,
-        maxHeight: '24rem',
     },
     root100: {
         borderRadius: borderRadius,
-        maxHeight: '34rem',
     },
     header: {
         textAlign: 'center',
@@ -51,8 +52,28 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const RexaDataTable = ({ key, data, loading, noDataLabel, fullHeight }) => {
+const RexaDataTable = ({
+    key,
+    data,
+    setPage,
+    loading,
+    noDataLabel,
+    fullHeight,
+    rowsPerPage,
+    currentPage,
+    totalElements,
+    setRowsPerPage,
+}) => {
     const classes = useStyles();
+
+    const handleChangePage = (_, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
 
     if (loading) {
         return <LoadingIndicator />;
@@ -61,42 +82,58 @@ const RexaDataTable = ({ key, data, loading, noDataLabel, fullHeight }) => {
     const className = fullHeight ? classes.root100 : classes.root;
 
     return (
-        <TableContainer className={className} component={Paper}>
-            <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                    <TableRow>
-                        {data.map((column, index) => (
-                            <StyledTableCell
-                                key={`${key}_header_${index}`}
-                                align="center"
-                            >
-                                {column.name}
-                            </StyledTableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data[0].values.map((_, rowIndex) => (
-                        <StyledTableRow key={`${key}_row_${rowIndex}`}>
-                            {data.map((row, colIndex) => (
+        <Paper>
+            <TableContainer className={className}>
+                <Table stickyHeader aria-label="values table">
+                    <TableHead>
+                        <TableRow>
+                            {data.map((column, index) => (
                                 <StyledTableCell
-                                    key={`${key}_row_cell_${colIndex}`}
+                                    key={`${key}_header_${index}`}
                                     align="center"
                                 >
-                                    {row.values[rowIndex]}
+                                    {column.name}
                                 </StyledTableCell>
                             ))}
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            {data[0].values.length === 0 && (
-                <NoData
-                    label={noDataLabel ? noDataLabel : 'No data found'}
-                    noRadius
-                />
-            )}
-        </TableContainer>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {data[0].values.map((_, rowIndex) => (
+                            <StyledTableRow key={`${key}_row_${rowIndex}`}>
+                                {data.map((row, colIndex) => (
+                                    <StyledTableCell
+                                        key={`${key}_row_cell_${colIndex}`}
+                                        align="center"
+                                    >
+                                        {row.values[rowIndex]}
+                                    </StyledTableCell>
+                                ))}
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 15]}
+                                colSpan={3}
+                                count={totalElements}
+                                rowsPerPage={rowsPerPage}
+                                page={currentPage}
+                                onChangePage={handleChangePage}
+                                onChangeRowsPerPage={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+                {data[0].values.length === 0 && (
+                    <NoData
+                        label={noDataLabel ? noDataLabel : 'No data found'}
+                        noRadius
+                    />
+                )}
+            </TableContainer>
+        </Paper>
     );
 };
 
@@ -106,6 +143,18 @@ RexaDataTable.propTypes = {
     loading: PropTypes.bool.isRequired,
     noDataLabel: PropTypes.string,
     fullHeight: PropTypes.bool,
+    currentPage: PropTypes.number.isRequired,
+    totalElements: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number,
+    setPage: PropTypes.func.isRequired,
+    setRowsPerPage: PropTypes.func.isRequired,
+};
+
+RexaDataTable.defaultProps = {
+    rowsPerPage: 10,
+    fullHeight: false,
+    noDataLabel: '',
+    key: '',
 };
 
 export default RexaDataTable;

@@ -1,9 +1,13 @@
 package fr.yvbro.rexa.repository
 
+import fr.yvbro.rexa.controller.output.UserDto
 import fr.yvbro.rexa.jooq.generated.Tables.USER
 import fr.yvbro.rexa.model.User
 import fr.yvbro.rexa.repository.mapper.UserTupleMapper
 import org.jooq.DSLContext
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -53,4 +57,13 @@ class UserRepository(private val dsl: DSLContext,
     fun getUsers(): List<User> = dsl.select()
             .from(USER)
             .fetch(userTupleMapper)
+
+    fun getUsersByPage(pageable: Pageable): Page<User> {
+        val users = dsl.select()
+                .from(USER).offset(pageable.offset).limit(pageable.pageSize).fetch(userTupleMapper);
+
+        return PageImpl(users, pageable, getNumberOfUser().toLong())
+    }
+
+    fun getNumberOfUser() : Int = dsl.select().from(USER).count()
 }

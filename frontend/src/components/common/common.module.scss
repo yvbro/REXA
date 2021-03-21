@@ -2,6 +2,7 @@
 
 .wrapper {
     padding-left: map-get($theme-core, 'navSize');
+    height: 100vh;
 }
 
 .navBar {
@@ -24,6 +25,7 @@
 .rootDiv {
     flex-grow: 1;
     padding: 24px;
+    height: 100%;
 }
 
 .modal {
