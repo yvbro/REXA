@@ -11,7 +11,7 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import DashboardPage from '../components/dashboard/page/DashboardPage';
-import Header from './Header';
+import NavBar from './NavBar';
 import ProjectPage from '../components/project/page/ProjectPage';
 import SettingsDetailsPage from '../components/settings/page/SettingsDetailsPage';
 import UsersManagementPage from '../components/management/page/UsersManagementPage';
@@ -43,7 +43,7 @@ class App extends React.Component {
                     <Route
                         render={() => (
                             <div>
-                                <Header />
+                                <NavBar />
                                 <Switch>
                                     <Route
                                         path="/rexa/login"
