@@ -7,9 +7,18 @@ import { useLocation } from 'react-router-dom';
 
 import { NavLink as RouterLink } from 'react-router-dom';
 
-import {List, ListItem, Collapse, Button, Drawer, makeStyles, Typography } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import {
+    List,
+    ListItem,
+    Collapse,
+    Button,
+    Drawer,
+    Typography,
+    makeStyles
+} from '@material-ui/core';
 
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -72,8 +81,8 @@ const menuData = [
     },
     {
         'name': 'Project View',
-        'url': '/rexa/project',
         'icon': <AccountTreeIcon />,
+        'url': '/rexa/project',
         'needAdmin': false
     },
     {
@@ -174,7 +183,7 @@ const NavBar = (props) => {
                             })}>
                             { icon }
                             <Typography className={classes.title}>{name}</Typography>
-                            { menu[ name ] ? <ExpandLess /> : <ExpandMore />}
+                            { menu[ name ] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                         </Button>
                     </ListItem>
                     <Collapse
