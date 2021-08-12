@@ -17,6 +17,7 @@ import {
     makeStyles
 } from '@material-ui/core';
 
+import InfoIcon from '@material-ui/icons/Info';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -34,7 +35,7 @@ const useStyles = makeStyles(() => ({
     },
     drawer : {
         paddingTop : '20px',
-        width: '250px',
+        width: '165px',
         backgroundColor: themeColor,
     },
     item: {
@@ -95,6 +96,12 @@ const menuData = [
         'name': 'Settings',
         'icon': <SettingsIcon />,
         'url': '/rexa/settings',
+        'needAdmin': false
+    },
+    {
+        'name': 'About us',
+        'icon': <InfoIcon/>,
+        'url': '/rexa/aboutUs',
         'needAdmin': false
     },
     {

@@ -19,6 +19,7 @@ import LoadingIndicator from '../components/common/LoadingIndicator';
 import NotFound from '../components/common/NotFound';
 import { authCheckState } from '../components/auth/redux/authDuck';
 import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandler';
+import AboutUsPage from '../components/aboutUs/page/AboutUsPage';
 
 class App extends React.Component {
     componentDidMount() {
@@ -71,6 +72,10 @@ class App extends React.Component {
                                     <PrivateRoute
                                         path="/rexa/management"
                                         component={UsersManagementPage}
+                                    />
+                                    <PrivateRoute
+                                        path="/rexa/aboutUs"
+                                        component={AboutUsPage}
                                     />
                                     <Redirect to="/rexa/dashboard" />
                                 </Switch>
