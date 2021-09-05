@@ -48,10 +48,12 @@
             width: 100%;
             padding: 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: center;
 
             .aboutUsEmailIcon {
+                padding: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;

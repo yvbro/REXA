@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Avatar, Typography, IconButton, Card } from '@material-ui/core';
-import beni from '../../../assets/benjaminAvatar.jpeg';
+import beni from '../../../assets/benjaminAvatar.png';
 import beber from '../../../assets/bertrandAvatar.png';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import EmailIcon from '@material-ui/icons/Email';
-
+import Mailto from '../../common/mailto/Mailto';
 import classes from './AboutUsPage.module.scss';
 
 const AboutUsPage = () => {
@@ -34,11 +34,13 @@ const AboutUsPage = () => {
                 <div className={classes.aboutUsDescription}>
                     <Typography variant="caption">We are two brothers passionate about web development.</Typography>
                     <div className={classes.aboutUsEmail}>
-                        <Typography variant="caption">You can contact us at this adress :</Typography>
+                        <Typography variant="caption">You can contact us at this address if you have any requests or questions:</Typography>
                         <div className={classes.aboutUsEmailIcon}>
-                            <EmailIcon fontSize="small" />
-                            <Typography variant="caption" style={{ marginLeft : '5px' }}>rexa.devellopers@gmail.com</Typography>
-                        </div>
+                            <EmailIcon fontSize="small" style={{ marginRight: '5px' }}/>
+                            <Mailto email="rexa.devellopers@gmail.com">
+                                <Typography variant="caption">rexa.devellopers@gmail.com</Typography>
+                            </Mailto>
+                          </div>
                     </div>
                 </div>
            </Card>
