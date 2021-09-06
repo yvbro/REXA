@@ -17,7 +17,7 @@ import {
     makeStyles
 } from '@material-ui/core';
 
-import InfoIcon from '@material-ui/icons/Info';
+import ContactsTwoTone from '@material-ui/icons/ContactsTwoTone';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -100,7 +100,7 @@ const menuData = [
     },
     {
         'name': 'About us',
-        'icon': <InfoIcon/>,
+        'icon': <ContactsTwoTone/>,
         'url': '/rexa/aboutUs',
         'needAdmin': false
     },
