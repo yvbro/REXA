@@ -2,14 +2,15 @@ import React from 'react';
 
 import { Avatar, Typography, IconButton, Card } from '@material-ui/core';
 
-import Mailto from '../../common/mailto/Mailto';
+import Mailto from '../common/mailto/Mailto';
 import classes from './AboutUsPage.module.scss';
 import EmailIcon from '@material-ui/icons/Email';
-import beni from '../../../assets/benjaminAvatar.png';
-import beber from '../../../assets/bertrandAvatar.png';
+import beni from '../../assets/benjaminAvatar.png';
+import beber from '../../assets/bertrandAvatar.png';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
-const EMAIL_TO = 'rexa.developpers@gmail.com';
+const EMAIL_TO = 'rexa.yvbro@gmail.com';
+  
 
 const AboutUsPage = () => {
     return (
@@ -17,19 +18,17 @@ const AboutUsPage = () => {
             <Card className={classes.aboutUsContainer}>
                 <div className={classes.aboutUsHeader}>
                     <div  className={classes.aboutUsAvatar}>
-                    <Avatar alt="Benjamin avatar" src={beni} />
-                    <div className={classes.aboutUsLinkedin}>
-                        <IconButton color="primary" aria-label="linkedin button" component="span" onClick={() => window.open('https://www.linkedin.com/in/benjamin-yvernault-5a014a64')} >
-                            <LinkedInIcon fontSize="small" />
-                            <Typography variant="overline">Benjamin yvernault</Typography>
+                        <Avatar alt="Benjamin avatar" src={beni} className={classes.largeAvatar} />
+                        <IconButton aria-label="linkedin button" component="span" onClick={() => window.open('https://www.linkedin.com/in/benjamin-yvernault-5a014a64')} className={classes.aboutUsLinkedin}>
+                            <LinkedInIcon fontSize="small" className={classes.colorIconLinkedin} />
+                            <Typography variant="overline" className={classes.colorIconLinkedin} >Benjamin yvernault</Typography>
                         </IconButton>                    
-                        </div>
                     </div>
                     <div  className={classes.aboutUsAvatar}>
-                        <Avatar alt="Bertrand avatar" src={beber} />
-                        <IconButton color="primary" aria-label="linkedin button" component="span" onClick={() => window.open('https://www.linkedin.com/in/bertrand-yvernault-ba305892')} className={classes.aboutUsLinkedin}>
-                            <LinkedInIcon fontSize="small" />
-                            <Typography variant="overline"> Bertrand yvernault</Typography>
+                        <Avatar alt="Bertrand avatar" src={beber} className={classes.largeAvatar} />
+                        <IconButton aria-label="linkedin button" component="span" onClick={() => window.open('https://www.linkedin.com/in/bertrand-yvernault-ba305892')} className={classes.aboutUsLinkedin}>
+                            <LinkedInIcon fontSize="small" className={classes.colorIconLinkedin} />
+                            <Typography variant="overline" className={classes.colorIconLinkedin} > Bertrand yvernault</Typography>
                         </IconButton>       
                     </div>
                 </div>

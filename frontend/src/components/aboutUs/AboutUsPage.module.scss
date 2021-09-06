@@ -29,10 +29,16 @@
         align-items: center;
         justify-content: center;
 
-            .aboutUsLinkedin {                
+        .largeAvatar {
+            width: 100px;
+            height: 100px;
+        }
+
+            .aboutUsLinkedin {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                background: none;
             };
         };
     };
@@ -60,5 +66,9 @@
             }
         }
         
+    }
+
+    .colorIconLinkedin {
+        color: #0e76a8;
     }
 };
