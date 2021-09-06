@@ -10,41 +10,91 @@ import beber from '../../assets/bertrandAvatar.png';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 const EMAIL_TO = 'rexa.yvbro@gmail.com';
-  
 
 const AboutUsPage = () => {
     return (
         <div className={classes.aboutUsRoot}>
             <Card className={classes.aboutUsContainer}>
                 <div className={classes.aboutUsHeader}>
-                    <div  className={classes.aboutUsAvatar}>
-                        <Avatar alt="Benjamin avatar" src={beni} className={classes.largeAvatar} />
-                        <IconButton aria-label="linkedin button" component="span" onClick={() => window.open('https://www.linkedin.com/in/benjamin-yvernault-5a014a64')} className={classes.aboutUsLinkedin}>
-                            <LinkedInIcon fontSize="small" className={classes.colorIconLinkedin} />
-                            <Typography variant="overline" className={classes.colorIconLinkedin} >Benjamin yvernault</Typography>
-                        </IconButton>                    
+                    <div className={classes.aboutUsAvatar}>
+                        <Avatar
+                            alt="Benjamin avatar"
+                            src={beni}
+                            className={classes.largeAvatar}
+                        />
+                        <IconButton
+                            aria-label="linkedin button"
+                            component="span"
+                            onClick={() =>
+                                window.open(
+                                    'https://www.linkedin.com/in/benjamin-yvernault-5a014a64'
+                                )
+                            }
+                            className={classes.aboutUsLinkedin}
+                        >
+                            <LinkedInIcon
+                                fontSize="small"
+                                className={classes.colorIconLinkedin}
+                            />
+                            <Typography
+                                variant="overline"
+                                className={classes.colorIconLinkedin}
+                            >
+                                Benjamin yvernault
+                            </Typography>
+                        </IconButton>
                     </div>
-                    <div  className={classes.aboutUsAvatar}>
-                        <Avatar alt="Bertrand avatar" src={beber} className={classes.largeAvatar} />
-                        <IconButton aria-label="linkedin button" component="span" onClick={() => window.open('https://www.linkedin.com/in/bertrand-yvernault-ba305892')} className={classes.aboutUsLinkedin}>
-                            <LinkedInIcon fontSize="small" className={classes.colorIconLinkedin} />
-                            <Typography variant="overline" className={classes.colorIconLinkedin} > Bertrand yvernault</Typography>
-                        </IconButton>       
+                    <div className={classes.aboutUsAvatar}>
+                        <Avatar
+                            alt="Bertrand avatar"
+                            src={beber}
+                            className={classes.largeAvatar}
+                        />
+                        <IconButton
+                            aria-label="linkedin button"
+                            component="span"
+                            onClick={() =>
+                                window.open(
+                                    'https://www.linkedin.com/in/bertrand-yvernault-ba305892'
+                                )
+                            }
+                            className={classes.aboutUsLinkedin}
+                        >
+                            <LinkedInIcon
+                                fontSize="small"
+                                className={classes.colorIconLinkedin}
+                            />
+                            <Typography
+                                variant="overline"
+                                className={classes.colorIconLinkedin}
+                            >
+                                {' '}
+                                Bertrand yvernault
+                            </Typography>
+                        </IconButton>
                     </div>
                 </div>
                 <div className={classes.aboutUsDescription}>
-                    <Typography variant="caption">We are two brothers passionate about web development.</Typography>
+                    <Typography variant="caption">
+                        We are two brothers passionate about web development.
+                    </Typography>
                     <div className={classes.aboutUsEmail}>
-                        <Typography variant="caption">You can contact us at this address if you have any requests or questions:</Typography>
+                        <Typography variant="caption">
+                            You can contact us at this address if you have any
+                            requests or questions:
+                        </Typography>
                         <div className={classes.aboutUsEmailIcon}>
-                            <EmailIcon fontSize="small" style={{ marginRight: '5px' }}/>
+                            <EmailIcon
+                                fontSize="small"
+                                style={{ marginRight: '5px' }}
+                            />
                             <Mailto email={EMAIL_TO}>
                                 <Typography variant="caption">{EMAIL_TO}</Typography>
                             </Mailto>
-                          </div>
+                        </div>
                     </div>
                 </div>
-           </Card>
+            </Card>
         </div>
     );
 };

@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-};
+}
 
 .aboutUsContainer {
     width: 60%;
@@ -13,35 +13,35 @@
     justify-content: center;
     align-items: center;
     border-radius: 16px;
-    background-color: #ffff; 
+    background-color: #ffff;
 
     .aboutUsHeader {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
 
         .aboutUsAvatar {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-        .largeAvatar {
-            width: 100px;
-            height: 100px;
-        }
+            .largeAvatar {
+                width: 100px;
+                height: 100px;
+            }
 
             .aboutUsLinkedin {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: none;
-            };
-        };
-    };
+            }
+        }
+    }
 
     .aboutUsDescription {
         width: 100%;
@@ -65,10 +65,9 @@
                 justify-content: center;
             }
         }
-        
     }
 
     .colorIconLinkedin {
         color: #0e76a8;
     }
-};
+}
