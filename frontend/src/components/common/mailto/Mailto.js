@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Mailto = ({ email, children }) => {
-    return <a href={`mailto:${email}`}>{children}</a>;
-  };
+const Mailto = ({ email, children }) => (<a href={`mailto:${email}`}>{children}</a>);
   
-
   Mailto.propTypes = {
     email: PropTypes.string.isRequired,
     children: PropTypes.string,
