@@ -1,15 +1,17 @@
 import React from 'react';
 
 import { Avatar, Typography, IconButton, Card } from '@material-ui/core';
+
+import Mailto from '../../common/mailto/Mailto';
+import classes from './AboutUsPage.module.scss';
+import EmailIcon from '@material-ui/icons/Email';
 import beni from '../../../assets/benjaminAvatar.png';
 import beber from '../../../assets/bertrandAvatar.png';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import EmailIcon from '@material-ui/icons/Email';
-import Mailto from '../../common/mailto/Mailto';
-import classes from './AboutUsPage.module.scss';
+
+const EMAIL_TO = 'rexa.developpers@gmail.com';
 
 const AboutUsPage = () => {
-    
     return (
         <div className={classes.aboutUsRoot}>
             <Card className={classes.aboutUsContainer}>
@@ -37,8 +39,8 @@ const AboutUsPage = () => {
                         <Typography variant="caption">You can contact us at this address if you have any requests or questions:</Typography>
                         <div className={classes.aboutUsEmailIcon}>
                             <EmailIcon fontSize="small" style={{ marginRight: '5px' }}/>
-                            <Mailto email="rexa.devellopers@gmail.com">
-                                <Typography variant="caption">rexa.devellopers@gmail.com</Typography>
+                            <Mailto email={EMAIL_TO}>
+                                <Typography variant="caption">{EMAIL_TO}</Typography>
                             </Mailto>
                           </div>
                     </div>
