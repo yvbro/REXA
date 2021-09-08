@@ -19,7 +19,7 @@ import LoadingIndicator from '../components/common/LoadingIndicator';
 import NotFound from '../components/common/NotFound';
 import { authCheckState } from '../components/auth/redux/authDuck';
 import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandler';
-import AboutUsPage from '../components/aboutUs/page/AboutUsPage';
+import AboutUsPage from '../components/aboutUs/AboutUsPage';
 
 class App extends React.Component {
     componentDidMount() {

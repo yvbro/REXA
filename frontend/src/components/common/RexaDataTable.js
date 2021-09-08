@@ -111,7 +111,7 @@ const RexaDataTable = ({
                             </StyledTableRow>
                         ))}
                     </TableBody>
-                    <TableFooter>
+                    {totalElements !== 0 && (<TableFooter>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 15]}
@@ -124,9 +124,9 @@ const RexaDataTable = ({
                                 ActionsComponent={TablePaginationActions}
                             />
                         </TableRow>
-                    </TableFooter>
+                    </TableFooter>)}
                 </Table>
-                {data[0].values.length === 0 && (
+                {totalElements === 0 && (
                     <NoData
                         label={noDataLabel ? noDataLabel : 'No data found'}
                         noRadius
