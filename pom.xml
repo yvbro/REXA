@@ -19,7 +19,7 @@
 		<kotlin.version>1.3.71</kotlin.version>
 
 		<!-- Database & framework related-->
-		<postgresql.version>42.2.11</postgresql.version>
+		<postgresql.version>42.2.25</postgresql.version>
 		<jooq.version>3.13.1</jooq.version>
 		<!-- Flyway -->
 		<flyway-core.version>6.5.7</flyway-core.version>
