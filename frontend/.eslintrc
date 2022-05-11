@@ -1,38 +1,46 @@
 {
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true,
-    "amd": true
-  },
-  "parser": "babel-eslint",
-  "plugins": [
-    "import",
-    "react"
-  ],
-  "extends": [
-    "plugin:react/recommended",
-    "eslint:recommended"
-  ],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
+    "extends": [
+        "react-app",
+        "react-app/jest",
+        "airbnb",
+        "airbnb/hooks",
+        "airbnb-typescript",
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "plugins": ["formatjs"],
+    "ignorePatterns": ["serviceWorker.js", "src/**/*.js", "src/**/*.jsx"],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "formatjs/no-offset": "error",
+        "import/prefer-default-export": "warn",
+        "react/no-array-index-key": "warn",
+        "react/react-in-jsx-scope": "warn",
+        "react/require-default-props": "warn",
+        "react/jsx-props-no-spreading": "warn",
+        "react/style-prop-object": "warn",
+        "react/button-has-type": "owarnff",
+        "jsx-a11y/click-events-have-key-events": "warn",
+        "jsx-a11y/no-static-element-interactions": "warn",
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
+        "no-continue": "warn",
+        "no-param-reassign": "warn"
+    },
+    "globals": {
+        "document": false
     }
-  },
-  "rules": {
-    "no-console": "warn",
-    "no-eval": "error",
-    "no-undef": "off",
-    "import/first": "error",
-    // we only want single quotes
-    "quotes": ["error", "single"],
-    // we want to force semicolons
-    "semi": ["error", "always"],
-    // we use 2 spaces to indent our code
-    "indent": ["error", 4],
-    // we want to avoid useless spaces
-    "no-multi-spaces": ["error"]
-  }
 }
