@@ -1,6 +1,5 @@
-
 import React, { useState, forwardRef } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
@@ -14,7 +13,7 @@ import {
     Button,
     Drawer,
     Typography,
-    makeStyles
+    makeStyles,
 } from '@material-ui/core';
 
 import ContactsTwoTone from '@material-ui/icons/ContactsTwoTone';
@@ -31,10 +30,10 @@ import { themeColor, themeColorHover } from '../components/common/theme/theme.sc
 
 const useStyles = makeStyles(() => ({
     root: {
-        justifyContent : 'left',
+        justifyContent: 'left',
     },
-    drawer : {
-        paddingTop : '20px',
+    drawer: {
+        paddingTop: '20px',
         width: '165px',
         backgroundColor: themeColor,
     },
@@ -57,59 +56,59 @@ const useStyles = makeStyles(() => ({
         paddingBottom: 0,
         backgroundColor: themeColorHover,
     },
-    btnRoot : {
+    btnRoot: {
         paddingLeft: '25px',
-        justifyContent: 'left !important'
+        justifyContent: 'left !important',
     },
-    subMenu : {
+    subMenu: {
         paddingLeft: '50px !important',
     },
-    title : {
+    title: {
         paddingLeft: 10,
     },
     logoBottom: {
         position: 'fixed',
         bottom: 0,
-    }
+    },
 }));
 
 const menuData = [
     {
-        'name': 'Dashboard',
-        'url': '/rexa/dashboard',
-        'icon': <DashboardIcon />,
-        'isAdmin': false
+        name: 'Dashboard',
+        url: '/rexa/dashboard',
+        icon: <DashboardIcon />,
+        isAdmin: false,
     },
     {
-        'name': 'Project View',
-        'icon': <AccountTreeIcon />,
-        'url': '/rexa/project',
-        'needAdmin': false
+        name: 'Project View',
+        icon: <AccountTreeIcon />,
+        url: '/rexa/project',
+        needAdmin: false,
     },
     {
-        'name': 'Users Management',
-        'url': '/rexa/management',
-        'icon': <SupervisorAccountIcon />,
-        'needAdmin': true
+        name: 'Users Management',
+        url: '/rexa/management',
+        icon: <SupervisorAccountIcon />,
+        needAdmin: true,
     },
     {
-        'name': 'Settings',
-        'icon': <SettingsIcon />,
-        'url': '/rexa/settings',
-        'needAdmin': false
+        name: 'Settings',
+        icon: <SettingsIcon />,
+        url: '/rexa/settings',
+        needAdmin: false,
     },
     {
-        'name': 'About us',
-        'icon': <ContactsTwoTone/>,
-        'url': '/rexa/aboutUs',
-        'needAdmin': false
+        name: 'About us',
+        icon: <ContactsTwoTone />,
+        url: '/rexa/aboutUs',
+        needAdmin: false,
     },
     {
-        'name': 'Logout',
-        'icon': <ExitToAppIcon />,
-        'url': '/rexa/logout',
-        'needAdmin': false
-    }
+        name: 'Logout',
+        icon: <ExitToAppIcon />,
+        url: '/rexa/logout',
+        needAdmin: false,
+    },
 ];
 
 const NavBar = (props) => {
@@ -118,7 +117,7 @@ const NavBar = (props) => {
 
     const location = useLocation();
 
-    const [ menu, setMenu ] = useState({});
+    const [menu, setMenu] = useState({});
 
     const { isAdmin, authenticated } = useSelector((state) => ({
         isAdmin: state.auth.user.isAdmin,
@@ -126,7 +125,7 @@ const NavBar = (props) => {
     }));
 
     const handleClick = (item) => {
-        let newData = {...menu, [item] : !menu[item]};
+        let newData = { ...menu, [item]: !menu[item] };
         setMenu(newData);
     };
 
@@ -136,75 +135,78 @@ const NavBar = (props) => {
 
     // eslint-disable-next-line react/display-name
     const CustomRouterLink = forwardRef((props, ref) => (
-        <div ref={ref} style={{ flexGrow: 1 }} >
+        <div ref={ref} style={{ flexGrow: 1 }}>
             <RouterLink {...props} />
         </div>
     ));
-    
-    const handleMenu = ( children, level=0 ) => {
-        return children.map(({children, name, url, icon, needAdmin }) => {
+
+    const handleMenu = (children, level = 0) => {
+        return children.map(({ children, name, url, icon, needAdmin }) => {
             if (needAdmin && !isAdmin) {
                 return null;
             }
 
             const selected = location.pathname.startsWith(url);
 
-            if ( !children ) {
+            if (!children) {
                 return (
-                    <List component="div" disablePadding key={ name }>
+                    <List component="div" disablePadding key={name}>
                         <ListItem
-                            className={selected ? classes.selected : classes.item }
+                            className={selected ? classes.selected : classes.item}
                             disableGutters
-                            style={{padding:'0px'}}
+                            style={{ padding: '0px' }}
                             key={name}
                         >
                             <Button
                                 className={clsx({
-                                    [classes.btnRoot] : true,
-                                    [classes.button] : true,
-                                    [classes.subMenu] : level
+                                    [classes.btnRoot]: true,
+                                    [classes.button]: true,
+                                    [classes.subMenu]: level,
                                 })}
                                 component={CustomRouterLink}
                                 to={url}
                             >
                                 {icon}
-                                <Typography className={classes.title}>{name}</Typography>
+                                <Typography className={classes.title}>
+                                    {name}
+                                </Typography>
                             </Button>
                         </ListItem>
                     </List>
                 );
             }
             return (
-                <div key={ name }>
+                <div key={name}>
                     <ListItem
-                        className={selected ? classes.selected : classes.item }
+                        className={selected ? classes.selected : classes.item}
                         disableGutters
                         key={name}
                         onClick={() => handleClick(name)}
                     >
                         <Button
                             className={clsx({
-                                [classes.btnRoot] : true,
-                                [classes.button] : true,
-                                [classes.subMenu] : level
-                            })}>
-                            { icon }
+                                [classes.btnRoot]: true,
+                                [classes.button]: true,
+                                [classes.subMenu]: level,
+                            })}
+                        >
+                            {icon}
                             <Typography className={classes.title}>{name}</Typography>
-                            { menu[ name ] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                            {menu[name] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                         </Button>
                     </ListItem>
                     <Collapse
-                        in={ (menu[name]) ? true : false }
+                        in={menu[name] ? true : false}
                         timeout="auto"
                         unmountOnExit
                     >
-                        { handleMenu( children, 1) }
+                        {handleMenu(children, 1)}
                     </Collapse>
                 </div>
             );
         });
     };
-    
+
     return (
         <Drawer
             anchor="left"
@@ -212,8 +214,8 @@ const NavBar = (props) => {
             open={true}
             variant="persistent"
         >
-            <List {...rest} className={clsx(classes.root, className)} >
-                { handleMenu(menuData) }
+            <List {...rest} className={clsx(classes.root, className)}>
+                {handleMenu(menuData)}
             </List>
             <img
                 className={classes.logoBottom}
@@ -227,7 +229,7 @@ const NavBar = (props) => {
 };
 
 NavBar.propTypes = {
-    className: PropTypes.string.isRequired,
+    className: PropTypes.string,
 };
 
 export default NavBar;

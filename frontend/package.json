@@ -6,6 +6,7 @@
     "dependencies": {
         "@material-ui/core": "^4.11.0",
         "@material-ui/icons": "^4.9.1",
+        "@reduxjs/toolkit": "^1.8.1",
         "@testing-library/jest-dom": "^5.11.9",
         "@testing-library/react": "^11.2.5",
         "@types/node": "^17.0.32",

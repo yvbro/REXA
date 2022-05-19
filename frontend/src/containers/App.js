@@ -52,7 +52,6 @@ class App extends React.Component {
                                         path="/oauth2/redirect"
                                         component={OAuth2RedirectHandler}
                                     />
-
                                     <Route
                                         path="/rexa/notfound"
                                         component={NotFound}

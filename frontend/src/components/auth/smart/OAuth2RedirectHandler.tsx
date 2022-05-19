@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { loginSuccess, extractPayload } from '../redux/authDuck';
-
-class OAuth2RedirectHandler extends Component {
-    getUrlParameter(name) {
+import { extractPayload,  } from '../../../store/slices/auth/authAction' 
+function OAuth2RedirectHandler() {
+    const getUrlParameter = (name: string) => {
         // eslint-disable-next-line
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -17,9 +16,14 @@ class OAuth2RedirectHandler extends Component {
             : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 
+    useEffect(() => {  
+        
+    }, []);
+
+
     render() {
-        const token = this.getUrlParameter('token');
-        const error = this.getUrlParameter('error');
+        const token = getUrlParameter('token');
+        const error = etUrlParameter('error');
 
         if (token) {
             this.props.login(extractPayload(token)).then(() => {
@@ -54,10 +58,5 @@ OAuth2RedirectHandler.propTypes = {
     location: PropTypes.object,
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: (payload) => dispatch(loginSuccess(payload)),
-    };
-};
 
-export default connect(null, mapDispatchToProps)(OAuth2RedirectHandler);
+export default OAuth2RedirectHandler;
