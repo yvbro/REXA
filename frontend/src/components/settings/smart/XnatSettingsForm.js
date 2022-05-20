@@ -6,7 +6,7 @@ import { Card, Button, TextField, makeStyles, Typography } from '@material-ui/co
 import { updateXnatSettings, testConnection } from '../api/apiSettings';
 import { resetDataDashboard } from '../../dashboard/redux/dashboardDuck';
 import { resetDataProjects } from '../../project/redux/projectDuck';
-import { updateCurrentUserXnatInfos } from '../../auth/redux/authDuck';
+import { updateXnatInfo } from '../../../store/slices/auth/authSlice';
 import classes from './XnatSettingsForm.module.scss';
 
 const REGEX_PROTOCOL = /^((http|https):\/\/)/;
@@ -54,7 +54,7 @@ const XnatSettingsForm = () => {
                 !host ? xnatHost : host,
                 password
             ).then(() => {
-                dispatch(updateCurrentUserXnatInfos(username, host));
+                dispatch(updateXnatInfo(username, host));
                 dispatch(resetDataDashboard());
                 dispatch(resetDataProjects());
             });

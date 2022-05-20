@@ -6,19 +6,19 @@ import { toast } from 'react-toastify';
 
 import { Grid, Card, Button, TextField, makeStyles } from '@material-ui/core';
 
-import { performLogin } from '../redux/authDuck';
-import SocialLogin from '../dumb/SocialLogin';
+import { RootState } from '../../../store/store';
 import classes from '../dumb/auth.module.scss';
-
-import { regexEmail } from '../../../helpers/constants/index';
-import { borderRadius } from '../../common/theme/theme.scss';
 import rexaLogo from '../../../assets/rexa-logo-svg.png';
+import { regexEmail } from '../../../helpers/constants/index';
+
+import SocialLogin from '../dumb/SocialLogin';
+import { performLogin } from '../../../store/slices/auth/authAction';
 
 const useStyles = makeStyles((theme) => ({
     card: {
         width: 400,
         height: 500,
-        borderRadius: borderRadius,
+        borderRadius: 5,
     },
     input: {
         margin: theme.spacing(1),
@@ -26,10 +26,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+interface LocationState {
+    from: string;
+    error: string | null;
+}
+
 const LoginPage = () => {
     const style = useStyles();
 
-    const { authenticated } = useSelector((state) => ({
+    const { authenticated } = useSelector((state: RootState) => ({
         authenticated: state.auth.token !== null,
     }));
 
@@ -38,15 +43,15 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
-    const location = useLocation();
+    const location = useLocation<LocationState>();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
         dispatch(performLogin(email, password));
     };
 
-    const onChangeEmail = (event) => {
+    const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.match(regexEmail)) {
             setEmail(event.target.value);
             setErrorEmail('');

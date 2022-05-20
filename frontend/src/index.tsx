@@ -4,10 +4,9 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import './index.scss';
-import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
-import configureStore from './store/store';
 import { ACCESS_TOKEN, TOKEN_TYPE } from './helpers/constants';
+import App from './containers/App';
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {

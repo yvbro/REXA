@@ -1,15 +1,15 @@
 import { XnatInfo } from './../../../models/XnatInfo';
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../../models/auth/User";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../../../models/auth/User';
 import { TokenInfo } from './authAction';
 
 interface AuthState {
     user: User;
-    token: string | null;
-    authProvider: string | null;
+    token: string | null;
+    authProvider: string | null;
     loading: boolean;
     error: string;
-} 
+}
 
 const initialState: AuthState = {
     token: null,
@@ -21,30 +21,30 @@ const initialState: AuthState = {
         isAdmin: false,
     },
     loading: false,
-    error: "",
-} 
+    error: '',
+};
 
 export const authSlice = createSlice({
-    name: "auth",
+    name: 'auth',
     initialState,
     reducers: {
         login: (state, action: PayloadAction<TokenInfo>) => {
-            state.token = action.payload.token,
-            state.authProvider = action.payload.authProvider,
-            state.user.username = action.payload.username,
-            state.user.xnatHost = action.payload.xnatHost,
-            state.user.xnatUser = action.payload.xnatUser,
-            state.user.isAdmin = action.payload.isAdmin
+            state.token = action.payload.token;
+            state.authProvider = action.payload.authProvider;
+            state.user.username = action.payload.username;
+            state.user.xnatHost = action.payload.xnatHost;
+            state.user.xnatUser = action.payload.xnatUser;
+            state.user.isAdmin = action.payload.isAdmin;
         },
         errorLogin: (state, action: PayloadAction<string>) => {
-            state = {... state, error: action.payload} 
+            state = { ...state, error: action.payload };
         },
         logout: (state) => {
             state = initialState;
         },
         updateXnatInfo: (state, action: PayloadAction<XnatInfo>) => {
-          state.user.xnatHost = action.payload.xnatHost,
-          state.user.xnatUser = action.payload.xnatUser
+            state.user.xnatHost = action.payload.xnatHost;
+            state.user.xnatUser = action.payload.xnatUser;
         },
     },
 });

@@ -1,62 +1,52 @@
-import React, { Component, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
 
-import { extractPayload,  } from '../../../store/slices/auth/authAction' 
+import { extractPayload } from '../../../store/slices/auth/authAction';
+import { login } from '../../../store/slices/auth/authSlice';
+
 function OAuth2RedirectHandler() {
+    const location = useLocation();
+
     const getUrlParameter = (name: string) => {
-        // eslint-disable-next-line
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        name = name.replace(/[\]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 
-        var results = regex.exec(this.props.location.search);
+        var results = regex.exec(location.search);
         return results === null
             ? ''
             : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
+    };
 
-    useEffect(() => {  
-        
-    }, []);
-
-
-    render() {
+    const renderOAuth = () => {
         const token = getUrlParameter('token');
-        const error = etUrlParameter('error');
+        const error = getUrlParameter('error');
 
         if (token) {
-            this.props.login(extractPayload(token)).then(() => {
-                return (
-                    <Redirect
-                        to={{
-                            pathname: '/rexa/dashboard',
-                            state: { from: this.props.location },
-                        }}
-                    />
-                );
-            });
+            login(extractPayload(token));
+            return (
+                <Redirect
+                    to={{
+                        pathname: '/rexa/dashboard',
+                        state: { from: location },
+                    }}
+                />
+            );
         } else {
             return (
                 <Redirect
                     to={{
                         pathname: '/rexa/login',
                         state: {
-                            from: this.props.location,
+                            from: location,
                             error: error,
                         },
                     }}
                 />
             );
         }
-    }
+    };
+
+    return renderOAuth();
 }
-
-OAuth2RedirectHandler.propTypes = {
-    login: PropTypes.func.isRequired,
-    // react-router provided
-    location: PropTypes.object,
-};
-
 
 export default OAuth2RedirectHandler;
