@@ -4,8 +4,17 @@ import PropTypes from 'prop-types';
 import RexaDataTable from '../../common/RexaDataTable';
 import RexaCard from '../../common/RexaCard';
 import classes from './dashboard.module.scss';
+import { PreArchive } from '../../../models/project/PreArchive';
 
-export const PrearchiveDashboard = ({ preArchives, loading }) => {
+interface PrearchiveDashboardProps {
+    preArchives: PreArchive[];
+    loading: boolean;
+}
+
+export const PrearchiveDashboard = ({
+    preArchives,
+    loading,
+}: PrearchiveDashboardProps) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
@@ -32,11 +41,6 @@ export const PrearchiveDashboard = ({ preArchives, loading }) => {
             />
         </RexaCard>
     );
-};
-
-PrearchiveDashboard.propTypes = {
-    preArchives: PropTypes.array,
-    loading: PropTypes.bool,
 };
 
 export default PrearchiveDashboard;

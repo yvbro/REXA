@@ -6,8 +6,15 @@ import { Chip } from '@material-ui/core';
 import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
 import { getXnatUri } from '../../../helpers/xnat';
+import { RecentActivity } from '../../../models/project/RecentActivity';
 
-const toChip = (label, id, xnatHost) => {
+interface RecentActivitiesDashboardProps {
+    recentActivities: RecentActivity[];
+    loading: boolean;
+    xnatHost: string;
+}
+
+const toChip = (label: string, id: number, xnatHost: string) => {
     return (
         <Chip
             label={label}
@@ -22,7 +29,11 @@ const toChip = (label, id, xnatHost) => {
     );
 };
 
-const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
+const RecentActivitiesDashboard = ({
+    recentActivities,
+    loading,
+    xnatHost,
+}: RecentActivitiesDashboardProps) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
@@ -37,7 +48,7 @@ const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
     ];
 
     return (
-        <RexaCard title="Recent Activities" >
+        <RexaCard title="Recent Activities">
             <RexaDataTable
                 data={data}
                 loading={loading}
@@ -50,12 +61,6 @@ const RecentActivitiesDashboard = ({ recentActivities, loading, xnatHost }) => {
             />
         </RexaCard>
     );
-};
-
-RecentActivitiesDashboard.propTypes = {
-    recentActivities: PropTypes.array,
-    loading: PropTypes.bool,
-    xnatHost: PropTypes.string,
 };
 
 export default RecentActivitiesDashboard;

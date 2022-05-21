@@ -1,4 +1,4 @@
-import { XnatInfo } from './../../../models/XnatInfo';
+import { XnatInfo } from '../../../models/xnat/XnatInfo';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../../models/auth/User';
 import { TokenInfo } from './authAction';

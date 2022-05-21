@@ -8,7 +8,7 @@ import {
     ListItemText,
     ListItem,
     Chip,
-    makeStyles
+    makeStyles,
 } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
 import { Link } from 'react-router-dom';
@@ -26,7 +26,12 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const ProjectDashboard = ({ projects, loading }) => {
+interface ProjectDashboardProps {
+    projects: Project[];
+    loading: boolean;
+}
+
+const ProjectDashboard = ({ projects, loading }: ProjectDashboardProps) => {
     const style = useStyles();
 
     if (loading) {
@@ -35,7 +40,11 @@ const ProjectDashboard = ({ projects, loading }) => {
 
     return (
         <>
-            <RexaCard title='Projects' classNameContent={classes.tableCardContent} className={classes.tableCard}>
+            <RexaCard
+                title="Projects"
+                classNameContent={classes.tableCardContent}
+                className={classes.tableCard}
+            >
                 {projects.length > 0 ? (
                     <List className={classes.listProjects}>
                         {projects.map((project, index) => (
@@ -66,19 +75,11 @@ const ProjectDashboard = ({ projects, loading }) => {
                         ))}
                     </List>
                 ) : (
-                    <NoData
-                        label={'No projects'}
-                        noRadius
-                    />
+                    <NoData label={'No projects'} noRadius />
                 )}
             </RexaCard>
         </>
     );
-};
-
-ProjectDashboard.propTypes = {
-    projects: PropTypes.array,
-    loading: PropTypes.bool,
 };
 
 export default ProjectDashboard;
