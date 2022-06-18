@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { Chip } from '@material-ui/core';
+import { toast } from 'react-toastify';
 
 import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
 import { getXnatUri } from '../../../helpers/xnat';
 import { RecentActivity } from '../../../models/project/RecentActivity';
+import { useQuery } from 'react-query';
+import axios, { AxiosError } from 'axios';
+import { RexaError } from '../../../models/management/RexaError';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 interface RecentActivitiesDashboardProps {
-    recentActivities: RecentActivity[];
-    loading: boolean;
     xnatHost: string;
 }
 
@@ -29,33 +31,49 @@ const toChip = (label: string, id: number, xnatHost: string) => {
     );
 };
 
-const RecentActivitiesDashboard = ({
-    recentActivities,
-    loading,
-    xnatHost,
-}: RecentActivitiesDashboardProps) => {
+const RecentActivitiesDashboard = ({ xnatHost }: RecentActivitiesDashboardProps) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
+    const { isLoading, data: recentActivities } = useQuery(
+        ['fetchRecentActivities', rowsPerPage, page],
+        () => axios.get<RecentActivity[]>('/private/recentActivities'),
+        {
+            onError: (error: AxiosError<RexaError>) => {
+                toast.error(error?.response?.data?.message);
+            },
+        }
+    );
+
+    if (isLoading) {
+        return <LoadingIndicator />;
+    }
+
     const data = [
-        { name: 'Project', values: recentActivities.map((e) => e.project) },
-        { name: 'Type', values: recentActivities.map((e) => e.typeDesc) },
+        { name: 'Project', values: recentActivities?.data.map((e) => e.project) },
+        { name: 'Type', values: recentActivities?.data.map((e) => e.typeDesc) },
         {
             name: 'Label',
-            values: recentActivities.map((e) => toChip(e.label, e.id, xnatHost)),
+            values: recentActivities?.data.map((e) =>
+                toChip(e.label, e.id, xnatHost)
+            ),
         },
-        { name: 'Element', values: recentActivities.map((e) => e.elementName) },
+        {
+            name: 'Element',
+            values: recentActivities?.data.map((e) => e.elementName),
+        },
     ];
 
     return (
         <RexaCard title="Recent Activities">
             <RexaDataTable
+                key="rexa_data_table_dashboard_pre_archive"
                 data={data}
-                loading={loading}
+                loading={isLoading}
                 noDataLabel="No recent activities"
                 currentPage={page}
                 rowsPerPage={rowsPerPage}
-                totalElements={recentActivities.length}
+                totalElements={recentActivities?.data.length ?? 0}
                 setRowsPerPage={setRowsPerPage}
                 setPage={setPage}
             />

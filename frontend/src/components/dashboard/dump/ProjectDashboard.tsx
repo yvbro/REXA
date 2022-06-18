@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
     List,
@@ -12,6 +11,7 @@ import {
 } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import LoadingIndicator from '../../common/LoadingIndicator';
 import RexaCard from '../../common/RexaCard';
@@ -19,6 +19,10 @@ import RexaCard from '../../common/RexaCard';
 import theme from '../../common/theme/theme.scss';
 import classes from './dashboard.module.scss';
 import NoData from '../../common/NoData';
+import { Project } from '../../../models/project/Project';
+import { useQuery } from 'react-query';
+import axios, { AxiosError } from 'axios';
+import { RexaError } from '../../../models/management/RexaError';
 
 const useStyles = makeStyles(() => ({
     avatar: {
@@ -26,15 +30,20 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-interface ProjectDashboardProps {
-    projects: Project[];
-    loading: boolean;
-}
-
-const ProjectDashboard = ({ projects, loading }: ProjectDashboardProps) => {
+const ProjectDashboard = () => {
     const style = useStyles();
 
-    if (loading) {
+    const { isLoading, data: projects } = useQuery(
+        ['fetchProject'],
+        () => axios.get<Project[]>('/private/projects'),
+        {
+            onError: (error: AxiosError<RexaError>) => {
+                toast.error(error?.response?.data?.message);
+            },
+        }
+    );
+
+    if (isLoading) {
         return <LoadingIndicator />;
     }
 
@@ -45,9 +54,9 @@ const ProjectDashboard = ({ projects, loading }: ProjectDashboardProps) => {
                 classNameContent={classes.tableCardContent}
                 className={classes.tableCard}
             >
-                {projects.length > 0 ? (
+                {projects && projects.data.length > 0 ? (
                     <List className={classes.listProjects}>
-                        {projects.map((project, index) => (
+                        {projects?.data.map((project, index) => (
                             <ListItem key={`dashboard_${index}`}>
                                 <ListItemAvatar>
                                     <Avatar className={style.avatar}>

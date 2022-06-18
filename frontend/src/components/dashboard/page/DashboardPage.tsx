@@ -17,66 +17,26 @@ import RecentActivitiesDashboard from '../dump/RecentActivitiesDashboard';
 import classes from '../../common/common.module.scss';
 import { RecentActivity } from '../../../models/project/RecentActivity';
 import { PreArchive } from '../../../models/project/PreArchive';
+import { Project } from '../../../models/project/Project';
 
 const DashboardPage = () => {
     const { xnatHost } = useSelector((state: RootState) => ({
         xnatHost: state.auth.user.xnatHost,
     }));
 
-    const { isLoading: loadingProjects, data: projects } = useQuery(
-        ['featProject'],
-        () => axios.get<Project[]>('/private/projects'),
-        {
-            onError: (error: AxiosError<RexaError>) => {
-                toast.error(error?.response?.data?.message);
-            },
-            keepPreviousData: true,
-        }
-    );
-
-    const { isLoading: loadingPreArchives, data: preArchives } = useQuery(
-        ['featProject'],
-        () => axios.get<PreArchive[]>('/private/preArchives'),
-        {
-            keepPreviousData: true,
-        }
-    );
-
-    const { isLoading: loadingRecentActivities, data: recentActivities } = useQuery(
-        ['featProject'],
-        () => axios.get<RecentActivity[]>('/private/recentActivities'),
-        {
-            keepPreviousData: true,
-        }
-    );
-
-    if (loadingProjects) {
-        return <LoadingIndicator />;
-    }
-
     return (
         <div className={classes.rootDiv}>
             <Grid container spacing={3}>
                 <Grid item xs={9}>
-                    <RecentActivitiesDashboard
-                        recentActivities={recentActivities?.data ?? []}
-                        loading={loadingRecentActivities}
-                        xnatHost={xnatHost ?? ''}
-                    />
+                    <RecentActivitiesDashboard xnatHost={xnatHost ?? ''} />
                 </Grid>
                 <Grid item xs={3}>
-                    <ProjectDashboard
-                        projects={projects?.data ?? []}
-                        loading={loadingProjects}
-                    />
+                    <ProjectDashboard />
                 </Grid>
             </Grid>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <PrearchiveDashboard
-                        preArchives={preArchives?.data ?? []}
-                        loading={loadingPreArchives}
-                    />
+                    <PrearchiveDashboard />
                 </Grid>
             </Grid>
         </div>
