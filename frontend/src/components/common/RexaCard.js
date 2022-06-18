@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Card, CardContent, Typography, makeStyles, CardActions} from '@material-ui/core';
+import {
+    Card,
+    CardContent,
+    Typography,
+    makeStyles,
+    CardActions,
+} from '@material-ui/core';
 
-import { textColor } from './theme/theme.scss';
+import theme from './theme/theme.scss';
 
 const useStyles = makeStyles({
     bold: {
         fontWeight: 600,
-        color: textColor,
-    }
+        color: theme.textColor,
+    },
 });
 
 const RexaCard = (props) => {
@@ -16,14 +22,12 @@ const RexaCard = (props) => {
     return (
         <Card className={props.className} variant="outlined">
             <CardContent className={props.classNameContent}>
-                <Typography variant="h5" gutterBottom className={style.bold}>{props.title}</Typography>
+                <Typography variant="h5" gutterBottom className={style.bold}>
+                    {props.title}
+                </Typography>
                 {props.children}
             </CardContent>
-            {props.actions && (
-                <CardActions>
-                    {props.actions}
-                </CardActions>
-            )}
+            {props.actions && <CardActions>{props.actions}</CardActions>}
         </Card>
     );
 };

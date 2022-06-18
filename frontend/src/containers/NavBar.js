@@ -26,7 +26,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import rexaLogo from '../assets/rexa-logo-svg.png';
-import { themeColor, themeColorHover } from '../components/common/theme/theme.scss';
+import themes from '../components/common/theme/theme.scss';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
     drawer: {
         paddingTop: '20px',
         width: '165px',
-        backgroundColor: themeColor,
+        backgroundColor: themes.themeColor,
     },
     item: {
         display: 'flex',
@@ -54,7 +54,7 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         paddingTop: 0,
         paddingBottom: 0,
-        backgroundColor: themeColorHover,
+        backgroundColor: themes.themeColorHover,
     },
     btnRoot: {
         paddingLeft: '25px',

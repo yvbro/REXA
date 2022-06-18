@@ -23,16 +23,10 @@ import {
     ERROR_PASSWORD_CAPITAL_LETTER,
     passwordDoesNotContainANumber,
     ERROR_PASSWORD_NUMBER,
-    ERROR_PASSWORD_NOT_MATCH
+    ERROR_PASSWORD_NOT_MATCH,
 } from '../../../helpers/constants';
 
-import {
-    borderRadius,
-    primaryButtonColor,
-    secondaryButtonColor,
-    themeColor,
-    avatarColor,
-} from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        borderRadius: borderRadius,
+        borderRadius: themes.borderRadius,
     },
     header: {
         width: 430,
@@ -59,18 +53,18 @@ const useStyles = makeStyles((theme) => ({
     },
     saveButton: {
         width: 120,
-        backgroundColor: primaryButtonColor,
+        backgroundColor: themes.primaryButtonColor,
         color: 'white',
     },
     cancelButton: {
         width: 120,
-        backgroundColor: secondaryButtonColor,
+        backgroundColor: themes.secondaryButtonColor,
         color: 'white',
     },
     avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
-        backgroundColor: avatarColor,
+        backgroundColor: themes.avatarColor,
     },
     iconDef: {
         fontSize: 50,
@@ -91,7 +85,9 @@ const ChangePasswordForm = (props) => {
         if (confirmationPassword !== newPassword) {
             setErrorConfirmationPassword(ERROR_PASSWORD_NOT_MATCH);
         } else {
-            updatePassword(props.userEmail, newPassword, confirmationPassword).then(() => props.closeAction());
+            updatePassword(props.userEmail, newPassword, confirmationPassword).then(
+                () => props.closeAction()
+            );
         }
     };
 
@@ -111,7 +107,9 @@ const ChangePasswordForm = (props) => {
 
     const onChangeConfirmedPassword = (event) => {
         if (event.target.value !== newPassword) {
-            setErrorConfirmationPassword('Password and confirmation does not match.');
+            setErrorConfirmationPassword(
+                'Password and confirmation does not match.'
+            );
         } else {
             setErrorConfirmationPassword('');
         }
@@ -132,7 +130,7 @@ const ChangePasswordForm = (props) => {
                 className={classes.header}
             />
             <CardContent className={classes.cardContent}>
-                <PasswordField 
+                <PasswordField
                     value={newPassword}
                     label="New password"
                     error={errorPassword}
@@ -140,7 +138,7 @@ const ChangePasswordForm = (props) => {
                     testId={'newPassword'}
                     className={classes.text}
                 />
-                <PasswordField 
+                <PasswordField
                     value={confirmationPassword}
                     label="Confirm new password"
                     error={errorConfirmationPassword}
@@ -151,17 +149,20 @@ const ChangePasswordForm = (props) => {
             </CardContent>
             <CardActions>
                 <Button
-                    variant='contained'
+                    variant="contained"
                     onClick={handleSubmit}
                     disabled={
-                        !newPassword || !confirmationPassword ||
-                        !!errorPassword || !!errorConfirmationPassword}
+                        !newPassword ||
+                        !confirmationPassword ||
+                        !!errorPassword ||
+                        !!errorConfirmationPassword
+                    }
                     className={classes.saveButton}
                 >
                     Save
                 </Button>
                 <Button
-                    variant='contained'
+                    variant="contained"
                     onClick={props.closeAction}
                     className={classes.cancelButton}
                 >

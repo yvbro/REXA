@@ -5,5 +5,5 @@ export type RecentActivity = {
     label: string;
     typeDesc: string;
     elementName: string;
-    id: string;
+    id: number;
 }

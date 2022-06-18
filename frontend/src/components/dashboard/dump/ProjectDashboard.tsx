@@ -16,13 +16,13 @@ import { Link } from 'react-router-dom';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import RexaCard from '../../common/RexaCard';
 
-import { avatarColor } from '../../common/theme/theme.scss';
+import theme from '../../common/theme/theme.scss';
 import classes from './dashboard.module.scss';
 import NoData from '../../common/NoData';
 
 const useStyles = makeStyles(() => ({
     avatar: {
-        backgroundColor: avatarColor,
+        backgroundColor: theme.avatarColor,
     },
 }));
 
@@ -58,15 +58,13 @@ const ProjectDashboard = ({ projects, loading }: ProjectDashboardProps) => {
                                     <Link
                                         to={{
                                             pathname: '/rexa/project',
-                                            project: project.id,
+                                            state: { project: project.id },
                                         }}
                                     >
                                         <Chip
                                             label={project.name}
                                             clickable
                                             color="primary"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
                                             variant="outlined"
                                         />
                                     </Link>

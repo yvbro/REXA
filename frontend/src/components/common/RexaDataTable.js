@@ -19,24 +19,24 @@ import TablePaginationActions from '@material-ui/core/TablePagination/TablePagin
 import LoadingIndicator from './LoadingIndicator';
 import NoData from './NoData';
 
-import { themeColor, backgroundColor, borderRadius } from './theme/theme.scss';
+import theme from './theme/theme.scss';
 
 const useStyles = makeStyles(() => ({
     root: {
-        borderRadius: borderRadius,
+        borderRadius: theme.borderRadius,
     },
     root100: {
-        borderRadius: borderRadius,
+        borderRadius: theme.borderRadius,
     },
     header: {
         textAlign: 'center',
-        background: backgroundColor,
+        background: theme.backgroundColor,
     },
 }));
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: themeColor,
+        backgroundColor: theme.themeColor,
         color: theme.palette.common.white,
     },
     body: {
@@ -111,20 +111,22 @@ const RexaDataTable = ({
                             </StyledTableRow>
                         ))}
                     </TableBody>
-                    {totalElements !== 0 && (<TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 15]}
-                                colSpan={3}
-                                count={totalElements}
-                                rowsPerPage={rowsPerPage}
-                                page={currentPage}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>)}
+                    {totalElements !== 0 && (
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    rowsPerPageOptions={[5, 10, 15]}
+                                    colSpan={3}
+                                    count={totalElements}
+                                    rowsPerPage={rowsPerPage}
+                                    page={currentPage}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                    ActionsComponent={TablePaginationActions}
+                                />
+                            </TableRow>
+                        </TableFooter>
+                    )}
                 </Table>
                 {totalElements === 0 && (
                     <NoData

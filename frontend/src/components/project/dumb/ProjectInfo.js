@@ -15,12 +15,12 @@ import {
 } from '@material-ui/core';
 import RexaCard from '../../common/RexaCard';
 
-import { avatarColor } from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 import classes from './project.module.scss';
 
 const useStyles = makeStyles({
     avatar: {
-        backgroundColor: avatarColor,
+        backgroundColor: themes.avatarColor,
     },
 });
 
@@ -28,7 +28,7 @@ const ProjectInfo = ({ project }) => {
     const style = useStyles();
 
     return (
-        <RexaCard title='Project information' className={classes.card}>
+        <RexaCard title="Project information" className={classes.card}>
             <List>
                 <ListItem>
                     <ListItemAvatar>
@@ -58,10 +58,7 @@ const ProjectInfo = ({ project }) => {
                             <CameraIcon />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText
-                        primary="Scan"
-                        secondary={project.numberOfScan}
-                    />
+                    <ListItemText primary="Scan" secondary={project.numberOfScan} />
                 </ListItem>
                 {project.assessors && (
                     <ListItem>

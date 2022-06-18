@@ -14,18 +14,18 @@ import ChangePasswordForm from '../smart/ChangePasswordForm';
 import { GoogleIcon } from '../../auth/dumb/SocialLogin';
 
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
-import { primaryButtonColor } from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 
 import classes from './UserListPage.module.scss';
 
-const DEFAULT_MODAL_PASSWORD_STATE = {open: false, userEmail: ''};
+const DEFAULT_MODAL_PASSWORD_STATE = { open: false, userEmail: '' };
 
 const useStyles = makeStyles(() => ({
     button: {
         marginLeft: 'auto',
         height: 40,
         marginRight: 8,
-        backgroundColor: primaryButtonColor,
+        backgroundColor: themes.primaryButtonColor,
         color: 'white',
     },
 }));
@@ -34,17 +34,19 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
     const style = useStyles();
 
     const [openModalNewUser, setOpenModalNewUser] = useState(false);
-    const [openModalPassword, setOpenModalPassword] = useState(DEFAULT_MODAL_PASSWORD_STATE);
+    const [openModalPassword, setOpenModalPassword] = useState(
+        DEFAULT_MODAL_PASSWORD_STATE
+    );
 
-    const { users, totalElements} = useSelector((state) => ({
+    const { users, totalElements } = useSelector((state) => ({
         users: state.user.data,
-        totalElements: state.user.totalElements
+        totalElements: state.user.totalElements,
     }));
 
     const handleChange = (userEmail, enabled) =>
         dispatch(switchEnabledUser(userEmail, !enabled));
 
-    const toSwitch = user => {
+    const toSwitch = (user) => {
         return (
             <Switch
                 checked={user.enabled}
@@ -59,16 +61,28 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
         );
     };
 
-    const toEditComponent = user => {
+    const toEditComponent = (user) => {
         let component = (
-            <IconButton color="primary" aria-label="edit password" component="span" onClick={() => setOpenModalPassword({open: true, userEmail: user.email})}>
+            <IconButton
+                color="primary"
+                aria-label="edit password"
+                component="span"
+                onClick={() =>
+                    setOpenModalPassword({ open: true, userEmail: user.email })
+                }
+            >
                 <EditIcon />
             </IconButton>
         );
 
         if (user.roles.includes('ADMIN')) {
             component = (
-                <IconButton color="primary" aria-label="edit password" component="span" disabled >
+                <IconButton
+                    color="primary"
+                    aria-label="edit password"
+                    component="span"
+                    disabled
+                >
                     <EditIcon />
                 </IconButton>
             );
@@ -102,7 +116,8 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
                 <RexaModal
                     open={openModalNewUser}
                     closeModal={() => setOpenModalNewUser(false)}
-                    title='addUserModal'>
+                    title="addUserModal"
+                >
                     <div>
                         <AddUserForm
                             users={users.map((e) => e.email)}
@@ -112,19 +127,25 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
                 </RexaModal>
                 <RexaModal
                     open={openModalPassword.open}
-                    closeModal={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
-                    title="editPasswordModal">
+                    closeModal={() =>
+                        setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)
+                    }
+                    title="editPasswordModal"
+                >
                     <div>
                         <ChangePasswordForm
                             userEmail={openModalPassword.userEmail}
-                            closeAction={() => setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)}
+                            closeAction={() =>
+                                setOpenModalPassword(DEFAULT_MODAL_PASSWORD_STATE)
+                            }
                         />
                     </div>
                 </RexaModal>
                 <RexaCard
-                    title='User Management'
+                    title="User Management"
                     className={classes.card}
-                    actions={action}>
+                    actions={action}
+                >
                     <RexaDataTable
                         data={data}
                         setPage={setPage}

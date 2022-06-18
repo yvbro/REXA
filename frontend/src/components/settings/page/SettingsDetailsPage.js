@@ -10,7 +10,7 @@ import UserSettingsForm from '../smart/UserSettingsForm';
 
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 import classes from './SettingsDetails.module.scss';
-import { themeColor } from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -62,7 +62,10 @@ const SettingsDetailsPage = () => {
         <Grid container className={classes.rootDiv}>
             <Grid item md={6} xs={12}>
                 <div className={classes.rootDiv}>
-                    <AppBar position="static" style={{ background: themeColor }}>
+                    <AppBar
+                        position="static"
+                        style={{ background: themes.themeColor }}
+                    >
                         <Tabs
                             value={value}
                             onChange={handleChange}

@@ -6,17 +6,17 @@ import {
     ListItem,
     ListItemText,
     ListItemIcon,
-    makeStyles
+    makeStyles,
 } from '@material-ui/core';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
 
 import classes from './project.module.scss';
 import RexaCard from '../../common/RexaCard';
-import { themeColor } from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 
 const useStyles = makeStyles({
     avatar: {
-        color: themeColor,
+        color: themes.themeColor,
     },
 });
 
@@ -24,13 +24,17 @@ const UnknownProcessorStatus = ({ unknownStatus }) => {
     const style = useStyles();
 
     return (
-        <RexaCard title='Unknown Processing status' className={classes.cardExtra} classNameContent={classes.cardExtraContent}>
+        <RexaCard
+            title="Unknown Processing status"
+            className={classes.cardExtra}
+            classNameContent={classes.cardExtraContent}
+        >
             <List className={classes.scrollableList}>
                 {unknownStatus &&
                     unknownStatus.map((status) => (
                         <ListItem key={status}>
                             <ListItemIcon>
-                                <LabelOffIcon className={style.avatar}/>
+                                <LabelOffIcon className={style.avatar} />
                             </ListItemIcon>
                             <ListItemText primary={status} />
                         </ListItem>

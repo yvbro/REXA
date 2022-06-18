@@ -59,14 +59,14 @@ const DashboardPage = () => {
             <Grid container spacing={3}>
                 <Grid item xs={9}>
                     <RecentActivitiesDashboard
-                        recentActivities={recentActivities?.data}
+                        recentActivities={recentActivities?.data ?? []}
                         loading={loadingRecentActivities}
-                        xnatHost={xnatHost}
+                        xnatHost={xnatHost ?? ''}
                     />
                 </Grid>
                 <Grid item xs={3}>
                     <ProjectDashboard
-                        projects={projects?.data}
+                        projects={projects?.data ?? []}
                         loading={loadingProjects}
                     />
                 </Grid>
@@ -74,7 +74,7 @@ const DashboardPage = () => {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <PrearchiveDashboard
-                        preArchives={preArchives?.data}
+                        preArchives={preArchives?.data ?? []}
                         loading={loadingPreArchives}
                     />
                 </Grid>

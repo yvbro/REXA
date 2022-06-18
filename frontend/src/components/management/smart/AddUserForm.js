@@ -28,13 +28,7 @@ import {
     ERROR_PASSWORD_NUMBER,
 } from '../../../helpers/constants/index';
 
-import {
-    borderRadius,
-    primaryButtonColor,
-    secondaryButtonColor,
-    themeColor,
-    avatarColor,
-} from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        borderRadius: borderRadius,
+        borderRadius: themes.borderRadius,
     },
     header: {
         width: 430,
@@ -61,18 +55,18 @@ const useStyles = makeStyles((theme) => ({
     },
     addButton: {
         width: 120,
-        backgroundColor: primaryButtonColor,
+        backgroundColor: themes.primaryButtonColor,
         color: 'white',
     },
     cancelButton: {
         width: 120,
-        backgroundColor: secondaryButtonColor,
+        backgroundColor: themes.secondaryButtonColor,
         color: 'white',
     },
     avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
-        backgroundColor: avatarColor,
+        backgroundColor: themes.avatarColor,
     },
     iconDef: {
         fontSize: 50,
@@ -148,21 +142,19 @@ const AddUserForm = (props) => {
                     error={!!errorEmail}
                     helperText={errorEmail}
                     onChange={onChangeEmail}
-                    inputProps={
-                        {'data-testid': 'email'}
-                    }
+                    inputProps={{ 'data-testid': 'email' }}
                 />
-                <PasswordField 
+                <PasswordField
                     value={password}
                     label="Password"
                     error={errorPassword}
                     onChange={onChangePassword}
-                    testId='password'
+                    testId="password"
                 />
             </CardContent>
             <CardActions>
                 <Button
-                    variant='contained'
+                    variant="contained"
                     onClick={handleSubmit}
                     disabled={!!errorEmail || !!errorPassword}
                     className={classes.addButton}
@@ -170,7 +162,7 @@ const AddUserForm = (props) => {
                     Add
                 </Button>
                 <Button
-                    variant='contained'
+                    variant="contained"
                     onClick={props.closeAction}
                     className={classes.cancelButton}
                 >

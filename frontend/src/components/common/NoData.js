@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { makeStyles, Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
-import { borderRadius, avatarColor } from './theme/theme.scss';
+import theme from './theme/theme.scss';
 
 const useStyles = makeStyles(() => ({
     cardInfoWithRadius: {
-        borderRadius: borderRadius,
+        borderRadius: theme.borderRadius,
     },
     alignItemsAndJustifyContent: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        color: avatarColor,
+        color: theme.avatarColor,
     },
     iconDef: {
         fontSize: 80,
@@ -25,9 +25,7 @@ const NoData = ({ label, noRadius }) => {
     const classes = useStyles();
 
     return (
-        <Card
-            className={noRadius ? '' : classes.cardInfoWithRadius}
-        >
+        <Card className={noRadius ? '' : classes.cardInfoWithRadius}>
             <CardContent className={classes.alignItemsAndJustifyContent}>
                 <InfoIcon className={classes.iconDef} />
                 <Typography variant="h5" component="h2">
