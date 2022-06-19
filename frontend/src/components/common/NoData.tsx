@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles, Card, CardContent, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
@@ -21,7 +20,12 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const NoData = ({ label, noRadius }) => {
+interface NoDataProps {
+    label: string;
+    noRadius: boolean;
+}
+
+const NoData = ({ label = '', noRadius = false }: NoDataProps) => {
     const classes = useStyles();
 
     return (
@@ -34,11 +38,6 @@ const NoData = ({ label, noRadius }) => {
             </CardContent>
         </Card>
     );
-};
-
-NoData.propTypes = {
-    label: PropTypes.string,
-    noRadius: PropTypes.bool,
 };
 
 export default NoData;
