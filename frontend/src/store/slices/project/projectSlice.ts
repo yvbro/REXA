@@ -1,14 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+/* eslint-disable prettier/prettier */
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Project } from '../../../models/project/Project';
 
 interface ProjectState {
     projectsList: Project[];
-    selectedProject: Project | undefined;
-};
-
+    selectedProject: Project | null;
+}
 
 const initialState: ProjectState = {
     projectsList: [],
-    selectedProject: undefined,
+    selectedProject: null,
 };
 
 export const projectSlice = createSlice({
@@ -17,16 +18,17 @@ export const projectSlice = createSlice({
     reducers: {
         setProjects: (state, action: PayloadAction<Project[]>) => {
             state.projectsList = action.payload;
-        },  
+        },
         setSelectedProject: (state, action: PayloadAction<Project>) => {
             state.selectedProject = action.payload;
         },
         resetProjects: (state) => {
             state = initialState;
-        }         
+        },
     },
 });
 
-export const { setProjects, setSelectedProject, resetProjects } = projectSlice.actions;
+export const { setProjects, setSelectedProject, resetProjects } =
+    projectSlice.actions;
 
 export default projectSlice;

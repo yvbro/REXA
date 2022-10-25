@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
@@ -12,11 +12,10 @@ import UsersManagementPage from '../components/management/page/UsersManagementPa
 import LoginPage from '../components/auth/page/LoginPage';
 import Logout from '../components/auth/smart/Logout';
 import PrivateRoute from './PrivateRoute';
-import LoadingIndicator from '../components/common/LoadingIndicator';
 import NotFound from '../components/common/NotFound';
 import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandler';
 import AboutUsPage from '../components/aboutUs/AboutUsPage';
-import { RootState, store } from '../store/store';
+import { store } from '../store/store';
 import { authCheckState } from '../store/slices/auth/authAction';
 
 function App() {

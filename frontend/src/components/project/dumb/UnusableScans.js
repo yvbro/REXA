@@ -16,25 +16,30 @@ const UnusableScans = ({ unusableScans }) => {
     }));
 
     return (
-        <RexaCard title='Unusable scans' className={classes.card} classNameContent={classes.cardContent}>
+        <RexaCard
+            title="Unusable scans"
+            className={classes.card}
+            classNameContent={classes.cardContent}
+        >
             <List className={classes.scrollableList}>
-                {unusableScans && unusableScans.map((scan) => (
-                    <ListItem
-                        key={`${scan.ID}.${scan['xnat:imagescandata/id']}`}
-                    >
-                        <Chip
-                            icon={<MoodBadIcon />}
-                            label={`${scan['xnat:imagescandata/id']} on ${scan['label']}`}
-                            clickable
-                            color="primary"
-                            component="a"
-                            href={getXnatUri(xnatHost, scan.ID)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            variant="outlined"
-                        />
-                    </ListItem>
-                ))}
+                {unusableScans &&
+                    unusableScans.map((scan) => (
+                        <ListItem
+                            key={`${scan.ID}.${scan['xnat:imagescandata/id']}`}
+                        >
+                            <Chip
+                                icon={<MoodBadIcon />}
+                                label={`${scan['xnat:imagescandata/id']} on ${scan['label']}`}
+                                clickable
+                                color="primary"
+                                component="a"
+                                href={getXnatUri(xnatHost, scan.ID)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                variant="outlined"
+                            />
+                        </ListItem>
+                    ))}
             </List>
         </RexaCard>
     );

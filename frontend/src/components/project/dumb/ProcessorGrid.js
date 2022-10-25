@@ -16,7 +16,7 @@ const ProcessorGrid = ({ processors }) => {
     return (
         <Grid container spacing={3}>
             <Grid item md={unknownProcStatus.length > 0 ? 9 : 12} xs={12}>
-                <RexaCard title='Processor Board' className={classes.cardExtra}>
+                <RexaCard title="Processor Board" className={classes.cardExtra}>
                     <StackedProjectColumnChart assessors={processors} />
                 </RexaCard>
             </Grid>

@@ -20,11 +20,11 @@ const ProjectsDropDown = ({ projectSelected }) => {
     useEffect(() => {
         projectSelected
             ? dispatch(fetchProject(projectSelected)).catch((error) => {
-                toast.error(error?.response?.data?.message);
-            })
+                  toast.error(error?.response?.data?.message);
+              })
             : dispatch(fetchProjects()).catch((error) => {
-                toast.error(error?.response?.data?.message);
-            });
+                  toast.error(error?.response?.data?.message);
+              });
     }, [dispatch, projectSelected]);
 
     const onChange = (event) => dispatch(fetchProject(event.target.value));

@@ -15,7 +15,7 @@ const ScanTypesDetails = ({ scans }) => {
     }
 
     return (
-        <RexaCard title='Scan types' className={classes.card}>
+        <RexaCard title="Scan types" className={classes.card}>
             {scansByType && scansByType.length > 0 ? (
                 <ScanTypePieChart scans={scansByType} />
             ) : (

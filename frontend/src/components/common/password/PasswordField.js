@@ -1,14 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 
-import {
-    TextField,
-    InputAdornment,
-    IconButton
-} from '@material-ui/core';
+import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
 
 const PasswordField = (props) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,14 +19,12 @@ const PasswordField = (props) => {
             helperText={props.error}
             onChange={props.onChange}
             className={props.className}
-            inputProps={
-                {
-                    form: {
-                        autoComplete: 'off',
-                    },
-                    'data-testid': props.testId,
-                }
-            }
+            inputProps={{
+                form: {
+                    autoComplete: 'off',
+                },
+                'data-testid': props.testId,
+            }}
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
@@ -44,7 +37,7 @@ const PasswordField = (props) => {
                             {showPassword ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
                     </InputAdornment>
-                )
+                ),
             }}
         />
     );

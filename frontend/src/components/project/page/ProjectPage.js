@@ -14,10 +14,9 @@ export const ProjectPage = () => {
         <div className={classes.rootDiv}>
             <Grid container spacing={3}>
                 <Grid item md={3} xs={12}>
-                    <ProjectsDropDown projectSelected={location.project} />
+                    <ProjectsDropDown projectSelected={location?.project ?? ''} />
                 </Grid>
             </Grid>
-            <ProjectDetails />
         </div>
     );
 };

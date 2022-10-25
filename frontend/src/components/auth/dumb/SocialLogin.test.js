@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderWithStore, cleanup} from '../../../helpers/test/test-utils';
+import { renderWithStore, cleanup } from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 
 import SocialLogin from './SocialLogin';
@@ -21,5 +21,4 @@ describe('The SocialLogin component', () => {
         expect(getByRole('link')).toHaveTextContent('Sign in with Google');
         expect(getByRole('link')).toHaveAttribute('href', GOOGLE_AUTH_URL);
     });
-
 });

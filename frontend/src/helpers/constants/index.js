@@ -19,18 +19,19 @@ const REGEX_ONE_NUMBER = /^.*[0-9]+.*$/;
 const PASSWORD_LENGTH = 8;
 
 export const ERROR_PASSWORD_LENGTH = 'Password must be at least 8 characters long.';
-export const ERROR_PASSWORD_CAPITAL_LETTER = 'Password must contain a capital letter.';
+export const ERROR_PASSWORD_CAPITAL_LETTER =
+    'Password must contain a capital letter.';
 export const ERROR_PASSWORD_NUMBER = 'Password must contain a number.';
 export const ERROR_PASSWORD_NOT_MATCH = 'Password and confirmation does not match.';
 
-export const isPasswordTooShort = password => {
+export const isPasswordTooShort = (password) => {
     return password.length < PASSWORD_LENGTH;
 };
 
-export const passwordDoesNotContainACapitalLetter = password => {
+export const passwordDoesNotContainACapitalLetter = (password) => {
     return !password.match(REGEX_ONE_CAPITAL_LETTER);
 };
 
-export const passwordDoesNotContainANumber = password => {
-    return !password.match(REGEX_ONE_NUMBER) ;
+export const passwordDoesNotContainANumber = (password) => {
+    return !password.match(REGEX_ONE_NUMBER);
 };

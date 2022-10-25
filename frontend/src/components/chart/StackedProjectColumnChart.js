@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Chart from 'react-apexcharts';
-import {extractAssessorsProcTypeAndStatus, PROC_STATUS} from '../../helpers/xnat';
+import { extractAssessorsProcTypeAndStatus, PROC_STATUS } from '../../helpers/xnat';
 
 import classes from './charts.module.scss';
 
