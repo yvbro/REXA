@@ -4,4 +4,4 @@ export type Project = {
     description: string;
     piFirstname: string;
     piLastname: string;
-}
+};

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
-
 import { Grid } from '@material-ui/core';
 
 import ProjectInfo from './ProjectInfo';
@@ -10,19 +8,18 @@ import ScanGrid from './ScanGrid';
 
 import LoadingIndicator from '../../common/LoadingIndicator';
 import NoData from '../../common/NoData';
+import { Project } from '../../../models/project/Project';
 
-const ProjectDetails = () => {
-    const { project, loading, parentLoading } = useSelector((state) => ({
-        project: state.project.selectedProject.data,
-        loading: state.project.selectedProject.loading,
-        parentLoading: state.project.projectsList.loading,
-    }));
+interface ProjectDetailsProps {
+    project: Project | undefined;
+}
 
+const ProjectDetails = ({ project }: ProjectDetailsProps) => {
     return (
         <>
-            {loading || parentLoading ? (
+            {/*             { project == undefined ? (
                 <LoadingIndicator />
-            ) : project && project.assessors ? (
+            ) : (
                 <>
                     <Grid container spacing={3}>
                         <Grid item md={3} xs={12}>
@@ -40,7 +37,7 @@ const ProjectDetails = () => {
                         </Grid>
                     </Grid>
                 </>
-            )}
+            )} */}
         </>
     );
 };

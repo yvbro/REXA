@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Button, TextField, makeStyles, Typography } from '@material-ui/core';
 
 import { updateXnatSettings, testConnection } from '../api/apiSettings';
-import { resetDataProjects } from '../../project/redux/projectDuck';
 import { updateXnatInfo } from '../../../store/slices/auth/authSlice';
 import classes from './XnatSettingsForm.module.scss';
 
@@ -54,7 +53,7 @@ const XnatSettingsForm = () => {
                 password
             ).then(() => {
                 dispatch(updateXnatInfo(username, host));
-                dispatch(resetDataProjects());
+                /*                 dispatch(resetDataProjects()); */
             });
         }
     };
