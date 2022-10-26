@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 
 interface NoDataProps {
     label: string;
-    noRadius: boolean;
+    noRadius?: boolean;
 }
 
 const NoData = ({ label = '', noRadius = false }: NoDataProps) => {

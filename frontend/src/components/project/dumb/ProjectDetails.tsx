@@ -6,19 +6,22 @@ import ProjectInfo from './ProjectInfo';
 import ProcessorGrid from './ProcessorGrid';
 import ScanGrid from './ScanGrid';
 
-import LoadingIndicator from '../../common/LoadingIndicator';
 import NoData from '../../common/NoData';
-import { Project } from '../../../models/project/Project';
+import { ProjectXnatInfo } from '../../../models/project/ProjectXnatInfo';
 
 interface ProjectDetailsProps {
-    project: Project | undefined;
+    project: ProjectXnatInfo | undefined;
 }
 
 const ProjectDetails = ({ project }: ProjectDetailsProps) => {
     return (
         <>
-            {/*             { project == undefined ? (
-                <LoadingIndicator />
+            {project == undefined || project.projectId === 'None' ? (
+                <Grid container spacing={3}>
+                    <Grid item md={12} xs={12}>
+                        <NoData label="No project selected or no data found" />
+                    </Grid>
+                </Grid>
             ) : (
                 <>
                     <Grid container spacing={3}>
@@ -29,15 +32,7 @@ const ProjectDetails = ({ project }: ProjectDetailsProps) => {
                     </Grid>
                     <ProcessorGrid processors={project.assessors} />
                 </>
-            ) : (
-                <>
-                    <Grid container spacing={3}>
-                        <Grid item md={12} xs={12}>
-                            <NoData label="No project selected or no data found" />
-                        </Grid>
-                    </Grid>
-                </>
-            )} */}
+            )}
         </>
     );
 };

@@ -31,7 +31,7 @@ const ProjectsDropDown = ({
                 value={projectSelected}
                 onChange={onChange}
             >
-                <MenuItem value="">
+                <MenuItem value="None">
                     <em>None</em>
                 </MenuItem>
                 {projects.map((p) => (

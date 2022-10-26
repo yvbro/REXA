@@ -11,16 +11,17 @@ import ProjectDetails from '../dumb/ProjectDetails';
 import classes from '../../common/common.module.scss';
 import { Project } from '../../../models/project/Project';
 import { RexaError } from '../../../models/management/RexaError';
+import { ProjectXnatInfo } from '../../../models/project/ProjectXnatInfo';
 
 export const ProjectPage = () => {
     const location = useLocation<{ project: string }>();
     const [projectSelected, setProjectSelected] = useState(
-        location.state ? location.state.project : ''
+        location.state ? location.state.project : 'None'
     );
 
     const { data: project } = useQuery(
         ['fetchProject', projectSelected],
-        () => axios.get(`/private/projects/${projectSelected}`),
+        () => axios.get<ProjectXnatInfo>(`/private/projects/${projectSelected}`),
         {
             keepPreviousData: true,
         }
@@ -49,6 +50,7 @@ export const ProjectPage = () => {
                     />
                 </Grid>
             </Grid>
+            <ProjectDetails project={project?.data ?? undefined} />
         </div>
     );
 };
