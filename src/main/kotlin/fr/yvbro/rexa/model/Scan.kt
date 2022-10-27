@@ -21,3 +21,4 @@ data class Scan(
         var project: String,
         var xsiType: String
 )
+

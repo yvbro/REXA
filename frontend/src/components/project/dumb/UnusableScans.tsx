@@ -9,11 +9,19 @@ import { getXnatUri } from '../../../helpers/xnat';
 import classes from './project.module.scss';
 
 import RexaCard from '../../common/RexaCard';
+import { RootState } from '../../../store/store';
+import { Scan } from '../../../models/project/Scan';
 
-const UnusableScans = ({ unusableScans }) => {
-    const { xnatHost } = useSelector((state) => ({
-        xnatHost: state.auth.user.xnatHost,
+interface UnusableScansProps {
+    unusableScans: Scan[];
+}
+
+const UnusableScans = ({ unusableScans }: UnusableScansProps) => {
+    const { xnatHost } = useSelector((state: RootState) => ({
+        xnatHost: state.auth.user.xnatHost ?? '',
     }));
+
+    console.log(unusableScans);
 
     return (
         <RexaCard
@@ -24,16 +32,14 @@ const UnusableScans = ({ unusableScans }) => {
             <List className={classes.scrollableList}>
                 {unusableScans &&
                     unusableScans.map((scan) => (
-                        <ListItem
-                            key={`${scan.ID}.${scan['xnat:imagescandata/id']}`}
-                        >
+                        <ListItem key={`${scan.id}.${scan.scanLabel}`}>
                             <Chip
                                 icon={<MoodBadIcon />}
-                                label={`${scan['xnat:imagescandata/id']} on ${scan['label']}`}
+                                label={`${scan.scanLabel} on ${scan.sessionLabel}`}
                                 clickable
                                 color="primary"
                                 component="a"
-                                href={getXnatUri(xnatHost, scan.ID)}
+                                href={getXnatUri(xnatHost, scan.id)}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 variant="outlined"
@@ -43,10 +49,6 @@ const UnusableScans = ({ unusableScans }) => {
             </List>
         </RexaCard>
     );
-};
-
-UnusableScans.propTypes = {
-    unusableScans: PropTypes.array.isRequired,
 };
 
 export default UnusableScans;

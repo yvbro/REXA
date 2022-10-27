@@ -356,8 +356,6 @@
                             we are using the standalone javax.servlet:servlet-api dependency for compile (as provided) scope -->
 						<ignoredDependency>org.apache.tomcat.embed:tomcat-embed-core</ignoredDependency>
 
-						<!-- com.fasterxml.jackson: imported through com.mirakl:spring-boot-starter-api,
-                                with version defined in spring-boot-dependencies -->
 						<ignoredDependency>com.fasterxml.jackson.*</ignoredDependency>
 					</ignoredDependencies>
 				</configuration>

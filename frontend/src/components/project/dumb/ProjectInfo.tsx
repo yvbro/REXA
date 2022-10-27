@@ -17,6 +17,7 @@ import RexaCard from '../../common/RexaCard';
 
 import themes from '../../common/theme/theme.scss';
 import classes from './project.module.scss';
+import { ProjectXnatInfo } from '../../../models/project/ProjectXnatInfo';
 
 const useStyles = makeStyles({
     avatar: {
@@ -24,7 +25,11 @@ const useStyles = makeStyles({
     },
 });
 
-const ProjectInfo = ({ project }) => {
+interface ProjectInfoProps {
+    project: ProjectXnatInfo;
+}
+
+const ProjectInfo = ({ project }: ProjectInfoProps) => {
     const style = useStyles();
 
     return (
@@ -76,10 +81,6 @@ const ProjectInfo = ({ project }) => {
             </List>
         </RexaCard>
     );
-};
-
-ProjectInfo.propTypes = {
-    project: PropTypes.object.isRequired,
 };
 
 export default ProjectInfo;

@@ -2,10 +2,7 @@ package fr.yvbro.rexa.controller
 
 import fr.yvbro.rexa.config.WebConfig
 import fr.yvbro.rexa.controller.input.XnatSettingsRequest
-import fr.yvbro.rexa.controller.output.ProjectDto
-import fr.yvbro.rexa.controller.output.ProjectPreAchivesDto
-import fr.yvbro.rexa.controller.output.ProjectRecentActivitiesDto
-import fr.yvbro.rexa.controller.output.XnatInfoDto
+import fr.yvbro.rexa.controller.output.*
 import fr.yvbro.rexa.model.Project
 import fr.yvbro.rexa.model.role.ADMIN
 import fr.yvbro.rexa.model.role.USER
@@ -30,8 +27,8 @@ class XnatFrontController(private val xnatService: XnatService) {
             scans.size,
             scans.groupBy { it.sessionLabel }.size,
             scans.groupBy { it.subjectLabel }.size,
-            scans,
-            assessors
+            scans.map { ScanDto.from(it) },
+            assessors.map { AssessorDto.from(it) }
         )
     }
 

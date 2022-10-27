@@ -1,3 +1,5 @@
+import { Scan } from '../models/project/Scan';
+
 export const PROC_STATUS = [
     'NEED_INPUTS',
     'NEED_TO_RUN',
@@ -13,15 +15,15 @@ export const PROC_STATUS = [
 
 export const UNUSABLE_SCAN_QUALITY = 'unusable';
 
-const defaultProcStatus = (status) => {
-    return PROC_STATUS.reduce(function (result, s) {
+const defaultProcStatus = (status: string) => {
+    return PROC_STATUS.reduce(function (result: number[], s) {
         result.push(s === status ? 1 : 0);
         return result;
     }, []);
 };
 
-export const extractAssessorsProcTypeAndStatus = (assessors) => {
-    return assessors.reduce((arr, obj) => {
+export const extractAssessorsProcTypeAndStatus = (assessors: any) => {
+    return assessors.reduce((arr: any[], obj: any) => {
         const procStatus = PROC_STATUS.includes(obj['proc:genprocdata/procstatus'])
             ? obj['proc:genprocdata/procstatus']
             : 'UNKNOWN';
@@ -41,23 +43,23 @@ export const extractAssessorsProcTypeAndStatus = (assessors) => {
     }, []);
 };
 
-export const getUnknownProcStatus = (assessors) => {
+export const getUnknownProcStatus = (assessors: any) => {
     return [
         ...new Set(
             assessors
                 .filter(
-                    (proc) =>
+                    (proc: any) =>
                         !PROC_STATUS.includes(proc['proc:genprocdata/procstatus'])
                 )
-                .map((proc) => proc['proc:genprocdata/procstatus'])
+                .map((proc: any) => proc['proc:genprocdata/procstatus'])
         ),
     ];
 };
 
-export const extractScanTypes = (scans) => {
-    return scans.reduce((arr, obj) => {
+export const extractScanTypes = (scans: any) => {
+    return scans.reduce((arr: any[], obj: any) => {
         const typeFound = arr.filter(
-            (el) => el.name === obj['xnat:imagescandata/type']
+            (el: any) => el.name === obj['xnat:imagescandata/type']
         );
         if (typeFound.length > 0) {
             typeFound[0].data += 1;
@@ -71,11 +73,16 @@ export const extractScanTypes = (scans) => {
     }, []);
 };
 
-export const getUnusableScans = (scans) => {
-    let idsProcessed = [];
+export const getUnusableScans = (scans: Scan[]) => {
+    let idsProcessed: string[] = [];
     return scans.filter((scan) => {
-        if (scan['xnat:imagescandata/quality'] === UNUSABLE_SCAN_QUALITY) {
-            const uniqueId = `${scan.ID}.${scan['xnat:imagescandata/id']}`;
+        if (
+            scan['xnat:imagescandata/quality' as keyof Scan] ===
+            UNUSABLE_SCAN_QUALITY
+        ) {
+            const uniqueId = `${scan.ID}.${
+                scan['xnat:imagescandata/id' as keyof Scan]
+            }`;
             if (idsProcessed.includes(uniqueId)) {
                 return false;
             } else {
@@ -88,5 +95,5 @@ export const getUnusableScans = (scans) => {
     });
 };
 
-export const getXnatUri = (host, id) =>
+export const getXnatUri = (host: string, id: number) =>
     `${host}/app/action/DisplayItemAction/search_element/xnat:mrSessionData/search_field/xnat:mrSessionData.ID/search_value/${id}`;

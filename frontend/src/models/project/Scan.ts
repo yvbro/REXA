@@ -1,6 +1,6 @@
 export type Scan = {
     sessionId: string;
-    id: string;
+    id: number;
     subjectLabel: string;
     uri: string;
     subjectId: string;

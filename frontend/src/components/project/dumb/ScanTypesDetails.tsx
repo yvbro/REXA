@@ -7,8 +7,13 @@ import { extractScanTypes } from '../../../helpers/xnat';
 
 import RexaCard from '../../common/RexaCard';
 import classes from './project.module.scss';
+import { Scan } from '../../../models/project/Scan';
 
-const ScanTypesDetails = ({ scans }) => {
+interface ScanTypesDetailsProps {
+    scans: Scan[];
+}
+
+const ScanTypesDetails = ({ scans }: ScanTypesDetailsProps) => {
     let scansByType = [];
     if (scans) {
         scansByType = extractScanTypes(scans);
@@ -23,10 +28,6 @@ const ScanTypesDetails = ({ scans }) => {
             )}
         </RexaCard>
     );
-};
-
-ScanTypesDetails.propTypes = {
-    scans: PropTypes.array.isRequired,
 };
 
 export default ScanTypesDetails;

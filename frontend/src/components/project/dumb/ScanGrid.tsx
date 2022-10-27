@@ -6,8 +6,13 @@ import { Grid } from '@material-ui/core';
 import { getUnusableScans } from '../../../helpers/xnat';
 import ScanTypesDetails from './ScanTypesDetails';
 import UnusableScans from './UnusableScans';
+import { Scan } from '../../../models/project/Scan';
 
-const ScanGrid = ({ scans }) => {
+interface ScanGridProps {
+    scans: Scan[];
+}
+
+const ScanGrid = ({ scans }: ScanGridProps) => {
     let unusableScans = getUnusableScans(scans);
 
     return (

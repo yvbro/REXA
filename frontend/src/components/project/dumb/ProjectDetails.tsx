@@ -8,12 +8,18 @@ import ScanGrid from './ScanGrid';
 
 import NoData from '../../common/NoData';
 import { ProjectXnatInfo } from '../../../models/project/ProjectXnatInfo';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 interface ProjectDetailsProps {
     project: ProjectXnatInfo | undefined;
+    isLoading: boolean;
 }
 
-const ProjectDetails = ({ project }: ProjectDetailsProps) => {
+const ProjectDetails = ({ project, isLoading }: ProjectDetailsProps) => {
+    if (isLoading) {
+        return <LoadingIndicator />;
+    }
+
     return (
         <>
             {project == undefined || project.projectId === 'None' ? (

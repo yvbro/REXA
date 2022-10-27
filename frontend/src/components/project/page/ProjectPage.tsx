@@ -27,7 +27,7 @@ export const ProjectPage = () => {
         }
     );
 
-    const { data: projects } = useQuery(
+    const { isLoading, data: projects } = useQuery(
         ['fetchProjects'],
         () => axios.get<Project[]>('/private/projects'),
         {
@@ -50,7 +50,10 @@ export const ProjectPage = () => {
                     />
                 </Grid>
             </Grid>
-            <ProjectDetails project={project?.data ?? undefined} />
+            <ProjectDetails
+                project={project?.data ?? undefined}
+                isLoading={isLoading}
+            />
         </div>
     );
 };
