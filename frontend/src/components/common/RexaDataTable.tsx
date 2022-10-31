@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
     makeStyles,
@@ -36,7 +35,6 @@ const useStyles = makeStyles(() => ({
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: theme.themeColor,
         color: theme.palette.common.white,
     },
     body: {
@@ -52,25 +50,45 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+type RexaTableData =
+    | { name: string; values: string[] }
+    | { name: string; values: JSX.Element[] };
+
+interface RexaDataTableProps {
+    key?: string;
+    data: RexaTableData[];
+    loading: boolean;
+    noDataLabel?: string;
+    fullHeight?: boolean;
+    currentPage: number;
+    totalElements: number;
+    rowsPerPage?: number;
+    setPage: (page: number) => void;
+    setRowsPerPage: (rowPerPage: number) => void;
+}
+
 const RexaDataTable = ({
-    key,
+    key = '',
     data,
     setPage,
     loading,
-    noDataLabel,
-    fullHeight,
-    rowsPerPage,
+    noDataLabel = '',
+    fullHeight = false,
+    rowsPerPage = 10,
     currentPage,
     totalElements,
     setRowsPerPage,
-}) => {
+}: RexaDataTableProps) => {
     const classes = useStyles();
 
-    const handleChangePage = (_, newPage) => {
+    const handleChangePage = (
+        _: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number
+    ) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event) => {
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
@@ -98,18 +116,20 @@ const RexaDataTable = ({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data[0].values.map((_, rowIndex) => (
-                            <StyledTableRow key={`${key}_row_${rowIndex}`}>
-                                {data.map((row, colIndex) => (
-                                    <StyledTableCell
-                                        key={`${key}_row_cell_${colIndex}`}
-                                        align="center"
-                                    >
-                                        {row.values[rowIndex]}
-                                    </StyledTableCell>
-                                ))}
-                            </StyledTableRow>
-                        ))}
+                        {data[0].values.map(
+                            (_: string | JSX.Element, rowIndex: number) => (
+                                <StyledTableRow key={`${key}_row_${rowIndex}`}>
+                                    {data.map((row, colIndex) => (
+                                        <StyledTableCell
+                                            key={`${key}_row_cell_${colIndex}`}
+                                            align="center"
+                                        >
+                                            {row.values[rowIndex]}
+                                        </StyledTableCell>
+                                    ))}
+                                </StyledTableRow>
+                            )
+                        )}
                     </TableBody>
                     {totalElements !== 0 && (
                         <TableFooter>
@@ -120,7 +140,7 @@ const RexaDataTable = ({
                                     count={totalElements}
                                     rowsPerPage={rowsPerPage}
                                     page={currentPage}
-                                    onChangePage={handleChangePage}
+                                    onPageChange={handleChangePage}
                                     onChangeRowsPerPage={handleChangeRowsPerPage}
                                     ActionsComponent={TablePaginationActions}
                                 />
@@ -137,26 +157,6 @@ const RexaDataTable = ({
             </TableContainer>
         </Paper>
     );
-};
-
-RexaDataTable.propTypes = {
-    key: PropTypes.string,
-    data: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired,
-    noDataLabel: PropTypes.string,
-    fullHeight: PropTypes.bool,
-    currentPage: PropTypes.number.isRequired,
-    totalElements: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number,
-    setPage: PropTypes.func.isRequired,
-    setRowsPerPage: PropTypes.func.isRequired,
-};
-
-RexaDataTable.defaultProps = {
-    rowsPerPage: 10,
-    fullHeight: false,
-    noDataLabel: '',
-    key: '',
 };
 
 export default RexaDataTable;

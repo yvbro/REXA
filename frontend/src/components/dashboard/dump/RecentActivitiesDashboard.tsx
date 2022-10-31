@@ -50,17 +50,17 @@ const RecentActivitiesDashboard = ({ xnatHost }: RecentActivitiesDashboardProps)
     }
 
     const data = [
-        { name: 'Project', values: recentActivities?.data.map((e) => e.project) },
-        { name: 'Type', values: recentActivities?.data.map((e) => e.typeDesc) },
+        { name: 'Project', values: recentActivities?.data.map((e) => e.project)!! },
+        { name: 'Type', values: recentActivities?.data.map((e) => e.typeDesc)!! },
         {
             name: 'Label',
             values: recentActivities?.data.map((e) =>
                 toChip(e.label, e.id, xnatHost)
-            ),
+            )!!,
         },
         {
             name: 'Element',
-            values: recentActivities?.data.map((e) => e.elementName),
+            values: recentActivities?.data.map((e) => e.elementName)!!,
         },
     ];
 

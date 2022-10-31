@@ -1,5 +1,11 @@
 import React, { ReactNode } from 'react';
-import { Card, CardContent, Typography, makeStyles } from '@material-ui/core';
+import {
+    Card,
+    CardContent,
+    Typography,
+    makeStyles,
+    CardActions,
+} from '@material-ui/core';
 
 import theme from './theme/theme.scss';
 
@@ -15,13 +21,15 @@ interface RexaCardProps {
     className?: string;
     classNameContent?: string;
     title?: string;
+    actions?: ReactNode | null;
 }
 
 const RexaCard = ({
     children,
+    title = '',
+    actions = null,
     className = '',
     classNameContent = '',
-    title = '',
 }: RexaCardProps) => {
     const style = useStyles();
     return (
@@ -32,6 +40,7 @@ const RexaCard = ({
                 </Typography>
                 {children}
             </CardContent>
+            {actions ? <CardActions>{actions}</CardActions> : null}
         </Card>
     );
 };

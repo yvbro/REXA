@@ -19,7 +19,7 @@ export const ProjectPage = () => {
         location.state ? location.state.project : 'None'
     );
 
-    const { data: project } = useQuery(
+    const { isFetching: isLoadingProject, data: project } = useQuery(
         ['fetchProject', projectSelected],
         () => axios.get<ProjectXnatInfo>(`/private/projects/${projectSelected}`),
         {
@@ -27,7 +27,7 @@ export const ProjectPage = () => {
         }
     );
 
-    const { isLoading, data: projects } = useQuery(
+    const { data: projects } = useQuery(
         ['fetchProjects'],
         () => axios.get<Project[]>('/private/projects'),
         {
@@ -52,7 +52,7 @@ export const ProjectPage = () => {
             </Grid>
             <ProjectDetails
                 project={project?.data ?? undefined}
-                isLoading={isLoading}
+                isLoading={isLoadingProject}
             />
         </div>
     );

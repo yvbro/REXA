@@ -5,18 +5,21 @@ import PropTypes from 'prop-types';
 import { Button, Switch, IconButton, Grid, makeStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { switchEnabledUser } from '../redux/userDuck';
 import RexaDataTable from '../../common/RexaDataTable';
 import RexaModal from '../../common/RexaModal';
 import RexaCard from '../../common/RexaCard';
-import AddUserForm from '../smart/AddUserForm';
-import ChangePasswordForm from '../smart/ChangePasswordForm';
+import AddUserForm from './AddUserForm';
+import ChangePasswordForm from './ChangePasswordForm';
 import { GoogleIcon } from '../../auth/dumb/SocialLogin';
 
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 import themes from '../../common/theme/theme.scss';
 
 import classes from './UserListPage.module.scss';
+import { UserRexa } from '../../../models/management/UserRexa';
+import { Page } from '../../../models/Page';
+import { RexaRole } from '../../../models/management/RexaRole';
+import useUsersManagementService from '../../../services/useUsersManagementService';
 
 const DEFAULT_MODAL_PASSWORD_STATE = { open: false, userEmail: '' };
 
@@ -29,29 +32,38 @@ const useStyles = makeStyles(() => ({
         color: 'white',
     },
 }));
-const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
-    const dispatch = useDispatch();
-    const style = useStyles();
 
+interface UserListPageProps {
+    pageOfUsers: Page<UserRexa>;
+    page: number;
+    setPage: (page: number) => void;
+    rowsPerPage: number;
+    setRowsPerPage: (page: number) => void;
+}
+
+const UserListPage = ({
+    page,
+    setPage,
+    pageOfUsers,
+    rowsPerPage,
+    setRowsPerPage,
+}: UserListPageProps) => {
+    const style = useStyles();
+    const { switchEnabledUser } = useUsersManagementService();
     const [openModalNewUser, setOpenModalNewUser] = useState(false);
     const [openModalPassword, setOpenModalPassword] = useState(
         DEFAULT_MODAL_PASSWORD_STATE
     );
 
-    const { users, totalElements } = useSelector((state) => ({
-        users: state.user.data,
-        totalElements: state.user.totalElements,
-    }));
+    const handleChange = (userEmail: string, enabled: boolean) =>
+        switchEnabledUser({ userEmail: userEmail, enabled: !enabled });
 
-    const handleChange = (userEmail, enabled) =>
-        dispatch(switchEnabledUser(userEmail, !enabled));
-
-    const toSwitch = (user) => {
+    const toSwitch = (user: UserRexa) => {
         return (
             <Switch
-                checked={user.enabled}
+                defaultChecked={user.enabled}
                 onChange={() => handleChange(user.email, user.enabled)}
-                disabled={user.roles.includes('ADMIN')}
+                disabled={user.roles.includes(RexaRole.ADMIN)}
                 color="primary"
                 name="disableUser"
                 inputProps={{
@@ -61,7 +73,7 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
         );
     };
 
-    const toEditComponent = (user) => {
+    const toEditComponent = (user: UserRexa) => {
         let component = (
             <IconButton
                 color="primary"
@@ -75,7 +87,7 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
             </IconButton>
         );
 
-        if (user.roles.includes('ADMIN')) {
+        if (user.roles.includes(RexaRole.ADMIN)) {
             component = (
                 <IconButton
                     color="primary"
@@ -94,10 +106,19 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
     };
 
     const data = [
-        { name: 'Email', values: users.map((e) => e.email) },
-        { name: 'Role', values: users.map((e) => e.roles.join(',')) },
-        { name: 'Enabled', values: users.map((e) => toSwitch(e)) },
-        { name: 'Actions', values: users.map((e) => toEditComponent(e)) },
+        { name: 'Email', values: pageOfUsers.content.map((user) => user.email) },
+        {
+            name: 'Role',
+            values: pageOfUsers.content.map((user) => user.roles.join(',')),
+        },
+        {
+            name: 'Enabled',
+            values: pageOfUsers.content.map((user) => toSwitch(user)),
+        },
+        {
+            name: 'Actions',
+            values: pageOfUsers.content.map((user) => toEditComponent(user)),
+        },
     ];
 
     const action = (
@@ -120,7 +141,7 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
                 >
                     <div>
                         <AddUserForm
-                            users={users.map((e) => e.email)}
+                            users={pageOfUsers.content.map((user) => user.email)}
                             closeAction={() => setOpenModalNewUser(false)}
                         />
                     </div>
@@ -154,20 +175,13 @@ const UserListPage = ({ page, setPage, rowsPerPage, setRowsPerPage }) => {
                         noDataLabel="No users on the platform"
                         fullHeight
                         currentPage={page}
-                        totalElements={totalElements}
+                        totalElements={pageOfUsers.totalElements}
                         rowsPerPage={rowsPerPage}
                     />
                 </RexaCard>
             </Grid>
         </Grid>
     );
-};
-
-UserListPage.propTypes = {
-    page: PropTypes.number.isRequired,
-    setPage: PropTypes.func.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-    setRowsPerPage: PropTypes.func.isRequired,
 };
 
 export default UserListPage;
