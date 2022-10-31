@@ -1,4 +1,7 @@
+import { Assessor } from './../models/project/Assessor';
 import { Scan } from '../models/project/Scan';
+import { ScanByType } from './type/ScanByType';
+import { ProcessorStats } from './type/ProcessorStats';
 
 export const PROC_STATUS = [
     'NEED_INPUTS',
@@ -22,20 +25,19 @@ const defaultProcStatus = (status: string) => {
     }, []);
 };
 
-export const extractAssessorsProcTypeAndStatus = (assessors: any) => {
-    return assessors.reduce((arr: any[], obj: any) => {
-        const procStatus = PROC_STATUS.includes(obj['proc:genprocdata/procstatus'])
-            ? obj['proc:genprocdata/procstatus']
+export const extractAssessorsProcTypeAndStatus = (assessors: Assessor[]) => {
+    return assessors.reduce((arr: ProcessorStats[], obj) => {
+        const procStatus = PROC_STATUS.includes(obj.procStatus)
+            ? obj.procStatus
             : 'UNKNOWN';
 
-        const procFound = arr.filter(
-            (el) => el.name === obj['proc:genprocdata/proctype']
-        );
+        const procFound = arr.filter((el) => el.name === obj.procType);
+
         if (procFound.length > 0) {
             procFound[0].data[PROC_STATUS.indexOf(procStatus)] += 1;
         } else {
             arr.push({
-                name: obj['proc:genprocdata/proctype'],
+                name: obj.procType,
                 data: [...defaultProcStatus(procStatus)],
             });
         }
@@ -43,29 +45,24 @@ export const extractAssessorsProcTypeAndStatus = (assessors: any) => {
     }, []);
 };
 
-export const getUnknownProcStatus = (assessors: any) => {
+export const getUnknownProcStatus = (assessors: Assessor[]) => {
     return [
         ...new Set(
             assessors
-                .filter(
-                    (proc: any) =>
-                        !PROC_STATUS.includes(proc['proc:genprocdata/procstatus'])
-                )
-                .map((proc: any) => proc['proc:genprocdata/procstatus'])
+                .filter((proc) => !PROC_STATUS.includes(proc.procStatus))
+                .map((proc) => proc.procStatus)
         ),
     ];
 };
 
-export const extractScanTypes = (scans: any) => {
-    return scans.reduce((arr: any[], obj: any) => {
-        const typeFound = arr.filter(
-            (el: any) => el.name === obj['xnat:imagescandata/type']
-        );
+export const extractScanTypes = (scans: Scan[]) => {
+    return scans.reduce((arr: ScanByType[], obj: Scan) => {
+        const typeFound = arr.filter((el: any) => el.name === obj.type);
         if (typeFound.length > 0) {
             typeFound[0].data += 1;
         } else {
             arr.push({
-                name: obj['xnat:imagescandata/type'],
+                name: obj.type,
                 data: 1,
             });
         }
@@ -76,13 +73,8 @@ export const extractScanTypes = (scans: any) => {
 export const getUnusableScans = (scans: Scan[]) => {
     let idsProcessed: string[] = [];
     return scans.filter((scan) => {
-        if (
-            scan['xnat:imagescandata/quality' as keyof Scan] ===
-            UNUSABLE_SCAN_QUALITY
-        ) {
-            const uniqueId = `${scan.ID}.${
-                scan['xnat:imagescandata/id' as keyof Scan]
-            }`;
+        if (scan.quality === UNUSABLE_SCAN_QUALITY) {
+            const uniqueId = `${scan.id}.${scan.scanLabel}`;
             if (idsProcessed.includes(uniqueId)) {
                 return false;
             } else {

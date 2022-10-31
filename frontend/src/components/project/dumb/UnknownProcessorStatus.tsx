@@ -20,7 +20,11 @@ const useStyles = makeStyles({
     },
 });
 
-const UnknownProcessorStatus = ({ unknownStatus }) => {
+interface UnknownProcessorStatusProps {
+    unknownStatus: string[];
+}
+
+const UnknownProcessorStatus = ({ unknownStatus }: UnknownProcessorStatusProps) => {
     const style = useStyles();
 
     return (
@@ -42,10 +46,6 @@ const UnknownProcessorStatus = ({ unknownStatus }) => {
             </List>
         </RexaCard>
     );
-};
-
-UnknownProcessorStatus.propTypes = {
-    unknownStatus: PropTypes.array.isRequired,
 };
 
 export default UnknownProcessorStatus;

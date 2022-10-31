@@ -1,20 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import ScanTypePieChart from '../../chart/ScanTypePieChart';
 import NoData from '../../common/NoData';
 import { extractScanTypes } from '../../../helpers/xnat';
 
 import RexaCard from '../../common/RexaCard';
 import classes from './project.module.scss';
 import { Scan } from '../../../models/project/Scan';
+import { ScanByType } from '../../../helpers/type/ScanByType';
+import ScanTypePieChart from '../../chart/ScanTypePieChart';
 
 interface ScanTypesDetailsProps {
     scans: Scan[];
 }
 
 const ScanTypesDetails = ({ scans }: ScanTypesDetailsProps) => {
-    let scansByType = [];
+    let scansByType: ScanByType[] = [];
     if (scans) {
         scansByType = extractScanTypes(scans);
     }

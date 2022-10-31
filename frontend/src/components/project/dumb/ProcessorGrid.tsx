@@ -5,12 +5,17 @@ import { Grid } from '@material-ui/core';
 
 import UnknownProcessorStatus from './UnknownProcessorStatus';
 import { getUnknownProcStatus } from '../../../helpers/xnat';
-import StackedProjectColumnChart from '../../chart/StackedProjectColumnChart';
 import RexaCard from '../../common/RexaCard';
 
 import classes from './project.module.scss';
+import { Assessor } from '../../../models/project/Assessor';
+import StackedProjectColumnChart from '../../chart/StackedProjectColumnChart';
 
-const ProcessorGrid = ({ processors }) => {
+interface ProcessorGridProps {
+    processors: Assessor[];
+}
+
+const ProcessorGrid = ({ processors }: ProcessorGridProps) => {
     const unknownProcStatus = getUnknownProcStatus(processors);
 
     return (
@@ -27,10 +32,6 @@ const ProcessorGrid = ({ processors }) => {
             )}
         </Grid>
     );
-};
-
-ProcessorGrid.propTypes = {
-    processors: PropTypes.array.isRequired,
 };
 
 export default ProcessorGrid;
