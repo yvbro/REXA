@@ -5,14 +5,34 @@ import {
     renderWithStore,
 } from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
+import { render } from '@testing-library/react';
 
 import ChangePasswordForm from './ChangePasswordForm';
 
-import * as userDuck from '../redux/userDuck';
+import useUsersManagementService from '../../../services/useUsersManagementService';
+import UsersManagementPage from '../page/UsersManagementPage';
 
-// With jest.mock our API method does nothing
+const mockUpdatePassword = jest.fn(() => Promise.resolve());
+
+// With jest.mock our API method does store
 // we don't want to hit the server in our tests
-jest.mock('../redux/userDuck');
+jest.mock('../../../services/useUsersManagementService', () => {
+    const originalModule = jest.requireActual(
+        '../../../services/useUsersManagementService'
+    );
+
+    return {
+        __esModule: true,
+        ...originalModule,
+        default: () => ({
+            updatePassword: mockUpdatePassword,
+            addUser: jest.fn(),
+            fetchUsers: jest.fn(),
+            switchEnabledUser: jest.fn(),
+        }),
+    };
+});
 
 const CLOSE_ACTION = jest.fn();
 
@@ -26,39 +46,40 @@ describe('The ChangePasswordForm component', () => {
     afterEach(cleanup);
 
     it('should take a snapshot', () => {
-        const { asFragment } = renderWithStore(
-            <ChangePasswordForm closeAction={CLOSE_ACTION} />,
+        const { asFragment } = render(
+            <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        expect(
-            asFragment(<ChangePasswordForm closeAction={CLOSE_ACTION} />)
-        ).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should display the password rules', () => {
         const { getByTestId } = renderWithStore(
-            <ChangePasswordForm closeAction={CLOSE_ACTION} />,
+            <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        expect(getByTestId('passwordRules')).toHaveTextContent(
+        const passwordRules = getByTestId('passwordRules');
+        expect(passwordRules.textContent).toBe(
             'The password must be 8 characters long. It should contain a capital letter and a number.'
         );
     });
 
     it('should have button Save disabled if no value', () => {
         const { getByRole } = renderWithStore(
-            <ChangePasswordForm closeAction={CLOSE_ACTION} />,
+            <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        expect(getByRole('button', { name: 'Save' })).toBeDisabled();
+        expect(getByRole('button', { name: 'Save' }).getAttribute('disabled')).toBe(
+            ''
+        );
     });
 
     it('should call closeAction on Cancel button', () => {
         const { getByRole } = renderWithStore(
-            <ChangePasswordForm closeAction={CLOSE_ACTION} />,
+            <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
@@ -74,25 +95,24 @@ describe('The ChangePasswordForm component', () => {
             {}
         );
 
-        userDuck.updatePassword = jest.fn(() => Promise.resolve());
-
         const passwordInput = getByTestId('newPassword');
-        const confirmationpasswordInput = getByTestId('confirmationPassword');
+        const confirmationPasswordInput = getByTestId('confirmationPassword');
 
         fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
-        fireEvent.change(confirmationpasswordInput, {
+        fireEvent.change(confirmationPasswordInput, {
             target: { value: VALID_PASSWORD },
         });
 
         const save = getByRole('button', { name: 'Save' });
         fireEvent.click(save);
 
-        expect(userDuck.updatePassword).toHaveBeenCalledTimes(1);
-        expect(userDuck.updatePassword).toHaveBeenCalledWith(
-            USER_EMAIL,
-            VALID_PASSWORD,
-            VALID_PASSWORD
-        );
+        expect(mockUpdatePassword).toHaveBeenCalledTimes(1);
+        expect(mockUpdatePassword).toHaveBeenCalledWith({
+            email: USER_EMAIL,
+            newPassword: VALID_PASSWORD,
+            confirmationPassword: VALID_PASSWORD,
+        });
+
         expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
     });
 
@@ -162,7 +182,7 @@ describe('The ChangePasswordForm component', () => {
 
     it('should have button Save disabled if missing confirmation password', () => {
         const { getByRole, getByTestId } = renderWithStore(
-            <ChangePasswordForm closeAction={CLOSE_ACTION} />,
+            <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
@@ -175,7 +195,7 @@ describe('The ChangePasswordForm component', () => {
 
     it('should have button Save disabled if missing new password', () => {
         const { getByRole, getByTestId } = renderWithStore(
-            <ChangePasswordForm closeAction={CLOSE_ACTION} />,
+            <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 

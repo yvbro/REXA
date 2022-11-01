@@ -26,6 +26,7 @@ import {
 
 import themes from '../../common/theme/theme.scss';
 import useUsersManagementService from '../../../services/useUsersManagementService';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -85,7 +86,7 @@ const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps)
     const [errorPassword, setErrorPassword] = useState('');
     const [errorConfirmationPassword, setErrorConfirmationPassword] = useState('');
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         if (confirmationPassword !== newPassword) {
@@ -95,7 +96,8 @@ const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps)
                 email: userEmail,
                 newPassword: newPassword,
                 confirmationPassword: confirmationPassword,
-            }).then(() => closeAction());
+            });
+            closeAction();
         }
     };
 
