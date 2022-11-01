@@ -141,7 +141,7 @@ const RexaDataTable = ({
                                     rowsPerPage={rowsPerPage}
                                     page={currentPage}
                                     onPageChange={handleChangePage}
-                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
                                     ActionsComponent={TablePaginationActions}
                                 />
                             </TableRow>

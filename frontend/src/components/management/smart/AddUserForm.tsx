@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
     TextField,
     Card,
@@ -86,7 +85,7 @@ const AddUserForm = ({ users, closeAction }: AddUserFormProps) => {
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
         if (!email) {
@@ -94,7 +93,7 @@ const AddUserForm = ({ users, closeAction }: AddUserFormProps) => {
         } else if (!password) {
             setErrorPassword('Password must be set.');
         } else {
-            await addUser({ email, password });
+            addUser({ email, password });
             closeAction();
         }
     };

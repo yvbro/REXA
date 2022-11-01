@@ -37,8 +37,8 @@ export default function useUsersManagementService() {
             });
     };
 
-    const addUser = (addUserRequest: AddUserRequest) => {
-        return axios
+    const addUser = async (addUserRequest: AddUserRequest) => {
+        await axios
             .post(`${USERS_MANAGEMENT_URI}/add`, addUserRequest)
             .then(() => {
                 toast.info('User added!');

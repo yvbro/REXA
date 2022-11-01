@@ -9,8 +9,27 @@ import {
 import '@testing-library/jest-dom/extend-expect';
 
 import UserListPage from './UserListPage';
-import { SWITCH_ENABLED_USER } from '../redux/userDuck';
-import { pending } from '../../../helpers/promise';
+import useUsersManagementService from '../../../services/useUsersManagementService';
+import { RexaRole } from '../../../models/management/RexaRole';
+
+const mockSwitchEnabledUser = jest.fn(() => Promise.resolve());
+
+jest.mock('../../../services/useUsersManagementService', () => {
+    const originalModule = jest.requireActual(
+        '../../../services/useUsersManagementService'
+    );
+
+    return {
+        __esModule: true,
+        ...originalModule,
+        default: () => ({
+            updatePassword: jest.fn(),
+            addUser: jest.fn(),
+            fetchUsers: jest.fn(),
+            switchEnabledUser: mockSwitchEnabledUser,
+        }),
+    };
+});
 
 const NUMBER_COLUMNS = 4;
 const NUMBER_LINE = 3;
@@ -21,35 +40,37 @@ const ROW_PER_PAGE = 10;
 const SET_PAGE_ACTION = jest.fn();
 const SET_ROW_PER_PAGE_ACTION = jest.fn();
 
-const TEST_USERS = [
-    {
-        email: 'admin@test.com',
-        roles: ['ADMIN', 'USER'],
-        enabled: true,
-        authProvider: 'local',
-    },
-    {
-        email: 'user@test.com',
-        roles: ['USER'],
-        enabled: true,
-        authProvider: 'local',
-    },
-    {
-        email: 'disabled@gmail.com',
-        roles: ['USER'],
-        enabled: false,
-        authProvider: 'google',
-    },
-];
-
-const TEST_ACTION = {
-    type: pending(SWITCH_ENABLED_USER),
-    payload: { userEmail: TEST_USERS[2].email, enabled: !TEST_USERS[2].enabled },
+const TEST_USERS = {
+    content: [
+        {
+            email: 'admin@test.com',
+            roles: [RexaRole.ADMIN, RexaRole.USER],
+            enabled: true,
+            authProvider: 'local',
+        },
+        {
+            email: 'user@test.com',
+            roles: [RexaRole.USER],
+            enabled: true,
+            authProvider: 'local',
+        },
+        {
+            email: 'disabled@gmail.com',
+            roles: [RexaRole.USER],
+            enabled: false,
+            authProvider: 'google',
+        },
+    ],
+    size: 3,
+    first: true,
+    last: true,
+    totalPages: 1,
+    totalElements: 3,
 };
 
 const REGULAR_STATE = {
     user: {
-        data: TEST_USERS,
+        data: TEST_USERS.content,
         totalElements: 3,
         loading: false,
     },
@@ -61,6 +82,7 @@ describe('The UserListPage component', () => {
     it('should display user table properly', () => {
         const { getByRole, getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -92,6 +114,7 @@ describe('The UserListPage component', () => {
     it('should contain a table with 4 columns for one header meaning 4 columnheaders', () => {
         const { getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -106,6 +129,7 @@ describe('The UserListPage component', () => {
     it('should contain a table with 4 columns and 3 lines meaning 12 cells', () => {
         const { getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -122,6 +146,7 @@ describe('The UserListPage component', () => {
     it('should have disabled checkbox and span for edit if user is admin', () => {
         const { getAllByRole, getAllByLabelText } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -140,6 +165,7 @@ describe('The UserListPage component', () => {
     it('should have enabled checkbox if user is not admin', () => {
         const { getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -155,6 +181,7 @@ describe('The UserListPage component', () => {
     it('should have checked checkbox if user is enabled', () => {
         const { getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -169,6 +196,7 @@ describe('The UserListPage component', () => {
     it('should have checked checkbox if user disabled', () => {
         const { getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -183,6 +211,7 @@ describe('The UserListPage component', () => {
     it('should have enabled span to edit password if user with local provider', () => {
         const { getAllByLabelText } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -200,6 +229,7 @@ describe('The UserListPage component', () => {
     it('should have an img google in edit column if user with google provider', () => {
         const { getAllByRole, getByAltText } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -214,31 +244,12 @@ describe('The UserListPage component', () => {
         expect(lastCell).toContainElement(img);
         expect(img.src).toContain('google-logo.png');
     });
-
-    it('should dispatch action if click on checkbox', () => {
-        const store = makeTestStore(REGULAR_STATE);
-
-        const { getAllByRole } = render(
-            <UserListPage
-                page={PAGE}
-                setPage={SET_PAGE_ACTION}
-                rowsPerPage={ROW_PER_PAGE}
-                setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
-            />,
-            { store }
-        );
-
-        const checkbox = getAllByRole('checkbox')[2];
-        expect(checkbox).not.toHaveAttribute('checked');
-
-        fireEvent.click(checkbox);
-
-        expect(store.getActions()).toStrictEqual([TEST_ACTION]);
-    });
+    q;
 
     it('should open modal if click on edit for user with local provider', () => {
         const { getByRole, getAllByLabelText } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
@@ -261,6 +272,7 @@ describe('The UserListPage component', () => {
     it('should open modal if click on add user', () => {
         const { getByRole, getAllByRole } = renderWithStore(
             <UserListPage
+                pageOfUsers={TEST_USERS}
                 page={PAGE}
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}

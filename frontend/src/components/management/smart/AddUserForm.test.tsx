@@ -1,45 +1,33 @@
 import React from 'react';
-import {
-    cleanup,
-    fireEvent,
-    renderWithStore,
-    makeTestStore,
-    render,
-} from '../../../helpers/test/test-utils';
+import { cleanup, fireEvent } from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
+import { render } from '@testing-library/react';
 
 import AddUserForm from './AddUserForm';
 
-import * as userDuck from '../redux/userDuck';
+import useUsersManagementService from '../../../services/useUsersManagementService';
+
+const mockAddUser = jest.fn(() => Promise.resolve());
+
+jest.mock('../../../services/useUsersManagementService', () => {
+    const originalModule = jest.requireActual(
+        '../../../services/useUsersManagementService'
+    );
+
+    return {
+        __esModule: true,
+        ...originalModule,
+        default: () => ({
+            updatePassword: jest.fn(),
+            addUser: mockAddUser,
+            fetchUsers: jest.fn(),
+            switchEnabledUser: jest.fn(),
+        }),
+    };
+});
 
 const CLOSE_ACTION = jest.fn();
-const TEST_USERS = [
-    {
-        email: 'admin@test.com',
-        roles: ['ADMIN', 'USER'],
-        enabled: true,
-        authProvider: 'local',
-    },
-    {
-        email: 'user@test.com',
-        roles: ['USER'],
-        enabled: true,
-        authProvider: 'local',
-    },
-    {
-        email: 'disabled@gmail.com',
-        roles: ['USER'],
-        enabled: false,
-        authProvider: 'google',
-    },
-];
-
-const REGULAR_STATE = {
-    user: {
-        data: TEST_USERS,
-        loading: false,
-    },
-};
+const TEST_USERS = ['admin@test.com', 'user@test.com', 'disabled@gmail.com'];
 
 const VALID_EMAIL = 'test@gmail.com';
 const INVALID_EMAIL = 'username';
@@ -52,20 +40,16 @@ describe('The AddUserForm component', () => {
     afterEach(cleanup);
 
     it('should take a snapshot', () => {
-        const { asFragment } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { asFragment } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
-        expect(
-            asFragment(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />)
-        ).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should display the password rules', () => {
-        const { getByTestId } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByTestId } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         expect(getByTestId('passwordRules')).toHaveTextContent(
@@ -74,9 +58,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should call closeAction on Cancel button', () => {
-        const { getByRole } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByRole } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const cancel = getByRole('button', { name: 'Cancel' });
@@ -86,13 +69,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should call addUser on Add if no errors and close modal', () => {
-        const store = makeTestStore(REGULAR_STATE);
-
-        const addUser = jest.spyOn(userDuck, 'addUser');
-
         const { getByRole, getByTestId } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            { store }
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const email = getByTestId('email');
@@ -104,15 +82,17 @@ describe('The AddUserForm component', () => {
         const add = getByRole('button', { name: 'Add' });
         fireEvent.click(add);
 
-        expect(addUser).toHaveBeenCalledTimes(1);
-        expect(addUser).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD);
+        expect(mockAddUser).toHaveBeenCalledTimes(1);
+        expect(mockAddUser).toHaveBeenCalledWith({
+            email: VALID_EMAIL,
+            password: VALID_PASSWORD,
+        });
         expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
     });
 
     it('should display error if password to short', () => {
-        const { getByTestId, getByText } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByTestId, getByText } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const passwordInput = getByTestId('password');
@@ -125,9 +105,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display error if no number in password', () => {
-        const { getByTestId, getByText } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByTestId, getByText } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const passwordInput = getByTestId('password');
@@ -138,9 +117,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display error if no capital letter in password', () => {
-        const { getByTestId, getByText } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByTestId, getByText } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const passwordInput = getByTestId('password');
@@ -155,9 +133,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display error if add click with empty user email', () => {
-        const { getByRole, getByText } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByRole, getByText } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const add = getByRole('button', { name: 'Add' });
@@ -167,9 +144,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display error if add click with invalid email', () => {
-        const { getByTestId, getByRole, getByText } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByTestId, getByRole, getByText } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const passwordInput = getByTestId('email');
@@ -182,9 +158,8 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display error if add click with valid user email but empty password', () => {
-        const { getByTestId, getByRole, getByText } = renderWithStore(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />,
-            {}
+        const { getByTestId, getByRole, getByText } = render(
+            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
         );
 
         const passwordInput = getByTestId('email');

@@ -13,7 +13,7 @@ exports[`The AddUserForm component should take a snapshot 1`] = `
       >
         <div
           aria-label="recipe"
-          class="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-7 MuiAvatar-colorDefault"
+          class="MuiAvatar-root MuiAvatar-circular makeStyles-avatar-7 MuiAvatar-colorDefault"
         >
           <svg
             aria-hidden="true"
