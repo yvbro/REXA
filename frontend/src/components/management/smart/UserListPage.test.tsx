@@ -39,6 +39,7 @@ const PAGE = 0;
 const ROW_PER_PAGE = 10;
 const SET_PAGE_ACTION = jest.fn();
 const SET_ROW_PER_PAGE_ACTION = jest.fn();
+const REFETCH_USERS = jest.fn();
 
 const TEST_USERS = {
     content: [
@@ -87,6 +88,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -119,6 +121,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -134,6 +137,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -151,6 +155,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -170,6 +175,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -186,6 +192,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -201,6 +208,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -216,6 +224,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -234,17 +243,17 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
 
         const lastCell = getAllByRole('cell')[NUMBER_COLUMNS * NUMBER_LINE - 1];
-        const img = getByAltText('Google');
+        const img = getByAltText('Google') as HTMLImageElement;
 
         expect(lastCell).toContainElement(img);
         expect(img.src).toContain('google-logo.png');
     });
-    q;
 
     it('should open modal if click on edit for user with local provider', () => {
         const { getByRole, getAllByLabelText } = renderWithStore(
@@ -254,6 +263,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );
@@ -277,6 +287,7 @@ describe('The UserListPage component', () => {
                 setPage={SET_PAGE_ACTION}
                 rowsPerPage={ROW_PER_PAGE}
                 setRowsPerPage={SET_ROW_PER_PAGE_ACTION}
+                refetchUsers={REFETCH_USERS}
             />,
             REGULAR_STATE
         );

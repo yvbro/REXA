@@ -38,6 +38,7 @@ interface UserListPageProps {
     page: number;
     setPage: (page: number) => void;
     rowsPerPage: number;
+    refetchUsers: () => void;
     setRowsPerPage: (page: number) => void;
 }
 
@@ -46,6 +47,7 @@ const UserListPage = ({
     setPage,
     pageOfUsers,
     rowsPerPage,
+    refetchUsers,
     setRowsPerPage,
 }: UserListPageProps) => {
     const style = useStyles();
@@ -142,7 +144,10 @@ const UserListPage = ({
                     <div>
                         <AddUserForm
                             users={pageOfUsers.content.map((user) => user.email)}
-                            closeAction={() => setOpenModalNewUser(false)}
+                            closeAction={() => {
+                                setOpenModalNewUser(false);
+                                refetchUsers();
+                            }}
                         />
                     </div>
                 </RexaModal>

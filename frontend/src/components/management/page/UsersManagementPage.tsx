@@ -11,18 +11,16 @@ import useUsersManagementService from '../../../services/useUsersManagementServi
 const UsersManagementPage = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [refetchUsers, setRefetchUsers] = useState(false);
 
     const { fetchUsers } = useUsersManagementService();
 
-    const {
-        isLoading,
-        isFetching,
-        data: users,
-    } = useQuery(['fetchUsers', page, rowsPerPage], () =>
-        fetchUsers(page, rowsPerPage)
+    const { isLoading, data: users } = useQuery(
+        ['fetchUsers', page, rowsPerPage, refetchUsers],
+        () => fetchUsers(page, rowsPerPage)
     );
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
         return <LoadingIndicator />;
     }
 
@@ -30,6 +28,7 @@ const UsersManagementPage = () => {
         <UserListPage
             page={page}
             setPage={setPage}
+            refetchUsers={() => setRefetchUsers(!refetchUsers)}
             rowsPerPage={rowsPerPage}
             pageOfUsers={users?.data!!}
             setRowsPerPage={setRowsPerPage}

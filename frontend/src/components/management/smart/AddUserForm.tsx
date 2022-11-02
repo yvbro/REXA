@@ -85,7 +85,7 @@ const AddUserForm = ({ users, closeAction }: AddUserFormProps) => {
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         if (!email) {
@@ -93,7 +93,7 @@ const AddUserForm = ({ users, closeAction }: AddUserFormProps) => {
         } else if (!password) {
             setErrorPassword('Password must be set.');
         } else {
-            addUser({ email, password });
+            await addUser({ email, password });
             closeAction();
         }
     };

@@ -87,7 +87,6 @@ describe('The AddUserForm component', () => {
             email: VALID_EMAIL,
             password: VALID_PASSWORD,
         });
-        expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
     });
 
     it('should display error if password to short', () => {

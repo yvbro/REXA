@@ -6,7 +6,7 @@ import classes from './common.module.scss';
 
 const LoadingIndicator = () => {
     return (
-        <div className={`${classes.centered} ${classes.loader}`}>
+        <div className={`${classes.centered} ${classes.loader}`} aria-label="loader">
             <CircularProgress />
         </div>
     );
