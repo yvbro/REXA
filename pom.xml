@@ -48,8 +48,8 @@
 
 		<!-- Maven -->
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
-		<node.version>v12.13.1</node.version>
-		<yarn.version>v1.19.2</yarn.version>
+		<node.version>v16.14.0</node.version>
+		<yarn.version>v1.22.5</yarn.version>
 		<asm.version>7.3.1</asm.version>
 		<maven-dependency-analyzer.version>1.11.1</maven-dependency-analyzer.version>
 
