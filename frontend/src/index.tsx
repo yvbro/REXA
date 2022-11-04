@@ -19,10 +19,10 @@ const queryClient = new QueryClient({
 });
 
 // Add a request interceptor
-axios.interceptors.request.use(function (config) {
-    config.headers.Authorization = `${TOKEN_TYPE} ${localStorage.getItem(
-        ACCESS_TOKEN
-    )}`;
+axios.interceptors.request.use((config) => {
+    (config.headers as { Authorization: string }).Authorization = `${TOKEN_TYPE} ${
+        localStorage.getItem(ACCESS_TOKEN) ?? ''
+    }`;
     return config;
 });
 

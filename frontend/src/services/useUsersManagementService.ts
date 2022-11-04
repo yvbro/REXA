@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { RexaException } from '../models/management/RexaException';
 import { UserRexa } from '../models/management/UserRexa';
 import { Page } from '../models/Page';
 
@@ -43,7 +44,7 @@ export default function useUsersManagementService() {
             .then(() => {
                 toast.info('User added!');
             })
-            .catch((error) => {
+            .catch((error: AxiosError<RexaException>) => {
                 const errorMessage = error?.response?.data?.message;
                 toast.error(errorMessage);
             });
@@ -55,7 +56,7 @@ export default function useUsersManagementService() {
         await axios
             .post('/private/management/users/edit', userChangePasswordRequest)
             .then(() => toast.info('Password edited!'))
-            .catch((error) => {
+            .catch((error: AxiosError<RexaException>) => {
                 const errorMessage = error?.response?.data?.message;
                 toast.error(errorMessage);
             });

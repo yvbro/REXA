@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import axios from 'axios';
 
 import UserListPage from '../smart/UserListPage';
-import { UserRexa } from '../../../models/management/UserRexa';
-import { Page } from '../../../models/Page';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import useUsersManagementService from '../../../services/useUsersManagementService';
 
@@ -20,7 +17,7 @@ function UsersManagementPage() {
         () => fetchUsers(page, rowsPerPage)
     );
 
-    if (isLoading) {
+    if (isLoading || users === undefined) {
         return <LoadingIndicator />;
     }
 
@@ -30,7 +27,7 @@ function UsersManagementPage() {
             setPage={setPage}
             refetchUsers={() => setRefetchUsers(!refetchUsers)}
             rowsPerPage={rowsPerPage}
-            pageOfUsers={users?.data!}
+            pageOfUsers={users?.data}
             setRowsPerPage={setRowsPerPage}
         />
     );

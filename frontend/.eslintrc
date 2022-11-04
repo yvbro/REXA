@@ -36,7 +36,14 @@
             }
         ],
         "no-continue": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "import/no-cycle": [
+            "warn",
+            {
+                "maxDepth": 10,
+                "ignoreExternal": true
+            }
+        ]
     },
     "globals": {
         "document": false

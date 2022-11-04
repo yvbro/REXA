@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 
 import DashboardPage from '../components/dashboard/page/DashboardPage';
 import NavBar from './NavBar';
-import ProjectPage from '../components/project/page/ProjectPage';
 import SettingsDetailsPage from '../components/settings/page/SettingsDetailsPage';
 import UsersManagementPage from '../components/management/page/UsersManagementPage';
 import LoginPage from '../components/auth/page/LoginPage';
@@ -17,6 +16,7 @@ import OAuth2RedirectHandler from '../components/auth/smart/OAuth2RedirectHandle
 import AboutUsPage from '../components/aboutUs/AboutUsPage';
 import { store } from '../store/store';
 import { authCheckState } from '../store/slices/auth/authAction';
+import ProjectPage from '../components/project/page/ProjectPage';
 
 function App() {
     useEffect(() => {

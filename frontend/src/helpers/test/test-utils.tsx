@@ -5,19 +5,19 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { AnyAction, Store } from 'redux';
-import { RootState } from '../../store/store';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-export function makeTestStore(initialState = {}) {
+export const makeTestStore = (initialState = {}) => {
     const store = mockStore(initialState);
     const origDispatch = store.dispatch;
     store.dispatch = jest.fn(origDispatch);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const origGetState = store.getState;
     store.getState = jest.fn(origGetState);
     return store;
-}
+};
 
 export function renderWithStore(ui: ReactNode, initialState = {}) {
     const store = makeTestStore(initialState);

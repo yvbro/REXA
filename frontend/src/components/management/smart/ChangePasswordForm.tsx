@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { toast } from 'react-toastify';
 import PasswordRules from '../../common/password/PasswordRules';
 import PasswordField from '../../common/password/PasswordField';
 
@@ -86,7 +85,7 @@ function ChangePasswordForm({ userEmail, closeAction }: ChangePasswordFormProps)
     const [errorPassword, setErrorPassword] = useState('');
     const [errorConfirmationPassword, setErrorConfirmationPassword] = useState('');
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
         if (confirmationPassword !== newPassword) {

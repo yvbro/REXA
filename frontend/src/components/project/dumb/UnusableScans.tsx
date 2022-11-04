@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { List, ListItem, Chip } from '@material-ui/core';
@@ -20,8 +19,6 @@ function UnusableScans({ unusableScans }: UnusableScansProps) {
     const { xnatHost } = useSelector((state: RootState) => ({
         xnatHost: state.auth.user.xnatHost ?? '',
     }));
-
-    console.log(unusableScans);
 
     return (
         <RexaCard

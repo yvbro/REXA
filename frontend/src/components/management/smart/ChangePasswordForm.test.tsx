@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+
 import {
     cleanup,
     fireEvent,
@@ -6,12 +10,8 @@ import {
 } from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
 
 import ChangePasswordForm from './ChangePasswordForm';
-
-import useUsersManagementService from '../../../services/useUsersManagementService';
-import UsersManagementPage from '../page/UsersManagementPage';
 
 const mockUpdatePassword = jest.fn(() => Promise.resolve());
 
@@ -55,55 +55,55 @@ describe('The ChangePasswordForm component', () => {
     });
 
     it('should display the password rules', () => {
-        const { getByTestId } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordRules = getByTestId('passwordRules');
+        const passwordRules = screen.getByTestId('passwordRules');
         expect(passwordRules.textContent).toBe(
             'The password must be 8 characters long. It should contain a capital letter and a number.'
         );
     });
 
     it('should have button Save disabled if no value', () => {
-        const { getByRole } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        expect(getByRole('button', { name: 'Save' }).getAttribute('disabled')).toBe(
-            ''
-        );
+        expect(
+            screen.getByRole('button', { name: 'Save' }).getAttribute('disabled')
+        ).toBe('');
     });
 
     it('should call closeAction on Cancel button', () => {
-        const { getByRole } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const cancel = getByRole('button', { name: 'Cancel' });
+        const cancel = screen.getByRole('button', { name: 'Cancel' });
         fireEvent.click(cancel);
 
         expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
     });
 
     it('should call updatePassword on Save if no errors and close modal', () => {
-        const { getByRole, getByTestId } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordInput = getByTestId('newPassword');
-        const confirmationPasswordInput = getByTestId('confirmationPassword');
+        const passwordInput = screen.getByTestId('newPassword');
+        const confirmationPasswordInput = screen.getByTestId('confirmationPassword');
 
         fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
         fireEvent.change(confirmationPasswordInput, {
             target: { value: VALID_PASSWORD },
         });
 
-        const save = getByRole('button', { name: 'Save' });
+        const save = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(save);
 
         expect(mockUpdatePassword).toHaveBeenCalledTimes(1);
@@ -117,58 +117,60 @@ describe('The ChangePasswordForm component', () => {
     });
 
     it('should display error if password to short', () => {
-        const { getByTestId, getByText } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordInput = getByTestId('newPassword');
+        const passwordInput = screen.getByTestId('newPassword');
 
         fireEvent.change(passwordInput, { target: { value: SHORT_PASSWORD } });
 
         expect(
-            getByText('Password must be at least 8 characters long.')
+            screen.getByText('Password must be at least 8 characters long.')
         ).toBeInTheDocument();
     });
 
     it('should display error if no number in password', () => {
-        const { getByTestId, getByText } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordInput = getByTestId('newPassword');
+        const passwordInput = screen.getByTestId('newPassword');
 
         fireEvent.change(passwordInput, { target: { value: NO_NUMBER_PASSWORD } });
 
-        expect(getByText('Password must contain a number.')).toBeInTheDocument();
+        expect(
+            screen.getByText('Password must contain a number.')
+        ).toBeInTheDocument();
     });
 
     it('should display error if no capital letter in password', () => {
-        const { getByTestId, getByText } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordInput = getByTestId('newPassword');
+        const passwordInput = screen.getByTestId('newPassword');
 
         fireEvent.change(passwordInput, {
             target: { value: NO_CAPITAL_LETTER_PASSWORD },
         });
 
         expect(
-            getByText('Password must contain a capital letter.')
+            screen.getByText('Password must contain a capital letter.')
         ).toBeInTheDocument();
     });
 
     it('should display error if no match between password and confirmation', () => {
-        const { getByTestId, getByText } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordInput = getByTestId('newPassword');
-        const confirmationpasswordInput = getByTestId('confirmationPassword');
+        const passwordInput = screen.getByTestId('newPassword');
+        const confirmationpasswordInput = screen.getByTestId('confirmationPassword');
 
         fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
         fireEvent.change(confirmationpasswordInput, {
@@ -176,35 +178,35 @@ describe('The ChangePasswordForm component', () => {
         });
 
         expect(
-            getByText('Password and confirmation does not match.')
+            screen.getByText('Password and confirmation does not match.')
         ).toBeInTheDocument();
     });
 
     it('should have button Save disabled if missing confirmation password', () => {
-        const { getByRole, getByTestId } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const passwordInput = getByTestId('newPassword');
+        const passwordInput = screen.getByTestId('newPassword');
 
         fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
 
-        expect(getByRole('button', { name: 'Save' })).toBeDisabled();
+        expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
     });
 
     it('should have button Save disabled if missing new password', () => {
-        const { getByRole, getByTestId } = renderWithStore(
+        renderWithStore(
             <ChangePasswordForm userEmail={USER_EMAIL} closeAction={CLOSE_ACTION} />,
             {}
         );
 
-        const confirmationpasswordInput = getByTestId('confirmationPassword');
+        const confirmationpasswordInput = screen.getByTestId('confirmationPassword');
 
         fireEvent.change(confirmationpasswordInput, {
             target: { value: VALID_PASSWORD },
         });
 
-        expect(getByRole('button', { name: 'Save' })).toBeDisabled();
+        expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
     });
 });

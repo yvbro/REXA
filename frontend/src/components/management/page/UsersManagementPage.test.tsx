@@ -1,10 +1,12 @@
-import React from 'react';
-import { cleanup } from '../../../helpers/test/test-utils';
-import '@testing-library/jest-dom/extend-expect';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+import { render, screen } from '@testing-library/react';
+
+import { cleanup } from '../../../helpers/test/test-utils';
 import UsersManagementPage from './UsersManagementPage';
-import { render } from '@testing-library/react';
-import useUsersManagementService from '../../../services/useUsersManagementService';
 
 const mockFetchUsers = jest.fn(() => Promise.resolve());
 
@@ -63,8 +65,10 @@ describe('The UsersManagementPage component', () => {
     afterEach(cleanup);
 
     test('should display loader if loading', () => {
-        const { getAllByLabelText } = render(<UsersManagementPage />);
+        render(<UsersManagementPage />);
 
-        expect(getAllByLabelText('loader')[0]).toBeCalled;
+        const loaderComponent = screen.getAllByLabelText('loader')[0];
+
+        expect(loaderComponent).toBeInTheDocument();
     });
 });

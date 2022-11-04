@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import jwt_decode from 'jwt-decode';
 import { toast } from 'react-toastify';
-import { User } from '../../../models/auth/User';
 import { ACCESS_TOKEN, EXPIRATION_DATE } from '../../../helpers/constants';
+import { RexaException } from '../../../models/management/RexaException';
 import { AppDispatch } from '../../store';
-import { errorLogin, login, logout } from './authSlice';
+import { errorLogin, login, logout, TokenInfo } from './authSlice';
 
 type AuthResponse = {
     token: string;
@@ -16,8 +16,6 @@ interface TokenDto {
     exp: number;
     iat: number;
 }
-
-export type TokenInfo = User & { token: string; authProvider: string };
 
 const getExpirationDate = (token: string) => {
     const decoded = jwt_decode<TokenDto>(token);
@@ -64,7 +62,7 @@ export const performLogin =
                 dispatch(checkAuthTimeout(getExpirationTime(expirationDate)));
                 toast.info('Welcome ro Rexa');
             })
-            .catch((error: AxiosError) => {
+            .catch((error: AxiosError<RexaException>) => {
                 let errorMessage = error?.response?.data?.message;
                 if (!errorMessage || errorMessage !== 'User is disabled') {
                     errorMessage = 'Invalid username or password';
@@ -90,8 +88,8 @@ export const authCheckState = () => (dispatch: AppDispatch) => {
         if (Number(expirationDate) <= new Date().getTime() / 1000) {
             dispatch(logout());
         } else {
-            const token = localStorage.getItem(ACCESS_TOKEN);
-            dispatch(login(extractPayload(token ?? '')));
+            const accessToken = localStorage.getItem(ACCESS_TOKEN);
+            dispatch(login(extractPayload(accessToken ?? '')));
             dispatch(checkAuthTimeout(getExpirationTime(Number(expirationDate))));
         }
     }

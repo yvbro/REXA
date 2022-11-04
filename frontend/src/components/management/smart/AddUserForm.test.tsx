@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
-import { cleanup, fireEvent } from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
+import { cleanup, fireEvent } from '../../../helpers/test/test-utils';
 import AddUserForm from './AddUserForm';
-
-import useUsersManagementService from '../../../services/useUsersManagementService';
 
 const mockAddUser = jest.fn(() => Promise.resolve());
 
@@ -48,38 +48,32 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display the password rules', () => {
-        const { getByTestId } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        expect(getByTestId('passwordRules')).toHaveTextContent(
+        expect(screen.getByTestId('passwordRules')).toHaveTextContent(
             'The password must be 8 characters long. It should contain a capital letter and a number.'
         );
     });
 
     it('should call closeAction on Cancel button', () => {
-        const { getByRole } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const cancel = getByRole('button', { name: 'Cancel' });
+        const cancel = screen.getByRole('button', { name: 'Cancel' });
         fireEvent.click(cancel);
 
         expect(CLOSE_ACTION).toHaveBeenCalledTimes(1);
     });
 
     it('should call addUser on Add if no errors and close modal', () => {
-        const { getByRole, getByTestId } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const email = getByTestId('email');
-        const passwordInput = getByTestId('password');
+        const email = screen.getByTestId('email');
+        const passwordInput = screen.getByTestId('password');
 
         fireEvent.change(email, { target: { value: VALID_EMAIL } });
         fireEvent.change(passwordInput, { target: { value: VALID_PASSWORD } });
 
-        const add = getByRole('button', { name: 'Add' });
+        const add = screen.getByRole('button', { name: 'Add' });
         fireEvent.click(add);
 
         expect(mockAddUser).toHaveBeenCalledTimes(1);
@@ -90,83 +84,73 @@ describe('The AddUserForm component', () => {
     });
 
     it('should display error if password to short', () => {
-        const { getByTestId, getByText } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const passwordInput = getByTestId('password');
+        const passwordInput = screen.getByTestId('password');
 
         fireEvent.change(passwordInput, { target: { value: SHORT_PASSWORD } });
 
         expect(
-            getByText('Password must be at least 8 characters long.')
+            screen.getByText('Password must be at least 8 characters long.')
         ).toBeInTheDocument();
     });
 
     it('should display error if no number in password', () => {
-        const { getByTestId, getByText } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const passwordInput = getByTestId('password');
+        const passwordInput = screen.getByTestId('password');
 
         fireEvent.change(passwordInput, { target: { value: NO_NUMBER_PASSWORD } });
 
-        expect(getByText('Password must contain a number.')).toBeInTheDocument();
+        expect(
+            screen.getByText('Password must contain a number.')
+        ).toBeInTheDocument();
     });
 
     it('should display error if no capital letter in password', () => {
-        const { getByTestId, getByText } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const passwordInput = getByTestId('password');
+        const passwordInput = screen.getByTestId('password');
 
         fireEvent.change(passwordInput, {
             target: { value: NO_CAPITAL_LETTER_PASSWORD },
         });
 
         expect(
-            getByText('Password must contain a capital letter.')
+            screen.getByText('Password must contain a capital letter.')
         ).toBeInTheDocument();
     });
 
     it('should display error if add click with empty user email', () => {
-        const { getByRole, getByText } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const add = getByRole('button', { name: 'Add' });
+        const add = screen.getByRole('button', { name: 'Add' });
         fireEvent.click(add);
 
-        expect(getByText('Email must be set.')).toBeInTheDocument();
+        expect(screen.getByText('Email must be set.')).toBeInTheDocument();
     });
 
     it('should display error if add click with invalid email', () => {
-        const { getByTestId, getByRole, getByText } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const passwordInput = getByTestId('email');
+        const passwordInput = screen.getByTestId('email');
         fireEvent.change(passwordInput, { target: { value: INVALID_EMAIL } });
 
-        const add = getByRole('button', { name: 'Add' });
+        const add = screen.getByRole('button', { name: 'Add' });
         fireEvent.click(add);
 
-        expect(getByText('Email invalid')).toBeInTheDocument();
+        expect(screen.getByText('Email invalid')).toBeInTheDocument();
     });
 
     it('should display error if add click with valid user email but empty password', () => {
-        const { getByTestId, getByRole, getByText } = render(
-            <AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />
-        );
+        render(<AddUserForm users={TEST_USERS} closeAction={CLOSE_ACTION} />);
 
-        const passwordInput = getByTestId('email');
+        const passwordInput = screen.getByTestId('email');
         fireEvent.change(passwordInput, { target: { value: VALID_EMAIL } });
 
-        const add = getByRole('button', { name: 'Add' });
+        const add = screen.getByRole('button', { name: 'Add' });
         fireEvent.click(add);
 
-        expect(getByText('Password must be set.')).toBeInTheDocument();
+        expect(screen.getByText('Password must be set.')).toBeInTheDocument();
     });
 });

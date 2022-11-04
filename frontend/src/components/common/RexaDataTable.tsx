@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import {
     makeStyles,
@@ -33,26 +33,26 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const StyledTableCell = withStyles((theme) => ({
+const StyledTableCell = withStyles((themeTableCell) => ({
     head: {
-        color: theme.palette.common.white,
+        color: themeTableCell.palette.common.white,
     },
     body: {
         fontSize: 14,
     },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles((themeTableRow) => ({
     root: {
         '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
+            backgroundColor: themeTableRow.palette.action.hover,
         },
     },
 }))(TableRow);
 
 type RexaTableData =
     | { name: string; values: string[] }
-    | { name: string; values: JSX.Element[] };
+    | { name: string; values: ReactNode[] };
 
 interface RexaDataTableProps {
     key?: string;
@@ -117,7 +117,7 @@ function RexaDataTable({
                     </TableHead>
                     <TableBody>
                         {data[0].values.map(
-                            (_: string | JSX.Element, rowIndex: number) => (
+                            (_: string | ReactNode, rowIndex: number) => (
                                 <StyledTableRow key={`${key}_row_${rowIndex}`}>
                                     {data.map((row, colIndex) => (
                                         <StyledTableCell

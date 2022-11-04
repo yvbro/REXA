@@ -20,7 +20,7 @@ import theme from '../../common/theme/theme.scss';
 import classes from './dashboard.module.scss';
 import NoData from '../../common/NoData';
 import { Project } from '../../../models/project/Project';
-import { RexaError } from '../../../models/management/RexaError';
+import { RexaException } from '../../../models/management/RexaException';
 
 const useStyles = makeStyles(() => ({
     avatar: {
@@ -35,7 +35,7 @@ function ProjectDashboard() {
         ['fetchProject'],
         () => axios.get<Project[]>('/private/projects'),
         {
-            onError: (error: AxiosError<RexaError>) => {
+            onError: (error: AxiosError<RexaException>) => {
                 toast.error(error?.response?.data?.message);
             },
         }

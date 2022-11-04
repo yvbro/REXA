@@ -9,8 +9,8 @@ import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
 import { getXnatUri } from '../../../helpers/xnat';
 import { RecentActivity } from '../../../models/project/RecentActivity';
-import { RexaError } from '../../../models/management/RexaError';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import { RexaException } from '../../../models/management/RexaException';
 
 interface RecentActivitiesDashboardProps {
     xnatHost: string;
@@ -39,28 +39,28 @@ function RecentActivitiesDashboard({ xnatHost }: RecentActivitiesDashboardProps)
         ['fetchRecentActivities', rowsPerPage, page],
         () => axios.get<RecentActivity[]>('/private/recentActivities'),
         {
-            onError: (error: AxiosError<RexaError>) => {
+            onError: (error: AxiosError<RexaException>) => {
                 toast.error(error?.response?.data?.message);
             },
         }
     );
 
-    if (isLoading) {
+    if (isLoading || recentActivities === undefined) {
         return <LoadingIndicator />;
     }
 
     const data = [
-        { name: 'Project', values: recentActivities?.data.map((e) => e.project)! },
-        { name: 'Type', values: recentActivities?.data.map((e) => e.typeDesc)! },
+        { name: 'Project', values: recentActivities.data.map((e) => e.project) },
+        { name: 'Type', values: recentActivities.data.map((e) => e.typeDesc) },
         {
             name: 'Label',
-            values: recentActivities?.data.map((e) =>
+            values: recentActivities.data.map((e) =>
                 toChip(e.label, e.id, xnatHost)
-            )!,
+            ),
         },
         {
             name: 'Element',
-            values: recentActivities?.data.map((e) => e.elementName)!,
+            values: recentActivities.data.map((e) => e.elementName),
         },
     ];
 

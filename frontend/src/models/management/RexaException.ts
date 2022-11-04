@@ -1,4 +1,4 @@
-export type RexaError = {
+export type RexaException = {
     errorCode: string;
     message: string;
 };

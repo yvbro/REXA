@@ -1,16 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import React from 'react';
-import {
-    cleanup,
-    fireEvent,
-    renderWithStore,
-    render,
-    makeTestStore,
-} from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 
 import UserListPage from './UserListPage';
-import useUsersManagementService from '../../../services/useUsersManagementService';
 import { RexaRole } from '../../../models/management/RexaRole';
+import {
+    screen,
+    cleanup,
+    fireEvent,
+    renderWithStore,
+} from '../../../helpers/test/test-utils';
 
 const mockSwitchEnabledUser = jest.fn(() => Promise.resolve());
 
@@ -81,7 +81,7 @@ describe('The UserListPage component', () => {
     afterEach(cleanup);
 
     it('should display user table properly', () => {
-        const { getByRole, getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -93,28 +93,32 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        const table = getAllByRole('table')[0];
+        const table = screen.getAllByRole('table')[0];
 
-        expect(getByRole('heading')).toHaveTextContent('User Management');
+        expect(screen.getByRole('heading')).toHaveTextContent('User Management');
         expect(table).toBeInTheDocument();
         // Title
         expect(
-            getByRole('row', { name: 'Email Role Enabled Actions' })
+            screen.getByRole('row', { name: 'Email Role Enabled Actions' })
         ).toBeInTheDocument();
         // Content
         expect(
-            getByRole('row', { name: 'admin@test.com ADMIN,USER primary checkbox' })
+            screen.getByRole('row', {
+                name: 'admin@test.com ADMIN,USER primary checkbox',
+            })
         ).toBeInTheDocument();
         expect(
-            getByRole('row', { name: 'user@test.com USER primary checkbox' })
+            screen.getByRole('row', { name: 'user@test.com USER primary checkbox' })
         ).toBeInTheDocument();
         expect(
-            getByRole('row', { name: 'disabled@gmail.com USER primary checkbox' })
+            screen.getByRole('row', {
+                name: 'disabled@gmail.com USER primary checkbox',
+            })
         ).toBeInTheDocument();
     });
 
     it('should contain a table with 4 columns for one header meaning 4 columnheaders', () => {
-        const { getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -126,11 +130,11 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByRole('columnheader')).toHaveLength(NUMBER_COLUMNS);
+        expect(screen.getAllByRole('columnheader')).toHaveLength(NUMBER_COLUMNS);
     });
 
     it('should contain a table with 4 columns and 3 lines meaning 12 cells', () => {
-        const { getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -142,13 +146,13 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByRole('cell')).toHaveLength(
+        expect(screen.getAllByRole('cell')).toHaveLength(
             NUMBER_COLUMNS * NUMBER_LINE + PAGINATION_LINE
         );
     });
 
     it('should have disabled checkbox and span for edit if user is admin', () => {
-        const { getAllByRole, getAllByLabelText } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -160,15 +164,15 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByRole('checkbox')[0]).toBeDisabled();
-        expect(getAllByLabelText('edit password')[0]).toHaveAttribute(
+        expect(screen.getAllByRole('checkbox')[0]).toBeDisabled();
+        expect(screen.getAllByLabelText('edit password')[0]).toHaveAttribute(
             'aria-disabled',
             'true'
         );
     });
 
     it('should have enabled checkbox if user is not admin', () => {
-        const { getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -180,12 +184,12 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByRole('checkbox')[1]).not.toBeDisabled();
-        expect(getAllByRole('checkbox')[2]).not.toBeDisabled();
+        expect(screen.getAllByRole('checkbox')[1]).not.toBeDisabled();
+        expect(screen.getAllByRole('checkbox')[2]).not.toBeDisabled();
     });
 
     it('should have checked checkbox if user is enabled', () => {
-        const { getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -197,11 +201,11 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByRole('checkbox')[0]).toHaveAttribute('checked');
+        expect(screen.getAllByRole('checkbox')[0]).toHaveAttribute('checked');
     });
 
     it('should have checked checkbox if user disabled', () => {
-        const { getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -213,11 +217,11 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByRole('checkbox')[2]).not.toHaveAttribute('checked');
+        expect(screen.getAllByRole('checkbox')[2]).not.toHaveAttribute('checked');
     });
 
     it('should have enabled span to edit password if user with local provider', () => {
-        const { getAllByLabelText } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -229,14 +233,14 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        expect(getAllByLabelText('edit password')[1]).toHaveAttribute(
+        expect(screen.getAllByLabelText('edit password')[1]).toHaveAttribute(
             'aria-disabled',
             'false'
         );
     });
 
     it('should have an img google in edit column if user with google provider', () => {
-        const { getAllByRole, getByAltText } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -248,15 +252,16 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        const lastCell = getAllByRole('cell')[NUMBER_COLUMNS * NUMBER_LINE - 1];
-        const img = getByAltText('Google') as HTMLImageElement;
+        const lastCell =
+            screen.getAllByRole('cell')[NUMBER_COLUMNS * NUMBER_LINE - 1];
+        const img = screen.getByAltText('Google') as HTMLImageElement;
 
         expect(lastCell).toContainElement(img);
         expect(img.src).toContain('google-logo.png');
     });
 
     it('should open modal if click on edit for user with local provider', () => {
-        const { getByRole, getAllByLabelText } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -268,19 +273,19 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        const editInput = getAllByLabelText('edit password')[1];
+        const editInput = screen.getAllByLabelText('edit password')[1];
 
         fireEvent.click(editInput);
 
         // Modal to edit password
-        expect(getByRole('presentation')).toHaveAttribute(
+        expect(screen.getByRole('presentation')).toHaveAttribute(
             'aria-labelledby',
             'editPasswordModal'
         );
     });
 
     it('should open modal if click on add user', () => {
-        const { getByRole, getAllByRole } = renderWithStore(
+        renderWithStore(
             <UserListPage
                 pageOfUsers={TEST_USERS}
                 page={PAGE}
@@ -292,12 +297,12 @@ describe('The UserListPage component', () => {
             REGULAR_STATE
         );
 
-        const addUserButton = getAllByRole('button')[5];
+        const addUserButton = screen.getAllByRole('button')[5];
 
         fireEvent.click(addUserButton);
 
         // Modal to add user
-        expect(getByRole('presentation')).toHaveAttribute(
+        expect(screen.getByRole('presentation')).toHaveAttribute(
             'aria-labelledby',
             'addUserModal'
         );

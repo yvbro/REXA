@@ -16,30 +16,26 @@ interface ProjectDetailsProps {
 }
 
 function ProjectDetails({ project, isLoading }: ProjectDetailsProps) {
-    if (isLoading) {
+    if (isLoading || project === undefined) {
         return <LoadingIndicator />;
     }
 
-    return (
+    return project.projectId !== 'None' ? (
         <>
-            {project == undefined || project.projectId === 'None' ? (
-                <Grid container spacing={3}>
-                    <Grid item md={12} xs={12}>
-                        <NoData label="No project selected or no data found" />
-                    </Grid>
+            <Grid container spacing={3}>
+                <Grid item md={3} xs={12}>
+                    <ProjectInfo project={project} />
                 </Grid>
-            ) : (
-                <>
-                    <Grid container spacing={3}>
-                        <Grid item md={3} xs={12}>
-                            <ProjectInfo project={project} />
-                        </Grid>
-                        <ScanGrid scans={project.scans} />
-                    </Grid>
-                    <ProcessorGrid processors={project.assessors} />
-                </>
-            )}
+                <ScanGrid scans={project.scans} />
+            </Grid>
+            <ProcessorGrid processors={project.assessors} />
         </>
+    ) : (
+        <Grid container spacing={3}>
+            <Grid item md={12} xs={12}>
+                <NoData label="No project selected or no data found" />
+            </Grid>
+        </Grid>
     );
 }
 

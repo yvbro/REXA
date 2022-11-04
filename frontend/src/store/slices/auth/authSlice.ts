@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { XnatInfo } from '../../../models/xnat/XnatInfo';
 import { User } from '../../../models/auth/User';
-import { TokenInfo } from './authAction';
 
+export type TokenInfo = User & { token: string; authProvider: string };
 interface AuthState {
     user: User;
     token: string | null;
@@ -40,6 +40,7 @@ export const authSlice = createSlice({
             state = { ...state, error: action.payload };
         },
         logout: (state) => {
+            // eslint-disable-next-line no-unused-vars
             state = initialState;
         },
         updateXnatInfo: (state, action: PayloadAction<XnatInfo>) => {

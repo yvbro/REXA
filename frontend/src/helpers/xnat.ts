@@ -19,7 +19,7 @@ export const PROC_STATUS = [
 export const UNUSABLE_SCAN_QUALITY = 'unusable';
 
 const defaultProcStatus = (status: string) => {
-    return PROC_STATUS.reduce(function (result: number[], s) {
+    return PROC_STATUS.reduce((result: number[], s) => {
         result.push(s === status ? 1 : 0);
         return result;
     }, []);
@@ -57,7 +57,7 @@ export const getUnknownProcStatus = (assessors: Assessor[]) => {
 
 export const extractScanTypes = (scans: Scan[]) => {
     return scans.reduce((arr: ScanByType[], obj: Scan) => {
-        const typeFound = arr.filter((el: any) => el.name === obj.type);
+        const typeFound = arr.filter((el) => el.name === obj.type);
         if (typeFound.length > 0) {
             typeFound[0].data += 1;
         } else {

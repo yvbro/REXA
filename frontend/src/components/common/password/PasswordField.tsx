@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState } from 'react';
 
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-interface PasswordField {
+interface PasswordFieldProps {
     value: string;
     label: string;
     error: string;
@@ -20,8 +21,15 @@ function PasswordField({
     testId,
     onChange,
     className = '',
-}: PasswordField) {
+}: PasswordFieldProps) {
     const [showPassword, setShowPassword] = useState(false);
+
+    const input = {
+        form: {
+            autoComplete: 'off',
+        },
+        'data-testid': testId,
+    };
 
     return (
         <TextField
@@ -34,12 +42,7 @@ function PasswordField({
             helperText={error}
             onChange={onChange}
             className={className}
-            inputProps={{
-                form: {
-                    autoComplete: 'off',
-                },
-                'data-testid': testId,
-            }}
+            inputProps={input}
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">

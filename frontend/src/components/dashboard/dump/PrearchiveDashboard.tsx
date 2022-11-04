@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 
 import { PreArchive } from '../../../models/project/PreArchive';
-import { RexaError } from '../../../models/management/RexaError';
+import { RexaException } from '../../../models/management/RexaException';
 
 import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
@@ -13,7 +13,7 @@ import LoadingIndicator from '../../common/LoadingIndicator';
 
 import classes from './dashboard.module.scss';
 
-export function PrearchiveDashboard() {
+function PrearchiveDashboard() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
@@ -22,26 +22,26 @@ export function PrearchiveDashboard() {
         () => axios.get<PreArchive[]>('/private/preArchives'),
 
         {
-            onError: (error: AxiosError<RexaError>) => {
+            onError: (error: AxiosError<RexaException>) => {
                 toast.error(error?.response?.data?.message);
             },
         }
     );
 
-    if (isLoading) {
+    if (isLoading || preArchives === undefined) {
         return <LoadingIndicator />;
     }
 
     const data = [
-        { name: 'Project', values: preArchives?.data.map((e) => e.project)! },
-        { name: 'Subject', values: preArchives?.data.map((e) => e.subject)! },
-        { name: 'Session', values: preArchives?.data.map((e) => e.session)! },
-        { name: 'Scan Date', values: preArchives?.data.map((e) => e.scanDate)! },
+        { name: 'Project', values: preArchives.data.map((e) => e.project) },
+        { name: 'Subject', values: preArchives.data.map((e) => e.subject) },
+        { name: 'Session', values: preArchives.data.map((e) => e.session) },
+        { name: 'Scan Date', values: preArchives.data.map((e) => e.scanDate) },
         {
             name: 'Upload Date',
-            values: preArchives?.data.map((e) => e.updloadDate)!,
+            values: preArchives.data.map((e) => e.updloadDate),
         },
-        { name: 'Status', values: preArchives?.data.map((e) => e.status)! },
+        { name: 'Status', values: preArchives.data.map((e) => e.status) },
     ];
 
     return (

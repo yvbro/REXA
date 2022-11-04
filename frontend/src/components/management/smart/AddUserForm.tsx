@@ -158,7 +158,9 @@ function AddUserForm({ users, closeAction }: AddUserFormProps) {
             <CardActions>
                 <Button
                     variant="contained"
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                        handleSubmit(e).then();
+                    }}
                     disabled={!!errorEmail || !!errorPassword}
                     className={classes.addButton}
                 >

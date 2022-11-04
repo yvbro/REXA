@@ -10,10 +10,10 @@ import ProjectsDropDown from '../smart/ProjectsDropDown';
 import ProjectDetails from '../dumb/ProjectDetails';
 import classes from '../../common/common.module.scss';
 import { Project } from '../../../models/project/Project';
-import { RexaError } from '../../../models/management/RexaError';
+import { RexaException } from '../../../models/management/RexaException';
 import { ProjectXnatInfo } from '../../../models/project/ProjectXnatInfo';
 
-export function ProjectPage() {
+function ProjectPage() {
     const location = useLocation<{ project: string }>();
     const [projectSelected, setProjectSelected] = useState(
         location.state ? location.state.project : 'None'
@@ -32,7 +32,7 @@ export function ProjectPage() {
         () => axios.get<Project[]>('/private/projects'),
         {
             onSuccess: () => {},
-            onError: (error: AxiosError<RexaError>) => {
+            onError: (error: AxiosError<RexaException>) => {
                 toast.error(error?.response?.data?.message);
             },
             keepPreviousData: true,
