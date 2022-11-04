@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { UserRexa } from '../models/management/UserRexa';
 import { Page } from '../models/Page';
-import { toast } from 'react-toastify';
 
 type UserSwitchEnabledRequest = {
     userEmail: string;
@@ -44,7 +44,7 @@ export default function useUsersManagementService() {
                 toast.info('User added!');
             })
             .catch((error) => {
-                let errorMessage = error?.response?.data?.message;
+                const errorMessage = error?.response?.data?.message;
                 toast.error(errorMessage);
             });
     };
@@ -56,7 +56,7 @@ export default function useUsersManagementService() {
             .post('/private/management/users/edit', userChangePasswordRequest)
             .then(() => toast.info('Password edited!'))
             .catch((error) => {
-                let errorMessage = error?.response?.data?.message;
+                const errorMessage = error?.response?.data?.message;
                 toast.error(errorMessage);
             });
     };

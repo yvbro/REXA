@@ -9,9 +9,9 @@ function OAuth2RedirectHandler() {
 
     const getUrlParameter = (name: string) => {
         name = name.replace(/[\]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
 
-        var results = regex.exec(location.search);
+        const results = regex.exec(location.search);
         return results === null
             ? ''
             : decodeURIComponent(results[1].replace(/\+/g, ' '));
@@ -31,19 +31,18 @@ function OAuth2RedirectHandler() {
                     }}
                 />
             );
-        } else {
-            return (
-                <Redirect
-                    to={{
-                        pathname: '/rexa/login',
-                        state: {
-                            from: location,
-                            error: error,
-                        },
-                    }}
-                />
-            );
         }
+        return (
+            <Redirect
+                to={{
+                    pathname: '/rexa/login',
+                    state: {
+                        from: location,
+                        error,
+                    },
+                }}
+            />
+        );
     };
 
     return renderOAuth();

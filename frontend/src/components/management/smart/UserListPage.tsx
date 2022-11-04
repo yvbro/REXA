@@ -42,14 +42,14 @@ interface UserListPageProps {
     setRowsPerPage: (page: number) => void;
 }
 
-const UserListPage = ({
+function UserListPage({
     page,
     setPage,
     pageOfUsers,
     rowsPerPage,
     refetchUsers,
     setRowsPerPage,
-}: UserListPageProps) => {
+}: UserListPageProps) {
     const style = useStyles();
     const { switchEnabledUser } = useUsersManagementService();
     const [openModalNewUser, setOpenModalNewUser] = useState(false);
@@ -58,7 +58,7 @@ const UserListPage = ({
     );
 
     const handleChange = (userEmail: string, enabled: boolean) =>
-        switchEnabledUser({ userEmail: userEmail, enabled: !enabled });
+        switchEnabledUser({ userEmail, enabled: !enabled });
 
     const toSwitch = (user: UserRexa) => {
         return (
@@ -187,6 +187,6 @@ const UserListPage = ({
             </Grid>
         </Grid>
     );
-};
+}
 
 export default UserListPage;

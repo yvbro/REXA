@@ -8,7 +8,7 @@ import { Page } from '../../../models/Page';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import useUsersManagementService from '../../../services/useUsersManagementService';
 
-const UsersManagementPage = () => {
+function UsersManagementPage() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [refetchUsers, setRefetchUsers] = useState(false);
@@ -30,10 +30,10 @@ const UsersManagementPage = () => {
             setPage={setPage}
             refetchUsers={() => setRefetchUsers(!refetchUsers)}
             rowsPerPage={rowsPerPage}
-            pageOfUsers={users?.data!!}
+            pageOfUsers={users?.data!}
             setRowsPerPage={setRowsPerPage}
         />
     );
-};
+}
 
 export default UsersManagementPage;

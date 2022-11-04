@@ -67,7 +67,7 @@ interface RexaDataTableProps {
     setRowsPerPage: (rowPerPage: number) => void;
 }
 
-const RexaDataTable = ({
+function RexaDataTable({
     key = '',
     data,
     setPage,
@@ -78,7 +78,7 @@ const RexaDataTable = ({
     currentPage,
     totalElements,
     setRowsPerPage,
-}: RexaDataTableProps) => {
+}: RexaDataTableProps) {
     const classes = useStyles();
 
     const handleChangePage = (
@@ -149,14 +149,11 @@ const RexaDataTable = ({
                     )}
                 </Table>
                 {totalElements === 0 && (
-                    <NoData
-                        label={noDataLabel ? noDataLabel : 'No data found'}
-                        noRadius
-                    />
+                    <NoData label={noDataLabel || 'No data found'} noRadius />
                 )}
             </TableContainer>
         </Paper>
     );
-};
+}
 
 export default RexaDataTable;

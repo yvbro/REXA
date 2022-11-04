@@ -13,7 +13,7 @@ import { Project } from '../../../models/project/Project';
 import { RexaError } from '../../../models/management/RexaError';
 import { ProjectXnatInfo } from '../../../models/project/ProjectXnatInfo';
 
-export const ProjectPage = () => {
+export function ProjectPage() {
     const location = useLocation<{ project: string }>();
     const [projectSelected, setProjectSelected] = useState(
         location.state ? location.state.project : 'None'
@@ -56,6 +56,6 @@ export const ProjectPage = () => {
             />
         </div>
     );
-};
+}
 
 export default ProjectPage;

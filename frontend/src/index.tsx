@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import './index.scss';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import * as serviceWorker from './serviceWorker';
 import { ACCESS_TOKEN, TOKEN_TYPE } from './helpers/constants';
 import App from './containers/App';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient({
     defaultOptions: {

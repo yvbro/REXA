@@ -2,9 +2,7 @@ import React, { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
-import { useLocation } from 'react-router-dom';
-
-import { NavLink as RouterLink } from 'react-router-dom';
+import { useLocation, NavLink as RouterLink } from 'react-router-dom';
 
 import {
     List,
@@ -111,7 +109,7 @@ const menuData = [
     },
 ];
 
-const NavBar = (props) => {
+function NavBar(props) {
     const { className, ...rest } = props;
     const classes = useStyles();
 
@@ -125,7 +123,7 @@ const NavBar = (props) => {
     }));
 
     const handleClick = (item) => {
-        let newData = { ...menu, [item]: !menu[item] };
+        const newData = { ...menu, [item]: !menu[item] };
         setMenu(newData);
     };
 
@@ -195,11 +193,7 @@ const NavBar = (props) => {
                             {menu[name] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                         </Button>
                     </ListItem>
-                    <Collapse
-                        in={menu[name] ? true : false}
-                        timeout="auto"
-                        unmountOnExit
-                    >
+                    <Collapse in={!!menu[name]} timeout="auto" unmountOnExit>
                         {handleMenu(children, 1)}
                     </Collapse>
                 </div>
@@ -211,7 +205,7 @@ const NavBar = (props) => {
         <Drawer
             anchor="left"
             classes={{ paper: classes.drawer }}
-            open={true}
+            open
             variant="persistent"
         >
             <List {...rest} className={clsx(classes.root, className)}>
@@ -226,7 +220,7 @@ const NavBar = (props) => {
             />
         </Drawer>
     );
-};
+}
 
 NavBar.propTypes = {
     className: PropTypes.string,

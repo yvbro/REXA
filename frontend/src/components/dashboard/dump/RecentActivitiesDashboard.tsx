@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Chip } from '@material-ui/core';
 import { toast } from 'react-toastify';
 
+import { useQuery } from 'react-query';
+import axios, { AxiosError } from 'axios';
 import RexaCard from '../../common/RexaCard';
 import RexaDataTable from '../../common/RexaDataTable';
 import { getXnatUri } from '../../../helpers/xnat';
 import { RecentActivity } from '../../../models/project/RecentActivity';
-import { useQuery } from 'react-query';
-import axios, { AxiosError } from 'axios';
 import { RexaError } from '../../../models/management/RexaError';
 import LoadingIndicator from '../../common/LoadingIndicator';
 
@@ -31,7 +31,7 @@ const toChip = (label: string, id: number, xnatHost: string) => {
     );
 };
 
-const RecentActivitiesDashboard = ({ xnatHost }: RecentActivitiesDashboardProps) => {
+function RecentActivitiesDashboard({ xnatHost }: RecentActivitiesDashboardProps) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
@@ -50,17 +50,17 @@ const RecentActivitiesDashboard = ({ xnatHost }: RecentActivitiesDashboardProps)
     }
 
     const data = [
-        { name: 'Project', values: recentActivities?.data.map((e) => e.project)!! },
-        { name: 'Type', values: recentActivities?.data.map((e) => e.typeDesc)!! },
+        { name: 'Project', values: recentActivities?.data.map((e) => e.project)! },
+        { name: 'Type', values: recentActivities?.data.map((e) => e.typeDesc)! },
         {
             name: 'Label',
             values: recentActivities?.data.map((e) =>
                 toChip(e.label, e.id, xnatHost)
-            )!!,
+            )!,
         },
         {
             name: 'Element',
-            values: recentActivities?.data.map((e) => e.elementName)!!,
+            values: recentActivities?.data.map((e) => e.elementName)!,
         },
     ];
 
@@ -79,6 +79,6 @@ const RecentActivitiesDashboard = ({ xnatHost }: RecentActivitiesDashboardProps)
             />
         </RexaCard>
     );
-};
+}
 
 export default RecentActivitiesDashboard;

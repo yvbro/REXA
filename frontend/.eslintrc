@@ -7,7 +7,9 @@
         "airbnb-typescript",
         "plugin:prettier/recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "eslint:recommended",
+        "prettier"
     ],
     "plugins": ["formatjs"],
     "rules": {
@@ -38,5 +40,8 @@
     },
     "globals": {
         "document": false
+    },
+    "parserOptions": {
+        "project": ["./tsconfig.json"]
     }
 }

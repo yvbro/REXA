@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
+import { toast } from 'react-toastify';
 import PasswordRules from '../../common/password/PasswordRules';
 import PasswordField from '../../common/password/PasswordField';
 
@@ -26,7 +27,6 @@ import {
 
 import themes from '../../common/theme/theme.scss';
 import useUsersManagementService from '../../../services/useUsersManagementService';
-import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,7 +76,7 @@ interface ChangePasswordFormProps {
     closeAction: () => void;
 }
 
-const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps) => {
+function ChangePasswordForm({ userEmail, closeAction }: ChangePasswordFormProps) {
     const classes = useStyles();
 
     const { updatePassword } = useUsersManagementService();
@@ -94,8 +94,8 @@ const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps)
         } else {
             updatePassword({
                 email: userEmail,
-                newPassword: newPassword,
-                confirmationPassword: confirmationPassword,
+                newPassword,
+                confirmationPassword,
             });
             closeAction();
         }
@@ -147,7 +147,7 @@ const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps)
                     label="New password"
                     error={errorPassword}
                     onChange={onChangePassword}
-                    testId={'newPassword'}
+                    testId="newPassword"
                     className={classes.text}
                 />
                 <PasswordField
@@ -155,7 +155,7 @@ const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps)
                     label="Confirm new password"
                     error={errorConfirmationPassword}
                     onChange={onChangeConfirmedPassword}
-                    testId={'confirmationPassword'}
+                    testId="confirmationPassword"
                     className={classes.text}
                 />
             </CardContent>
@@ -183,6 +183,6 @@ const ChangePasswordForm = ({ userEmail, closeAction }: ChangePasswordFormProps)
             </CardActions>
         </Card>
     );
-};
+}
 
 export default ChangePasswordForm;

@@ -1,12 +1,11 @@
 import React from 'react';
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 import { ProcessorStats } from '../../helpers/type/ProcessorStats';
 import { extractAssessorsProcTypeAndStatus, PROC_STATUS } from '../../helpers/xnat';
 import { Assessor } from '../../models/project/Assessor';
 
-import Chart from 'react-apexcharts';
-
 import styles from './charts.module.scss';
-import { ApexOptions } from 'apexcharts';
 
 interface StackedProjectColumnChartProps {
     assessors: Assessor[];
@@ -54,9 +53,7 @@ const options: ApexOptions = {
     },
 };
 
-const StackedProjectColumnChart = ({
-    assessors,
-}: StackedProjectColumnChartProps) => {
+function StackedProjectColumnChart({ assessors }: StackedProjectColumnChartProps) {
     let processorsStats: ProcessorStats[] = [];
 
     if (assessors) {
@@ -73,6 +70,6 @@ const StackedProjectColumnChart = ({
             />
         </div>
     );
-};
+}
 
 export default StackedProjectColumnChart;

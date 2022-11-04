@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import LoadingIndicator from '../components/common/LoadingIndicator';
 import style from '../components/common/common.module.scss';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+function PrivateRoute({ component: Component, ...rest }) {
     const location = useLocation();
 
     const { authenticated, loading } = useSelector((state) => ({
@@ -38,7 +38,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             />
         </div>
     );
-};
+}
 
 PrivateRoute.propTypes = {
     component: PropTypes.func,

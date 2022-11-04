@@ -75,7 +75,7 @@ interface AddUserFormProps {
     closeAction: () => void;
 }
 
-const AddUserForm = ({ users, closeAction }: AddUserFormProps) => {
+function AddUserForm({ users, closeAction }: AddUserFormProps) {
     const classes = useStyles();
 
     const { addUser } = useUsersManagementService();
@@ -174,6 +174,6 @@ const AddUserForm = ({ users, closeAction }: AddUserFormProps) => {
             </CardActions>
         </Card>
     );
-};
+}
 
 export default AddUserForm;

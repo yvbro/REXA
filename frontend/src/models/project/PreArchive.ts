@@ -5,4 +5,4 @@ export type PreArchive = {
     scanDate: string;
     updloadDate: string;
     status: string;
-}
+};

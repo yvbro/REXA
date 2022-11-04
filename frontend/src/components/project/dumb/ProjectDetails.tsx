@@ -15,7 +15,7 @@ interface ProjectDetailsProps {
     isLoading: boolean;
 }
 
-const ProjectDetails = ({ project, isLoading }: ProjectDetailsProps) => {
+function ProjectDetails({ project, isLoading }: ProjectDetailsProps) {
     if (isLoading) {
         return <LoadingIndicator />;
     }
@@ -41,6 +41,6 @@ const ProjectDetails = ({ project, isLoading }: ProjectDetailsProps) => {
             )}
         </>
     );
-};
+}
 
 export default ProjectDetails;

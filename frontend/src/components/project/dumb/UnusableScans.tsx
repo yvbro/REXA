@@ -16,7 +16,7 @@ interface UnusableScansProps {
     unusableScans: Scan[];
 }
 
-const UnusableScans = ({ unusableScans }: UnusableScansProps) => {
+function UnusableScans({ unusableScans }: UnusableScansProps) {
     const { xnatHost } = useSelector((state: RootState) => ({
         xnatHost: state.auth.user.xnatHost ?? '',
     }));
@@ -49,6 +49,6 @@ const UnusableScans = ({ unusableScans }: UnusableScansProps) => {
             </List>
         </RexaCard>
     );
-};
+}
 
 export default UnusableScans;

@@ -31,7 +31,7 @@ interface LocationState {
     error: string | null;
 }
 
-const LoginPage = () => {
+function LoginPage() {
     const style = useStyles();
 
     const { authenticated } = useSelector((state: RootState) => ({
@@ -134,6 +134,6 @@ const LoginPage = () => {
             </Grid>
         </Grid>
     );
-};
+}
 
 export default LoginPage;

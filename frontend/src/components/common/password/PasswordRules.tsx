@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-const PasswordRules = () => {
+function PasswordRules() {
     return (
         <Typography
             data-testid="passwordRules"
@@ -14,6 +14,6 @@ const PasswordRules = () => {
             letter and a number.
         </Typography>
     );
-};
+}
 
 export default PasswordRules;

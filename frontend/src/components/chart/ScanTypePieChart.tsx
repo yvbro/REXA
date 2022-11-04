@@ -1,7 +1,6 @@
 import React from 'react';
-import { ScanByType } from '../../helpers/type/ScanByType';
-
 import Chart from 'react-apexcharts';
+import { ScanByType } from '../../helpers/type/ScanByType';
 
 import style from './charts.module.scss';
 
@@ -36,7 +35,7 @@ const options = {
     },
 };
 
-const ScanTypePieChart = ({ scans }: ScanTypePieChartProps) => {
+function ScanTypePieChart({ scans }: ScanTypePieChartProps) {
     return (
         <div id="chart" className={style.drawing}>
             <Chart
@@ -50,6 +49,6 @@ const ScanTypePieChart = ({ scans }: ScanTypePieChartProps) => {
             />
         </div>
     );
-};
+}
 
 export default ScanTypePieChart;

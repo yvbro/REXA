@@ -24,7 +24,7 @@ interface UnknownProcessorStatusProps {
     unknownStatus: string[];
 }
 
-const UnknownProcessorStatus = ({ unknownStatus }: UnknownProcessorStatusProps) => {
+function UnknownProcessorStatus({ unknownStatus }: UnknownProcessorStatusProps) {
     const style = useStyles();
 
     return (
@@ -46,6 +46,6 @@ const UnknownProcessorStatus = ({ unknownStatus }: UnknownProcessorStatusProps) 
             </List>
         </RexaCard>
     );
-};
+}
 
 export default UnknownProcessorStatus;

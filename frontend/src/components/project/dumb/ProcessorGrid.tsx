@@ -15,7 +15,7 @@ interface ProcessorGridProps {
     processors: Assessor[];
 }
 
-const ProcessorGrid = ({ processors }: ProcessorGridProps) => {
+function ProcessorGrid({ processors }: ProcessorGridProps) {
     const unknownProcStatus = getUnknownProcStatus(processors);
 
     return (
@@ -32,6 +32,6 @@ const ProcessorGrid = ({ processors }: ProcessorGridProps) => {
             )}
         </Grid>
     );
-};
+}
 
 export default ProcessorGrid;

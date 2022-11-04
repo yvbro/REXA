@@ -13,7 +13,7 @@ import LoadingIndicator from '../../common/LoadingIndicator';
 
 import classes from './dashboard.module.scss';
 
-export const PrearchiveDashboard = () => {
+export function PrearchiveDashboard() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
@@ -33,15 +33,15 @@ export const PrearchiveDashboard = () => {
     }
 
     const data = [
-        { name: 'Project', values: preArchives?.data.map((e) => e.project)!! },
-        { name: 'Subject', values: preArchives?.data.map((e) => e.subject)!! },
-        { name: 'Session', values: preArchives?.data.map((e) => e.session)!! },
-        { name: 'Scan Date', values: preArchives?.data.map((e) => e.scanDate)!! },
+        { name: 'Project', values: preArchives?.data.map((e) => e.project)! },
+        { name: 'Subject', values: preArchives?.data.map((e) => e.subject)! },
+        { name: 'Session', values: preArchives?.data.map((e) => e.session)! },
+        { name: 'Scan Date', values: preArchives?.data.map((e) => e.scanDate)! },
         {
             name: 'Upload Date',
-            values: preArchives?.data.map((e) => e.updloadDate)!!,
+            values: preArchives?.data.map((e) => e.updloadDate)!,
         },
-        { name: 'Status', values: preArchives?.data.map((e) => e.status)!! },
+        { name: 'Status', values: preArchives?.data.map((e) => e.status)! },
     ];
 
     return (
@@ -59,6 +59,6 @@ export const PrearchiveDashboard = () => {
             />
         </RexaCard>
     );
-};
+}
 
 export default PrearchiveDashboard;

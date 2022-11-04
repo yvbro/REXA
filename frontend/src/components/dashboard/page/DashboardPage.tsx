@@ -19,7 +19,7 @@ import { RecentActivity } from '../../../models/project/RecentActivity';
 import { PreArchive } from '../../../models/project/PreArchive';
 import { Project } from '../../../models/project/Project';
 
-const DashboardPage = () => {
+function DashboardPage() {
     const { xnatHost } = useSelector((state: RootState) => ({
         xnatHost: state.auth.user.xnatHost,
     }));
@@ -41,6 +41,6 @@ const DashboardPage = () => {
             </Grid>
         </div>
     );
-};
+}
 
 export default DashboardPage;

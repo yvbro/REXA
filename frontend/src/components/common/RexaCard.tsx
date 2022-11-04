@@ -24,13 +24,13 @@ interface RexaCardProps {
     actions?: ReactNode | null;
 }
 
-const RexaCard = ({
+function RexaCard({
     children,
     title = '',
     actions = null,
     className = '',
     classNameContent = '',
-}: RexaCardProps) => {
+}: RexaCardProps) {
     const style = useStyles();
     return (
         <Card className={className} variant="outlined">
@@ -43,6 +43,6 @@ const RexaCard = ({
             {actions ? <CardActions>{actions}</CardActions> : null}
         </Card>
     );
-};
+}
 
 export default RexaCard;

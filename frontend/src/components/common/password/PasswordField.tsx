@@ -13,14 +13,14 @@ interface PasswordField {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PasswordField = ({
+function PasswordField({
     value,
     label,
     error,
     testId,
     onChange,
     className = '',
-}: PasswordField) => {
+}: PasswordField) {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -56,6 +56,6 @@ const PasswordField = ({
             }}
         />
     );
-};
+}
 
 export default PasswordField;

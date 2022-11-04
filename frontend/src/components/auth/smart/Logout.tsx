@@ -3,8 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { performLogout } from '../../../store/slices/auth/authAction';
 
-
-const Logout = () => {
+function Logout() {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -12,6 +11,6 @@ const Logout = () => {
     }, [dispatch]);
 
     return <Redirect to="/rexa/login" />;
-};
+}
 
 export default Logout;

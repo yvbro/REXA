@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UserSettingsForm = () => {
+function UserSettingsForm() {
     const style = useStyles();
 
     const [currentPassword, setCurrentPassword] = useState('');
@@ -91,14 +91,14 @@ const UserSettingsForm = () => {
             <form
                 className={classes.formFlex}
                 onSubmit={handleSubmit}
-                key={'userSettingsForm'}
-                id={'userSettingsForm'}
+                key="userSettingsForm"
+                id="userSettingsForm"
             >
                 <PasswordField
                     value={currentPassword}
                     label="Current password"
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    testId={'Password'}
+                    testId="Password"
                     className={style.input}
                 />
                 <PasswordField
@@ -106,7 +106,7 @@ const UserSettingsForm = () => {
                     label="New password"
                     error={errorPassword}
                     onChange={onChangePassword}
-                    testId={'newPassword'}
+                    testId="newPassword"
                     className={style.input}
                 />
                 <PasswordField
@@ -114,7 +114,7 @@ const UserSettingsForm = () => {
                     label="Confirm new password"
                     error={errorConfirmationPassword}
                     onChange={onChangeConfirmedPassword}
-                    testId={'confirmationPassword'}
+                    testId="confirmationPassword"
                     className={style.input}
                 />
                 <Button
@@ -135,6 +135,6 @@ const UserSettingsForm = () => {
             </form>
         </Card>
     );
-};
+}
 
 export default UserSettingsForm;

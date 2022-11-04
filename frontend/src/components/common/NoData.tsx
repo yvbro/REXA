@@ -25,7 +25,7 @@ interface NoDataProps {
     noRadius?: boolean;
 }
 
-const NoData = ({ label = '', noRadius = false }: NoDataProps) => {
+function NoData({ label = '', noRadius = false }: NoDataProps) {
     const classes = useStyles();
 
     return (
@@ -38,6 +38,6 @@ const NoData = ({ label = '', noRadius = false }: NoDataProps) => {
             </CardContent>
         </Card>
     );
-};
+}
 
 export default NoData;

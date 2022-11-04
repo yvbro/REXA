@@ -12,7 +12,7 @@ import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 import classes from './SettingsDetails.module.scss';
 import themes from '../../common/theme/theme.scss';
 
-const TabPanel = (props) => {
+function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -30,7 +30,7 @@ const TabPanel = (props) => {
             )}
         </div>
     );
-};
+}
 
 TabPanel.propTypes = {
     children: PropTypes.node,
@@ -45,7 +45,7 @@ const a11yProps = (index) => {
     };
 };
 
-const SettingsDetailsPage = () => {
+function SettingsDetailsPage() {
     const [value, setValue] = useState(0);
 
     const { authProvider } = useSelector((state) => ({
@@ -90,6 +90,6 @@ const SettingsDetailsPage = () => {
             </Grid>
         </Grid>
     );
-};
+}
 
 export default SettingsDetailsPage;

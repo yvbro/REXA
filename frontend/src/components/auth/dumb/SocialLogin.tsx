@@ -13,15 +13,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const GoogleIcon = () => {
+export function GoogleIcon() {
     return (
         <Icon classes={{ root: classes.iconRoot }}>
             <img className={classes.imageIcon} src={googleLogo} alt="Google" />
         </Icon>
     );
-};
+}
 
-const SocialLogin = () => {
+function SocialLogin() {
     const style = useStyles();
 
     return (
@@ -35,6 +35,6 @@ const SocialLogin = () => {
             Sign in with Google
         </Button>
     );
-};
+}
 
 export default SocialLogin;

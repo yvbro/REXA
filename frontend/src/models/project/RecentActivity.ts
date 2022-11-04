@@ -6,4 +6,4 @@ export type RecentActivity = {
     typeDesc: string;
     elementName: string;
     id: number;
-}
+};

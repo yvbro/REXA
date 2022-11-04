@@ -1,4 +1,4 @@
-import { Assessor } from './../models/project/Assessor';
+import { Assessor } from '../models/project/Assessor';
 import { Scan } from '../models/project/Scan';
 import { ScanByType } from './type/ScanByType';
 import { ProcessorStats } from './type/ProcessorStats';
@@ -71,19 +71,17 @@ export const extractScanTypes = (scans: Scan[]) => {
 };
 
 export const getUnusableScans = (scans: Scan[]) => {
-    let idsProcessed: string[] = [];
+    const idsProcessed: string[] = [];
     return scans.filter((scan) => {
         if (scan.quality === UNUSABLE_SCAN_QUALITY) {
             const uniqueId = `${scan.id}.${scan.scanLabel}`;
             if (idsProcessed.includes(uniqueId)) {
                 return false;
-            } else {
-                idsProcessed.push(uniqueId);
-                return true;
             }
-        } else {
-            return false;
+            idsProcessed.push(uniqueId);
+            return true;
         }
+        return false;
     });
 };
 

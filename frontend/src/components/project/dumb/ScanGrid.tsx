@@ -12,8 +12,8 @@ interface ScanGridProps {
     scans: Scan[];
 }
 
-const ScanGrid = ({ scans }: ScanGridProps) => {
-    let unusableScans = getUnusableScans(scans);
+function ScanGrid({ scans }: ScanGridProps) {
+    const unusableScans = getUnusableScans(scans);
 
     return (
         <>
@@ -27,7 +27,7 @@ const ScanGrid = ({ scans }: ScanGridProps) => {
             )}
         </>
     );
-};
+}
 
 ScanGrid.propTypes = {
     scans: PropTypes.array.isRequired,

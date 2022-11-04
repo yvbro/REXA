@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const XnatSettingsForm = () => {
+function XnatSettingsForm() {
     const style = useStyles();
     const dispatch = useDispatch();
 
@@ -154,6 +154,6 @@ const XnatSettingsForm = () => {
             </form>
         </Card>
     );
-};
+}
 
 export default XnatSettingsForm;

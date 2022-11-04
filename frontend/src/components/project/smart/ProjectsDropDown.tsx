@@ -12,11 +12,11 @@ interface ProjectDropDownProps {
     onProjectSelected: (project: string) => void;
 }
 
-const ProjectsDropDown = ({
+function ProjectsDropDown({
     projects,
     projectSelected,
     onProjectSelected,
-}: ProjectDropDownProps) => {
+}: ProjectDropDownProps) {
     const onChange = (event: SelectChangeEvent) => {
         onProjectSelected(event.target.value);
     };
@@ -42,6 +42,6 @@ const ProjectsDropDown = ({
             </Select>
         </FormControl>
     );
-};
+}
 
 export default ProjectsDropDown;

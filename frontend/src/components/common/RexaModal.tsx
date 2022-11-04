@@ -11,15 +11,17 @@ interface RexaModalProps {
     closeModal: () => void;
 }
 
-const RexaModal = ({ children, title, open, closeModal }: RexaModalProps) => (
-    <Modal
-        className={classes.modal}
-        open={open}
-        onClose={closeModal}
-        aria-labelledby={title}
-    >
-        {children}
-    </Modal>
-);
+function RexaModal({ children, title, open, closeModal }: RexaModalProps) {
+    return (
+        <Modal
+            className={classes.modal}
+            open={open}
+            onClose={closeModal}
+            aria-labelledby={title}
+        >
+            {children}
+        </Modal>
+    );
+}
 
 export default RexaModal;

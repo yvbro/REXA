@@ -13,7 +13,7 @@ interface ScanTypesDetailsProps {
     scans: Scan[];
 }
 
-const ScanTypesDetails = ({ scans }: ScanTypesDetailsProps) => {
+function ScanTypesDetails({ scans }: ScanTypesDetailsProps) {
     let scansByType: ScanByType[] = [];
     if (scans) {
         scansByType = extractScanTypes(scans);
@@ -28,6 +28,6 @@ const ScanTypesDetails = ({ scans }: ScanTypesDetailsProps) => {
             )}
         </RexaCard>
     );
-};
+}
 
 export default ScanTypesDetails;

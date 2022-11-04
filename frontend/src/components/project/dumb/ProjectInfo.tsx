@@ -29,7 +29,7 @@ interface ProjectInfoProps {
     project: ProjectXnatInfo;
 }
 
-const ProjectInfo = ({ project }: ProjectInfoProps) => {
+function ProjectInfo({ project }: ProjectInfoProps) {
     const style = useStyles();
 
     return (
@@ -81,6 +81,6 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
             </List>
         </RexaCard>
     );
-};
+}
 
 export default ProjectInfo;

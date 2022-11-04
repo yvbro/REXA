@@ -1,4 +1,4 @@
 export enum RexaRole {
-    ADMIN = "ADMIN",
-    USER = 'USER'
-  }
+    ADMIN = 'ADMIN',
+    USER = 'USER',
+}
