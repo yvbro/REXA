@@ -10,9 +10,9 @@ import UserSettingsForm from '../smart/UserSettingsForm';
 
 import { GOOGLE_AUTH_PROVIDER } from '../../../helpers/constants/index';
 import classes from './SettingsDetails.module.scss';
-import { themeColor } from '../../common/theme/theme.scss';
+import themes from '../../common/theme/theme.scss';
 
-const TabPanel = (props) => {
+function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -30,7 +30,7 @@ const TabPanel = (props) => {
             )}
         </div>
     );
-};
+}
 
 TabPanel.propTypes = {
     children: PropTypes.node,
@@ -45,7 +45,7 @@ const a11yProps = (index) => {
     };
 };
 
-const SettingsDetailsPage = () => {
+function SettingsDetailsPage() {
     const [value, setValue] = useState(0);
 
     const { authProvider } = useSelector((state) => ({
@@ -62,7 +62,10 @@ const SettingsDetailsPage = () => {
         <Grid container className={classes.rootDiv}>
             <Grid item md={6} xs={12}>
                 <div className={classes.rootDiv}>
-                    <AppBar position="static" style={{ background: themeColor }}>
+                    <AppBar
+                        position="static"
+                        style={{ background: themes.themeColor }}
+                    >
                         <Tabs
                             value={value}
                             onChange={handleChange}
@@ -87,6 +90,6 @@ const SettingsDetailsPage = () => {
             </Grid>
         </Grid>
     );
-};
+}
 
 export default SettingsDetailsPage;

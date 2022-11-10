@@ -3,7 +3,7 @@ package fr.yvbro.rexa.xnat
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.result.Result
+import com.github.kittinunf.result.Result;
 import fr.yvbro.rexa.exception.RexaBadRequestException
 import fr.yvbro.rexa.exception.RexaNotFoundException
 import fr.yvbro.rexa.exception.RexaUnknownException

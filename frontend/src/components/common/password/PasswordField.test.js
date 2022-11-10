@@ -1,5 +1,9 @@
 import React from 'react';
-import { cleanup, fireEvent, renderWithStore } from '../../../helpers/test/test-utils';
+import {
+    cleanup,
+    fireEvent,
+    renderWithStore,
+} from '../../../helpers/test/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 
 import PasswordField from './PasswordField';
@@ -11,23 +15,31 @@ const ON_CHANGE = jest.fn();
 const TEST_ID = 'passwordId';
 
 describe('The PasswordField component', () => {
-    
     afterEach(cleanup);
 
     it('should take a snapshot', () => {
-        const { asFragment } = renderWithStore(<PasswordField onChange={ON_CHANGE}/>, {});
+        const { asFragment } = renderWithStore(
+            <PasswordField onChange={ON_CHANGE} />,
+            {}
+        );
 
-        expect(asFragment(<PasswordField onChange={ON_CHANGE}/>)).toMatchSnapshot();
+        expect(asFragment(<PasswordField onChange={ON_CHANGE} />)).toMatchSnapshot();
     });
 
     it('should display a visibility button', () => {
-        const { getByTestId } = renderWithStore(<PasswordField onChange={ON_CHANGE}/>, {});
+        const { getByTestId } = renderWithStore(
+            <PasswordField onChange={ON_CHANGE} />,
+            {}
+        );
 
         expect(getByTestId('visibilityButton')).toBeInTheDocument();
     });
 
     it('should change from type "password" to "text" when click on visibility button', () => {
-        const { getByTestId } = renderWithStore(<PasswordField onChange={ON_CHANGE} testId={TEST_ID}/>, {});
+        const { getByTestId } = renderWithStore(
+            <PasswordField onChange={ON_CHANGE} testId={TEST_ID} />,
+            {}
+        );
 
         const passwordInput = getByTestId(TEST_ID);
         expect(passwordInput).toHaveAttribute('type', 'password');
@@ -39,19 +51,28 @@ describe('The PasswordField component', () => {
     });
 
     it('should set value if given', () => {
-        const { getByTestId } = renderWithStore(<PasswordField onChange={ON_CHANGE} testId={TEST_ID} value={VALUE}/>, {});
+        const { getByTestId } = renderWithStore(
+            <PasswordField onChange={ON_CHANGE} testId={TEST_ID} value={VALUE} />,
+            {}
+        );
 
         expect(getByTestId(TEST_ID)).toHaveAttribute('value', VALUE);
     });
 
     it('should set label if given', () => {
-        const { getByText } = renderWithStore(<PasswordField onChange={ON_CHANGE} testId={TEST_ID} label={LABEL}/>, {});
+        const { getByText } = renderWithStore(
+            <PasswordField onChange={ON_CHANGE} testId={TEST_ID} label={LABEL} />,
+            {}
+        );
 
         expect(getByText(LABEL)).toBeInTheDocument();
     });
 
     it('should set error if given', () => {
-        const { getByText } = renderWithStore(<PasswordField onChange={ON_CHANGE} testId={TEST_ID} error={ERROR}/>, {});
+        const { getByText } = renderWithStore(
+            <PasswordField onChange={ON_CHANGE} testId={TEST_ID} error={ERROR} />,
+            {}
+        );
 
         expect(getByText(ERROR)).toBeInTheDocument();
     });

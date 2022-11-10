@@ -14,7 +14,7 @@ import {
     ERROR_PASSWORD_CAPITAL_LETTER,
     passwordDoesNotContainANumber,
     ERROR_PASSWORD_NUMBER,
-    ERROR_PASSWORD_NOT_MATCH
+    ERROR_PASSWORD_NOT_MATCH,
 } from '../../../helpers/constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UserSettingsForm = () => {
+function UserSettingsForm() {
     const style = useStyles();
 
     const [currentPassword, setCurrentPassword] = useState('');
@@ -45,7 +45,11 @@ const UserSettingsForm = () => {
         if (confirmationPassword !== newPassword) {
             setErrorConfirmationPassword(ERROR_PASSWORD_NOT_MATCH);
         } else {
-            updateUserSettings(currentPassword, newPassword, confirmationPassword).then(() => {
+            updateUserSettings(
+                currentPassword,
+                newPassword,
+                confirmationPassword
+            ).then(() => {
                 setCurrentPassword('');
                 setNewPassword('');
                 setConfirmationPassword('');
@@ -69,7 +73,9 @@ const UserSettingsForm = () => {
 
     const onChangeConfirmedPassword = (event) => {
         if (event.target.value !== newPassword) {
-            setErrorConfirmationPassword('Password and confirmation does not match.');
+            setErrorConfirmationPassword(
+                'Password and confirmation does not match.'
+            );
         } else {
             setErrorConfirmationPassword('');
         }
@@ -85,30 +91,30 @@ const UserSettingsForm = () => {
             <form
                 className={classes.formFlex}
                 onSubmit={handleSubmit}
-                key={'userSettingsForm'}
-                id={'userSettingsForm'}
+                key="userSettingsForm"
+                id="userSettingsForm"
             >
-                <PasswordField 
+                <PasswordField
                     value={currentPassword}
                     label="Current password"
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    testId={'Password'}
+                    testId="Password"
                     className={style.input}
                 />
-                <PasswordField 
+                <PasswordField
                     value={newPassword}
                     label="New password"
                     error={errorPassword}
                     onChange={onChangePassword}
-                    testId={'newPassword'}
+                    testId="newPassword"
                     className={style.input}
                 />
-                <PasswordField 
+                <PasswordField
                     value={confirmationPassword}
                     label="Confirm new password"
                     error={errorConfirmationPassword}
                     onChange={onChangeConfirmedPassword}
-                    testId={'confirmationPassword'}
+                    testId="confirmationPassword"
                     className={style.input}
                 />
                 <Button
@@ -116,8 +122,11 @@ const UserSettingsForm = () => {
                     variant="outlined"
                     color="primary"
                     disabled={
-                        !currentPassword || !newPassword || !confirmationPassword ||
-                        errorPassword || errorConfirmationPassword
+                        !currentPassword ||
+                        !newPassword ||
+                        !confirmationPassword ||
+                        errorPassword ||
+                        errorConfirmationPassword
                     }
                     className={style.input}
                 >
@@ -126,6 +135,6 @@ const UserSettingsForm = () => {
             </form>
         </Card>
     );
-};
+}
 
 export default UserSettingsForm;

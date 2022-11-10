@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Button, TextField, makeStyles, Typography } from '@material-ui/core';
 
 import { updateXnatSettings, testConnection } from '../api/apiSettings';
-import { resetDataDashboard } from '../../dashboard/redux/dashboardDuck';
-import { resetDataProjects } from '../../project/redux/projectDuck';
-import { updateCurrentUserXnatInfos } from '../../auth/redux/authDuck';
+import { updateXnatInfo } from '../../../store/slices/auth/authSlice';
 import classes from './XnatSettingsForm.module.scss';
 
 const REGEX_PROTOCOL = /^((http|https):\/\/)/;
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const XnatSettingsForm = () => {
+function XnatSettingsForm() {
     const style = useStyles();
     const dispatch = useDispatch();
 
@@ -54,9 +52,8 @@ const XnatSettingsForm = () => {
                 !host ? xnatHost : host,
                 password
             ).then(() => {
-                dispatch(updateCurrentUserXnatInfos(username, host));
-                dispatch(resetDataDashboard());
-                dispatch(resetDataProjects());
+                dispatch(updateXnatInfo(username, host));
+                /*                 dispatch(resetDataProjects()); */
             });
         }
     };
@@ -157,6 +154,6 @@ const XnatSettingsForm = () => {
             </form>
         </Card>
     );
-};
+}
 
 export default XnatSettingsForm;

@@ -5,7 +5,6 @@ import '@testing-library/jest-dom/extend-expect';
 import PasswordRules from './PasswordRules';
 
 describe('The PasswordRules component', () => {
-    
     afterEach(cleanup);
 
     it('should take a snapshot', () => {
@@ -17,6 +16,8 @@ describe('The PasswordRules component', () => {
     it('should display the password rules', () => {
         const { getByTestId } = renderWithStore(<PasswordRules />, {});
 
-        expect(getByTestId('passwordRules')).toHaveTextContent('The password must be 8 characters long. It should contain a capital letter and a number.');
+        expect(getByTestId('passwordRules')).toHaveTextContent(
+            'The password must be 8 characters long. It should contain a capital letter and a number.'
+        );
     });
 });

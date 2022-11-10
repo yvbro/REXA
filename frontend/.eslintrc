@@ -1,38 +1,54 @@
 {
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true,
-    "amd": true
-  },
-  "parser": "babel-eslint",
-  "plugins": [
-    "import",
-    "react"
-  ],
-  "extends": [
-    "plugin:react/recommended",
-    "eslint:recommended"
-  ],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
+    "extends": [
+        "react-app",
+        "react-app/jest",
+        "airbnb",
+        "airbnb/hooks",
+        "airbnb-typescript",
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "eslint:recommended",
+        "prettier"
+    ],
+    "plugins": ["formatjs"],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "formatjs/no-offset": "error",
+        "import/prefer-default-export": "off",
+        "react/no-array-index-key": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/require-default-props": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/style-prop-object": "off",
+        "react/button-has-type": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
+        "no-continue": "off",
+        "no-param-reassign": "off",
+        "import/no-cycle": [
+            "warn",
+            {
+                "maxDepth": 10,
+                "ignoreExternal": true
+            }
+        ]
+    },
+    "globals": {
+        "document": false
+    },
+    "parserOptions": {
+        "project": ["./tsconfig.json"]
     }
-  },
-  "rules": {
-    "no-console": "warn",
-    "no-eval": "error",
-    "no-undef": "off",
-    "import/first": "error",
-    // we only want single quotes
-    "quotes": ["error", "single"],
-    // we want to force semicolons
-    "semi": ["error", "always"],
-    // we use 2 spaces to indent our code
-    "indent": ["error", 4],
-    // we want to avoid useless spaces
-    "no-multi-spaces": ["error"]
-  }
 }

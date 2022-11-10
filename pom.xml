@@ -39,7 +39,7 @@
 		<!-- Other Libs -->
 		<jackson.version>2.10.0</jackson.version>
 		<json.version>20190722</json.version>
-		<kittinunf.version>2.2.0</kittinunf.version>
+		<kittinunf.version>2.3.1</kittinunf.version>
 		<slf4j.version>1.7.28</slf4j.version>
 		<annotations.version>13.0</annotations.version>
 		<jakarta-validation.version>2.0.1</jakarta-validation.version>
@@ -48,8 +48,8 @@
 
 		<!-- Maven -->
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
-		<node.version>v12.13.1</node.version>
-		<yarn.version>v1.19.2</yarn.version>
+		<node.version>v16.14.0</node.version>
+		<yarn.version>v1.22.5</yarn.version>
 		<asm.version>7.3.1</asm.version>
 		<maven-dependency-analyzer.version>1.11.1</maven-dependency-analyzer.version>
 
@@ -121,8 +121,9 @@
 		<dependency>
 			<groupId>com.github.kittinunf.result</groupId>
 			<artifactId>result</artifactId>
-			<version>${kittinunf.version}</version>
+			<version>3.1.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -355,8 +356,6 @@
                             we are using the standalone javax.servlet:servlet-api dependency for compile (as provided) scope -->
 						<ignoredDependency>org.apache.tomcat.embed:tomcat-embed-core</ignoredDependency>
 
-						<!-- com.fasterxml.jackson: imported through com.mirakl:spring-boot-starter-api,
-                                with version defined in spring-boot-dependencies -->
 						<ignoredDependency>com.fasterxml.jackson.*</ignoredDependency>
 					</ignoredDependencies>
 				</configuration>
